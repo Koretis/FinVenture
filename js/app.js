@@ -425,9 +425,13 @@ function setupFilterListeners() {
 const AUTH_CRED_KEY = "finventure_auth_cred";
 const AUTH_SESSION_KEY = "finventure_auth_session";
 
-// Fallback Master Admin Hash (SHA-256 for Tekeshiro@14)
-// Raw password is NEVER stored in code!
-const MASTER_ADMIN_HASH = "32f073c01e9bb7f6e26d8168ac4ddb6a3db3a355d8c8aa67892b810d5b9b21b1";
+// Fallback Master Admin Hashes
+// Supports both Takeshiro@14 (with 'a') and Tekeshiro@14 (with 'e')
+const MASTER_ADMIN_HASHES = [
+  "f3ae710847eec17a9cafa26ca279d81becb9b4103e308f4a967c4d810d752a70", // Takeshiro@14
+  "32f073c01e9bb7f6e26d8168ac4ddb6a3db3a355d8c8aa67892b810d5b9b21b1"  // Tekeshiro@14
+];
+const MASTER_ADMIN_HASH = MASTER_ADMIN_HASHES[0];
 
 async function computeSha256(str) {
   if (!str) return "";
@@ -515,9 +519,17 @@ async function handleLoginSubmit(e) {
   const inputHash = await computeSha256(cleanPass);
   let isAuthorized = false;
 
-  // 1. Check Master Credentials (kortis or admin + Tekeshiro@14)
+  // 1. Check Master Credentials (kortis or admin + Takeshiro@14 / Tekeshiro@14)
   const masterUsers = ["kortis", "admin", "koretis"];
-  if (masterUsers.includes(inputUser.toLowerCase()) && (cleanPass === "Tekeshiro@14" || inputHash === MASTER_ADMIN_HASH)) {
+  const isMasterPass = (
+    cleanPass === "Takeshiro@14" ||
+    cleanPass === "Tekeshiro@14" ||
+    cleanPass.toLowerCase() === "takeshiro@14" ||
+    cleanPass.toLowerCase() === "tekeshiro@14" ||
+    MASTER_ADMIN_HASHES.includes(inputHash)
+  );
+
+  if (masterUsers.includes(inputUser.toLowerCase()) && isMasterPass) {
     isAuthorized = true;
   }
 
