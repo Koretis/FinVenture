@@ -452,7 +452,7 @@ function getStoredCredentials() {
       }
     }
   } catch (e) {}
-  return { username: "admin", passHash: MASTER_ADMIN_HASH, isDefault: true };
+  return { username: "kortis", passHash: MASTER_ADMIN_HASH, isDefault: true };
 }
 
 function isUserAuthenticated() {
@@ -514,8 +514,9 @@ async function handleLoginSubmit(e) {
   const inputHash = await computeSha256(inputPass);
   let isAuthorized = false;
 
-  // 1. Check Master Admin (admin + Tekeshiro@14)
-  if (inputUser.toLowerCase() === "admin" && inputHash === MASTER_ADMIN_HASH) {
+  // 1. Check Master Credentials (kortis or admin + Tekeshiro@14)
+  const masterUsers = ["kortis", "admin", "koretis"];
+  if (masterUsers.includes(inputUser.toLowerCase()) && inputHash === MASTER_ADMIN_HASH) {
     isAuthorized = true;
   }
 
