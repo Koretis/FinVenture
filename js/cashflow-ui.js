@@ -1216,16 +1216,48 @@ function handleSaveAppsScriptUrl() {
 }
 
 function copyAppsScriptCode() {
-  const code = `function doPost(e) {
+  const code = `function doGet(e) {
   try {
+    var params = (e && e.parameter) ? e.parameter : {};
+    if (params.action === "getUser") {
+      var props = PropertiesService.getScriptProperties();
+      var user = props.getProperty("AUTH_USER") || "";
+      var passHash = props.getProperty("AUTH_HASH") || "";
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "success",
+        user: user,
+        passHash: passHash
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "ready", service: "FinVenture API" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doPost(e) {
+  try {
+    var contents = (e && e.postData && e.postData.contents) ? e.postData.contents : "{}";
+    var data = JSON.parse(contents);
+
+    // 1. User Management (Private Cloud Storage via ScriptProperties)
+    if (data.action === "saveUser") {
+      var props = PropertiesService.getScriptProperties();
+      props.setProperty("AUTH_USER", data.username || "");
+      props.setProperty("AUTH_HASH", data.passHash || "");
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "User saved" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 2. Default: Record Expense Row
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName("Expense");
     if (!sheet) {
       sheet = ss.insertSheet("Expense");
       sheet.appendRow(["Date", "Category", "Subcategory", "Description", "Amount", "Payment Method", "Remark"]);
     }
-    var contents = (e && e.postData && e.postData.contents) ? e.postData.contents : "{}";
-    var data = JSON.parse(contents);
     sheet.appendRow([
       data.date || Utilities.formatDate(new Date(), "GMT+7", "d-MMM-yyyy"),
       data.category || "",

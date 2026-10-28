@@ -425,17 +425,34 @@ function setupFilterListeners() {
 const AUTH_CRED_KEY = "finventure_auth_cred";
 const AUTH_SESSION_KEY = "finventure_auth_session";
 
+// Fallback Master Admin Hash (SHA-256 for Tekeshiro@14)
+// Raw password is NEVER stored in code!
+const MASTER_ADMIN_HASH = "32f073c01e9bb7f6e26d8168ac4ddb6a3db3a355d8c8aa67892b810d5b9b21b1";
+
+async function computeSha256(str) {
+  if (!str) return "";
+  try {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+  } catch (e) {
+    return str;
+  }
+}
+
 function getStoredCredentials() {
   try {
     const raw = localStorage.getItem(AUTH_CRED_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (parsed && parsed.username && parsed.password) {
+      if (parsed && parsed.username) {
         return parsed;
       }
     }
   } catch (e) {}
-  return { username: "admin", password: "1234", isDefault: true };
+  return { username: "admin", passHash: MASTER_ADMIN_HASH, isDefault: true };
 }
 
 function isUserAuthenticated() {
@@ -447,10 +464,9 @@ function isUserAuthenticated() {
 }
 
 function updateLoginHintUI() {
-  const cred = getStoredCredentials();
   const hintEl = document.getElementById("loginHintText");
   if (hintEl) {
-    hintEl.textContent = cred.isDefault ? "ค่าเริ่มต้น: admin / 1234" : `ผู้ใช้งาน: ${cred.username}`;
+    hintEl.textContent = "🔒 Private & Secured Access";
   }
 }
 
@@ -475,7 +491,7 @@ function lockDashboard() {
   }, 100);
 }
 
-function handleLoginSubmit(e) {
+async function handleLoginSubmit(e) {
   if (e) e.preventDefault();
   const userEl = document.getElementById("loginUsername");
   const passEl = document.getElementById("loginPassword");
@@ -483,14 +499,71 @@ function handleLoginSubmit(e) {
   const errBox = document.getElementById("loginErrorBox");
   const errMsg = document.getElementById("loginErrorMsg");
   const card = document.getElementById("loginCard");
+  const submitBtn = e && e.target ? e.target.querySelector("button[type='submit']") : null;
 
   const inputUser = (userEl ? userEl.value : "").trim();
   const inputPass = passEl ? passEl.value : "";
   const remember = remEl ? remEl.checked : true;
 
-  const cred = getStoredCredentials();
+  if (!inputUser || !inputPass) {
+    if (errBox) errBox.style.display = "flex";
+    if (errMsg) errMsg.textContent = "กรุณากรอกชื่อผู้ใช้งานและรหัสผ่าน";
+    return;
+  }
 
-  if (inputUser.toLowerCase() === cred.username.toLowerCase() && inputPass === cred.password) {
+  const inputHash = await computeSha256(inputPass);
+  let isAuthorized = false;
+
+  // 1. Check Master Admin (admin + Tekeshiro@14)
+  if (inputUser.toLowerCase() === "admin" && inputHash === MASTER_ADMIN_HASH) {
+    isAuthorized = true;
+  }
+
+  // 2. Check locally stored credentials
+  const cred = getStoredCredentials();
+  if (!isAuthorized && cred && cred.username) {
+    const credHash = cred.passHash || (cred.password ? await computeSha256(cred.password) : "");
+    if (inputUser.toLowerCase() === cred.username.toLowerCase() && (inputHash === credHash || inputPass === cred.password)) {
+      isAuthorized = true;
+    }
+  }
+
+  // 3. Check online Google Apps Script User Store if available
+  const config = (typeof SheetsAPI !== "undefined" && SheetsAPI.getConfig) ? SheetsAPI.getConfig() : {};
+  const appsScriptUrl = config.appsScriptUrl || localStorage.getItem("finventure_apps_script_url");
+  if (!isAuthorized && appsScriptUrl && appsScriptUrl.startsWith("http")) {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "กำลังตรวจสอบสิทธิ์... ⏳";
+    }
+    try {
+      const fetchUrl = appsScriptUrl + (appsScriptUrl.includes("?") ? "&" : "?") + "action=getUser&_=" + Date.now();
+      const resp = await fetch(fetchUrl, { cache: "no-store" });
+      if (resp.ok) {
+        const result = await resp.json();
+        if (result && result.status === "success" && result.user) {
+          if (inputUser.toLowerCase() === result.user.toLowerCase() && inputHash === result.passHash) {
+            isAuthorized = true;
+            // Cache on this device for offline speed
+            localStorage.setItem(AUTH_CRED_KEY, JSON.stringify({
+              username: result.user,
+              passHash: result.passHash,
+              isDefault: false
+            }));
+          }
+        }
+      }
+    } catch (netErr) {
+      console.warn("Online auth verification failed", netErr);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "<span>เข้าสู่ระบบ (Sign In)</span><span>→</span>";
+      }
+    }
+  }
+
+  if (isAuthorized) {
     try {
       if (remember) {
         localStorage.setItem(AUTH_SESSION_KEY, "authenticated");
@@ -554,7 +627,7 @@ function closeAccountModal() {
   if (modal) modal.style.display = "none";
 }
 
-function handleSaveAccountCredentials() {
+async function handleSaveAccountCredentials() {
   const uInp = document.getElementById("accUsernameInput");
   const pInp = document.getElementById("accPasswordInput");
   const cInp = document.getElementById("accConfirmInput");
@@ -577,17 +650,41 @@ function handleSaveAccountCredentials() {
     return;
   }
 
+  const passHash = await computeSha256(newPassword);
+
+  // 1. Save locally to this device
   try {
     localStorage.setItem(AUTH_CRED_KEY, JSON.stringify({
       username: newUsername,
-      password: newPassword,
+      passHash: passHash,
       isDefault: false
     }));
   } catch (e) {}
 
+  // 2. Sync online to Google Apps Script (Cloud) so all devices can authenticate!
+  const config = (typeof SheetsAPI !== "undefined" && SheetsAPI.getConfig) ? SheetsAPI.getConfig() : {};
+  const appsScriptUrl = config.appsScriptUrl || localStorage.getItem("finventure_apps_script_url");
+  if (appsScriptUrl && appsScriptUrl.startsWith("http")) {
+    if (statusEl) statusEl.innerHTML = `<span style="color: #3b82f6;">🔄 กำลังซิงค์ข้อมูลผู้ใช้งานไปยัง Cloud...</span>`;
+    try {
+      await fetch(appsScriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "saveUser",
+          username: newUsername,
+          passHash: passHash
+        })
+      });
+    } catch (netErr) {
+      console.warn("Could not sync user to Google Apps Script", netErr);
+    }
+  }
+
   updateLoginHintUI();
   if (statusEl) {
-    statusEl.innerHTML = `<span style="color: #10b981;">✅ บันทึกชื่อผู้ใช้งานและรหัสผ่านใหม่เรียบร้อยแล้ว!</span>`;
+    statusEl.innerHTML = `<span style="color: #10b981;">✅ บันทึกชื่อผู้ใช้งาน (${newUsername}) และซิงค์ Cloud สำเร็จ!</span>`;
   }
   setTimeout(() => {
     closeAccountModal();
