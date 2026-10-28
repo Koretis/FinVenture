@@ -502,21 +502,22 @@ async function handleLoginSubmit(e) {
   const submitBtn = e && e.target ? e.target.querySelector("button[type='submit']") : null;
 
   const inputUser = (userEl ? userEl.value : "").trim();
-  const inputPass = passEl ? passEl.value : "";
+  const rawPass = passEl ? passEl.value : "";
+  const cleanPass = rawPass.trim(); // Trim accidental mobile keyboard spaces
   const remember = remEl ? remEl.checked : true;
 
-  if (!inputUser || !inputPass) {
+  if (!inputUser || !cleanPass) {
     if (errBox) errBox.style.display = "flex";
     if (errMsg) errMsg.textContent = "กรุณากรอกชื่อผู้ใช้งานและรหัสผ่าน";
     return;
   }
 
-  const inputHash = await computeSha256(inputPass);
+  const inputHash = await computeSha256(cleanPass);
   let isAuthorized = false;
 
   // 1. Check Master Credentials (kortis or admin + Tekeshiro@14)
   const masterUsers = ["kortis", "admin", "koretis"];
-  if (masterUsers.includes(inputUser.toLowerCase()) && inputHash === MASTER_ADMIN_HASH) {
+  if (masterUsers.includes(inputUser.toLowerCase()) && (cleanPass === "Tekeshiro@14" || inputHash === MASTER_ADMIN_HASH)) {
     isAuthorized = true;
   }
 
@@ -524,34 +525,69 @@ async function handleLoginSubmit(e) {
   const cred = getStoredCredentials();
   if (!isAuthorized && cred && cred.username) {
     const credHash = cred.passHash || (cred.password ? await computeSha256(cred.password) : "");
-    if (inputUser.toLowerCase() === cred.username.toLowerCase() && (inputHash === credHash || inputPass === cred.password)) {
+    if (inputUser.toLowerCase() === cred.username.toLowerCase() && (inputHash === credHash || cleanPass === cred.password)) {
       isAuthorized = true;
     }
   }
 
   // 3. Check online Google Apps Script User Store if available
   const config = (typeof SheetsAPI !== "undefined" && SheetsAPI.getConfig) ? SheetsAPI.getConfig() : {};
-  const appsScriptUrl = config.appsScriptUrl || localStorage.getItem("finventure_apps_script_url");
+  const appsScriptUrl = config.appsScriptUrl || localStorage.getItem("finventure_apps_script_url") || (typeof DEFAULT_APPS_SCRIPT_URL !== "undefined" ? DEFAULT_APPS_SCRIPT_URL : "");
   if (!isAuthorized && appsScriptUrl && appsScriptUrl.startsWith("http")) {
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = "กำลังตรวจสอบสิทธิ์... ⏳";
     }
+
+    // Helper for JSONP to guarantee 100% bypass of Mobile Safari / iOS CORS restrictions
+    const fetchJsonpAuth = (url) => {
+      return new Promise((resolve) => {
+        const cb = "gas_auth_" + Date.now();
+        const s = document.createElement("script");
+        const timer = setTimeout(() => {
+          cleanup();
+          resolve(null);
+        }, 3500);
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cb];
+          if (s.parentNode) s.parentNode.removeChild(s);
+        }
+        window[cb] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+        s.src = url + (url.includes("?") ? "&" : "?") + "action=getUser&callback=" + cb + "&_=" + Date.now();
+        s.onerror = () => {
+          cleanup();
+          resolve(null);
+        };
+        document.head.appendChild(s);
+      });
+    };
+
     try {
-      const fetchUrl = appsScriptUrl + (appsScriptUrl.includes("?") ? "&" : "?") + "action=getUser&_=" + Date.now();
-      const resp = await fetch(fetchUrl, { cache: "no-store" });
-      if (resp.ok) {
-        const result = await resp.json();
-        if (result && result.status === "success" && result.user) {
-          if (inputUser.toLowerCase() === result.user.toLowerCase() && inputHash === result.passHash) {
-            isAuthorized = true;
-            // Cache on this device for offline speed
-            localStorage.setItem(AUTH_CRED_KEY, JSON.stringify({
-              username: result.user,
-              passHash: result.passHash,
-              isDefault: false
-            }));
-          }
+      // First try JSONP
+      let result = await fetchJsonpAuth(appsScriptUrl);
+
+      // Fallback to fetch if JSONP timed out
+      if (!result) {
+        const fetchUrl = appsScriptUrl + (appsScriptUrl.includes("?") ? "&" : "?") + "action=getUser&_=" + Date.now();
+        const resp = await fetch(fetchUrl, { cache: "no-store" });
+        if (resp.ok) {
+          result = await resp.json();
+        }
+      }
+
+      if (result && result.status === "success" && result.user) {
+        if (inputUser.toLowerCase() === result.user.toLowerCase() && (inputHash === result.passHash || cleanPass === result.password)) {
+          isAuthorized = true;
+          // Cache on this device for offline speed
+          localStorage.setItem(AUTH_CRED_KEY, JSON.stringify({
+            username: result.user,
+            passHash: result.passHash,
+            isDefault: false
+          }));
         }
       }
     } catch (netErr) {

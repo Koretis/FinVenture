@@ -1219,21 +1219,31 @@ function copyAppsScriptCode() {
   const code = `function doGet(e) {
   try {
     var params = (e && e.parameter) ? e.parameter : {};
+    var cb = params.callback;
+    var result = { status: "ready", service: "FinVenture API" };
     if (params.action === "getUser") {
       var props = PropertiesService.getScriptProperties();
       var user = props.getProperty("AUTH_USER") || "";
       var passHash = props.getProperty("AUTH_HASH") || "";
-      return ContentService.createTextOutput(JSON.stringify({
+      result = {
         status: "success",
         user: user,
         passHash: passHash
-      })).setMimeType(ContentService.MimeType.JSON);
+      };
     }
-    return ContentService.createTextOutput(JSON.stringify({ status: "ready", service: "FinVenture API" }))
-      .setMimeType(ContentService.MimeType.JSON);
+    var jsonStr = JSON.stringify(result);
+    if (cb) {
+      return ContentService.createTextOutput(cb + "(" + jsonStr + ")")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService.createTextOutput(jsonStr).setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    var errObj = JSON.stringify({ status: "error", message: err.toString() });
+    if (e && e.parameter && e.parameter.callback) {
+      return ContentService.createTextOutput(e.parameter.callback + "(" + errObj + ")")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService.createTextOutput(errObj).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
