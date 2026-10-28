@@ -1722,6 +1722,272 @@
       color: var(--fg-muted);
     }
 
+    /* =====================================================================
+       MOBILE & PORTRAIT RESPONSIVE LAYOUT (Single-Column / No Overflow)
+       ===================================================================== */
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .bento-grid > *,
+    .tile-grid > *,
+    .cf-layout > *,
+    .cf-chart-row > *,
+    .div-ref-layout > *,
+    .div-card-grid > *,
+    .liquidity-grid > *,
+    .roadmap-milestone-grid > *,
+    .discipline-grid > *,
+    .bento-card,
+    .sub-tile,
+    .cf-col {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    /* Tablet & Mobile Landscape (<= 1024px) */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+      .discipline-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+
+    /* Mobile & Portrait Ratio Viewports: Force 1 Box Per Row & Prevent Frame Overflow */
+    @media (max-width: 768px), (max-width: 900px) and (orientation: portrait) {
+      .app-wrap {
+        padding: 10px 12px 100px 12px;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      /* Top Navigation Bar Responsive Wrap */
+      .top-nav {
+        padding: 10px 12px;
+        border-radius: 20px;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .brand-row {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .util-group {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 6px;
+      }
+      .util-group .seg-ctrl {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+      .util-group .seg-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+      .nav-tabs {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px;
+      }
+      .tab-btn {
+        padding: 6px 11px;
+        font-size: 12px;
+      }
+
+      /* All Multi-Column Grids -> Strictly 1 Box Per Row (Single Column) */
+      .bento-grid,
+      .tile-grid,
+      .liquidity-grid,
+      .roadmap-milestone-grid,
+      #roadmapMilestoneCards,
+      .discipline-grid,
+      .cf-layout,
+      .cf-chart-row,
+      .cf-stats,
+      .div-ref-layout,
+      .div-card-grid,
+      #cfRecCatRow {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px !important;
+      }
+
+      /* Card & Sub-Tile Containment (Prevent Inner Boxes From Overflowing Frame) */
+      .bento-card,
+      .div-card-main,
+      .div-target-card,
+      .div-yoc-card {
+        padding: 16px !important;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .sub-tile {
+        padding: 14px !important;
+        min-height: auto;
+        overflow: hidden;
+      }
+
+      /* Hero & Section Headers Inside Cards */
+      .bento-card h1 {
+        font-size: 20px !important;
+      }
+      .bento-card h2 {
+        font-size: 16px !important;
+      }
+      .tile-val {
+        font-size: 21px;
+        word-break: break-word;
+      }
+      .tile-hdr,
+      .tile-ftr,
+      .cf-card-head,
+      .cf-balance-head {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      /* Allow long badges/pills to wrap instead of overflowing the card frame */
+      .pill {
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.35;
+      }
+
+      /* Goal Card (Yellow Electric Lime Card) Responsive Layout */
+      .bento-card.hero-lime > div {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .goal-micro-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      /* Sankey Container Responsive Scaling */
+      #sankeyContainer {
+        height: auto !important;
+        min-height: 150px;
+        overflow: hidden;
+      }
+      #sankeyContainer svg {
+        width: 100% !important;
+        height: auto !important;
+        display: block;
+      }
+
+      /* Cash Flow Balance Card: Fluid 3-Circle Bridge & Full-Width Action Buttons */
+      .cf-balance-body {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 14px;
+      }
+      .cf-circles-wrap {
+        width: 100% !important;
+        max-width: 340px;
+        height: auto !important;
+        aspect-ratio: 364 / 108;
+        margin: 4px auto;
+      }
+      .cf-circle-bridge-svg {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .cf-circles {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .cf-circle {
+        width: 29.67% !important;
+        height: 100% !important;
+        padding: 4px !important;
+        gap: 2px;
+      }
+      .cf-circle-val {
+        font-size: 12px !important;
+      }
+      .cf-circle.active .cf-circle-val,
+      .cf-circle.primary .cf-circle-val,
+      .cf-circle:hover .cf-circle-val {
+        font-size: 12.5px !important;
+      }
+      .cf-circle-lbl {
+        font-size: 9.5px !important;
+        line-height: 1.15;
+      }
+
+      /* Quick Action Buttons: 1 Button Per Row on Mobile Portrait */
+      .cf-balance-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        gap: 10px;
+      }
+      .cf-action-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px 14px;
+      }
+
+      /* Deep Dive Card & Bars */
+      #cfDeepDiveCard {
+        min-height: auto !important;
+      }
+      .cf-bars {
+        gap: 6px;
+      }
+
+      /* Latest Transactions Row on Mobile */
+      .cf-row {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: 8px;
+      }
+      .cf-row-date {
+        font-size: 10px;
+      }
+      .cf-row-amt {
+        font-size: 11.5px;
+      }
+
+      /* Dividends Tab Filter Pills & Gauges */
+      .ref-pill-dropdown {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .ref-pill-select {
+        flex: 1;
+        min-width: 0;
+        text-overflow: ellipsis;
+      }
+
+      /* Modals on Mobile */
+      .modal-overlay {
+        padding: 12px;
+      }
+      .modal-box {
+        padding: 18px 16px;
+        border-radius: 20px;
+        max-height: 92vh;
+      }
+      .modal-actions {
+        flex-wrap: wrap;
+      }
+      .modal-actions button {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+      .login-card {
+        padding: 26px 20px 22px;
+      }
+    }
+
   </style>
 
 </head>
@@ -1962,15 +2228,15 @@
       <!-- Historical Portfolio Growth & Comparison Section (Exact 1.8fr : 1.2fr Bento Layout) -->
       <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr; margin-bottom: 22px;" data-od-id="historical-recap-section">
         
-        <!-- Left Bento Card (1.8fr): Growth trajectory (Total Portfolio Only) -->
+          <!-- Left Bento Card (1.8fr): Growth trajectory (Total Portfolio Only) -->
         <div class="bento-card mint-chart-container" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: nowrap; gap: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 12px;">
             <div>
               <h2 style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin: 0; line-height: 1.2;">Growth trajectory</h2>
               <div style="font-size: 12px; color: var(--mint-subtext); margin-top: 3px;">Statistics overview</div>
             </div>
             
-            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; white-space: nowrap;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; max-width: 100%;">
               <div class="seg-ctrl">
                 <button class="seg-btn active" data-hist-range="ALL">ทั้งหมด (45ด.)</button>
                 <button class="seg-btn" data-hist-range="3Y">3 ปี</button>
@@ -2151,7 +2417,7 @@
 
         <!-- Sankey Flow: Inflow to Outflow/Assets -->
         <div class="bento-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
             <div>
               <h2 style="font-size: 16px; font-weight: 800;">🌊 Sankey Flow: ทิศทางการไหลของกระแสเงินสด</h2>
               <div style="font-size: 11.5px; color: var(--fg-muted);">แหล่งรายได้ (Salary, Bonus, Div) ➔ กระจายลงสู่รายจ่าย & การลงทุนทบต้น</div>
@@ -2168,7 +2434,7 @@
 
       <!-- Executive Liquidity Quick Card -->
       <section class="bento-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
           <div>
             <h2 style="font-size: 16px; font-weight: 800;">🛡️ Executive Liquidity & Emergency Fund</h2>
             <div style="font-size: 12px; color: var(--fg-muted);">สรุปเงินสดสภาพคล่องพร้อมใช้ฉุกเฉิน เทียบเป้าหมายสำรอง 6-12 เดือน</div>
@@ -2176,7 +2442,7 @@
           <span class="pill pill-em">ระดับความปลอดภัย: ปลอดภัยสูงมาก (16.7 เดือน)</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+        <div class="liquidity-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
           <div class="sub-tile white-bg" style="padding: 16px;">
             <div style="font-size: 12px; color: var(--fg-sec);">เงินสดพร้อมใช้ฉุกเฉินรวม</div>
             <div id="heroEmergencyFund" class="tile-val num" style="color: #0284c7; margin-top: 4px;" data-val-thb="710000">฿ 710,000</div>
@@ -2676,7 +2942,7 @@
           <span class="pill pill-lime-neon" style="font-weight: 700;">ปี 2026: KPI Pass ✅ (+฿ 413k)</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;" id="roadmapMilestoneCards">
+        <div class="roadmap-milestone-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;" id="roadmapMilestoneCards">
           <!-- Populated dynamically by FinCharts.renderRoadmapView() -->
         </div>
       </section>
@@ -2690,13 +2956,13 @@
               ข้อมูลแบบเรียลไทม์จำแนกรายปี 2021 – 2039 (อายุ 42 – 60 ปี) จากแท็บ Forecast SET70_US30-V2
             </div>
           </div>
-          <div style="display: flex; gap: 8px; font-size: 11px;">
+          <div style="display: flex; gap: 8px; font-size: 11px; flex-wrap: wrap;">
             <span class="pill pill-em">Pass = ทะลุเป้า</span>
             <span class="pill pill-rose">Fail = ต่ำกว่าเป้า</span>
             <span class="pill pill-muted">Upcoming = แผนในอนาคต</span>
           </div>
         </div>
-        <div style="overflow-x: auto;" id="forecastTableContainer">
+        <div style="overflow-x: auto; max-width: 100%;" id="forecastTableContainer">
           <!-- Populated dynamically by FinCharts.renderRoadmapView() -->
         </div>
       </section>
@@ -2708,7 +2974,7 @@
           เป้าหมายลงทุนมาตรฐาน: <strong>฿ 37,500 / เดือน</strong> (รวมเงินเดือน, โบนัส, คืนภาษี, และ Re-invest)
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+        <div class="discipline-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
           <div class="sub-tile white-bg" style="padding: 14px;">
             <div style="font-size: 11px; color: var(--fg-muted);">🟦 เงินเดือนประจำ (Salary)</div>
             <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">฿ 25,000/ด.</div>
@@ -3010,10 +3276,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=38"></script>
-  <script src="js/sheets-api.js?v=38"></script>
-  <script src="js/charts.js?v=38"></script>
-  <script src="js/cashflow-ui.js?v=38"></script>
-  <script src="js/app.js?v=38"></script>
+  <script src="js/data-store.js?v=39"></script>
+  <script src="js/sheets-api.js?v=39"></script>
+  <script src="js/charts.js?v=39"></script>
+  <script src="js/cashflow-ui.js?v=39"></script>
+  <script src="js/app.js?v=39"></script>
 </body>
 </html>
