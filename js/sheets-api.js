@@ -5,6 +5,7 @@
  */
 
 const DEFAULT_SHEET_ID = "1pAypdXR1g5vZ2FVs4XHpVghKXpsuRUiA4zxMseMrnfM";
+const DEFAULT_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwteoz4m8CNyZlg4MKNPdVVbH-vUoWBNYrGPF10hYDP98xBpI_PltlqV9qiJdfKl0ALOQ/exec";
 
 // Ensure local storage only contains config, not mock test expenses
 try {
@@ -20,8 +21,8 @@ var SheetsAPI = {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (!parsed.sheetId) parsed.sheetId = DEFAULT_SHEET_ID;
-        if (parsed.appsScriptUrl === undefined) {
-          parsed.appsScriptUrl = localStorage.getItem("finventure_apps_script_url") || "";
+        if (!parsed.appsScriptUrl) {
+          parsed.appsScriptUrl = localStorage.getItem("finventure_apps_script_url") || DEFAULT_APPS_SCRIPT_URL;
         }
         return parsed;
       }
@@ -30,7 +31,7 @@ var SheetsAPI = {
     }
     return {
       sheetId: DEFAULT_SHEET_ID,
-      appsScriptUrl: localStorage.getItem("finventure_apps_script_url") || "",
+      appsScriptUrl: localStorage.getItem("finventure_apps_script_url") || DEFAULT_APPS_SCRIPT_URL,
       autoSync: true,
       lastSyncTime: null,
       syncIntervalMin: 15
