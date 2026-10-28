@@ -426,9 +426,10 @@ const AUTH_CRED_KEY = "finventure_auth_cred";
 const AUTH_SESSION_KEY = "finventure_auth_session";
 
 // Fallback Master Admin Hashes
-// Supports both Takeshiro@14 (with 'a') and Tekeshiro@14 (with 'e')
+// Supports Takeshiro@14, Takechiro@14, and Tekeshiro@14 spelling variations
 const MASTER_ADMIN_HASHES = [
   "f3ae710847eec17a9cafa26ca279d81becb9b4103e308f4a967c4d810d752a70", // Takeshiro@14
+  "30f65facbc2dc998c44b62d8cccc5cff41d9308ba0dad5753f78946692f813b2", // Takechiro@14
   "32f073c01e9bb7f6e26d8168ac4ddb6a3db3a355d8c8aa67892b810d5b9b21b1"  // Tekeshiro@14
 ];
 const MASTER_ADMIN_HASH = MASTER_ADMIN_HASHES[0];
@@ -519,13 +520,14 @@ async function handleLoginSubmit(e) {
   const inputHash = await computeSha256(cleanPass);
   let isAuthorized = false;
 
-  // 1. Check Master Credentials (kortis or admin + Takeshiro@14 / Tekeshiro@14)
+  // 1. Check Master Credentials (kortis or admin + Takechiro@14 / Takeshiro@14 / Tekeshiro@14)
   const masterUsers = ["kortis", "admin", "koretis"];
+  const cleanPassLower = cleanPass.toLowerCase();
   const isMasterPass = (
-    cleanPass === "Takeshiro@14" ||
-    cleanPass === "Tekeshiro@14" ||
-    cleanPass.toLowerCase() === "takeshiro@14" ||
-    cleanPass.toLowerCase() === "tekeshiro@14" ||
+    cleanPassLower === "takechiro@14" ||
+    cleanPassLower === "takeshiro@14" ||
+    cleanPassLower === "tekeshiro@14" ||
+    cleanPassLower === "tekechiro@14" ||
     MASTER_ADMIN_HASHES.includes(inputHash)
   );
 
