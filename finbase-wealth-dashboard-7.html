@@ -1,0 +1,1602 @@
+
+<!DOCTYPE html>
+<html lang="th" data-theme="bento">
+<head><script type="application/json" data-od-external-dependencies>["https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"]</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FinBase — Apple Neo-Bento Financial Intelligence Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================================
+       Apple Neo-Bento Design System (Restored from Reference Screenshot)
+       ===================================================================== */
+    :root, [data-theme="bento"] {
+      --bg: #edf4ee;
+      --canvas: #e7f0e9;
+      --surface: #ffffff;
+      --surface-sec: #f2f7f3;
+      --surface-glass: rgba(255, 255, 255, 0.92);
+      
+      /* Screenshot Specific Tones */
+      --surface-mint-card: #e5f0ec;
+      --mint-border: rgba(70, 110, 103, 0.15);
+      --mint-line: #466e67;
+      --mint-line-glow: rgba(70, 110, 103, 0.22);
+      --mint-subtext: #6b8d86;
+      
+      --lime: #d8fd3e;
+      --lime-badge: #d4ff32;
+      --lime-fg: #0f172a;
+      --mint: #d5edd8;
+      
+      /* Capsule Bar Lavender Duo-tone */
+      --lavender: #ece7fd;
+      --lavender-fg: #4338ca;
+      --lavender-bar-bg: #e4ddfc;
+      --lavender-bar-fill: #9b87f5;
+      
+      --sky: #dcf0fd;
+      --sky-fg: #0369a1;
+      --rose: #fee2e2;
+      --rose-fg: #dc2626;
+
+      --dock-bg: #0f172a;
+      --dock-fg: #94a3b8;
+      --dock-active: #d8fd3e;
+
+      --border: rgba(15, 23, 42, 0.06);
+      --border-strong: rgba(15, 23, 42, 0.14);
+      --fg: #0f172a;
+      --fg-sec: #475569;
+      --fg-muted: #64748b;
+
+      --emerald: #10b981;
+      --crimson: #f43f5e;
+      --indigo: #6366f1;
+      --amber: #f59e0b;
+
+      --r-xl: 28px;
+      --r-lg: 20px;
+      --r-md: 14px;
+      --r-pill: 9999px;
+
+      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.03);
+      --shadow-card: 0 10px 30px -4px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(15, 23, 42, 0.02);
+      --shadow-dock: 0 16px 36px -4px rgba(15, 23, 42, 0.4);
+      --shadow-tooltip: 0 8px 24px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0c1117;
+      --canvas: #121822;
+      --surface: #18202c;
+      --surface-sec: #131a24;
+      --surface-glass: rgba(24, 32, 44, 0.92);
+      --surface-mint-card: #13241d;
+      --mint-border: rgba(16, 185, 129, 0.2);
+      --mint-line: #34d399;
+      --mint-line-glow: rgba(52, 211, 153, 0.3);
+      --mint-subtext: #94a3b8;
+
+      --lime: #1e2e18;
+      --lime-badge: #bef264;
+      --lime-fg: #dcf763;
+      --mint: #15291d;
+      --lavender: #231e3d;
+      --lavender-fg: #c4b5fd;
+      --lavender-bar-bg: #2d264f;
+      --lavender-bar-fill: #a78bfa;
+      --sky: #13273c;
+      --sky-fg: #7dd3fc;
+
+      --dock-bg: #1e293b;
+      --dock-fg: #94a3b8;
+      --dock-active: #dcf763;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --fg: #f8fafc;
+      --fg-sec: #94a3b8;
+      --fg-muted: #64748b;
+
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 10px 30px -4px rgba(0, 0, 0, 0.5);
+      --shadow-tooltip: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="blue"] {
+      --bg: #071321;
+      --canvas: #0c1c2e;
+      --surface: #122841;
+      --surface-sec: #0d1e33;
+      --surface-glass: rgba(18, 40, 65, 0.92);
+      --surface-mint-card: #0d273d;
+      --mint-border: rgba(56, 189, 248, 0.25);
+      --mint-line: #38bdf8;
+      --mint-line-glow: rgba(56, 189, 248, 0.35);
+      --mint-subtext: #93c5fd;
+
+      --lime: #0f3938;
+      --lime-badge: #5eead4;
+      --lime-fg: #5eead4;
+      --mint: #113333;
+      --lavender: #232a50;
+      --lavender-fg: #a5b4fc;
+      --lavender-bar-bg: #1d2c52;
+      --lavender-bar-fill: #60a5fa;
+      --sky: #163659;
+      --sky-fg: #bae6fd;
+
+      --dock-bg: #0a1829;
+      --dock-fg: #60a5fa;
+      --dock-active: #38bdf8;
+
+      --border: rgba(56, 189, 248, 0.16);
+      --border-strong: rgba(56, 189, 248, 0.3);
+      --fg: #f0f7ff;
+      --fg-sec: #93c5fd;
+      --fg-muted: #60a5fa;
+
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+      --shadow-card: 0 10px 30px -4px rgba(0, 0, 0, 0.6);
+      --shadow-tooltip: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Noto Sans Thai", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .num {
+      font-family: "JetBrains Mono", -apple-system, monospace;
+      font-feature-settings: "tnum" 1, "zero" 1;
+      letter-spacing: -0.03em;
+    }
+
+    .app-wrap {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 16px 24px 110px 24px;
+    }
+
+    @media (max-width: 768px) {
+      .app-wrap { padding: 12px 14px 100px 14px; }
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+      background: var(--surface-glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-pill);
+      padding: 8px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (max-width: 960px) {
+      .top-nav { flex-wrap: wrap; border-radius: var(--r-lg); }
+    }
+
+    .brand-row { display: flex; align-items: center; gap: 10px; }
+    .brand-badge {
+      width: 32px; height: 32px; border-radius: 10px; background: #0f172a;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--lime); font-weight: 800; font-size: 16px;
+    }
+    .brand-name { font-size: 18px; font-weight: 800; letter-spacing: -0.04em; }
+
+    .sync-tag {
+      display: flex; align-items: center; gap: 6px; padding: 4px 10px;
+      background: var(--surface-sec); border-radius: var(--r-pill);
+      font-size: 11px; font-weight: 600; color: var(--fg-sec);
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Top Tab Navigation */
+    .nav-tabs {
+      display: flex; align-items: center; background: var(--surface-sec);
+      padding: 3px; border-radius: var(--r-pill); gap: 2px; overflow-x: auto;
+    }
+    @media (max-width: 960px) { .nav-tabs { order: 3; width: 100%; margin-top: 4px; } }
+
+    .tab-btn {
+      border: none; background: transparent; color: var(--fg-sec);
+      font-family: inherit; font-size: 12.5px; font-weight: 600;
+      padding: 7px 14px; border-radius: var(--r-pill); cursor: pointer;
+      display: flex; align-items: center; gap: 6px; white-space: nowrap;
+      transition: all 0.18s ease;
+    }
+    .tab-btn:hover { color: var(--fg); }
+    .tab-btn.active {
+      background: var(--surface); color: var(--fg);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08); font-weight: 700;
+    }
+
+    /* Utilities */
+    .util-group { display: flex; align-items: center; gap: 8px; }
+    .seg-ctrl {
+      display: inline-flex; padding: 2px; background: var(--surface-sec);
+      border-radius: var(--r-pill); border: 1px solid var(--border);
+    }
+    .seg-btn {
+      border: none; background: transparent; color: var(--fg-muted);
+      font-size: 11.5px; font-weight: 600; padding: 4px 10px;
+      border-radius: var(--r-pill); cursor: pointer; transition: all 0.15s ease;
+    }
+    .seg-btn.active {
+      background: var(--surface); color: var(--fg); font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid; gap: 18px; margin-bottom: 22px;
+    }
+    .bento-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 24px; position: relative;
+      box-shadow: var(--shadow-card); transition: all 0.2s ease;
+    }
+    .bento-card:hover {
+      border-color: rgba(15, 23, 42, 0.12);
+    }
+
+    /* Screenshot Specialized Card: Mint Container for Stepped Line Chart */
+    .bento-card.mint-chart-container {
+      background: var(--surface-mint-card);
+      border: 1px solid var(--mint-border);
+      color: var(--fg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Screenshot Specialized Card: Electric Lime Hero Card */
+    .bento-card.hero-lime {
+      background: var(--lime); color: #0f172a;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    /* Sub-tiles */
+    .tile-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px;
+    }
+    @media (max-width: 600px) { .tile-grid { grid-template-columns: 1fr; } }
+    .sub-tile {
+      background: var(--surface-sec); border-radius: var(--r-lg);
+      padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 105px; border: 1px solid var(--border);
+    }
+    .sub-tile.mint-bg { background: var(--surface-mint-card); border-color: var(--mint-border); }
+    .sub-tile.white-bg { background: #ffffff; }
+    [data-theme="dark"] .sub-tile.white-bg { background: var(--surface); }
+
+    .tile-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; font-weight: 600; color: var(--fg-sec); margin-bottom: 6px;
+    }
+    .tile-val {
+      font-size: 24px; font-weight: 800; letter-spacing: -0.04em; color: var(--fg);
+    }
+    .tile-ftr {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; margin-top: 8px; color: var(--fg-muted);
+    }
+
+    /* Pills & Badges */
+    .pill {
+      display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+      border-radius: var(--r-pill); font-size: 11.5px; font-weight: 700; white-space: nowrap;
+    }
+    .pill-lime-neon {
+      background: var(--lime-badge);
+      color: #0f172a;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(212, 255, 50, 0.35);
+    }
+    .pill-mint { background: var(--mint); color: #0f172a; }
+    .pill-dark { background: #0f172a; color: #ffffff; }
+    .pill-sky { background: var(--sky); color: var(--sky-fg); }
+    .pill-lav { background: var(--lavender); color: var(--lavender-fg); }
+    .pill-em { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .pill-cr { background: rgba(244, 63, 94, 0.15); color: #f43f5e; }
+
+    /* Buttons */
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: var(--r-md);
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; cursor: pointer; font-size: 16px; font-weight: 700;
+      transition: transform 0.15s ease;
+    }
+    .icon-btn:hover { transform: scale(1.06); }
+    .icon-btn.dark { background: #0f172a; color: #ffffff; }
+    .icon-btn.white { background: #ffffff; color: #0f172a; box-shadow: var(--shadow-sm); }
+
+    /* Circular Gauge (Screenshot signature) */
+    .gauge-wrap {
+      position: relative; width: 110px; height: 110px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gauge-svg { transform: rotate(-90deg); width: 110px; height: 110px; }
+    .gauge-bg { fill: none; stroke: rgba(15, 23, 42, 0.12); stroke-width: 10; }
+    .gauge-bar {
+      fill: none; stroke: #0f172a; stroke-width: 10; stroke-linecap: round;
+      stroke-dasharray: 283; stroke-dashoffset: 82; transition: stroke-dashoffset 1s ease;
+    }
+    .gauge-num {
+      position: absolute; font-size: 20px; font-weight: 800; color: #0f172a;
+    }
+
+    /* Capsule Bar Chart (From Screenshot "Comparison") */
+    .capsule-chart-container {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 30px 10px 10px 10px;
+    }
+
+    .capsule-col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .capsule-bar-outer {
+      width: 100%;
+      max-width: 38px;
+      background: var(--lavender-bar-bg);
+      border-radius: var(--r-pill);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .capsule-col:hover .capsule-bar-outer {
+      transform: scaleY(1.02);
+      filter: brightness(0.96);
+    }
+
+    .capsule-bar-fill {
+      width: 100%;
+      background: var(--lavender-bar-fill);
+      border-radius: var(--r-pill);
+      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .capsule-month-label {
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: var(--fg-muted);
+      font-weight: 500;
+    }
+
+    /* Floating Pill Tooltip (From Screenshot "23k") */
+    .floating-pill-tooltip {
+      position: absolute;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: var(--font-body);
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--r-pill);
+      box-shadow: var(--shadow-tooltip);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+      transform: translate(-50%, -100%);
+      margin-top: -8px;
+      animation: popPill 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popPill {
+      from { opacity: 0; transform: translate(-50%, -85%) scale(0.9); }
+      to { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+    }
+
+    /* Multi-Segmented Traffic Bar (From Screenshot "Traffic Q4 '23") */
+    .traffic-capsule-bar {
+      width: 100%;
+      height: 12px;
+      border-radius: var(--r-pill);
+      background: var(--surface-sec);
+      display: flex;
+      gap: 3px;
+      overflow: hidden;
+      margin: 14px 0 16px 0;
+    }
+
+    .seg-slice {
+      height: 100%;
+      border-radius: var(--r-pill);
+      transition: width 0.5s ease;
+    }
+    .seg-slice.slice-mint { background: #86efac; }
+    .seg-slice.slice-lav { background: #a5b4fc; }
+    .seg-slice.slice-cyan { background: #67e8f9; }
+    .seg-slice.slice-coral { background: #fda4af; }
+
+    /* Tables */
+    .tbl-wrap { overflow-x: auto; border-radius: var(--r-lg); border: 1px solid var(--border); }
+    .bento-tbl { width: 100%; border-collapse: collapse; text-align: left; font-size: 12.5px; background: var(--surface); }
+    .bento-tbl th {
+      background: var(--surface-sec); padding: 11px 16px; font-size: 11px;
+      font-weight: 700; color: var(--fg-sec); text-transform: uppercase; border-bottom: 1px solid var(--border);
+    }
+    .bento-tbl td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .bento-tbl tr:last-child td { border-bottom: none; }
+    .bento-tbl tr:hover td { background: var(--surface-sec); }
+
+    /* Floating Island Dock (Bottom Navigation) */
+    .island-dock {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 999; background: var(--dock-bg); border-radius: var(--r-pill);
+      padding: 6px 10px; display: flex; align-items: center; gap: 6px;
+      box-shadow: var(--shadow-dock); border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .dock-icon {
+      border: none; background: transparent; color: var(--dock-fg);
+      width: 44px; height: 44px; border-radius: var(--r-pill);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; transition: all 0.18s ease; position: relative;
+    }
+    .dock-icon:hover { color: #ffffff; transform: translateY(-2px); }
+    .dock-icon.active { color: var(--dock-active); background: rgba(255, 255, 255, 0.08); }
+    .dock-icon.active::after {
+      content: ''; position: absolute; bottom: 5px; width: 4px; height: 4px;
+      border-radius: 50%; background: var(--dock-active);
+    }
+
+    .tab-view { display: none; }
+    .tab-view.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SVG Interactive Historical Chart Styles */
+    .hist-chart-svg {
+      width: 100%;
+      height: 280px;
+      display: block;
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrap">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" data-od-id="nav-bar">
+      <div class="brand-row">
+        <a href="#" class="brand-row" style="text-decoration: none; color: inherit;" onclick="switchTab('tab-overview'); return false;">
+          <div class="brand-badge">F</div>
+          <span class="brand-name">FinBase</span>
+        </a>
+        <div class="sync-tag">
+          <div class="live-dot"></div>
+          <span id="syncText">Sheets Live Sync</span>
+        </div>
+      </div>
+
+      <!-- 4 Main Tabs -->
+      <nav class="nav-tabs" data-od-id="nav-tabs">
+        <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 ภาพรวม</button>
+        <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 กระแสเงินสด</button>
+        <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 เงินปันผล</button>
+        <button class="tab-btn" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')">🎯 วางแผนเป้าหมาย</button>
+      </nav>
+
+      <!-- Utilities -->
+      <div class="util-group">
+        <div class="seg-ctrl">
+          <button id="curr-thb" class="seg-btn active" onclick="setCurrency('THB')">฿ THB</button>
+          <button id="curr-usd" class="seg-btn" onclick="setCurrency('USD')">$ USD</button>
+        </div>
+        <div class="seg-ctrl">
+          <button id="theme-bento-btn" class="seg-btn active" onclick="setTheme('bento')">🌿 Bento</button>
+          <button id="theme-dark-btn" class="seg-btn" onclick="setTheme('dark')">🌙 Dark</button>
+          <button id="theme-blue-btn" class="seg-btn" onclick="setTheme('blue')">🔷 Blue</button>
+        </div>
+        <button class="icon-btn white" style="width: 34px; height: 34px; font-size: 13px;" onclick="triggerSync()" title="ซิงค์ข้อมูล Google Sheets">🔄</button>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         TAB 1: 🌐 ภาพรวมความมั่งคั่ง (Overview / Net Worth Bento)
+         ===================================================================== -->
+    <main id="tab-overview" class="tab-view active" data-od-id="view-overview">
+      
+      <!-- Top Bento Grid: Fortified Insight + Neon Lime Goal Card -->
+      <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr;" data-od-id="overview-hero">
+        
+        <!-- Left: Fortified Financial Insight with 4 Sub-tiles -->
+        <div class="bento-card" data-od-id="card-hero-insight">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h1 style="font-size: 28px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 6px;">Fortified financial insight</h1>
+              <p style="font-size: 13px; color: var(--fg-sec); max-width: 520px;">
+                ระบบบริหารความมั่งคั่งและวิเคราะห์กระแสเงินสดระดับ Executive เชื่อมต่อ Google Sheets แบบ Real-time
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="icon-btn dark" onclick="switchTab('tab-cashflow')" title="ดูกระแสเงินสด">+</button>
+              <button class="icon-btn white" onclick="switchTab('tab-cashflow')" title="ดูกระแสเงินสด">↗</button>
+            </div>
+          </div>
+
+          <!-- 4 Sub-Tiles (Mint & Clean White like in screenshot) -->
+          <div class="tile-grid">
+            <div class="sub-tile mint-bg">
+              <div class="tile-hdr">
+                <span>ความมั่งคั่งสุทธิ (Net Worth)</span>
+                <span class="pill pill-lime-neon">+1.8% MoM</span>
+              </div>
+              <div class="tile-val num" data-val-thb="7092117">฿ 7,092,117</div>
+              <div class="tile-ftr">
+                <span>สินทรัพย์ 7 กลุ่มหลัก</span>
+                <span class="num text-emerald" style="font-weight: 700; color: #10b981;">+฿ 125,400</span>
+              </div>
+            </div>
+
+            <div class="sub-tile white-bg">
+              <div class="tile-hdr">
+                <span>กำไรสะสมทั้งหมด (Capital Gain)</span>
+                <span class="pill pill-em">+39.9%</span>
+              </div>
+              <div class="tile-val num" style="color: #10b981;" data-val-thb="2027770">+฿ 2,027,770</div>
+              <div class="tile-ftr">
+                <span>เทียบต้นทุนแท้จริง</span>
+                <span class="num" data-val-thb="5064347">฿ 5,064,347 Cost</span>
+              </div>
+            </div>
+
+            <div class="sub-tile white-bg">
+              <div class="tile-hdr">
+                <span>เงินปันผลสะสมทั้งปี (YTD)</span>
+                <span class="pill pill-lav">Yield 5.4%</span>
+              </div>
+              <div class="tile-val num" data-val-thb="385663">฿ 385,663</div>
+              <div class="tile-ftr">
+                <span>เฉลี่ยต่อเดือน</span>
+                <span class="num" data-val-thb="32138">฿ 32,138/ด.</span>
+              </div>
+            </div>
+
+            <div class="sub-tile white-bg">
+              <div class="tile-hdr">
+                <span>รายรับประจำเดือนล่าสุด</span>
+                <span class="pill pill-sky">Inflow</span>
+              </div>
+              <div class="tile-val num" data-val-thb="107056">฿ 107,056</div>
+              <div class="tile-ftr">
+                <span>เงินเดือน + ปันผล</span>
+                <span class="num" style="color: #10b981;">Active + Div</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Neon Lime Accent Hero Card (From Screenshot) -->
+        <div class="bento-card hero-lime" data-od-id="card-hero-lime">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px;">
+            <div>
+              <div style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8;">Distribution & Goal</div>
+              <div style="font-size: 18px; font-weight: 800; margin-top: 2px;">เป้าหมายอิสรภาพการเงิน</div>
+            </div>
+            <button class="icon-btn dark" onclick="switchTab('tab-roadmap')">+</button>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <div>
+              <div style="font-size: 12px; font-weight: 600; opacity: 0.75;">เป้าหมาย Milestone 3</div>
+              <div class="num" style="font-size: 32px; font-weight: 900; line-height: 1.15;" data-val-thb="10000000">฿ 10.0M</div>
+              <div style="font-size: 11.5px; font-weight: 600; margin-top: 4px; opacity: 0.85;">
+                ทะลุเป้าหมายปี 2026 (6.69M) แล้ว! 🚀
+              </div>
+            </div>
+
+            <div class="gauge-wrap">
+              <svg class="gauge-svg" viewBox="0 0 100 100">
+                <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+                <circle class="gauge-bar" cx="50" cy="50" r="45"></circle>
+              </svg>
+              <div class="gauge-num num">70.9%</div>
+            </div>
+          </div>
+
+          <!-- Bottom Micro Bar in Lime Card -->
+          <div style="background: rgba(0, 0, 0, 0.07); border-radius: var(--r-md); padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 10.5px; font-weight: 600; opacity: 0.7;">อัตราการออมต่อเดือน</div>
+              <div class="num" style="font-size: 15px; font-weight: 800;">45.2%</div>
+            </div>
+            <div style="height: 20px; width: 1px; background: rgba(0, 0, 0, 0.1);"></div>
+            <div>
+              <div style="font-size: 10.5px; font-weight: 600; opacity: 0.7;">กองทุนฉุกเฉิน</div>
+              <div class="num" style="font-size: 15px; font-weight: 800;">12.4 เดือน</div>
+            </div>
+            <div style="height: 20px; width: 1px; background: rgba(0, 0, 0, 0.1);"></div>
+            <button class="icon-btn dark" style="width: 28px; height: 28px; font-size: 12px;" onclick="switchTab('tab-roadmap')">→</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =====================================================================
+           🔥 SCREENSHOT FEATURE 1: Historical Portfolio Growth in Mint Container
+           ===================================================================== -->
+      <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr;" data-od-id="historical-recap-section">
+        
+        <!-- Left: Pale Mint Card with Stepped / Organic Sage-Teal Line Chart -->
+        <div class="bento-card mint-chart-container" data-od-id="card-historical-mint">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+            <div>
+              <h2 style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em;">Weekly recap & Growth</h2>
+              <div style="font-size: 12.5px; color: var(--mint-subtext); margin-top: 2px;">
+                Statistics overview • ข้อมูลประวัติศาสตร์ย้อนหลังพอร์ตจริง (2022 - 2026)
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="seg-ctrl" style="background: rgba(255,255,255,0.7);">
+                <button class="seg-btn active" onclick="setHistRange('ALL', this)">ทั้งหมด</button>
+                <button class="seg-btn" onclick="setHistRange('3Y', this)">3 ปี</button>
+                <button class="seg-btn" onclick="setHistRange('1Y', this)">1 ปี</button>
+              </div>
+              <div class="seg-ctrl" style="background: rgba(255,255,255,0.7);">
+                <button class="seg-btn active" id="btnModeSmooth" onclick="setHistCurve('smooth')">Smooth</button>
+                <button class="seg-btn" id="btnModeStepped" onclick="setHistCurve('stepped')">Stepped</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI & Neon Lime Pill Badge directly from Screenshot -->
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px;">
+            <span class="pill pill-lime-neon">+25.8% Gain</span>
+            <span class="tile-val num" style="font-size: 34px;" data-val-thb="7092117">฿ 7,092,117</span>
+            <span style="font-size: 12px; color: var(--mint-subtext); font-weight: 600;">Approved portfolio value</span>
+          </div>
+
+          <!-- Interactive SVG Line Chart Container -->
+          <div style="position: relative; width: 100%; height: 210px;" id="histSvgWrapper">
+            <svg class="hist-chart-svg" id="histSvg" viewBox="0 0 800 210" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="mintGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#466e67" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#466e67" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <g id="histGridLines"></g>
+              <path id="histAreaPath" fill="url(#mintGrad)"/>
+              <path id="histCostLine" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4,4"/>
+              <path id="histForecastLine" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5,3"/>
+              <path id="histMarketLine" fill="none" stroke="var(--mint-line)" stroke-width="2.8"/>
+              
+              <!-- Cursor line & dots -->
+              <line id="histCursorLine" x1="0" y1="0" x2="0" y2="210" stroke="#466e67" stroke-width="1.5" stroke-dasharray="3,3" style="display:none;"/>
+              <circle id="histMarketDot" r="5" fill="#466e67" stroke="#ffffff" stroke-width="2" style="display:none;"/>
+            </svg>
+
+            <!-- Floating Tooltip for Line Chart -->
+            <div id="histTooltip" class="floating-pill-tooltip" style="display: none;">
+              <span id="histTtLabel">ก.ย. 2026</span>: <span id="histTtVal">฿ 7,092,117</span>
+            </div>
+          </div>
+
+          <!-- Bottom Legend & Cost Comparison -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11.5px; color: var(--mint-subtext); border-top: 1px solid var(--mint-border); padding-top: 8px;">
+            <div style="display: flex; gap: 14px;">
+              <span><strong style="color: var(--mint-line);">—</strong> มูลค่าตลาด (Market Value)</span>
+              <span><strong style="color: #94a3b8;">┄</strong> เงินต้นทุนแท้จริง ฿5.06M</span>
+              <span><strong style="color: #818cf8;">┅</strong> เส้นพยากรณ์เป้าหมาย</span>
+            </div>
+            <div class="num font-bold" style="color: var(--fg);">กำไรสะสม +฿ 2,027,770</div>
+          </div>
+        </div>
+
+        <!-- Right: Duo-tone Lavender Capsule Bar Chart ("Comparison" in Screenshot) -->
+        <div class="bento-card" data-od-id="card-comparison-lavender">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+            <div>
+              <h2 style="font-size: 17px; font-weight: 800; letter-spacing: -0.02em;">Comparison</h2>
+              <div style="font-size: 12px; color: var(--fg-muted);">Amount of cash flow & net expenses</div>
+            </div>
+            <span class="pill pill-lav">6 Months</span>
+          </div>
+
+          <!-- Capsule Bar Chart -->
+          <div class="capsule-chart-container" id="capsuleChart">
+            <!-- 8 Capsule Bars: Feb, Mar, Apr, May, Jun, Jul, Aug, Sep -->
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 78k (ก.พ.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 120px;">
+                <div class="capsule-bar-fill" style="height: 48px;"></div>
+              </div>
+              <span class="capsule-month-label">Feb</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 92k (มี.ค.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 145px;">
+                <div class="capsule-bar-fill" style="height: 60px;"></div>
+              </div>
+              <span class="capsule-month-label">Mar</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 105k (เม.ย.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 160px;">
+                <div class="capsule-bar-fill" style="height: 72px;"></div>
+              </div>
+              <span class="capsule-month-label">Apr</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 98k (พ.ค.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 130px;">
+                <div class="capsule-bar-fill" style="height: 52px;"></div>
+              </div>
+              <span class="capsule-month-label">May</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 110k (มิ.ย.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 165px;">
+                <div class="capsule-bar-fill" style="height: 78px;"></div>
+              </div>
+              <span class="capsule-month-label">Jun</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 102k (ก.ค.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 140px;">
+                <div class="capsule-bar-fill" style="height: 65px;"></div>
+              </div>
+              <span class="capsule-month-label">Jul</span>
+            </div>
+
+            <div class="capsule-col" onmouseenter="showCapsuleTooltip(this, '฿ 104k (ส.ค.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="capsule-bar-outer" style="height: 150px;">
+                <div class="capsule-bar-fill" style="height: 70px;"></div>
+              </div>
+              <span class="capsule-month-label">Aug</span>
+            </div>
+
+            <!-- Active Featured Capsule with Tooltip -->
+            <div class="capsule-col active-capsule" onmouseenter="showCapsuleTooltip(this, '฿ 107k (ก.ย.)')" onmouseleave="hideCapsuleTooltip()">
+              <div class="floating-pill-tooltip" id="capsuleStaticTip" style="bottom: 175px; left: 50%;">฿ 107k</div>
+              <div class="capsule-bar-outer" style="height: 170px;">
+                <div class="capsule-bar-fill" style="height: 85px;"></div>
+              </div>
+              <span class="capsule-month-label" style="font-weight: 700; color: var(--fg);">Sep</span>
+            </div>
+          </div>
+
+          <!-- Multi-Segmented Traffic Bar (From Screenshot "Traffic Q4 '23") -->
+          <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div>
+                <span style="font-size: 13px; font-weight: 700;">Traffic & Allocation</span>
+                <span style="font-size: 11px; color: var(--fg-muted); margin-left: 6px;">Source on stats</span>
+              </div>
+              <span class="num font-bold" style="font-size: 11.5px;">Q4 • 2026</span>
+            </div>
+            
+            <div class="traffic-capsule-bar">
+              <div class="seg-slice slice-mint" style="width: 46%;" title="SET Stocks 46%"></div>
+              <div class="seg-slice slice-lav" style="width: 28%;" title="US Stocks 28%"></div>
+              <div class="seg-slice slice-cyan" style="width: 16%;" title="Cash & Savings 16%"></div>
+              <div class="seg-slice slice-coral" style="width: 10%;" title="Other Assets 10%"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--fg-muted);">
+              <span>● หุ้นไทย 46%</span>
+              <span>● หุ้นสหรัฐ 28%</span>
+              <span>● สภาพคล่อง 16%</span>
+              <span>● สินทรัพย์อื่น 10%</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Middle Bento Grid: 7-Group Asset Allocation & Executive Liquidity -->
+      <section class="bento-grid" style="grid-template-columns: 1.2fr 1.8fr;" data-od-id="overview-allocation">
+        
+        <!-- Asset Donut & 7 Groups -->
+        <div class="bento-card" data-od-id="card-allocation">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <div style="font-weight: 700; font-size: 15px;">🥧 สัดส่วนการกระจายสินทรัพย์</div>
+              <div style="font-size: 11.5px; color: var(--fg-muted);">7 กลุ่มสินทรัพย์หลักในพอร์ต</div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>🇹🇭 หุ้นไทย (SET)</span>
+                <span class="num font-bold">27.5% (฿1,950,332)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 27.5%; height: 100%; background: #10b981; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>🇺🇸 หุ้นสหรัฐ (US - Dime)</span>
+                <span class="num font-bold">32.3% (฿2,290,704)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 32.3%; height: 100%; background: #6366f1; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>🏢 กองทุนสำรองเลี้ยงชีพ (PVD)</span>
+                <span class="num font-bold">14.3% (฿1,014,233)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 14.3%; height: 100%; background: #0284c7; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>💵 เงินสด & ฝากดอกเบี้ยสูง (Saving-ME)</span>
+                <span class="num font-bold">10.0% (฿710,000)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 10.0%; height: 100%; background: #38bdf8; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>🪙 ทองคำ (Gold)</span>
+                <span class="num font-bold">8.0% (฿567,369)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 8.0%; height: 100%; background: #f59e0b; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>🛡️ ประกันชีวิตสะสมทรัพย์ (Insurance)</span>
+                <span class="num font-bold">5.0% (฿354,605)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 5.0%; height: 100%; background: #ec4899; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                <span>⚡ สินทรัพย์ดิจิทัล (Crypto)</span>
+                <span class="num font-bold">2.9% (฿204,874)</span>
+              </div>
+              <div style="height: 7px; background: var(--surface-sec); border-radius: var(--r-pill); overflow: hidden;">
+                <div style="width: 2.9%; height: 100%; background: #a855f7; border-radius: var(--r-pill);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Executive Liquidity Quick Card -->
+        <div class="bento-card" data-od-id="card-liquidity">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <div style="font-weight: 700; font-size: 15px;">🛡️ Executive Liquidity & Emergency Fund</div>
+              <div style="font-size: 11.5px; color: var(--fg-muted);">สรุปสภาพคล่องพร้อมใช้ฉุกเฉิน เทียบเป้าหมายสำรอง 6-12 เดือน</div>
+            </div>
+            <span class="pill pill-em">ระดับสูงสุด 157%</span>
+          </div>
+
+          <div style="background: var(--surface-sec); border-radius: var(--r-lg); padding: 18px; margin-bottom: 14px;">
+            <div style="font-size: 12px; color: var(--fg-sec);">เงินสำรองฉุกเฉินพร้อมใช้ (Emergency Fund)</div>
+            <div class="num" style="font-size: 32px; font-weight: 800; color: #0284c7; margin: 4px 0;" data-val-thb="710000">฿ 710,000</div>
+            <div style="font-size: 12px; color: var(--fg-muted);">
+              ครอบคลุมรายจ่ายกินเปล่าได้ <strong>16.7 เดือน</strong> (เป้าหมายมาตรฐาน 6-12 เดือน)
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="sub-tile white-bg" style="min-height: 80px; padding: 12px;">
+              <div style="font-size: 11px; color: var(--fg-muted);">เงินสดพร้อมใช้ (Cash)</div>
+              <div class="num font-bold" style="font-size: 18px; margin-top: 4px;" data-val-thb="150000">฿ 150,000</div>
+            </div>
+            <div class="sub-tile white-bg" style="min-height: 80px; padding: 12px;">
+              <div style="font-size: 11px; color: var(--fg-muted);">ฝากดอกเบี้ยสูง (Saving-ME)</div>
+              <div class="num font-bold" style="font-size: 18px; margin-top: 4px; color: #0284c7;" data-val-thb="560000">฿ 560,000</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; font-size: 11.5px; color: var(--fg-sec); line-height: 1.6;">
+            💡 <strong>Executive Takeaway:</strong> สภาพคล่องอยู่ในเกณฑ์ปลอดภัยสูงมาก สามารถนำเงินปันผลที่ได้รับเดือนละ ฿32k ไป Re-invest ทบต้นได้ 100% เต็มโดยไม่ต้องกังวลเรื่องเงินหมุนเวียน
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- =====================================================================
+         TAB 2: 💵 กระแสเงินสด & รายรับ-รายจ่าย (Cash Flow & Expenses)
+         ===================================================================== -->
+    <main id="tab-cashflow" class="tab-view" data-od-id="view-cashflow">
+      <!-- 4 Cards Strip -->
+      <section class="tile-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 20px;">
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>เงินสดคงเหลือปัจจุบัน</span><span class="pill pill-sky">Cash</span></div>
+          <div class="tile-val num" data-val-thb="710000">฿ 710,000</div>
+          <div class="tile-ftr"><span>Cash + Saving-ME</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>รายรับล่าสุดประจำเดือน</span><span class="pill pill-em">Inflow</span></div>
+          <div class="tile-val num" style="color: #10b981;" data-val-thb="107056">฿ 107,056</div>
+          <div class="tile-ftr"><span>เงินเดือน + ปันผล</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>รวมรายจ่ายสุทธิ</span><span class="pill pill-cr">Expenses</span></div>
+          <div class="tile-val num" style="color: #f43f5e;" data-val-thb="42350">฿ 42,350</div>
+          <div class="tile-ftr"><span>ตัด PVD และประกันออก</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>เงินลงทุนสะสมประจำปี</span><span class="pill pill-lav">Invest</span></div>
+          <div class="tile-val num" style="color: #6366f1;" data-val-thb="375000">฿ 375,000</div>
+          <div class="tile-ftr"><span>อัตราลงทุน 48.5%</span></div>
+        </div>
+      </section>
+
+      <!-- Cash Flow Analysis Chart in Bento Card -->
+      <section class="bento-card" style="margin-bottom: 20px;" data-od-id="card-cashflow-bars">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 17px; font-weight: 800;">เปรียบเทียบกระแสเงินสดรายเดือน 3 แท่ง</h2>
+            <div style="font-size: 12px; color: var(--fg-muted);">🟩 รายรับรวม (Income) vs 🟥 รวมรายจ่ายสุทธิ (Net Expense) vs 🟪 เงินลงทุนรวม (Total Invest)</div>
+          </div>
+          <div class="seg-ctrl">
+            <button class="seg-btn active">ปี 2026</button>
+            <button class="seg-btn">ปี 2025</button>
+            <button class="seg-btn">ย้อนหลัง 6 เดือน</button>
+          </div>
+        </div>
+
+        <!-- 3-Bar Chart Visualizer -->
+        <div style="height: 240px; position: relative;">
+          <svg width="100%" height="100%" viewBox="0 0 900 220" preserveAspectRatio="none">
+            <!-- 6 Months: Apr, May, Jun, Jul, Aug, Sep -->
+            <g transform="translate(60, 20)">
+              <rect x="0" y="30" width="24" height="150" rx="6" fill="#10b981"/>
+              <rect x="28" y="115" width="24" height="65" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="95" width="24" height="85" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg-muted)" font-size="12" text-anchor="middle">เม.ย.</text>
+            </g>
+            <g transform="translate(200, 20)">
+              <rect x="0" y="25" width="24" height="155" rx="6" fill="#10b981"/>
+              <rect x="28" y="110" width="24" height="70" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="90" width="24" height="90" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg-muted)" font-size="12" text-anchor="middle">พ.ค.</text>
+            </g>
+            <g transform="translate(340, 20)">
+              <rect x="0" y="15" width="24" height="165" rx="6" fill="#10b981"/>
+              <rect x="28" y="125" width="24" height="55" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="75" width="24" height="105" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg-muted)" font-size="12" text-anchor="middle">มิ.ย.</text>
+            </g>
+            <g transform="translate(480, 20)">
+              <rect x="0" y="20" width="24" height="160" rx="6" fill="#10b981"/>
+              <rect x="28" y="120" width="24" height="60" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="85" width="24" height="95" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg-muted)" font-size="12" text-anchor="middle">ก.ค.</text>
+            </g>
+            <g transform="translate(620, 20)">
+              <rect x="0" y="10" width="24" height="170" rx="6" fill="#10b981"/>
+              <rect x="28" y="112" width="24" height="68" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="78" width="24" height="102" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg-muted)" font-size="12" text-anchor="middle">ส.ค.</text>
+            </g>
+            <g transform="translate(760, 20)">
+              <rect x="0" y="5" width="24" height="175" rx="6" fill="#10b981"/>
+              <rect x="28" y="118" width="24" height="62" rx="6" fill="#f43f5e"/>
+              <rect x="56" y="70" width="24" height="110" rx="6" fill="#818cf8"/>
+              <text x="40" y="200" fill="var(--fg)" font-weight="700" font-size="12" text-anchor="middle">ก.ย. (สด)</text>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Category Deep Dive (10 หมวดหมู่) -->
+      <section class="bento-card" data-od-id="card-category-deepdive">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 17px; font-weight: 800;">ระบบเจาะลึกรายจ่ายรายหมวดหมู่ (Category Deep Dive)</h2>
+            <div style="font-size: 12px; color: var(--fg-muted);">เลือกดู 10 หมวดหมู่หลักแบบกราฟเส้นประวัติศาสตร์และกราฟสัดส่วน</div>
+          </div>
+          <select class="bento-select">
+            <option>🍔 1. อาหารและของกิน (Food & 7-Eleven)</option>
+            <option>🚗 2. การเดินทาง (BTS/MRT, Taxi, น้ำมัน, ทางด่วน)</option>
+            <option>🏢 3. ที่พักอาศัย & คอนโด (ผ่อนคอนโด, น้ำไฟ)</option>
+            <option>🛍️ 4. ช้อปปิ้ง & ไลฟ์สไตล์</option>
+            <option>💻 5. อุปกรณ์ไอที & อิเล็กทรอนิกส์</option>
+            <option>✈️ 6. ท่องเที่ยว & บันเทิง</option>
+            <option>🏥 7. สุขภาพ & ประกันภัย</option>
+            <option>👨👩👧 8. ครอบครัว & ภาระผูกพัน</option>
+            <option>📊 9. ภาพรวมรายจ่าย (Fixed vs Variable)</option>
+            <option selected>🌐 10. รวม 8 กลุ่มรายจ่ายหลัก</option>
+          </select>
+        </div>
+
+        <div class="tile-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="sub-tile white-bg">
+            <div class="tile-hdr"><span>ยอดรวมช่วงที่เลือก</span></div>
+            <div class="tile-val num" style="color: #f43f5e;" data-val-thb="42350">฿ 42,350</div>
+            <div class="tile-ftr"><span>เดือน ก.ย. ล่าสุด</span></div>
+          </div>
+          <div class="sub-tile white-bg">
+            <div class="tile-hdr"><span>เฉลี่ยต่อเดือนของปี</span></div>
+            <div class="tile-val num" data-val-thb="43120">฿ 43,120</div>
+            <div class="tile-ftr"><span>ปี 2026</span></div>
+          </div>
+          <div class="sub-tile white-bg">
+            <div class="tile-hdr"><span>สัดส่วนในรายจ่ายรวม</span></div>
+            <div class="tile-val num">100%</div>
+            <div class="tile-ftr"><span>Net Expenses</span></div>
+          </div>
+          <div class="sub-tile white-bg">
+            <div class="tile-hdr"><span>เดือนสูงสุด (Peak)</span></div>
+            <div class="tile-val num" style="font-size: 20px;">พ.ค. (฿46.2k)</div>
+            <div class="tile-ftr"><span>ทริปต่างประเทศ</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================================
+         TAB 3: 💰 เงินปันผล & ดอกเบี้ย (Dividends & Passive Income)
+         ===================================================================== -->
+    <main id="tab-dividends" class="tab-view" data-od-id="view-dividends">
+      <section class="tile-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 20px;">
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>เงินปันผลสะสมทั้งปี (YTD)</span><span class="pill pill-em">Received</span></div>
+          <div class="tile-val num" style="color: #f59e0b;" data-val-thb="385663">฿ 385,663</div>
+          <div class="tile-ftr"><span>เข้าบัญชีเรียบร้อย</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>เฉลี่ยต่อเดือน</span><span class="pill pill-lav">Monthly</span></div>
+          <div class="tile-val num" data-val-thb="32138">฿ 32,138</div>
+          <div class="tile-ftr"><span>ครอบคลุม 75% ค่าใช้จ่าย</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>คาดการณ์ปันผลทั้งปี</span><span class="pill pill-sky">Target</span></div>
+          <div class="tile-val num" style="color: #10b981;" data-val-thb="450000">฿ 450,000</div>
+          <div class="tile-ftr"><span>เหลือ ฿64,337 ใน Q4</span></div>
+        </div>
+        <div class="sub-tile white-bg">
+          <div class="tile-hdr"><span>Yield on Cost (YoC)</span><span class="pill pill-lime-neon">7.62%</span></div>
+          <div class="tile-val num" style="color: #0284c7;">7.62%</div>
+          <div class="tile-ftr"><span>เทียบเงินต้นทุนจริง</span></div>
+        </div>
+      </section>
+
+      <!-- Monthly Dividend Inflow Timeline Chart -->
+      <section class="bento-card" style="margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 17px; font-weight: 800;">ประวัติการรับเงินปันผลรายเดือน (Monthly Dividend Inflow)</h2>
+            <div style="font-size: 12px; color: var(--fg-muted);">เปรียบเทียบกระแสเงินปันผลย้อนหลัง Peak ในเดือน เม.ย. และ ก.ย.</div>
+          </div>
+          <span class="pill pill-lime-neon">High Yield Months</span>
+        </div>
+
+        <div style="height: 180px; display: flex; align-items: flex-end; gap: 14px; padding: 20px 0 10px 0;">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿12k</div>
+            <div style="width: 100%; height: 35px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">ม.ค.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿18k</div>
+            <div style="width: 100%; height: 50px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">ก.พ.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿35k</div>
+            <div style="width: 100%; height: 90px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">มี.ค.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px; color: #10b981;">฿68k</div>
+            <div style="width: 100%; height: 140px; background: #10b981; border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg); font-weight: 700;">เม.ย.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿22k</div>
+            <div style="width: 100%; height: 60px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">พ.ค.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿19k</div>
+            <div style="width: 100%; height: 55px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">มิ.ย.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿24k</div>
+            <div style="width: 100%; height: 65px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">ก.ค.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px;">฿38k</div>
+            <div style="width: 100%; height: 95px; background: var(--lavender-bar-fill); border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg-muted);">ส.ค.</span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="num font-bold" style="font-size: 11px; color: #10b981;">฿72k</div>
+            <div style="width: 100%; height: 150px; background: #10b981; border-radius: 6px;"></div>
+            <span style="font-size: 11px; color: var(--fg); font-weight: 700;">ก.ย.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dividend History Table -->
+      <section class="bento-card">
+        <h2 style="font-size: 16px; font-weight: 800; margin-bottom: 14px;">ประวัติการรับเงินปันผลล่าสุด (Payment History)</h2>
+        <div class="tbl-wrap">
+          <table class="bento-tbl">
+            <thead>
+              <tr>
+                <th>วันที่จ่าย</th>
+                <th>หุ้น/สินทรัพย์</th>
+                <th>ตลาด</th>
+                <th>ปันผลต่อหุ้น</th>
+                <th>หัก ณ ที่จ่าย (10%)</th>
+                <th>ยอดสุทธิเข้าบัญชี</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num">2026-09-18</td>
+                <td><strong>BDMS</strong></td>
+                <td><span class="pill pill-em">SET</span></td>
+                <td class="num">฿0.35</td>
+                <td class="num">฿875</td>
+                <td class="num font-bold" style="color: #10b981;">฿ 7,875</td>
+              </tr>
+              <tr>
+                <td class="num">2026-09-12</td>
+                <td><strong>AAPL</strong></td>
+                <td><span class="pill pill-lav">US</span></td>
+                <td class="num">$0.25</td>
+                <td class="num">$3.00</td>
+                <td class="num font-bold" style="color: #10b981;">$ 27.00 (฿961)</td>
+              </tr>
+              <tr>
+                <td class="num">2026-08-28</td>
+                <td><strong>PTT</strong></td>
+                <td><span class="pill pill-em">SET</span></td>
+                <td class="num">฿0.80</td>
+                <td class="num">฿1,200</td>
+                <td class="num font-bold" style="color: #10b981;">฿ 10,800</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================================
+         TAB 5: 🎯 วางแผนเป้าหมาย & วินัยการลงทุน (Discipline & Roadmap)
+         ===================================================================== -->
+    <main id="tab-roadmap" class="tab-view" data-od-id="view-roadmap">
+      
+      <!-- Milestone Progress Tracker -->
+      <section class="bento-card" style="margin-bottom: 20px;">
+        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">เส้นทางสู่อิสรภาพทางการเงิน (Wealth Roadmap Milestones)</h2>
+        <div style="font-size: 12px; color: var(--fg-muted); margin-bottom: 20px;">
+          เปรียบเทียบระดับความมั่งคั่ง 4 ขั้นบันไดสู่ Financial Freedom
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+          <div class="sub-tile white-bg" style="border-color: #10b981;">
+            <div class="tile-hdr"><span>Milestone 1</span><span class="pill pill-em">Achieved ✅</span></div>
+            <div class="tile-val num" data-val-thb="5000000">฿ 5.0M</div>
+            <div class="tile-ftr"><span>สำเร็จแล้วเมื่อปี 2024</span></div>
+          </div>
+          <div class="sub-tile white-bg" style="border-color: #10b981;">
+            <div class="tile-hdr"><span>Milestone 2</span><span class="pill pill-em">Achieved ✅</span></div>
+            <div class="tile-val num" data-val-thb="7000000">฿ 7.0M</div>
+            <div class="tile-ftr"><span>สำเร็จ ก.ย. 2026 (7.09M)</span></div>
+          </div>
+          <div class="sub-tile mint-bg">
+            <div class="tile-hdr"><span>Milestone 3</span><span class="pill pill-lime-neon">70.9% ⏳</span></div>
+            <div class="tile-val num" style="color: var(--fg);" data-val-thb="10000000">฿ 10.0M</div>
+            <div class="tile-ftr"><span>เป้าหมายปี 2028</span></div>
+          </div>
+          <div class="sub-tile white-bg">
+            <div class="tile-hdr"><span>Milestone 4</span><span class="pill pill-sky">Ultimate 🚀</span></div>
+            <div class="tile-val num" data-val-thb="15000000">฿ 15.0M</div>
+            <div class="tile-ftr"><span>Financial Freedom</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Investment Discipline & Sources Breakdown -->
+      <section class="bento-card">
+        <h2 style="font-size: 17px; font-weight: 800; margin-bottom: 6px;">วินัยการออมและแหล่งที่มาเงินลงทุน (Investment Sources)</h2>
+        <div style="font-size: 12px; color: var(--fg-muted); margin-bottom: 16px;">
+          เป้าหมายลงทุนมาตรฐาน: <strong>฿ 37,500 / เดือน</strong> (รวมเงินเดือน, โบนัส, คืนภาษี, และ Re-invest)
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+          <div class="sub-tile white-bg" style="padding: 12px;">
+            <div style="font-size: 11px; color: var(--fg-muted);">🟦 เงินเดือนประจำ</div>
+            <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">฿ 25,000/ด.</div>
+            <div style="font-size: 10px; color: var(--fg-sec); margin-top: 4px;">DCA สม่ำเสมอ</div>
+          </div>
+          <div class="sub-tile white-bg" style="padding: 12px;">
+            <div style="font-size: 11px; color: var(--fg-muted);">🟨 โบนัสประจำปี</div>
+            <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">฿ 120,000/ปี</div>
+            <div style="font-size: 10px; color: var(--fg-sec); margin-top: 4px;">ออม 60% ของโบนัส</div>
+          </div>
+          <div class="sub-tile white-bg" style="padding: 12px;">
+            <div style="font-size: 11px; color: var(--fg-muted);">🟩 ขอคืนภาษี</div>
+            <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">฿ 45,000/ปี</div>
+            <div style="font-size: 10px; color: var(--fg-sec); margin-top: 4px;">นำกลับมาทบต้น</div>
+          </div>
+          <div class="sub-tile white-bg" style="padding: 12px;">
+            <div style="font-size: 11px; color: var(--fg-muted);">🟪 ปันผล Re-invest</div>
+            <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">฿ 385,663/ปี</div>
+            <div style="font-size: 10px; color: var(--fg-sec); margin-top: 4px;">พลังดอกเบี้ยทบต้น</div>
+          </div>
+          <div class="sub-tile white-bg" style="padding: 12px;">
+            <div style="font-size: 11px; color: var(--fg-muted);">🔴 ปรับพอร์ต Rebalance</div>
+            <div class="num font-bold" style="font-size: 17px; margin-top: 4px;">อัตโนมัติ</div>
+            <div style="font-size: 10px; color: var(--fg-sec); margin-top: 4px;">ปีละ 2 ครั้ง</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =====================================================================
+       Floating Island Dock (Apple VisionOS / macOS Style Bottom Nav)
+       ===================================================================== -->
+  <nav class="island-dock" data-od-id="island-dock">
+    <button class="dock-icon active" data-tab="tab-overview" onclick="switchTab('tab-overview')" title="ภาพรวมความมั่งคั่ง">🌐</button>
+    <button class="dock-icon" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')" title="กระแสเงินสด & ค่าใช้จ่าย">💵</button>
+    <button class="dock-icon" data-tab="tab-dividends" onclick="switchTab('tab-dividends')" title="เงินปันผล & ดอกเบี้ย">💰</button>
+    <button class="dock-icon" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')" title="เป้าหมาย & วินัยการออม">🎯</button>
+  </nav>
+
+  <!-- =====================================================================
+       Application Core Script
+       ===================================================================== -->
+  <script>
+    const USD_RATE = 35.5;
+    let currentCurrency = 'THB';
+    let histRange = 'ALL';
+    let histCurve = 'smooth';
+
+    // Historical dataset 2022 to 2026
+    const historicalData = [
+      { date: '2022-01', label: 'ม.ค. 2022', cost: 1200000, market: 1250000, forecast: null },
+      { date: '2022-04', label: 'เม.ย. 2022', cost: 1450000, market: 1420000, forecast: null },
+      { date: '2022-07', label: 'ก.ค. 2022', cost: 1800000, market: 1910000, forecast: null },
+      { date: '2022-10', label: 'ต.ค. 2022', cost: 2100000, market: 2280000, forecast: null },
+      { date: '2023-01', label: 'ม.ค. 2023', cost: 2500000, market: 2790000, forecast: null },
+      { date: '2023-04', label: 'เม.ย. 2023', cost: 2850000, market: 3200000, forecast: null },
+      { date: '2023-07', label: 'ก.ค. 2023', cost: 3200000, market: 3650000, forecast: null },
+      { date: '2023-10', label: 'ต.ค. 2023', cost: 3600000, market: 4120000, forecast: null },
+      { date: '2024-01', label: 'ม.ค. 2024', cost: 3950000, market: 4680000, forecast: 4600000 },
+      { date: '2024-04', label: 'เม.ย. 2024', cost: 4250000, market: 5040000, forecast: 4950000 },
+      { date: '2024-07', label: 'ก.ค. 2024', cost: 4420000, market: 5280000, forecast: 5150000 },
+      { date: '2024-10', label: 'ต.ค. 2024', cost: 4560000, market: 5490000, forecast: 5310000 },
+      { date: '2025-01', label: 'ม.ค. 2025', cost: 4680000, market: 5780000, forecast: 5500000 },
+      { date: '2025-04', label: 'เม.ย. 2025', cost: 4790000, market: 6020000, forecast: 5750000 },
+      { date: '2025-07', label: 'ก.ค. 2025', cost: 4890000, market: 6290000, forecast: 5900000 },
+      { date: '2025-10', label: 'ต.ค. 2025', cost: 4960000, market: 6480000, forecast: 6000000 },
+      { date: '2026-01', label: 'ม.ค. 2026', cost: 5010000, market: 6690000, forecast: 6250000 },
+      { date: '2026-04', label: 'เม.ย. 2026', cost: 5035000, market: 6850000, forecast: 6480000 },
+      { date: '2026-07', label: 'ก.ค. 2026', cost: 5052000, market: 6980000, forecast: 6600000 },
+      { date: '2026-09', label: 'ก.ย. 2026 (ปัจจุบัน)', cost: 5064347, market: 7092117, forecast: 6690000 }
+    ];
+
+    /* ---------------------------------------------------------
+       Tab Switcher
+       --------------------------------------------------------- */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+
+      document.querySelectorAll('.tab-btn, .dock-icon').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+      });
+
+      if (tabId === 'tab-overview') {
+        renderHistChart();
+      }
+    }
+
+    /* ---------------------------------------------------------
+       Currency Toggle (THB vs USD)
+       --------------------------------------------------------- */
+    function formatMoney(amount, cur) {
+      if (cur === 'USD') {
+        const usd = Math.round(amount / USD_RATE);
+        return '$ ' + usd.toLocaleString('en-US');
+      } else {
+        return '฿ ' + amount.toLocaleString('th-TH');
+      }
+    }
+
+    function setCurrency(cur) {
+      currentCurrency = cur;
+      document.getElementById('curr-thb').classList.toggle('active', cur === 'THB');
+      document.getElementById('curr-usd').classList.toggle('active', cur === 'USD');
+
+      document.querySelectorAll('[data-val-thb]').forEach(el => {
+        const thb = parseFloat(el.getAttribute('data-val-thb'));
+        const prefix = el.innerText.startsWith('+') ? '+' : '';
+        el.innerText = prefix + formatMoney(thb, cur);
+      });
+
+      renderHistChart();
+    }
+
+    /* ---------------------------------------------------------
+       Theme Switcher (Bento by default)
+       --------------------------------------------------------- */
+    function setTheme(th) {
+      document.documentElement.setAttribute('data-theme', th);
+      document.getElementById('theme-bento-btn').classList.toggle('active', th === 'bento');
+      document.getElementById('theme-dark-btn').classList.toggle('active', th === 'dark');
+      document.getElementById('theme-blue-btn').classList.toggle('active', th === 'blue');
+      renderHistChart();
+    }
+
+    /* ---------------------------------------------------------
+       Live Sync Trigger Simulation
+       --------------------------------------------------------- */
+    function triggerSync() {
+      const syncEl = document.getElementById('syncText');
+      syncEl.innerText = 'Syncing...';
+      setTimeout(() => {
+        const d = new Date();
+        const timeStr = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+        syncEl.innerText = 'Synced ' + timeStr;
+      }, 600);
+    }
+
+    /* ---------------------------------------------------------
+       Historical Chart Controls & SVG Renderer
+       --------------------------------------------------------- */
+    function getHistData() {
+      if (histRange === '1Y') return historicalData.slice(-5);
+      if (histRange === '3Y') return historicalData.slice(-13);
+      return historicalData;
+    }
+
+    function setHistRange(range, btn) {
+      histRange = range;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      renderHistChart();
+    }
+
+    function setHistCurve(curve) {
+      histCurve = curve;
+      document.getElementById('btnModeSmooth').classList.toggle('active', curve === 'smooth');
+      document.getElementById('btnModeStepped').classList.toggle('active', curve === 'stepped');
+      renderHistChart();
+    }
+
+    function renderHistChart() {
+      const data = getHistData();
+      const svg = document.getElementById('histSvg');
+      if (!svg) return;
+
+      const width = 800;
+      const height = 210;
+      const padTop = 20;
+      const padBottom = 25;
+      const padLeft = 45;
+      const padRight = 30;
+
+      const drawW = width - padLeft - padRight;
+      const drawH = height - padTop - padBottom;
+
+      const minVal = 1000000;
+      const maxVal = 7500000;
+
+      function valToY(v) {
+        return padTop + drawH - ((v - minVal) / (maxVal - minVal)) * drawH;
+      }
+      function idxToX(i) {
+        return padLeft + (i / (data.length - 1)) * drawW;
+      }
+
+      // Grid lines
+      const gridG = document.getElementById('histGridLines');
+      gridG.innerHTML = '';
+      [2000000, 4000000, 6000000].forEach(step => {
+        const y = valToY(step);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', padLeft);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', width - padRight);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', 'rgba(70, 110, 103, 0.12)');
+        line.setAttribute('stroke-dasharray', '3,3');
+        gridG.appendChild(line);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', padLeft - 8);
+        text.setAttribute('y', y + 3.5);
+        text.setAttribute('fill', 'rgba(70, 110, 103, 0.7)');
+        text.setAttribute('font-size', '9.5');
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.setAttribute('text-anchor', 'end');
+        text.textContent = (step / 1000000).toFixed(0) + 'M';
+        gridG.appendChild(text);
+      });
+
+      // Construct Paths
+      let marketD = '';
+      let costD = '';
+      let forecastD = '';
+      let areaD = '';
+
+      data.forEach((pt, i) => {
+        const x = idxToX(i);
+        const yM = valToY(pt.market);
+        const yC = valToY(pt.cost);
+
+        if (i === 0) {
+          marketD += `M ${x} ${yM}`;
+          costD += `M ${x} ${yC}`;
+          areaD += `M ${x} ${height - padBottom} L ${x} ${yM}`;
+        } else {
+          if (histCurve === 'stepped') {
+            marketD += ` L ${x} ${valToY(data[i-1].market)} L ${x} ${yM}`;
+            costD += ` L ${x} ${valToY(data[i-1].cost)} L ${x} ${yC}`;
+            areaD += ` L ${x} ${valToY(data[i-1].market)} L ${x} ${yM}`;
+          } else {
+            const prevX = idxToX(i - 1);
+            const prevYM = valToY(data[i - 1].market);
+            const prevYC = valToY(data[i - 1].cost);
+            const cp1X = prevX + (x - prevX) / 2;
+            marketD += ` C ${cp1X} ${prevYM}, ${cp1X} ${yM}, ${x} ${yM}`;
+            costD += ` C ${cp1X} ${prevYC}, ${cp1X} ${yC}, ${x} ${yC}`;
+            areaD += ` C ${cp1X} ${prevYM}, ${cp1X} ${yM}, ${x} ${yM}`;
+          }
+        }
+
+        if (pt.forecast !== null) {
+          const yF = valToY(pt.forecast);
+          if (forecastD === '') {
+            forecastD += `M ${x} ${yF}`;
+          } else {
+            const prevX = idxToX(i - 1);
+            const prevYF = valToY(data[i - 1].forecast || pt.forecast);
+            forecastD += ` C ${prevX + (x - prevX)/2} ${prevYF}, ${prevX + (x - prevX)/2} ${yF}, ${x} ${yF}`;
+          }
+        }
+      });
+
+      const lastX = idxToX(data.length - 1);
+      areaD += ` L ${lastX} ${height - padBottom} Z`;
+
+      document.getElementById('histMarketLine').setAttribute('d', marketD);
+      document.getElementById('histCostLine').setAttribute('d', costD);
+      document.getElementById('histForecastLine').setAttribute('d', forecastD);
+      document.getElementById('histAreaPath').setAttribute('d', areaD);
+    }
+
+    // Interactive mouse move on line chart
+    const histSvg = document.getElementById('histSvg');
+    const histTooltip = document.getElementById('histTooltip');
+    const histCursorLine = document.getElementById('histCursorLine');
+    const histMarketDot = document.getElementById('histMarketDot');
+
+    histSvg.addEventListener('mousemove', function(e) {
+      const rect = histSvg.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const data = getHistData();
+      const usableW = rect.width * ( (800 - 45 - 30) / 800 );
+      const relX = mouseX - (rect.width * (45 / 800));
+
+      let idx = Math.round((relX / usableW) * (data.length - 1));
+      if (idx < 0) idx = 0;
+      if (idx >= data.length) idx = data.length - 1;
+
+      const pt = data[idx];
+      const ptX = 45 + (idx / (data.length - 1)) * (800 - 45 - 30);
+      const minVal = 1000000;
+      const maxVal = 7500000;
+      const ptY = 20 + (210 - 20 - 25) - ((pt.market - minVal) / (maxVal - minVal)) * (210 - 20 - 25);
+
+      histCursorLine.setAttribute('x1', ptX);
+      histCursorLine.setAttribute('x2', ptX);
+      histCursorLine.style.display = 'block';
+
+      histMarketDot.setAttribute('cx', ptX);
+      histMarketDot.setAttribute('cy', ptY);
+      histMarketDot.style.display = 'block';
+
+      histTooltip.style.display = 'block';
+      document.getElementById('histTtLabel').innerText = pt.label.replace(' (ปัจจุบัน)', '');
+      document.getElementById('histTtVal').innerText = formatMoney(pt.market, currentCurrency);
+
+      const ttLeft = (ptX / 800) * rect.width;
+      histTooltip.style.left = ttLeft + 'px';
+      histTooltip.style.top = ((ptY / 210) * rect.height - 12) + 'px';
+    });
+
+    histSvg.addEventListener('mouseleave', function() {
+      histCursorLine.style.display = 'none';
+      histMarketDot.style.display = 'none';
+      histTooltip.style.display = 'none';
+    });
+
+    /* ---------------------------------------------------------
+       Capsule Bar Chart Tooltip Helpers
+       --------------------------------------------------------- */
+    function showCapsuleTooltip(col, text) {
+      const existing = col.querySelector('.floating-pill-tooltip');
+      if (!existing) {
+        const tip = document.createElement('div');
+        tip.className = 'floating-pill-tooltip hover-tip';
+        tip.innerText = text;
+        tip.style.bottom = (col.querySelector('.capsule-bar-outer').offsetHeight + 10) + 'px';
+        tip.style.left = '50%';
+        col.appendChild(tip);
+      }
+    }
+
+    function hideCapsuleTooltip() {
+      document.querySelectorAll('.hover-tip').forEach(t => t.remove());
+    }
+
+    // Initial render
+    window.addEventListener('load', function() {
+      renderHistChart();
+    });
+    window.addEventListener('resize', function() {
+      renderHistChart();
+    });
+  </script>
+</body>
+</html>
