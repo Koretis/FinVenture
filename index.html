@@ -3702,30 +3702,30 @@
     <main id="tab-portfolio" class="tab-view" data-od-id="view-portfolio">
       <div class="pf-shell">
 
-        <!-- Top Header Bar (Matches "Investment" Reference Header) -->
+        <!-- Top Header Bar -->
         <div class="pf-header-bar">
           <div>
             <div class="pf-page-title">Investment &amp; Portfolio Intelligence</div>
             <div style="font-size: 12px; color: var(--pf-fg-muted); margin-top: 2px;">
-              ศูนย์บัญชาการพอร์ตการลงทุนครบวงจร (SET • US • Gold • Crypto • PVD • Insurance)
+              ศูนย์บัญชาการพอร์ตการลงทุน ดึงข้อมูลสด 100% จากชีต &ldquo;Portfolio&rdquo; (Date • Risk • Assess Type • Name • Value • Cost)
             </div>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <span class="pf-badge-soft">🟢 Mark-to-Market &amp; Live Sheets Sync</span>
+            <span class="pf-badge-soft">🟢 Live Sheet &ldquo;Portfolio&rdquo; Sync</span>
             <button type="button" class="pf-ask-ai-btn" onclick="document.getElementById('pfZone5').scrollIntoView({behavior:'smooth'})">
-              <span>✨</span>
-              <span>Portfolio Insights &amp; Architecture</span>
+              <span>📋</span>
+              <span>ตารางข้อมูลดิบ Sheet &ldquo;Portfolio&rdquo;</span>
             </button>
           </div>
         </div>
 
-        <!-- Sub-Navigation & Period/Currency Filter Bar -->
+        <!-- Sub-Navigation & Period Filter Bar -->
         <div class="pf-subnav-bar">
           <div class="pf-subtabs">
             <button type="button" class="pf-subtab-btn active" data-pf-subtab="overview" onclick="PortfolioUI.setSubTab('overview', this)">Overview (All Zones)</button>
             <button type="button" class="pf-subtab-btn" data-pf-subtab="holdings" onclick="PortfolioUI.setSubTab('holdings', this)">Holdings &amp; Asset Classes</button>
-            <button type="button" class="pf-subtab-btn" data-pf-subtab="allocation" onclick="PortfolioUI.setSubTab('allocation', this)">Allocation &amp; Rebalance</button>
-            <button type="button" class="pf-subtab-btn" data-pf-subtab="cashflow" onclick="PortfolioUI.setSubTab('cashflow', this)">Market Watch &amp; Tech</button>
+            <button type="button" class="pf-subtab-btn" data-pf-subtab="allocation" onclick="PortfolioUI.setSubTab('allocation', this)">Allocation &amp; Risk</button>
+            <button type="button" class="pf-subtab-btn" data-pf-subtab="cashflow" onclick="PortfolioUI.setSubTab('cashflow', this)">Monthly History &amp; Sheet</button>
           </div>
 
           <div class="pf-controls-right">
@@ -3741,74 +3741,72 @@
         </div>
 
         <!-- =================================================================
-             ZONE 1: Top Bar & Quick Summary (5 Reference KPI Cards)
+             ZONE 1: Top Bar & Quick Summary (5 Sheet-Driven KPI Cards)
              ================================================================= -->
         <section id="pfZone1" class="pf-kpi-grid">
-          <!-- 1. Total Net Worth -->
+          <!-- 1. Total Portfolio Value -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Total Portfolio Value (มูลค่าพอร์ตสุทธิ)</div>
-            <div id="pfKpiNetWorth" class="pf-kpi-val">฿ 7,105,257</div>
+            <div class="pf-kpi-lbl">Total Portfolio Value (มูลค่าพอร์ตรวมจากชีต)</div>
+            <div id="pfKpiNetWorth" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiNetWorthBadge" class="pf-kpi-foot">
-              <span class="pf-pos">↑ +20.10% (+฿1.19M)</span> <span class="pf-muted">This Year</span>
+              <span class="pf-muted">กำลังโหลดจากชีต Portfolio...</span>
             </div>
           </div>
 
           <!-- 2. Total Profit/Loss & Return -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Total P/L &amp; Return (กำไรสุทธิรวมปันผล)</div>
-            <div id="pfKpiTotalPL" class="pf-kpi-val">+฿ 2,009,942</div>
+            <div class="pf-kpi-lbl">Total Unrealized P/L (กำไร/ขาดทุนสุทธิ Value - Cost)</div>
+            <div id="pfKpiTotalPL" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiTotalPLBadge" class="pf-kpi-foot">
-              <span class="pf-pos">↑ +38.4% Total Return</span> <span class="pf-muted">(Unrealized + Div)</span>
+              <span class="pf-muted">—</span>
             </div>
           </div>
 
-          <!-- 3. Monthly Savings / Cash Flow In -->
+          <!-- 3. Total Invested Capital (Cost) -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Monthly Cash Flow In (เงินลงทุนสมทบ/ด.)</div>
-            <div id="pfKpiMonthlyIn" class="pf-kpi-val">+฿ 77,500</div>
+            <div class="pf-kpi-lbl">Net Invested Cost (เงินต้นสะสมรวมจากชีต)</div>
+            <div id="pfKpiMonthlyIn" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiMonthlyInBadge" class="pf-kpi-foot">
-              <span class="pf-pos">↑ 56.2% Invest Rate</span> <span class="pf-muted">DCA + PVD + Ins</span>
+              <span class="pf-muted">—</span>
             </div>
           </div>
 
-          <!-- 4. Dividend Income -->
+          <!-- 4. Month-over-Month Value Change -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Dividend Income (เงินปันผลรับสะสม)</div>
-            <div id="pfKpiDivYtd" class="pf-kpi-val">฿ 136,201</div>
+            <div class="pf-kpi-lbl">MoM Portfolio Change (เปลี่ยนแปลงเทียบเดือนก่อน)</div>
+            <div id="pfKpiDivYtd" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiDivYtdBadge" class="pf-kpi-foot">
-              <span class="pf-pos">↑ +75.0% YoY</span> <span class="pf-muted">· YoC 8.27%</span>
+              <span class="pf-muted">—</span>
             </div>
           </div>
 
-          <!-- 5. Risk Score & MWRR/TWRR -->
+          <!-- 5. Historical CAGR & Risk Split -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Risk Score &amp; TWRR / MWRR</div>
-            <div id="pfKpiRiskScore" class="pf-kpi-val">0.84</div>
+            <div class="pf-kpi-lbl">Portfolio CAGR &amp; Risk Split (อัตราเติบโตเฉลี่ยต่อปี)</div>
+            <div id="pfKpiRiskScore" class="pf-kpi-val">—%</div>
             <div id="pfKpiRiskBadge" class="pf-kpi-foot">
-              <span class="pf-pos">MWRR +14.8%</span> <span class="pf-muted">· TWRR +16.2%</span>
+              <span class="pf-muted">—</span>
             </div>
           </div>
         </section>
 
         <!-- =================================================================
-             ZONE 3 & HOLDINGS: Performance vs Benchmarks + Holdings Breakdown
+             ZONE 3 & HOLDINGS: Historical Growth Chart + Sheet Holdings Table
              ================================================================= -->
         <section id="pfZoneMiddle" class="pf-mid-grid">
-          <!-- Left: Performance Vs Benchmarks & Net Invested Capital -->
+          <!-- Left: Historical Growth & Return by Risk Tier -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">Performance Vs Benchmarks &amp; Net Invested Capital</div>
+                <div class="pf-card-title">Portfolio Growth &amp; Historical Return (จากชีต Portfolio)</div>
                 <div style="font-size: 11.5px; color: var(--pf-fg-muted); margin-top: 2px;">
-                  เปรียบเทียบผลตอบแทนพอร์ตจริง (TWRR/MWRR) กับตลาด และมูลค่าพอร์ตเทียบเส้นเงินต้นสะสม
+                  เปรียบเทียบมูลค่าพอร์ตจริง (Value) กับเงินต้นสะสม (Cost) และอัตราผลตอบแทนแยกตามระดับความเสี่ยง (High / Mid / Low)
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                <span class="pf-badge-soft">Alpha +5.3%</span>
-                <span class="pf-badge-soft">Sharpe 1.28</span>
                 <div class="pf-period-group">
-                  <button type="button" class="pf-period-btn pf-perfmode-btn active" data-pf-perfmode="benchmark" onclick="PortfolioUI.setPerfMode('benchmark', this)">% vs Benchmarks</button>
-                  <button type="button" class="pf-period-btn pf-perfmode-btn" data-pf-perfmode="capital" onclick="PortfolioUI.setPerfMode('capital', this)">฿ Value vs Net Cost</button>
+                  <button type="button" class="pf-period-btn pf-perfmode-btn active" data-pf-perfmode="capital" onclick="PortfolioUI.setPerfMode('capital', this)">฿ Value vs Cost</button>
+                  <button type="button" class="pf-period-btn pf-perfmode-btn" data-pf-perfmode="benchmark" onclick="PortfolioUI.setPerfMode('benchmark', this)">% Return by Risk</button>
                 </div>
               </div>
             </div>
@@ -3816,20 +3814,22 @@
             <!-- Legend Row -->
             <div id="pfPerfLegendRow" class="pf-legend-row"></div>
 
-            <!-- Interactive SVG Line Chart with Reference Dark Callout -->
+            <!-- Interactive SVG Line Chart -->
             <div id="pfPerfChartWrap" style="width: 100%; margin-top: 6px;"></div>
           </div>
 
-          <!-- Right: Holdings Breakdown Card (Matches Reference Right Card) -->
+          <!-- Right: Holdings Breakdown Card (100% from Sheet "Portfolio") -->
           <div class="pf-card">
             <div class="pf-card-head" style="margin-bottom: 10px;">
-              <div class="pf-card-title">Holdings &amp; Core Assets</div>
+              <div>
+                <div class="pf-card-title">Holdings in Sheet &ldquo;Portfolio&rdquo;</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">รายการสินทรัพย์เดือนล่าสุดตามคอลัมน์ Risk / Assess Type / Name</div>
+              </div>
               <div class="pf-period-group">
                 <button type="button" class="pf-period-btn pf-hold-filter-btn active" data-pf-hold="ALL" onclick="PortfolioUI.setHoldingsFilter('ALL', this)">All</button>
-                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="SET" onclick="PortfolioUI.setHoldingsFilter('SET', this)">SET</button>
-                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="US" onclick="PortfolioUI.setHoldingsFilter('US', this)">US</button>
-                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="ALT" onclick="PortfolioUI.setHoldingsFilter('ALT', this)">Gold/Crypto</button>
-                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="SAFETY" onclick="PortfolioUI.setHoldingsFilter('SAFETY', this)">PVD/Ins</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="High" onclick="PortfolioUI.setHoldingsFilter('High', this)">High Risk</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="Mid" onclick="PortfolioUI.setHoldingsFilter('Mid', this)">Mid Risk</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="Low" onclick="PortfolioUI.setHoldingsFilter('Low', this)">Low Risk</button>
               </div>
             </div>
 
@@ -3837,8 +3837,8 @@
               <table class="pf-hold-tbl">
                 <thead>
                   <tr>
-                    <th>Asset</th>
-                    <th>Value</th>
+                    <th>Name / Assess Type</th>
+                    <th>Value / Cost</th>
                     <th>Weight</th>
                     <th style="text-align: right;">P/L</th>
                   </tr>
@@ -3850,75 +3850,75 @@
         </section>
 
         <!-- =================================================================
-             ZONE 2 + TOP MOVERS + MARKET INTELLIGENCE (Bottom 3-Column Row)
+             ZONE 2 + TOP MOVERS + SHEET ANALYTICS (Bottom 3-Column Row)
              ================================================================= -->
         <section id="pfZoneBottom3" class="pf-bot3-grid">
-          <!-- Col 1: Zone 2 Asset Allocation Donut + Target vs Actual Drift + FX Exposure -->
+          <!-- Col 1: Zone 2 Asset Allocation Donut + Risk Level Breakdown -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">Asset Allocation &amp; Target vs Actual</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">สัดส่วนพอร์ตจริงเทียบเป้าหมาย &amp; จุดเบี่ยงเบน (Drift)</div>
+                <div class="pf-card-title">Asset Allocation &amp; Risk Breakdown</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">สัดส่วนพอร์ตจริงตาม Assess Type และระดับความเสี่ยง (High / Mid / Low)</div>
               </div>
-              <span class="pf-badge-soft">Rebalance Monitor</span>
+              <span class="pf-badge-soft">Sheet Allocation</span>
             </div>
 
             <!-- Interactive Donut Chart -->
             <div id="pfDonutWrap"></div>
 
-            <!-- Target vs Actual Allocation Drift Bars -->
+            <!-- Risk Level Breakdown Bars -->
             <div id="pfDriftTableWrap"></div>
 
-            <!-- Currency & Geography Exposure (3 Mini Reference Boxes) -->
+            <!-- Exposure Summary Boxes -->
             <div class="pf-mini3-grid">
               <div class="pf-mini-box">
-                <div class="pf-mini-lbl">THB vs USD</div>
-                <div id="pfExposureFxVal" class="pf-mini-val">88% : 12%</div>
+                <div class="pf-mini-lbl">THB : USD Stock</div>
+                <div id="pfExposureFxVal" class="pf-mini-val">— : —</div>
               </div>
               <div class="pf-mini-box">
-                <div class="pf-mini-lbl">Domestic : Global</div>
-                <div id="pfExposureGeoVal" class="pf-mini-val">74% : 26%</div>
+                <div class="pf-mini-lbl">Domestic : Global/Alt</div>
+                <div id="pfExposureGeoVal" class="pf-mini-val">— : —</div>
               </div>
               <div class="pf-mini-box">
-                <div class="pf-mini-lbl">Max Drift</div>
-                <div id="pfExposureDriftVal" class="pf-mini-val" style="color: #f59e0b;">+5.1%</div>
+                <div class="pf-mini-lbl">High Risk Share</div>
+                <div id="pfExposureDriftVal" class="pf-mini-val">—%</div>
               </div>
             </div>
           </div>
 
-          <!-- Col 2: Top Movers (Gainers / Losers & Core Watchlist) -->
+          <!-- Col 2: Top Gainers / Losers & MoM Value Changes from Sheet -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">Top Movers &amp; Leaders</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">สินทรัพย์ทำกำไรสูงสุด vs ชะลอตัวในพอร์ต</div>
+                <div class="pf-card-title">Top Gainers, Losers &amp; MoM Changes</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">สินทรัพย์กำไรสูงสุด vs ขาดทุนสะสม และความเคลื่อนไหวเทียบเดือนก่อน</div>
               </div>
-              <span class="pf-badge-soft">Live Sync</span>
+              <span class="pf-badge-soft">Value vs Cost</span>
             </div>
 
             <div class="pf-movers-2col">
               <div>
-                <div class="pf-mover-hdr" style="color: #10b981;">GAINERS</div>
+                <div class="pf-mover-hdr" style="color: #10b981;">PROFIT LEADERS</div>
                 <div id="pfMoversGainers"></div>
               </div>
               <div>
-                <div class="pf-mover-hdr" style="color: #f43f5e;">LAGGARDS / LOSERS</div>
+                <div class="pf-mover-hdr" style="color: #f43f5e;">UNREALIZED LOSS / ZERO</div>
                 <div id="pfMoversLosers"></div>
               </div>
             </div>
 
-            <div style="font-size: 11.5px; font-weight: 600; color: var(--pf-fg-muted); margin: 10px 0 6px;">Core Watchlist &amp; Dividend Engines</div>
+            <div style="font-size: 11.5px; font-weight: 600; color: var(--pf-fg-muted); margin: 10px 0 6px;">Month-over-Month Value Changes (เทียบเดือนก่อนหน้าในชีต)</div>
             <div id="pfMoversWatchlist"></div>
           </div>
 
-          <!-- Col 3: Market Intelligence & Insights (Portfolio Linked) -->
+          <!-- Col 3: Sheet Period Analytics -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">Market Intelligence</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">วิเคราะห์ปัจจัยเศรษฐกิจที่ส่งผลต่อพอร์ตโดยตรง</div>
+                <div class="pf-card-title">Portfolio Sheet Analytics</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">สรุปสถิติจริงจากข้อมูลรายเดือนในชีต Portfolio</div>
               </div>
-              <span class="pf-badge-soft">Portfolio Linked</span>
+              <span class="pf-badge-soft">100% Real Data</span>
             </div>
 
             <div id="pfMarketIntelList"></div>
@@ -3926,49 +3926,49 @@
         </section>
 
         <!-- =================================================================
-             ZONE 4: Asset Class Performance & Detail Cards (เจาะลึกรายสินทรัพย์)
+             ZONE 4: Asset Class Performance & Detail Cards (เจาะลึกรายหมวดจากชีต)
              ================================================================= -->
         <section id="pfZone4" style="margin-bottom: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
             <div>
-              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (เจาะลึกรายหมวดสินทรัพย์)</h3>
-              <div style="font-size: 12px; color: var(--pf-fg-muted);">แยกวิเคราะห์ตามสภาพคล่องและเป้าหมาย: 1. Liquid &amp; Growth Assets vs 2. Long-Term &amp; Safety Assets</div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (ข้อมูลจริงจากชีต Portfolio)</h3>
+              <div style="font-size: 12px; color: var(--pf-fg-muted);">แยกตามหมวดสินทรัพย์ในชีต: 1. Equities &amp; Alternatives vs 2. Provident Fund, Insurance &amp; Cash</div>
             </div>
             <div class="pf-period-group">
               <button type="button" class="pf-period-btn pf-zone4-filter-btn active" data-pf-z4="ALL" onclick="PortfolioUI.setAssetZoneFilter('ALL', this)">ทั้งหมด (4 กลุ่ม)</button>
-              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="LIQUID" onclick="PortfolioUI.setAssetZoneFilter('LIQUID', this)">1. Liquid &amp; Growth</button>
-              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="SAFETY" onclick="PortfolioUI.setAssetZoneFilter('SAFETY', this)">2. Long-Term &amp; Safety</button>
+              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="LIQUID" onclick="PortfolioUI.setAssetZoneFilter('LIQUID', this)">1. Equities &amp; Alt</button>
+              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="SAFETY" onclick="PortfolioUI.setAssetZoneFilter('SAFETY', this)">2. PVD, Ins &amp; Cash</button>
             </div>
           </div>
 
           <!-- Group 1: Liquid & Growth Assets -->
           <div id="pfZone4LiquidGrid" class="pf-z4-grid">
-            <!-- Card 4.1: SET & US Equities -->
+            <!-- Card 4.1: SET & USD Stock -->
             <div class="pf-card">
               <div class="pf-card-head" style="margin-bottom: 8px;">
                 <div>
-                  <span class="pf-badge-soft" style="color: #10b981;">1. Liquid &amp; Growth Asset</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🇹🇭🇺🇸 SET &amp; US Equities (พอร์ตหุ้นไทย &amp; หุ้นสหรัฐฯ)</div>
+                  <span class="pf-badge-soft" style="color: #10b981;">Risk: High • Assess Type: SET &amp; USD Stock</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🇹🇭🇺🇸 SET &amp; USD Stock (หุ้นไทย SET &amp; หุ้นต่างประเทศ Dime)</div>
                 </div>
-                <span class="pf-pl-pill pos">YoC 8.27%</span>
+                <span id="pfZ4EqBadge" class="pf-pl-pill pos">—</span>
               </div>
               <div class="pf-z4-metric-row">
                 <div class="pf-z4-stat">
                   <div class="pf-z4-stat-lbl">Market Value รวม</div>
-                  <div id="pfZ4EqMkt" class="pf-z4-stat-val">฿ 2,460,436</div>
+                  <div id="pfZ4EqMkt" class="pf-z4-stat-val">฿ —</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">Total Cost รวม</div>
+                  <div id="pfZ4EqCost" class="pf-z4-stat-val">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
                   <div class="pf-z4-stat-lbl">Unrealized P/L</div>
-                  <div id="pfZ4EqPl" class="pf-z4-stat-val" style="color: #10b981;">+฿ 618,371 (+33.6%)</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">ปันผลรับสะสมปีนี้</div>
-                  <div class="pf-z4-stat-val" style="color: #6366f1;">฿ 136,201</div>
+                  <div id="pfZ4EqPl" class="pf-z4-stat-val">฿ —</div>
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• หุ้นไทย (SET - ADVANC, TISCO, KTB, MC, SCB):</span> <strong id="pfZ4SetSplit">฿ 2,082,537 (ทุน ฿1.52M)</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• หุ้นสหรัฐฯ (US Dime - JEPQ, QQQI, NVDA, GOOGL):</span> <strong id="pfZ4UsSplit">฿ 377,899 (ทุน ฿320.7k)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• SET (Assess Type: SET):</span> <strong id="pfZ4SetSplit">฿ —</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• Dime (Assess Type: USD Stock):</span> <strong id="pfZ4UsSplit">฿ —</strong></div>
               </div>
             </div>
 
@@ -3976,28 +3976,28 @@
             <div class="pf-card">
               <div class="pf-card-head" style="margin-bottom: 8px;">
                 <div>
-                  <span class="pf-badge-soft" style="color: #f59e0b;">1. Alternative &amp; Inflation Hedge</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🪙⚡ Gold 96.5% &amp; Crypto (สินทรัพย์ทางเลือก &amp; ป้องกันความเสี่ยง)</div>
+                  <span class="pf-badge-soft" style="color: #f59e0b;">Assess Type: GOLD &amp; Crypto</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🪙⚡ GOLD (AOM NOW) &amp; Crypto (Bitkub)</div>
                 </div>
-                <span class="pf-pl-pill warn">20.1% Weight</span>
+                <span id="pfZ4AltBadge" class="pf-pl-pill warn">—</span>
               </div>
               <div class="pf-z4-metric-row">
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">มูลค่าตลาดปัจจุบัน</div>
-                  <div id="pfZ4AltMkt" class="pf-z4-stat-val">฿ 1,426,559</div>
+                  <div class="pf-z4-stat-lbl">Market Value ปัจจุบัน</div>
+                  <div id="pfZ4AltMkt" class="pf-z4-stat-val">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">ต้นทุนสะสมเฉลี่ย (DCA Cost)</div>
-                  <div id="pfZ4AltCost" class="pf-z4-stat-val">฿ 1,425,000</div>
+                  <div class="pf-z4-stat-lbl">Total Cost สะสม</div>
+                  <div id="pfZ4AltCost" class="pf-z4-stat-val">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">ความผันผวน (Volatility)</div>
-                  <div class="pf-z4-stat-val">18.4% (Med-High)</div>
+                  <div class="pf-z4-stat-lbl">Unrealized P/L</div>
+                  <div id="pfZ4AltPl" class="pf-z4-stat-val">฿ —</div>
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• ทองคำ AOM NOW (Gold 96.5% - Safe Haven):</span> <strong id="pfZ4GoldVal" style="color: #10b981;">฿ 970,072 (+7.8%)</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• สินทรัพย์ดิจิทัล Bitkub (Crypto &amp; SiriHub ICO):</span> <strong id="pfZ4CryptoVal">฿ 456,487 (-13.0%)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• AOM NOW (Assess Type: GOLD):</span> <strong id="pfZ4GoldVal">฿ —</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• Bitkub (Assess Type: Crypto):</span> <strong id="pfZ4CryptoVal">฿ —</strong></div>
               </div>
             </div>
           </div>
@@ -4008,157 +4008,106 @@
             <div class="pf-card">
               <div class="pf-card-head" style="margin-bottom: 8px;">
                 <div>
-                  <span class="pf-badge-soft" style="color: #0284c7;">2. Long-Term &amp; Retirement Safety</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🏢 PVD Provident Fund (กองทุนสำรองเลี้ยงชีพ)</div>
+                  <span class="pf-badge-soft" style="color: #0284c7;">Risk: Mid • Assess Type: Provident Fund</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🏢 PVD (กองทุนสำรองเลี้ยงชีพ)</div>
                 </div>
-                <span class="pf-pl-pill pos">CAGR +8.4% p.a.</span>
+                <span id="pfZ4PvdBadge" class="pf-pl-pill pos">—</span>
               </div>
               <div class="pf-z4-metric-row">
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">มูลค่ารวมสุทธิ (Total NAV)</div>
-                  <div id="pfZ4PvdMkt" class="pf-z4-stat-val">฿ 2,146,259</div>
+                  <div class="pf-z4-stat-lbl">มูลค่ารวมสุทธิ (Value)</div>
+                  <div id="pfZ4PvdMkt" class="pf-z4-stat-val">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">เงินสะสมของตัวเอง (Employee)</div>
-                  <div id="pfZ4PvdEmp" class="pf-z4-stat-val">฿ 892,449 (42%)</div>
+                  <div class="pf-z4-stat-lbl">เงินต้นสะสม (Cost)</div>
+                  <div id="pfZ4PvdEmp" class="pf-z4-stat-val">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">สมทบนายจ้าง + กำไรสะสม</div>
-                  <div id="pfZ4PvdEmr" class="pf-z4-stat-val" style="color: #10b981;">+฿ 1,253,810 (58%)</div>
+                  <div class="pf-z4-stat-lbl">กำไรสะสม (Value - Cost)</div>
+                  <div id="pfZ4PvdEmr" class="pf-z4-stat-val" style="color: #10b981;">฿ —</div>
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• แผนการลงทุนปัจจุบัน:</span> <strong>ตราสารหนี้ + หุ้นสมดุล (Balanced Growth Plan)</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• เงินสะสมหักรายเดือนอัตโนมัติ:</span> <strong style="color: #0284c7;">฿ 7,500 / เดือน (Vesting 100%)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• ข้อมูลจากชีต Portfolio:</span> <strong>Risk: Mid | Name: PVD</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• การเปลี่ยนแปลงเทียบเดือนก่อนหน้า (MoM):</span> <strong id="pfZ4PvdMom" style="color: #0284c7;">—</strong></div>
               </div>
             </div>
 
-            <!-- Card 4.4: Insurance (Cash Surrender Value vs Protection Coverage) -->
+            <!-- Card 4.4: Insurance & Cash/Bank -->
             <div class="pf-card">
               <div class="pf-card-head" style="margin-bottom: 8px;">
                 <div>
-                  <span class="pf-badge-soft" style="color: #ec4899;">2. Wealth Protection &amp; Cash Value</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🛡️ Insurance (ประกันชีวิตสะสมทรัพย์ &amp; วงเงินความคุ้มครอง)</div>
+                  <span class="pf-badge-soft" style="color: #ec4899;">Assess Type: Insurance • Cash • Bank</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🛡️🏦 Insurance &amp; Cash / Saving-ME</div>
                 </div>
-                <span class="pf-pl-pill info">Cashback ฿12k/ปี</span>
+                <span id="pfZ4InsBadge" class="pf-pl-pill info">—</span>
               </div>
               <div class="pf-z4-metric-row">
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">มูลค่าเวนคืนเงินสด (นับเป็นสินทรัพย์)</div>
-                  <div id="pfZ4InsCashVal" class="pf-z4-stat-val" style="color: #10b981;">฿ 991,050</div>
+                  <div class="pf-z4-stat-lbl">Insurance Value (Cost)</div>
+                  <div id="pfZ4InsCashVal" class="pf-z4-stat-val" style="color: #ec4899;">฿ —</div>
                 </div>
                 <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">เบี้ยสะสมที่จ่ายไปแล้ว</div>
-                  <div id="pfZ4InsPremium" class="pf-z4-stat-val">฿ 956,383</div>
+                  <div class="pf-z4-stat-lbl">Cash + Saving-ME</div>
+                  <div id="pfZ4InsPremium" class="pf-z4-stat-val">฿ —</div>
                 </div>
-                <div class="pf-z4-stat" style="border: 1px dashed rgba(236, 72, 153, 0.4);">
-                  <div class="pf-z4-stat-lbl">วงเงินคุ้มครองชีวิตรวม (Protection)</div>
-                  <div id="pfZ4InsCoverage" class="pf-z4-stat-val" style="color: #ec4899;">฿ 3,500,000</div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">รวม Safety &amp; Liquid Cash</div>
+                  <div id="pfZ4InsCoverage" class="pf-z4-stat-val" style="color: #10b981;">฿ —</div>
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• การบันทึกบัญชีความมั่งคั่ง:</span> <strong>แยกมูลค่าเงินสด (Net Worth) ออกจากทุนประกันชัดเจน</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• เงินคืนตามกรมธรรม์ (CHUBB Life):</span> <strong style="color: #10b981;">รับเงินคืน ฿ 12,000 ทุกเดือน ส.ค.</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• Cash (Assess Type: Cash):</span> <strong id="pfZ4CashSplit">฿ —</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• Saving-ME (Assess Type: Bank):</span> <strong id="pfZ4BankSplit">฿ —</strong></div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- =================================================================
-             ZONE 5: Cash Flow Calendar, Rebalancing Alerts & Technical Architecture
+             ZONE 5: Monthly Value Progression, Cost Log & Raw Sheet Table
              ================================================================= -->
         <section id="pfZone5" class="pf-bot3-grid" style="margin-bottom: 0;">
-          <!-- Card 5.1: Dividend & Passive Income Calendar -->
+          <!-- Card 5.1: 12-Month Portfolio Value Progression -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">📅 Dividend &amp; Passive Income Calendar</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">ตารางกระแสเงินสดปันผลรายเดือน (SET + US ETFs + Insurance)</div>
+                <div class="pf-card-title">📊 12-Month Portfolio Value (จากชีต Portfolio)</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">เปรียบเทียบมูลค่าพอร์ตรายเดือนย้อนหลัง 12 เดือนล่าสุด</div>
               </div>
-              <span class="pf-pl-pill pos">฿11.3k / ด.</span>
+              <span class="pf-badge-soft">Monthly Value</span>
             </div>
             <div id="pfDivCalendarBars" class="pf-cal-bars"></div>
             <div style="font-size: 11.5px; color: var(--pf-fg-sec); display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--pf-border);">
-              <span>🔥 เดือนปันผลสูงสุด: <strong>เม.ย. (฿65.1k) &amp; ก.ย. (฿28.5k)</strong></span>
-              <span class="pf-pos">US ETF จ่ายทุกเดือน</span>
+              <span id="pfZ5PeakSummary">กำลังโหลดข้อมูล...</span>
+              <span class="pf-pos">Live Sheet</span>
             </div>
           </div>
 
-          <!-- Card 5.2: Contribution Tracker & Rebalancing Alerts -->
+          <!-- Card 5.2: Recent Monthly Cost & Value Changes -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">🔔 Contribution &amp; Rebalancing Alerts</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">แจ้งเตือนปรับสัดส่วนพอร์ต &amp; กำหนดการตัดเงินลงทุนงวดถัดไป</div>
+                <div class="pf-card-title">📈 ประวัติการเปลี่ยนแปลง Value &amp; Cost รายเดือน</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">ข้อมูลย้อนหลัง 5 เดือนล่าสุดจากชีต Portfolio</div>
               </div>
-              <span class="pf-pl-pill warn">1 Alert</span>
+              <span class="pf-badge-soft">MoM Log</span>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="padding: 10px 12px; border-radius: 12px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); font-size: 12px;">
-                <div style="font-weight: 700; color: #d97706;">⚠️ Rebalance Alert: Alternative Overweight (+5.1%)</div>
-                <div style="color: var(--pf-fg-sec); font-size: 11px; margin-top: 2px;">สัดส่วน Gold + Crypto (20.1%) เกินกรอบเป้าหมาย 15% แนะนำเน้นเติม DCA รอบถัดไปเข้า SET / US Equity</div>
-              </div>
-
-              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-                <div>
-                  <div style="font-weight: 600;">🏢 ตัดเงินสะสม PVD งวดถัดไป</div>
-                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">ทุกวันที่ 25 ของเดือน (หักผ่านบัญชีเงินเดือน)</div>
-                </div>
-                <strong style="color: #0284c7;">฿ 7,500</strong>
-              </div>
-
-              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-                <div>
-                  <div style="font-weight: 600;">📈 เติมเงินลงทุน DCA (SET &amp; US Dime)</div>
-                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">ทุกวันที่ 28 ของเดือน + ปันผลทบต้น (Re-invest)</div>
-                </div>
-                <strong style="color: #10b981;">฿ 30,500</strong>
-              </div>
-            </div>
+            <div id="pfZ5MonthlyLogList" style="display: flex; flex-direction: column; gap: 8px;"></div>
           </div>
 
-          <!-- Card 5.3: Technical & Data Architecture -->
+          <!-- Card 5.3: Raw Sheet "Portfolio" Inspector (Latest Month) -->
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">⚙️ Data Architecture &amp; Return Engine</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">โครงสร้างความถี่การดึงราคา (Latency) &amp; มาตรฐานคำนวณผลตอบแทน</div>
+                <div class="pf-card-title">📋 ข้อมูลดิบจากชีต &ldquo;Portfolio&rdquo; (เดือนล่าสุด)</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">แสดงทุกแถวของเดือนล่าสุดตรงตาม Google Sheet 100%</div>
               </div>
-              <span class="pf-badge-soft">MWRR / TWRR</span>
+              <span class="pf-badge-soft">Raw Sheet Rows</span>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11.5px;">
-              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
-                <div style="display: flex; justify-content: space-between; font-weight: 700;">
-                  <span>⚡ Real-time / End-of-Day API</span>
-                  <span class="pf-pos">Live GVIZ Sync</span>
-                </div>
-                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
-                  หุ้น SET, หุ้น US (Dime), ทองคำ 96.5%, และ Crypto ดึงราคาตลาดอัตโนมัติผ่าน Google Finance &amp; Sheets API
-                </div>
-              </div>
-
-              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
-                <div style="display: flex; justify-content: space-between; font-weight: 700;">
-                  <span>🗓️ Periodic Mark-to-Market / Manual NAV</span>
-                  <span style="color: #0284c7; font-weight: 600;">Monthly NAV</span>
-                </div>
-                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
-                  PVD และ Insurance Cash Value อัปเดต NAV รายเดือน/รายงวดผ่านชีต Portfolio พร้อมแยกเงินต้นสะสมแท้จริง
-                </div>
-              </div>
-
-              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
-                <div style="display: flex; justify-content: space-between; font-weight: 700;">
-                  <span>📐 MWRR (+14.8%) vs TWRR (+16.2%)</span>
-                  <span style="color: #6366f1; font-weight: 600;">Cash-Flow Adjusted</span>
-                </div>
-                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
-                  แยกกระแสเงินสดเติมเงินต้น (Net Invested Capital) ออกจากกำไรตลาด เพื่อไม่ให้ % ผลตอบแทนเพี้ยนเมื่อ DCA
-                </div>
-              </div>
-            </div>
+            <div id="pfZ5RawSheetTable"></div>
           </div>
         </section>
 
@@ -4433,11 +4382,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=40"></script>
-  <script src="js/sheets-api.js?v=40"></script>
-  <script src="js/charts.js?v=40"></script>
-  <script src="js/cashflow-ui.js?v=40"></script>
-  <script src="js/portfolio-ui.js?v=40"></script>
-  <script src="js/app.js?v=40"></script>
+  <script src="js/data-store.js?v=41"></script>
+  <script src="js/sheets-api.js?v=41"></script>
+  <script src="js/charts.js?v=41"></script>
+  <script src="js/cashflow-ui.js?v=41"></script>
+  <script src="js/portfolio-ui.js?v=41"></script>
+  <script src="js/app.js?v=41"></script>
 </body>
 </html>

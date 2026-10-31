@@ -399,11 +399,12 @@ var SheetsAPI = {
     }
 
     // -------------------------------------------------------------------------
-    // 2. Portfolio: 45+ Months Historical Growth & True Cost Curve (By Assess Type)
+    // 2. Portfolio: 45+ Months Historical Growth & True Cost Curve (By Assess Type & Risk)
     // -------------------------------------------------------------------------
     const historyRows = sheetResults["Portfolio"] || [];
     if (historyRows.length > 0) {
       const byYm = {};
+      const allPortfolioRows = [];
 
       historyRows.forEach(r => {
         const dRaw = r["Date"] || r["col_0"];
@@ -411,11 +412,21 @@ var SheetsAPI = {
         const dateObj = this.parseGvizDate(dRaw, dFmt);
         if (!dateObj || !dateObj.ym) return;
 
-        const val = this.parseNum(r["Value"] || r["col_4"] || r["col_5"]);
-        const cost = this.parseNum(r["Cost"] || r["Cost (THB)"] || r["col_7"] || r["col_9"]);
+        const valCell = (r["Value"] !== undefined && r["Value"] !== null) ? r["Value"] : r["col_4"];
+        const costCell = (r["Cost"] !== undefined && r["Cost"] !== null) ? r["Cost"] : ((r["Cost (THB)"] !== undefined && r["Cost (THB)"] !== null) ? r["Cost (THB)"] : r["col_7"]);
 
-        const at = (r["Assess Type"] || r["col_2"] || "").toString().trim().toLowerCase();
-        const nm = (r["Name"] || r["col_3"] || "").toString().trim().toLowerCase();
+        let val = this.parseNum(valCell, 0);
+        let cost = this.parseNum(costCell, 0);
+        if (Math.abs(val) < 0.01) val = 0;
+        if (Math.abs(cost) < 0.01) cost = 0;
+
+        const riskRaw = (r["Risk"] || r["col_1"] || "").toString().trim();
+        const riskKey = riskRaw.toLowerCase().includes("low") ? "Low" : (riskRaw.toLowerCase().includes("mid") ? "Mid" : (riskRaw.toLowerCase().includes("high") ? "High" : (riskRaw || "Mid")));
+        const assessTypeRaw = (r["Assess Type"] || r["col_2"] || "").toString().trim();
+        const nameRaw = (r["Name"] || r["col_3"] || "").toString().trim();
+
+        const at = assessTypeRaw.toLowerCase();
+        const nm = nameRaw.toLowerCase();
 
         let cat = "OTHER";
         if (at.includes("provident") || nm.includes("pvd")) cat = "PVD";
@@ -444,16 +455,43 @@ var SheetsAPI = {
               CRYPTO: { market: 0, cost: 0 },
               US: { market: 0, cost: 0 },
               CASH: { market: 0, cost: 0 }
-            }
+            },
+            risks: {
+              Low: { market: 0, cost: 0 },
+              Mid: { market: 0, cost: 0 },
+              High: { market: 0, cost: 0 }
+            },
+            items: []
           };
         }
+
         byYm[dateObj.ym].market += val;
         byYm[dateObj.ym].cost += cost;
         if (byYm[dateObj.ym].assets[cat]) {
           byYm[dateObj.ym].assets[cat].market += val;
           byYm[dateObj.ym].assets[cat].cost += cost;
         }
+        if (!byYm[dateObj.ym].risks[riskKey]) {
+          byYm[dateObj.ym].risks[riskKey] = { market: 0, cost: 0 };
+        }
+        byYm[dateObj.ym].risks[riskKey].market += val;
+        byYm[dateObj.ym].risks[riskKey].cost += cost;
+
+        const rowItem = {
+          ym: dateObj.ym,
+          date: dFmt || dateObj.ym,
+          risk: riskKey,
+          assessType: assessTypeRaw,
+          name: nameRaw,
+          cat: cat,
+          market: Math.round(val * 100) / 100,
+          cost: Math.round(cost * 100) / 100
+        };
+        byYm[dateObj.ym].items.push(rowItem);
+        allPortfolioRows.push(rowItem);
       });
+
+      currentFinData.portfolioSheetRows = allPortfolioRows;
 
       const sortedYm = Object.keys(byYm).sort();
       if (sortedYm.length > 0) {
@@ -464,6 +502,10 @@ var SheetsAPI = {
           Object.keys(item.assets).forEach(c => {
             item.assets[c].market = Math.round(item.assets[c].market);
             item.assets[c].cost = Math.round(item.assets[c].cost);
+          });
+          Object.keys(item.risks).forEach(rk => {
+            item.risks[rk].market = Math.round(item.risks[rk].market);
+            item.risks[rk].cost = Math.round(item.risks[rk].cost);
           });
           const yr = item.year;
           const m = item.month;

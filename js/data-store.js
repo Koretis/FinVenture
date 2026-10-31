@@ -13,16 +13,16 @@ const DEFAULT_FIN_DATA = {
     isConnected: true
   },
 
-  // 1. Portfolio-Lastest Summary
+  // 1. Portfolio Summary (From sheet Portfolio - Oct 2026)
   overview: {
-    netWorth: 7105232,
-    netWorthMoMAmount: 125400,
-    netWorthMoMPercent: 1.8,
-    totalCost: 5063605,
-    capitalGain: 2041627,
-    capitalGainPercent: 40.3,
-    ytdDividends: 133867,
-    avgMonthlyDividend: 11156,
+    netWorth: 6961271,
+    netWorthMoMAmount: -37797,
+    netWorthMoMPercent: -0.5,
+    totalCost: 5270554,
+    capitalGain: 1690717,
+    capitalGainPercent: 32.1,
+    ytdDividends: 136201,
+    avgMonthlyDividend: 11350,
     projectedAnnualDividend: 450000,
     yieldOnCost: 8.12,
     monthlyInflow: 137906,
@@ -32,38 +32,38 @@ const DEFAULT_FIN_DATA = {
     variableExpense: 34489,
     totalInvestYTD: 423500,
     investmentRate: 51.0,
-    emergencyFund: 80952,
-    emergencyMonths: 1.2,
-    cashAmount: 70130,
+    emergencyFund: 944497,
+    emergencyMonths: 14.0,
+    cashAmount: 934039,
     savingMeAmount: 10458,
-    totalCash: 70130
+    totalCash: 934039
   },
 
-  // Asset Distribution (7 Groups)
+  // Asset Distribution (7 Groups - From sheet Portfolio Oct 2026)
   assetAllocation: [
-    { id: "pvd", name: "กองทุนสำรองเลี้ยงชีพ (PVD)", code: "PVD", value: 2146259, percent: 30.2, color: "#0284c7", icon: "🏢" },
-    { id: "set", name: "หุ้นไทย (SET)", code: "SET", value: 2082537, percent: 29.3, color: "#10b981", icon: "🇹🇭" },
-    { id: "insurance", name: "ประกันชีวิตสะสมทรัพย์ (Insurance)", code: "INS", value: 991050, percent: 13.9, color: "#ec4899", icon: "🛡️" },
-    { id: "gold", name: "ทองคำ (Gold - AOM NOW)", code: "GOLD", value: 970000, percent: 13.7, color: "#f59e0b", icon: "🪙" },
-    { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 456906, percent: 6.4, color: "#a855f7", icon: "⚡" },
-    { id: "us", name: "หุ้นสหรัฐ (US - Dime)", code: "US", value: 377871, percent: 5.3, color: "#6366f1", icon: "🇺🇸" },
-    { id: "cash", name: "เงินสด & ฝาก Saving-ME", code: "CASH", value: 80952, percent: 1.1, color: "#38bdf8", icon: "💵" }
+    { id: "pvd", name: "กองทุนสำรองเลี้ยงชีพ (PVD)", code: "PVD", value: 2158345, percent: 31.0, color: "#0284c7", icon: "🏢" },
+    { id: "set", name: "หุ้นไทย (SET)", code: "SET", value: 2039760, percent: 29.3, color: "#10b981", icon: "🇹🇭" },
+    { id: "insurance", name: "ประกันชีวิตสะสมทรัพย์ (Insurance)", code: "INS", value: 991050, percent: 14.2, color: "#ec4899", icon: "🛡️" },
+    { id: "cash", name: "เงินสด & ฝาก Saving-ME", code: "CASH", value: 944497, percent: 13.6, color: "#38bdf8", icon: "💵" },
+    { id: "us", name: "หุ้นสหรัฐ (US - Dime)", code: "US", value: 420741, percent: 6.0, color: "#6366f1", icon: "🇺🇸" },
+    { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 406878, percent: 5.8, color: "#a855f7", icon: "⚡" },
+    { id: "gold", name: "ทองคำ (Gold - AOM NOW)", code: "GOLD", value: 0, percent: 0.0, color: "#f59e0b", icon: "🪙" }
   ],
 
   // Historical Weekly/Period Recap Metrics (From sheet Portfolio)
   historicalRecap: {
-    latestNetWorth: 7105257,
-    latestCost: 5231516,
-    latestGain: 1873741,
-    latestGainPercent: 35.8,
-    momDiff: 69996,
-    momPercent: 1.0,
-    yoyDiff: 1186659,
-    yoyPercent: 20.1,
-    threeYearDiff: 2546297,
-    threeYearPercent: 55.9,
-    allTimeDiff: 2890513,
-    allTimePercent: 68.6
+    latestNetWorth: 6961271,
+    latestCost: 5270554,
+    latestGain: 1690717,
+    latestGainPercent: 32.1,
+    momDiff: -37797,
+    momPercent: -0.5,
+    yoyDiff: 1042673,
+    yoyPercent: 17.6,
+    threeYearDiff: 2445615,
+    threeYearPercent: 54.2,
+    allTimeDiff: 2746527,
+    allTimePercent: 65.2
   },
 
   // Portfolio Historical Growth & True Cost (45 Months from sheet Portfolio 2023 - 2026)
@@ -100,8 +100,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 830698,
                 "cost": 830698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 268819,
+                "cost": 268819
+            },
+            "Mid": {
+                "market": 2367968,
+                "cost": 1609547
+            },
+            "High": {
+                "market": 1577957,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 94577.16,
+                "cost": 94577.16
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 174242.03,
+                "cost": 174242.03
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1338253.88,
+                "cost": 582749.2
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 232603.02,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1114862.5,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 128061.23,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 830698.0,
+                "cost": 830698.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 32651.75,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 80254.16,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 103.94,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 86006.26,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-01",
+                "date": "Jan-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 102429.77,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-02",
@@ -135,8 +275,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 830698,
                 "cost": 830698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 604711,
+                "cost": 604711
+            },
+            "Mid": {
+                "market": 2375317,
+                "cost": 1622766
+            },
+            "High": {
+                "market": 1586012,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 400286.48,
+                "cost": 400286.48
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 204424.03,
+                "cost": 204424.03
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1352014.97,
+                "cost": 595968.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 233163.02,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1111798.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 131817.99,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 830698.0,
+                "cost": 830698.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 31850.15,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 77715.65,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.01,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 82934.61,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-02",
+                "date": "Feb-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 109232.01,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-03",
@@ -170,8 +450,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 830698,
                 "cost": 830698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 544300,
+                "cost": 544300
+            },
+            "Mid": {
+                "market": 2387559,
+                "cost": 1629513
+            },
+            "High": {
+                "market": 1594042,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 219876.35,
+                "cost": 219876.35
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 324424.03,
+                "cost": 324424.03
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1364991.08,
+                "cost": 602714.88
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 251683.02,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1091870.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 128952.59,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 830698.0,
+                "cost": 830698.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 31437.56,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 78074.15,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.1,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 82254.31,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-03",
+                "date": "Mar-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 121536.78,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-04",
@@ -205,8 +625,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 830698,
                 "cost": 830698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 513132,
+                "cost": 513132
+            },
+            "Mid": {
+                "market": 2384190,
+                "cost": 1636260
+            },
+            "High": {
+                "market": 1613437,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 163707.78,
+                "cost": 163707.78
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 349424.03,
+                "cost": 349424.03
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1367685.83,
+                "cost": 609461.76
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 243955.35,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1116105.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 127297.42,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 830698.0,
+                "cost": 830698.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 30918.88,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 76074.62,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.18,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 78708.51,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-04",
+                "date": "Apr-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 126079.45,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-05",
@@ -240,8 +800,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 578615,
+                "cost": 578615
+            },
+            "Mid": {
+                "market": 2449004,
+                "cost": 1694007
+            },
+            "High": {
+                "market": 1581373,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 199191.41,
+                "cost": 199191.41
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 379424.03,
+                "cost": 379424.03
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1379977.99,
+                "cost": 616208.64
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 243035.35,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1084908.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 131623.96,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 30494.5,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 77010.33,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.3,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 79718.65,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-05",
+                "date": "May-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 121805.01,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-06",
@@ -275,8 +975,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 593293,
+                "cost": 593293
+            },
+            "Mid": {
+                "market": 2454481,
+                "cost": 1700754
+            },
+            "High": {
+                "market": 1623149,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 211456.49,
+                "cost": 211456.49
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 381836.68,
+                "cost": 381836.68
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1389813.45,
+                "cost": 622955.52
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 252475.35,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1104610.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 142396.99,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 29760.26,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 75750.1,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.42,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 77354.79,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-06",
+                "date": "Jun-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 123666.38,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-07",
@@ -310,8 +1150,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 529507,
+                "cost": 529507
+            },
+            "Mid": {
+                "market": 2483285,
+                "cost": 1707500
+            },
+            "High": {
+                "market": 1655068,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 122670.64,
+                "cost": 122670.64
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 406836.68,
+                "cost": 406836.68
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1414795.29,
+                "cost": 629702.4
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 237547.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1159485.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 146307.11,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 30381.67,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 78724.26,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.56,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 77581.55,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-07",
+                "date": "Jul-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 111728.57,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-08",
@@ -345,8 +1325,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 389431,
+                "cost": 389431
+            },
+            "Mid": {
+                "market": 2512124,
+                "cost": 1714247
+            },
+            "High": {
+                "market": 1598351,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 85594.12,
+                "cost": 85594.12
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 303836.68,
+                "cost": 303836.68
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1437210.71,
+                "cost": 636449.28
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 242827.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1107818.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 141078.29,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 30875.09,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 79543.18,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.69,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 82692.04,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-08",
+                "date": "Aug-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 106626.13,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-09",
@@ -380,8 +1500,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 413795,
+                "cost": 413795
+            },
+            "Mid": {
+                "market": 2495465,
+                "cost": 1720994
+            },
+            "High": {
+                "market": 1649701,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 64958.18,
+                "cost": 64958.18
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 348836.68,
+                "cost": 348836.68
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1428702.32,
+                "cost": 643196.16
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 253427.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1145019.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 139414.03,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 29206.04,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 76308.9,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 104.83,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 79444.47,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-09",
+                "date": "Sep-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 111839.49,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-10",
@@ -415,8 +1675,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 429023,
+                "cost": 429023
+            },
+            "Mid": {
+                "market": 2479126,
+                "cost": 1727741
+            },
+            "High": {
+                "market": 1607506,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 65186.42,
+                "cost": 65186.42
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 363836.68,
+                "cost": 363836.68
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1424747.16,
+                "cost": 649943.04
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 238947.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1112495.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 129902.98,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27708.6,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 70870.91,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.0,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 73996.58,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-10",
+                "date": "Oct-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 126160.63,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-11",
@@ -450,8 +1850,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 640896,
+                "cost": 640896
+            },
+            "Mid": {
+                "market": 2497815,
+                "cost": 1734488
+            },
+            "High": {
+                "market": 1617226,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 316059.57,
+                "cost": 316059.57
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 324836.68,
+                "cost": 324836.68
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1442830.18,
+                "cost": 656689.92
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 237867.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1103723.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 137330.7,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27035.66,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 71742.2,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.16,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 74403.39,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-11",
+                "date": "Nov-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 138303.61,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2023-12",
@@ -485,8 +2025,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 491941,
+                "cost": 491941
+            },
+            "Mid": {
+                "market": 2529787,
+                "cost": 1741235
+            },
+            "High": {
+                "market": 1511349,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 99885.52,
+                "cost": 99885.52
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 392055.36,
+                "cost": 392055.36
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1470217.52,
+                "cost": 663436.8
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 252827.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1099707.5,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 0.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27757.27,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 73279.54,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.32,
+                "cost": 100.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 76729.46,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2023-12",
+                "date": "Dec-2023",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 158813.53,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-01",
@@ -520,8 +2200,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 476760,
+                "cost": 476760
+            },
+            "Mid": {
+                "market": 2521895,
+                "cost": 1747982
+            },
+            "High": {
+                "market": 1442155,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 84704.53,
+                "cost": 84704.53
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 392055.36,
+                "cost": 392055.36
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1468461.76,
+                "cost": 670183.68
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 240307.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1053473.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 0.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26660.63,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 69890.96,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.51,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 75078.19,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-01",
+                "date": "Jan-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 148373.92,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-02",
@@ -555,8 +2375,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 522722,
+                "cost": 522722
+            },
+            "Mid": {
+                "market": 2547508,
+                "cost": 1754944
+            },
+            "High": {
+                "market": 1449097,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 130667.05,
+                "cost": 130667.05
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 392055.36,
+                "cost": 392055.36
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1491490.15,
+                "cost": 677145.88
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 239507.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 976393.75,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 0.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27338.28,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 71450.94,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.68,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 75424.52,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-02",
+                "date": "Feb-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 233195.94,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-03",
@@ -590,8 +2550,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 615053,
+                "cost": 615053
+            },
+            "Mid": {
+                "market": 2568188,
+                "cost": 1761906
+            },
+            "High": {
+                "market": 1521691,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 114797.93,
+                "cost": 114797.93
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 500255.36,
+                "cost": 500255.36
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1510410.35,
+                "cost": 684108.08
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 251827.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1002555.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 0.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27674.08,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 72346.31,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 105.84,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 75953.64,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-03",
+                "date": "Mar-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 267308.74,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-04",
@@ -625,8 +2725,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 881698,
                 "cost": 881698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 701821,
+                "cost": 701821
+            },
+            "Mid": {
+                "market": 2581938,
+                "cost": 1768868
+            },
+            "High": {
+                "market": 1645483,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 154254.24,
+                "cost": 154254.24
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 547566.84,
+                "cost": 547566.84
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1524395.42,
+                "cost": 691070.28
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 239587.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1021600.0,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 155201.49,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 881698.0,
+                "cost": 881698.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27635.01,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 72384.17,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.01,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 75719.32,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-04",
+                "date": "Apr-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 229094.1,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-05",
@@ -660,8 +2900,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 702668,
+                "cost": 702668
+            },
+            "Mid": {
+                "market": 2642724,
+                "cost": 1826830
+            },
+            "High": {
+                "market": 1639230,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 155101.31,
+                "cost": 155101.31
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 547566.84,
+                "cost": 547566.84
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1535118.51,
+                "cost": 698032.48
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 239587.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 984051.25,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 154971.27,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27414.4,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 71001.49,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.14,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 76385.88,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-05",
+                "date": "May-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 260620.16,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-06",
@@ -695,8 +3075,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 665762,
+                "cost": 665762
+            },
+            "Mid": {
+                "market": 2640952,
+                "cost": 1833793
+            },
+            "High": {
+                "market": 1636449,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 95053.93,
+                "cost": 95053.93
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 570707.96,
+                "cost": 570707.96
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1541627.28,
+                "cost": 704994.68
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 252427.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 987047.5,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 156876.17,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26200.21,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 69039.48,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.35,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 71280.2,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-06",
+                "date": "Jun-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 240097.85,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-07",
@@ -730,8 +3250,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 692455,
+                "cost": 692455
+            },
+            "Mid": {
+                "market": 2669314,
+                "cost": 1840755
+            },
+            "High": {
+                "market": 1682048,
+                "cost": 1642720
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 99155.02,
+                "cost": 99155.02
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 593300.29,
+                "cost": 593300.29
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1570123.38,
+                "cost": 711956.88
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 248507.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1048116.25,
+                "cost": 1132717.45
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 155261.8,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26267.57,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 70886.48,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.57,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 69232.43,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-07",
+                "date": "Jul-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 230162.35,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-08",
@@ -765,8 +3425,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 699898,
+                "cost": 699898
+            },
+            "Mid": {
+                "market": 2697343,
+                "cost": 1847717
+            },
+            "High": {
+                "market": 1640149,
+                "cost": 1638768
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 306598.2,
+                "cost": 306598.2
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 393300.29,
+                "cost": 393300.29
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1597486.21,
+                "cost": 718919.08
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 225667.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1077096.7,
+                "cost": 1128765.45
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 150404.36,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26865.4,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 72211.83,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.78,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 67974.91,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-08",
+                "date": "Aug-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 186980.18,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-09",
@@ -800,8 +3600,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 444953,
+                "cost": 444953
+            },
+            "Mid": {
+                "market": 2758808,
+                "cost": 1854679
+            },
+            "High": {
+                "market": 1982766,
+                "cost": 1894556
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 165791.33,
+                "cost": 165791.33
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 279161.29,
+                "cost": 279161.29
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1646309.84,
+                "cost": 725881.28
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 261067.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1384348.61,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 149209.9,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 28955.29,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 76949.1,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 106.97,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 73788.37,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-09",
+                "date": "Sep-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 188139.92,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-10",
@@ -835,8 +3775,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 426759,
+                "cost": 426759
+            },
+            "Mid": {
+                "market": 2779679,
+                "cost": 1861641
+            },
+            "High": {
+                "market": 2000573,
+                "cost": 1894556
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 84744.46,
+                "cost": 84744.46
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 342014.62,
+                "cost": 342014.62
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1666084.31,
+                "cost": 732843.48
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 215147.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1425241.11,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 155411.22,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 28992.34,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 78009.03,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.15,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 73788.37,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-10",
+                "date": "Oct-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 204773.2,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-11",
@@ -870,8 +3950,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 410750,
+                "cost": 410750
+            },
+            "Mid": {
+                "market": 2778178,
+                "cost": 1868604
+            },
+            "High": {
+                "market": 2185845,
+                "cost": 1894556
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 68735.29,
+                "cost": 68735.29
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 342014.62,
+                "cost": 342014.62
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1670969.32,
+                "cost": 739805.68
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 235867.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1481761.11,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 169908.28,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27572.7,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 76258.29,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.32,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 70572.41,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-11",
+                "date": "Nov-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 298308.25,
+                "cost": 250000.0
+            }
+        ]
     },
     {
         "date": "2024-12",
@@ -905,8 +4125,148 @@ const DEFAULT_FIN_DATA = {
             "INS": {
                 "market": 932698,
                 "cost": 932698
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 378174,
+                "cost": 378174
+            },
+            "Mid": {
+                "market": 2778956,
+                "cost": 1875566
+            },
+            "High": {
+                "market": 2244107,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 183603.06,
+                "cost": 183603.06
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 194570.46,
+                "cost": 194570.46
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1674983.63,
+                "cost": 746767.88
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 252227.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1505591.11,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 162919.8,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 932698.0,
+                "cost": 932698.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26951.29,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 74522.78,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.49,
+                "cost": 100.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 69692.83,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2024-12",
+                "date": "Dec-2024",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 323368.75,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-01",
@@ -945,7 +4305,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 0,
                 "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 317501,
+                "cost": 317501
+            },
+            "Mid": {
+                "market": 2809204,
+                "cost": 1934528
+            },
+            "High": {
+                "market": 2235597,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 122930.53,
+                "cost": 122930.53
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 194570.46,
+                "cost": 194570.46
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1667219.82,
+                "cost": 753730.08
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 235347.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1499467.36,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 164584.54,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 984698.0,
+                "cost": 984698.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 25261.7,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 69700.56,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.65,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 62216.42,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 0.0,
+                "cost": 0.0
+            },
+            {
+                "ym": "2025-01",
+                "date": "Jan-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 336197.43,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-02",
@@ -984,7 +4490,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 0,
                 "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 556114,
+                "cost": 556114
+            },
+            "Mid": {
+                "market": 2849717,
+                "cost": 1993717
+            },
+            "High": {
+                "market": 2114757,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 361543.93,
+                "cost": 361543.93
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 194570.46,
+                "cost": 194570.46
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1662474.13,
+                "cost": 760918.52
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 222907.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1470322.36,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 161000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1036698.0,
+                "cost": 1036698.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 23965.5,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 65485.29,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.8,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 60986.38,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 0.0,
+                "cost": 0.0
+            },
+            {
+                "ym": "2025-02",
+                "date": "Feb-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 260527.42,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-03",
@@ -1023,7 +4675,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 0,
                 "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 402442,
+                "cost": 402442
+            },
+            "Mid": {
+                "market": 2896023,
+                "cost": 2052905
+            },
+            "High": {
+                "market": 2100643,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 207871.95,
+                "cost": 207871.95
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 194570.46,
+                "cost": 194570.46
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1666120.39,
+                "cost": 768106.96
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 257027.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1444553.61,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 153677.18,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 23096.53,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 62730.54,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 107.96,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 55269.12,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 0.0,
+                "cost": 0.0
+            },
+            {
+                "ym": "2025-03",
+                "date": "Mar-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 245384.44,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-04",
@@ -1062,7 +4860,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 178002,
                 "cost": 175000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 295680,
+                "cost": 295680
+            },
+            "Mid": {
+                "market": 3112383,
+                "cost": 2235093
+            },
+            "High": {
+                "market": 2160488,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 151109.35,
+                "cost": 151109.35
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 144570.46,
+                "cost": 144570.46
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1700048.0,
+                "cost": 775295.4
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 253267.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1493442.87,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 153257.61,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 23451.87,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 65183.76,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.11,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 56890.85,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 178002.27,
+                "cost": 175000.0
+            },
+            {
+                "ym": "2025-04",
+                "date": "Apr-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 260519.94,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-05",
@@ -1101,7 +5045,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 276640,
                 "cost": 275900
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 258438,
+                "cost": 258438
+            },
+            "Mid": {
+                "market": 3205485,
+                "cost": 2343182
+            },
+            "High": {
+                "market": 2147540,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 148867.44,
+                "cost": 148867.44
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 109570.46,
+                "cost": 109570.46
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1702170.47,
+                "cost": 782483.84
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 240467.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1451057.87,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 157000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 22694.05,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 62942.17,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.25,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 52231.83,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 276640.35,
+                "cost": 275900.0
+            },
+            {
+                "ym": "2025-05",
+                "date": "May-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 299014.07,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-06",
@@ -1140,7 +5230,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 273666,
                 "cost": 275900
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 162831,
+                "cost": 162831
+            },
+            "Mid": {
+                "market": 3196962,
+                "cost": 2350370
+            },
+            "High": {
+                "market": 2096640,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 52649.38,
+                "cost": 52649.38
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 110181.83,
+                "cost": 110181.83
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1704536.51,
+                "cost": 789672.28
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 247427.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1390466.62,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 165000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 21537.12,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 59922.36,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.37,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 48493.62,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 273665.72,
+                "cost": 275900.0
+            },
+            {
+                "ym": "2025-06",
+                "date": "Jun-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 293746.05,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-07",
@@ -1179,7 +5415,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 276640,
                 "cost": 275900
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 269320,
+                "cost": 269320
+            },
+            "Mid": {
+                "market": 3287573,
+                "cost": 2357559
+            },
+            "High": {
+                "market": 2201381,
+                "cost": 1944556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 159137.86,
+                "cost": 159137.86
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 110181.83,
+                "cost": 110181.83
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1778588.74,
+                "cost": 796860.72
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 243947.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1433041.37,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 167000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 24149.06,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 67665.3,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.49,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 51723.33,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 276640.35,
+                "cost": 275900.0
+            },
+            {
+                "ym": "2025-07",
+                "date": "Jul-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 357392.4,
+                "cost": 300000.0
+            }
+        ]
     },
     {
         "date": "2025-08",
@@ -1218,7 +5600,153 @@ const DEFAULT_FIN_DATA = {
                 "market": 283942,
                 "cost": 275900
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 217453,
+                "cost": 217453
+            },
+            "Mid": {
+                "market": 3316645,
+                "cost": 2364747
+            },
+            "High": {
+                "market": 2252318,
+                "cost": 1994556
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 112270.9,
+                "cost": 112270.9
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 105181.83,
+                "cost": 105181.83
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1801413.79,
+                "cost": 804049.16
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 243947.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1427262.87,
+                "cost": 1384553.56
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 167407.17,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1088698.0,
+                "cost": 1088698.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 24061.49,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 67123.83,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.6,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 51297.28,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 283941.71,
+                "cost": 275900.0
+            },
+            {
+                "ym": "2025-08",
+                "date": "Aug-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 413700.51,
+                "cost": 350000.0
+            }
+        ]
     },
     {
         "date": "2025-09",
@@ -1257,7 +5785,163 @@ const DEFAULT_FIN_DATA = {
                 "market": 335710,
                 "cost": 295900
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 217399,
+                "cost": 217399
+            },
+            "Mid": {
+                "market": 3422639,
+                "cost": 2418936
+            },
+            "High": {
+                "market": 2278561,
+                "cost": 1779627
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 111205.13,
+                "cost": 111205.13
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 106193.83,
+                "cost": 106193.83
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1824830.46,
+                "cost": 811237.6
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "High",
+                "assessType": "ICO",
+                "name": "SiriHUB",
+                "cat": "CRYPTO",
+                "market": 257867.68,
+                "cost": 240000.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1324899.87,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 172340.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1115698.0,
+                "cost": 1115698.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 24858.03,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 69085.14,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.72,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 52348.65,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 335709.52,
+                "cost": 295900.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 483893.85,
+                "cost": 410000.0
+            },
+            {
+                "ym": "2025-09",
+                "date": "Sep-2025",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 39559.1,
+                "cost": 39680.0
+            }
+        ]
     },
     {
         "date": "2025-10",
@@ -1276,6 +5960,10 @@ const DEFAULT_FIN_DATA = {
                 "market": 1842681,
                 "cost": 818426
             },
+            "CRYPTO": {
+                "market": 486721,
+                "cost": 440000
+            },
             "SET": {
                 "market": 1391918,
                 "cost": 1266045
@@ -1291,12 +5979,154 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 547969,
                 "cost": 505900
-            },
-            "CRYPTO": {
-                "market": 486721,
-                "cost": 440000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 275158,
+                "cost": 275158
+            },
+            "Mid": {
+                "market": 3679614,
+                "cost": 2662121
+            },
+            "High": {
+                "market": 2017409,
+                "cost": 1634627
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 198683.53,
+                "cost": 198683.53
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 76474.83,
+                "cost": 76474.83
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1842681.41,
+                "cost": 818426.04
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1244648.99,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 179000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1141695.0,
+                "cost": 1141695.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 24932.13,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 71315.4,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.83,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 50912.46,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 547968.74,
+                "cost": 505900.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 486721.4,
+                "cost": 440000.0
+            },
+            {
+                "ym": "2025-10",
+                "date": "Oct-2025",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 107039.02,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2025-11",
@@ -1315,6 +6145,10 @@ const DEFAULT_FIN_DATA = {
                 "market": 1840812,
                 "cost": 825614
             },
+            "CRYPTO": {
+                "market": 377694,
+                "cost": 440000
+            },
             "SET": {
                 "market": 1385643,
                 "cost": 1266045
@@ -1330,12 +6164,154 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 571210,
                 "cost": 505900
-            },
-            "CRYPTO": {
-                "market": 377694,
-                "cost": 440000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 327794,
+                "cost": 327794
+            },
+            "Mid": {
+                "market": 3694923,
+                "cost": 2669309
+            },
+            "High": {
+                "market": 1896359,
+                "cost": 1634627
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 251319.49,
+                "cost": 251319.49
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 76474.83,
+                "cost": 76474.83
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1840812.26,
+                "cost": 825614.48
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1244437.99,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 174817.24,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 1141695.0,
+                "cost": 1141695.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 23704.47,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 68087.14,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 108.92,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 49304.48,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 571210.48,
+                "cost": 505900.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 377693.85,
+                "cost": 440000.0
+            },
+            {
+                "ym": "2025-11",
+                "date": "Nov-2025",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 99410.2,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2025-12",
@@ -1354,6 +6330,10 @@ const DEFAULT_FIN_DATA = {
                 "market": 1865417,
                 "cost": 832803
             },
+            "CRYPTO": {
+                "market": 367175,
+                "cost": 440000
+            },
             "SET": {
                 "market": 1420100,
                 "cost": 1266045
@@ -1369,12 +6349,154 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 579703,
                 "cost": 505900
-            },
-            "CRYPTO": {
-                "market": 367175,
-                "cost": 440000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 549823,
+                "cost": 549823
+            },
+            "Mid": {
+                "market": 3474316,
+                "cost": 2421853
+            },
+            "High": {
+                "market": 1915004,
+                "cost": 1634627
+            }
+        },
+        "items": [
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 472854.83,
+                "cost": 472854.83
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 76968.41,
+                "cost": 76968.41
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1865417.4,
+                "cost": 832802.92
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1277953.99,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 175000.0,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 887050.0,
+                "cost": 887050.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 24026.12,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 68239.32,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 109.02,
+                "cost": 100.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 49771.76,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 579702.66,
+                "cost": 505900.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 367174.87,
+                "cost": 440000.0
+            },
+            {
+                "ym": "2025-12",
+                "date": "Dec-2025",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 94875.63,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2026-01",
@@ -1393,6 +6515,10 @@ const DEFAULT_FIN_DATA = {
                 "market": 1901713,
                 "cost": 839991
             },
+            "CRYPTO": {
+                "market": 322087,
+                "cost": 440000
+            },
             "SET": {
                 "market": 1526492,
                 "cost": 1266045
@@ -1408,12 +6534,154 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 1000262,
                 "cost": 845900
-            },
-            "CRYPTO": {
-                "market": 322087,
-                "cost": 440000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 188473,
+                "cost": 188473
+            },
+            "Mid": {
+                "market": 3963864,
+                "cost": 2795041
+            },
+            "High": {
+                "market": 1968740,
+                "cost": 1634627
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 111504.4,
+                "cost": 111504.4
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 76968.41,
+                "cost": 76968.41
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1901713.24,
+                "cost": 839991.36
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1377653.99,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 171361.8,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 913050.0,
+                "cost": 913050.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 25063.49,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 71976.84,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 109.11,
+                "cost": 100.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 51688.97,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 1000261.95,
+                "cost": 845900.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 322087.28,
+                "cost": 440000.0
+            },
+            {
+                "ym": "2026-01",
+                "date": "Jan-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 97636.68,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2026-02",
@@ -1432,6 +6700,10 @@ const DEFAULT_FIN_DATA = {
                 "market": 2009650,
                 "cost": 847485
             },
+            "CRYPTO": {
+                "market": 262109,
+                "cost": 440000
+            },
             "SET": {
                 "market": 1637416,
                 "cost": 1266045
@@ -1447,12 +6719,154 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 1041996,
                 "cost": 845900
-            },
-            "CRYPTO": {
-                "market": 262109,
-                "cost": 440000
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 511718,
+                "cost": 511718
+            },
+            "Mid": {
+                "market": 4134086,
+                "cost": 2802535
+            },
+            "High": {
+                "market": 1983391,
+                "cost": 1634627
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 434749.53,
+                "cost": 434749.53
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 76968.41,
+                "cost": 76968.41
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2009649.89,
+                "cost": 847485.28
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1468025.49,
+                "cost": 1069944.59
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "High",
+                "assessType": "ETF",
+                "name": "Jitta",
+                "cat": "US",
+                "market": 167746.34,
+                "cost": 20002.88
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 913050.0,
+                "cost": 913050.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 28441.66,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 84060.33,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 109.2,
+                "cost": 100.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 56779.53,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 1041995.62,
+                "cost": 845900.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 262108.87,
+                "cost": 440000.0
+            },
+            {
+                "ym": "2026-02",
+                "date": "Feb-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 85510.62,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2026-03",
@@ -1471,9 +6885,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 1989959,
                 "cost": 854979
             },
+            "CRYPTO": {
+                "market": 333804,
+                "cost": 490000
+            },
             "SET": {
                 "market": 2016541,
                 "cost": 1679670
+            },
+            "US": {
+                "market": 82948,
+                "cost": 104680
             },
             "INS": {
                 "market": 939050,
@@ -1482,16 +6904,144 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 955836,
                 "cost": 845900
-            },
-            "CRYPTO": {
-                "market": 333804,
-                "cost": 490000
-            },
-            "US": {
-                "market": 82948,
-                "cost": 104680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 159719,
+                "cost": 159719
+            },
+            "Mid": {
+                "market": 4042726,
+                "cost": 2836029
+            },
+            "High": {
+                "market": 2275413,
+                "cost": 2078250
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 72961.11,
+                "cost": 72961.11
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 86757.85,
+                "cost": 86757.85
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 1989959.12,
+                "cost": 854979.2
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1858660.32,
+                "cost": 1483569.59
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 939050.0,
+                "cost": 939050.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 26956.34,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "CIMB-PRINCIPAL LTF-T",
+                "cat": "SET",
+                "market": 79999.0,
+                "cost": 80000.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 109.28,
+                "cost": 100.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UTHAISME-LN",
+                "cat": "SET",
+                "market": 50816.26,
+                "cost": 70000.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 955835.78,
+                "cost": 845900.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 333804.3,
+                "cost": 490000.0
+            },
+            {
+                "ym": "2026-03",
+                "date": "Mar-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 82948.03,
+                "cost": 104680.0
+            }
+        ]
     },
     {
         "date": "2026-04",
@@ -1510,9 +7060,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 2029366,
                 "cost": 862473
             },
+            "CRYPTO": {
+                "market": 363383,
+                "cost": 490000
+            },
             "SET": {
                 "market": 1889502,
                 "cost": 1547485
+            },
+            "US": {
+                "market": 284236,
+                "cost": 285680
             },
             "INS": {
                 "market": 939050,
@@ -1521,16 +7079,124 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 983448,
                 "cost": 870000
-            },
-            "CRYPTO": {
-                "market": 363383,
-                "cost": 490000
-            },
-            "US": {
-                "market": 284236,
-                "cost": 285680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 146195,
+                "cost": 146195
+            },
+            "Mid": {
+                "market": 3979116,
+                "cost": 2717623
+            },
+            "High": {
+                "market": 2509870,
+                "cost": 2277065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 82044.8,
+                "cost": 82044.8
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 64149.85,
+                "cost": 64149.85
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2029366.11,
+                "cost": 862473.12
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1862250.58,
+                "cost": 1501384.59
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 939050.0,
+                "cost": 939050.0
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "Krungsri-KFLTFDIV",
+                "cat": "SET",
+                "market": 27142.6,
+                "cost": 46000.0
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Mid",
+                "assessType": "LTF",
+                "name": "UOBSD",
+                "cat": "SET",
+                "market": 109.27,
+                "cost": 100.0
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 983447.78,
+                "cost": 870000.0
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 363383.18,
+                "cost": 490000.0
+            },
+            {
+                "ym": "2026-04",
+                "date": "Apr-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 284236.02,
+                "cost": 285680.0
+            }
+        ]
     },
     {
         "date": "2026-05",
@@ -1549,9 +7215,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 2074909,
                 "cost": 869967
             },
+            "CRYPTO": {
+                "market": 343584,
+                "cost": 490000
+            },
             "SET": {
                 "market": 1944951,
                 "cost": 1521385
+            },
+            "US": {
+                "market": 336983,
+                "cost": 305680
             },
             "INS": {
                 "market": 939050,
@@ -1560,16 +7234,104 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 963434,
                 "cost": 870000
-            },
-            "CRYPTO": {
-                "market": 343584,
-                "cost": 490000
-            },
-            "US": {
-                "market": 336983,
-                "cost": 305680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 140473,
+                "cost": 140473
+            },
+            "Mid": {
+                "market": 3977392,
+                "cost": 2679017
+            },
+            "High": {
+                "market": 2625518,
+                "cost": 2317065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 80960.25,
+                "cost": 80960.25
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 59512.85,
+                "cost": 59512.85
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2074908.66,
+                "cost": 869967.04
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 1944951.09,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 939050.0,
+                "cost": 939050.0
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 963433.75,
+                "cost": 870000.0
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 343584.11,
+                "cost": 490000.0
+            },
+            {
+                "ym": "2026-05",
+                "date": "May-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 336982.56,
+                "cost": 305680.0
+            }
+        ]
     },
     {
         "date": "2026-06",
@@ -1588,9 +7350,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 2106178,
                 "cost": 877461
             },
+            "CRYPTO": {
+                "market": 280746,
+                "cost": 500000
+            },
             "SET": {
                 "market": 2036536,
                 "cost": 1521385
+            },
+            "US": {
+                "market": 355129,
+                "cost": 310680
             },
             "INS": {
                 "market": 956383,
@@ -1599,16 +7369,104 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 890817,
                 "cost": 890000
-            },
-            "CRYPTO": {
-                "market": 280746,
-                "cost": 500000
-            },
-            "US": {
-                "market": 355129,
-                "cost": 310680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 107569,
+                "cost": 107569
+            },
+            "Mid": {
+                "market": 3953378,
+                "cost": 2723844
+            },
+            "High": {
+                "market": 2672412,
+                "cost": 2332065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 97777.62,
+                "cost": 97777.62
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 9790.92,
+                "cost": 9790.92
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2106178.05,
+                "cost": 877460.96
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 2036535.91,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 956383.16,
+                "cost": 956383.16
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 890816.64,
+                "cost": 890000.0
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 280746.5,
+                "cost": 500000.0
+            },
+            {
+                "ym": "2026-06",
+                "date": "Jun-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 355129.29,
+                "cost": 310680.0
+            }
+        ]
     },
     {
         "date": "2026-07",
@@ -1616,7 +7474,7 @@ const DEFAULT_FIN_DATA = {
         "year": 2026,
         "month": 7,
         "cost": 5238100,
-        "market": 6920928,
+        "market": 6923413,
         "forecast": 6405593,
         "assets": {
             "CASH": {
@@ -1627,9 +7485,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 2138306,
                 "cost": 884955
             },
+            "CRYPTO": {
+                "market": 315796,
+                "cost": 500000
+            },
             "SET": {
                 "market": 2098487,
                 "cost": 1521385
+            },
+            "US": {
+                "market": 346927,
+                "cost": 320680
             },
             "INS": {
                 "market": 973718,
@@ -1638,16 +7504,104 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 902817,
                 "cost": 890000
-            },
-            "CRYPTO": {
-                "market": 315796,
-                "cost": 500000
-            },
-            "US": {
-                "market": 344442,
-                "cost": 320680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 147362,
+                "cost": 147362
+            },
+            "Mid": {
+                "market": 4014841,
+                "cost": 2748673
+            },
+            "High": {
+                "market": 2761211,
+                "cost": 2342065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 119571.17,
+                "cost": 119571.17
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 27790.92,
+                "cost": 27790.92
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2138305.59,
+                "cost": 884954.88
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 2098487.41,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 973718.4,
+                "cost": 973718.4
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 902816.55,
+                "cost": 890000.0
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 315795.77,
+                "cost": 500000.0
+            },
+            {
+                "ym": "2026-07",
+                "date": "Jul-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 346927.39,
+                "cost": 320680.0
+            }
+        ]
     },
     {
         "date": "2026-08",
@@ -1655,7 +7609,7 @@ const DEFAULT_FIN_DATA = {
         "year": 2026,
         "month": 8,
         "cost": 5200648,
-        "market": 7035261,
+        "market": 7033782,
         "forecast": 6462951,
         "assets": {
             "CASH": {
@@ -1666,9 +7620,17 @@ const DEFAULT_FIN_DATA = {
                 "market": 2149084,
                 "cost": 892449
             },
+            "CRYPTO": {
+                "market": 412644,
+                "cost": 515000
+            },
             "SET": {
                 "market": 2068525,
                 "cost": 1521385
+            },
+            "US": {
+                "market": 362787,
+                "cost": 320680
             },
             "INS": {
                 "market": 991050,
@@ -1677,74 +7639,508 @@ const DEFAULT_FIN_DATA = {
             "GOLD": {
                 "market": 984608,
                 "cost": 895000
-            },
-            "CRYPTO": {
-                "market": 412644,
-                "cost": 515000
-            },
-            "US": {
-                "market": 364266,
-                "cost": 320680
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 65085,
+                "cost": 65085
+            },
+            "Mid": {
+                "market": 4124742,
+                "cost": 2778499
+            },
+            "High": {
+                "market": 2843956,
+                "cost": 2357065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 54626.78,
+                "cost": 54626.78
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 10457.92,
+                "cost": 10457.92
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2149083.58,
+                "cost": 892448.8
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 2068524.96,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 991050.0,
+                "cost": 991050.0
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 984608.42,
+                "cost": 895000.0
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 412643.6,
+                "cost": 515000.0
+            },
+            {
+                "ym": "2026-08",
+                "date": "Aug-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 362787.06,
+                "cost": 320680.0
+            }
+        ]
     },
     {
         "date": "2026-09",
-        "label": "ก.ย. 2026 (ปัจจุบัน)",
+        "label": "ก.ย. 2026",
         "year": 2026,
         "month": 9,
-        "cost": 5231516,
-        "market": 7105257,
+        "cost": 5215443,
+        "market": 6999068,
         "forecast": 6520308,
         "assets": {
             "CASH": {
-                "market": 80952,
-                "cost": 80952
+                "market": 79880,
+                "cost": 79880
             },
             "PVD": {
-                "market": 2146259,
+                "market": 2149485,
                 "cost": 892449
             },
+            "CRYPTO": {
+                "market": 452067,
+                "cost": 515000
+            },
             "SET": {
-                "market": 2082537,
+                "market": 2005878,
                 "cost": 1521385
+            },
+            "US": {
+                "market": 374543,
+                "cost": 320680
             },
             "INS": {
                 "market": 991050,
                 "cost": 991050
             },
             "GOLD": {
-                "market": 970072,
-                "cost": 900000
+                "market": 946166,
+                "cost": 895000
+            }
+        },
+        "risks": {
+            "Low": {
+                "market": 79880,
+                "cost": 79880
+            },
+            "Mid": {
+                "market": 4086701,
+                "cost": 2778499
+            },
+            "High": {
+                "market": 2832488,
+                "cost": 2357065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 69421.72,
+                "cost": 69421.72
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 10457.92,
+                "cost": 10457.92
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2149484.84,
+                "cost": 892448.8
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 2005877.56,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 991050.0,
+                "cost": 991050.0
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 946165.89,
+                "cost": 895000.0
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 452067.28,
+                "cost": 515000.0
+            },
+            {
+                "ym": "2026-09",
+                "date": "Sep-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 374543.0,
+                "cost": 320680.0
+            }
+        ]
+    },
+    {
+        "date": "2026-10",
+        "label": "ต.ค. 2026 (ปัจจุบัน)",
+        "year": 2026,
+        "month": 10,
+        "cost": 5270554,
+        "market": 6961271,
+        "forecast": 6577666,
+        "assets": {
+            "CASH": {
+                "market": 944497,
+                "cost": 944497
+            },
+            "PVD": {
+                "market": 2158345,
+                "cost": 899943
             },
             "CRYPTO": {
-                "market": 456487,
+                "market": 406878,
                 "cost": 525000
             },
+            "SET": {
+                "market": 2039760,
+                "cost": 1521385
+            },
             "US": {
-                "market": 377899,
-                "cost": 320680
+                "market": 420741,
+                "cost": 388680
+            },
+            "INS": {
+                "market": 991050,
+                "cost": 991050
+            },
+            "GOLD": {
+                "market": 0,
+                "cost": 0
             }
-        }
+        },
+        "risks": {
+            "Low": {
+                "market": 944497,
+                "cost": 944497
+            },
+            "Mid": {
+                "market": 3149395,
+                "cost": 1890993
+            },
+            "High": {
+                "market": 2867379,
+                "cost": 2435065
+            }
+        },
+        "items": [
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "Low",
+                "assessType": "Cash",
+                "name": "Cash",
+                "cat": "CASH",
+                "market": 934039.02,
+                "cost": 934039.02
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "Low",
+                "assessType": "Bank",
+                "name": "Saving-ME",
+                "cat": "CASH",
+                "market": 10457.92,
+                "cost": 10457.92
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "Mid",
+                "assessType": "Provident Fund",
+                "name": "PVD",
+                "cat": "PVD",
+                "market": 2158344.64,
+                "cost": 899942.72
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "High",
+                "assessType": "SET",
+                "name": "SET",
+                "cat": "SET",
+                "market": 2039759.89,
+                "cost": 1521384.59
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "Mid",
+                "assessType": "Insurance",
+                "name": "Insurance",
+                "cat": "INS",
+                "market": 991050.0,
+                "cost": 991050.0
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "Mid",
+                "assessType": "GOLD",
+                "name": "AOM NOW",
+                "cat": "GOLD",
+                "market": 0.0,
+                "cost": 0.0
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "High",
+                "assessType": "Crypto",
+                "name": "Bitkub",
+                "cat": "CRYPTO",
+                "market": 406877.87,
+                "cost": 525000.0
+            },
+            {
+                "ym": "2026-10",
+                "date": "Oct-2026",
+                "risk": "High",
+                "assessType": "USD Stock",
+                "name": "Dime",
+                "cat": "US",
+                "market": 420741.17,
+                "cost": 388680.0
+            }
+        ]
     }
 ],
 
-  // Top Individual Holdings
+  // Top Individual Holdings (From sheet Portfolio)
   holdings: [
-    { ticker: "AAPL", name: "Apple Inc.", assetClass: "US", units: 120, avgCost: 155.20, curPrice: 228.40, currency: "USD", marketValueTHB: 973984, unrealizedGainTHB: 312180, gainPercent: 47.1, weight: 13.7, divYield: 0.55 },
-    { ticker: "NVDA", name: "Nvidia Corporation", assetClass: "US", units: 160, avgCost: 68.40, curPrice: 124.50, currency: "USD", marketValueTHB: 707160, unrealizedGainTHB: 318720, gainPercent: 82.0, weight: 10.0, divYield: 0.12 },
-    { ticker: "BDMS", name: "กรุงเทพดุสิตเวชการ", assetClass: "SET", units: 25000, avgCost: 24.50, curPrice: 29.00, currency: "THB", marketValueTHB: 725000, unrealizedGainTHB: 112500, gainPercent: 18.3, weight: 10.2, divYield: 2.80 },
-    { ticker: "DELTA", name: "เดลต้า อีเลคโทรนิคส์", assetClass: "SET", units: 6000, avgCost: 78.00, curPrice: 108.50, currency: "THB", marketValueTHB: 651000, unrealizedGainTHB: 183000, gainPercent: 39.1, weight: 9.2, divYield: 0.95 },
-    { ticker: "MSFT", name: "Microsoft Corporation", assetClass: "US", units: 40, avgCost: 310.00, curPrice: 432.00, currency: "USD", marketValueTHB: 613440, unrealizedGainTHB: 173240, gainPercent: 39.3, weight: 8.6, divYield: 0.75 },
-    { ticker: "PVD-EQ", name: "กองทุนสำรองเลี้ยงชีพ หุ้นสมดุล", assetClass: "PVD", units: 58200, avgCost: 14.20, curPrice: 17.42, currency: "THB", marketValueTHB: 1014233, unrealizedGainTHB: 187393, gainPercent: 22.7, weight: 14.3, divYield: 0.00 },
-    { ticker: "SAVING-ME", name: "บัญชีเงินฝากดอกเบี้ยสูงพิเศษ", assetClass: "CASH", units: 1, avgCost: 560000, curPrice: 560000, currency: "THB", marketValueTHB: 560000, unrealizedGainTHB: 0, gainPercent: 0.0, weight: 7.9, divYield: 2.20 },
-    { ticker: "GOLD965", name: "ทองคำแท่ง 96.5% (13.5 บาท)", assetClass: "GOLD", units: 13.5, avgCost: 34200, curPrice: 42027, currency: "THB", marketValueTHB: 567369, unrealizedGainTHB: 105669, gainPercent: 22.9, weight: 8.0, divYield: 0.00 },
-    { ticker: "PTT", name: "ปตท.", assetClass: "SET", units: 15000, avgCost: 32.00, curPrice: 35.25, currency: "THB", marketValueTHB: 528750, unrealizedGainTHB: 48750, gainPercent: 10.2, weight: 7.5, divYield: 5.75 },
-    { ticker: "INS-LIFE", name: "ประกันชีวิตสะสมทรัพย์ 10/3", assetClass: "INS", units: 1, avgCost: 310000, curPrice: 354605, currency: "THB", marketValueTHB: 354605, unrealizedGainTHB: 44605, gainPercent: 14.4, weight: 5.0, divYield: 2.85 },
-    { ticker: "BTC", name: "Bitcoin", assetClass: "CRYPTO", units: 0.092, avgCost: 42500, curPrice: 63200, currency: "USD", marketValueTHB: 204874, unrealizedGainTHB: 67094, gainPercent: 48.7, weight: 2.9, divYield: 0.00 },
-    { ticker: "SCB", name: "เอสซีบี เอกซ์", assetClass: "SET", units: 4000, avgCost: 98.50, curPrice: 111.00, currency: "THB", marketValueTHB: 444000, unrealizedGainTHB: 50000, gainPercent: 12.7, weight: 6.3, divYield: 8.20 },
-    { ticker: "CASH-OP", name: "เงินสดหมุนเวียนพร้อมใช้", assetClass: "CASH", units: 1, avgCost: 150000, curPrice: 150000, currency: "THB", marketValueTHB: 150000, unrealizedGainTHB: 0, gainPercent: 0.0, weight: 2.1, divYield: 0.50 }
-  ],
+    {
+        "ticker": "PVD",
+        "name": "Provident Fund (Mid Risk)",
+        "assetClass": "PVD",
+        "risk": "Mid",
+        "assessType": "Provident Fund",
+        "units": 1,
+        "avgCost": 899943,
+        "curPrice": 2158345,
+        "currency": "THB",
+        "marketValueTHB": 2158345,
+        "unrealizedGainTHB": 1258402,
+        "gainPercent": 139.8,
+        "weight": 31.0,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "SET",
+        "name": "SET (High Risk)",
+        "assetClass": "SET",
+        "risk": "High",
+        "assessType": "SET",
+        "units": 1,
+        "avgCost": 1521385,
+        "curPrice": 2039760,
+        "currency": "THB",
+        "marketValueTHB": 2039760,
+        "unrealizedGainTHB": 518375,
+        "gainPercent": 34.1,
+        "weight": 29.3,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "Insurance",
+        "name": "Insurance (Mid Risk)",
+        "assetClass": "INS",
+        "risk": "Mid",
+        "assessType": "Insurance",
+        "units": 1,
+        "avgCost": 991050,
+        "curPrice": 991050,
+        "currency": "THB",
+        "marketValueTHB": 991050,
+        "unrealizedGainTHB": 0,
+        "gainPercent": 0.0,
+        "weight": 14.2,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "Cash",
+        "name": "Cash (Low Risk)",
+        "assetClass": "CASH",
+        "risk": "Low",
+        "assessType": "Cash",
+        "units": 1,
+        "avgCost": 934039,
+        "curPrice": 934039,
+        "currency": "THB",
+        "marketValueTHB": 934039,
+        "unrealizedGainTHB": 0,
+        "gainPercent": 0.0,
+        "weight": 13.4,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "Dime",
+        "name": "USD Stock (High Risk)",
+        "assetClass": "US",
+        "risk": "High",
+        "assessType": "USD Stock",
+        "units": 1,
+        "avgCost": 388680,
+        "curPrice": 420741,
+        "currency": "THB",
+        "marketValueTHB": 420741,
+        "unrealizedGainTHB": 32061,
+        "gainPercent": 8.2,
+        "weight": 6.0,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "Bitkub",
+        "name": "Crypto (High Risk)",
+        "assetClass": "CRYPTO",
+        "risk": "High",
+        "assessType": "Crypto",
+        "units": 1,
+        "avgCost": 525000,
+        "curPrice": 406878,
+        "currency": "THB",
+        "marketValueTHB": 406878,
+        "unrealizedGainTHB": -118122,
+        "gainPercent": -22.5,
+        "weight": 5.8,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "Saving-ME",
+        "name": "Bank (Low Risk)",
+        "assetClass": "CASH",
+        "risk": "Low",
+        "assessType": "Bank",
+        "units": 1,
+        "avgCost": 10458,
+        "curPrice": 10458,
+        "currency": "THB",
+        "marketValueTHB": 10458,
+        "unrealizedGainTHB": 0,
+        "gainPercent": 0.0,
+        "weight": 0.2,
+        "divYield": 0.0
+    },
+    {
+        "ticker": "AOM NOW",
+        "name": "GOLD (Mid Risk)",
+        "assetClass": "GOLD",
+        "risk": "Mid",
+        "assessType": "GOLD",
+        "units": 1,
+        "avgCost": 0,
+        "curPrice": 0,
+        "currency": "THB",
+        "marketValueTHB": 0,
+        "unrealizedGainTHB": 0,
+        "gainPercent": 0.0,
+        "weight": 0.0,
+        "divYield": 0.0
+    }
+],
 
   // Monthly Cash Flow records (2024 to 2026)
   monthlyCashFlow: [
