@@ -191,10 +191,17 @@ var PortfolioUI = {
       if (zones.zoneMiddle) zones.zoneMiddle.style.display = "none";
     } else if (subTab === "cashflow") {
       if (zones.zoneMiddle) zones.zoneMiddle.style.display = "none";
+      if (zones.zoneBottom3) zones.zoneBottom3.style.display = "none";
       if (zones.zone4) zones.zone4.style.display = "none";
     }
 
     this.renderAll();
+
+    if (subTab === "cashflow" && zones.zone5) {
+      setTimeout(() => {
+        zones.zone5.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+    }
   },
 
   setPeriod(period) {
