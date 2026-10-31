@@ -6,7 +6,7 @@
   <title>FinVenture — Executive Wealth & Financial Intelligence System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     /* =====================================================================
        FinVenture Multi-Theme Design Tokens (Executive Dark, Light, Blue, Bento)
@@ -1988,6 +1988,691 @@
       }
     }
 
+    /* =====================================================================
+       PORTFOLIO TAB — Clean SaaS Investment Reference UI (#tab-portfolio)
+       Typography: Plus Jakarta Sans / Inter + Noto Sans Thai
+       ===================================================================== */
+    #tab-portfolio {
+      --pf-bg: #f8fafc;
+      --pf-card: #ffffff;
+      --pf-card-sec: #f4f6f9;
+      --pf-border: #eef2f6;
+      --pf-border-strong: #e2e8f0;
+      --pf-fg: #0f172a;
+      --pf-fg-sec: #475569;
+      --pf-fg-muted: #64748b;
+      --pf-line-main: #0f172a;
+      --pf-grid-line: rgba(148, 163, 184, 0.16);
+      --pf-shadow: 0 2px 10px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(15, 23, 42, 0.02);
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', -apple-system, sans-serif;
+    }
+
+    [data-theme="dark"] #tab-portfolio {
+      --pf-bg: #0f172a;
+      --pf-card: #162032;
+      --pf-card-sec: #1e293b;
+      --pf-border: rgba(148, 163, 184, 0.14);
+      --pf-border-strong: rgba(148, 163, 184, 0.25);
+      --pf-fg: #f8fafc;
+      --pf-fg-sec: #cbd5e1;
+      --pf-fg-muted: #94a3b8;
+      --pf-line-main: #f8fafc;
+      --pf-grid-line: rgba(148, 163, 184, 0.12);
+      --pf-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
+    }
+
+    #tab-portfolio,
+    #tab-portfolio * {
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', -apple-system, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pf-shell {
+      background: var(--pf-bg);
+      border: 1px solid var(--pf-border-strong);
+      border-radius: 26px;
+      padding: 24px;
+      color: var(--pf-fg);
+      box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Portfolio Top Header & Sub-Tabs (Reference Style) */
+    .pf-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--pf-border);
+      margin-bottom: 16px;
+    }
+    .pf-page-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--pf-fg);
+    }
+    .pf-subnav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .pf-subtabs {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      overflow-x: auto;
+    }
+    .pf-subtab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 2px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--pf-fg-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s ease;
+    }
+    .pf-subtab-btn:hover {
+      color: var(--pf-fg);
+    }
+    .pf-subtab-btn.active {
+      color: var(--pf-fg);
+      font-weight: 600;
+      border-bottom-color: var(--pf-fg);
+    }
+
+    .pf-controls-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pf-period-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border-strong);
+      border-radius: 9999px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .pf-period-btn {
+      border: none;
+      background: transparent;
+      color: var(--pf-fg-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pf-period-btn.active {
+      background: var(--pf-fg);
+      color: var(--pf-card);
+    }
+    .pf-ask-ai-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 7px 15px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    [data-theme="dark"] .pf-ask-ai-btn {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .pf-ask-ai-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Generic Reference Card */
+    .pf-card {
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--pf-shadow);
+      min-width: 0;
+      max-width: 100%;
+    }
+    .pf-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .pf-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--pf-fg);
+    }
+    .pf-badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--pf-card-sec);
+      color: var(--pf-fg-sec);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Zone 1: 5 KPI Cards Row (Exact Reference Match) */
+    .pf-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .pf-kpi-card {
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--pf-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+    }
+    .pf-kpi-lbl {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--pf-fg-muted);
+    }
+    .pf-kpi-val {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--pf-fg);
+    }
+    .pf-kpi-foot {
+      font-size: 11.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .pf-pos { color: #10b981; font-weight: 600; }
+    .pf-neg { color: #f43f5e; font-weight: 600; }
+    .pf-muted { color: var(--pf-fg-muted); }
+
+    /* Zone 3 + Holdings Middle Row (1.85fr : 1fr) */
+    .pf-mid-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+    .pf-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--pf-fg-sec);
+      margin-bottom: 12px;
+    }
+    .pf-leg-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pf-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Holdings Table inside Right Middle Card */
+    .pf-hold-tbl {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .pf-hold-tbl th {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--pf-fg-muted);
+      text-align: left;
+      padding: 6px 4px 10px;
+      border-bottom: 1px solid var(--pf-border);
+    }
+    .pf-hold-row td {
+      padding: 10px 4px;
+      border-bottom: 1px solid var(--pf-border);
+      vertical-align: middle;
+    }
+    .pf-hold-row:last-child td {
+      border-bottom: none;
+    }
+    .pf-hold-asset {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .pf-hold-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .pf-hold-ticker {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--pf-fg);
+      line-height: 1.2;
+    }
+    .pf-hold-name {
+      font-size: 10.5px;
+      color: var(--pf-fg-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 130px;
+    }
+    .pf-hold-price {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--pf-fg);
+      white-space: nowrap;
+    }
+    .pf-hold-weight-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pf-hold-weight-num {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--pf-fg-sec);
+      min-width: 28px;
+    }
+    .pf-hold-bar-track {
+      width: 54px;
+      height: 4px;
+      background: var(--pf-card-sec);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .pf-hold-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+    }
+    .pf-pl-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pf-pl-pill.pos {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+    .pf-pl-pill.neg {
+      background: rgba(244, 63, 94, 0.12);
+      color: #f43f5e;
+    }
+    .pf-pl-pill.warn {
+      background: rgba(245, 158, 11, 0.14);
+      color: #d97706;
+    }
+    .pf-pl-pill.info {
+      background: rgba(2, 132, 199, 0.12);
+      color: #0284c7;
+    }
+
+    /* Bottom 3-Column Row (Allocation | Top Movers | Market Intelligence) */
+    .pf-bot3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    /* Donut & Drift inside Allocation Card */
+    .pf-donut-flex {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .pf-donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+    }
+    .pf-donut-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .pf-donut-leg-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      padding: 3px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .pf-donut-leg-row:hover {
+      background: var(--pf-card-sec);
+    }
+    .pf-donut-leg-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--pf-fg-sec);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pf-donut-leg-right {
+      font-weight: 600;
+      color: var(--pf-fg);
+    }
+
+    .pf-drift-item {
+      padding: 8px 10px;
+      background: var(--pf-card-sec);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .pf-drift-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .pf-drift-sub {
+      font-size: 11px;
+      color: var(--pf-fg-muted);
+      margin: 2px 0 6px;
+    }
+    .pf-drift-track {
+      position: relative;
+      height: 6px;
+      background: rgba(148, 163, 184, 0.22);
+      border-radius: 9999px;
+      overflow: visible;
+    }
+    .pf-drift-fill {
+      height: 100%;
+      border-radius: 9999px;
+    }
+    .pf-drift-marker {
+      position: absolute;
+      top: -3px;
+      width: 2.5px;
+      height: 12px;
+      background: var(--pf-fg);
+      border-radius: 2px;
+    }
+
+    .pf-mini3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pf-mini-box {
+      background: var(--pf-card-sec);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .pf-mini-lbl {
+      font-size: 10.5px;
+      color: var(--pf-fg-muted);
+      margin-bottom: 3px;
+    }
+    .pf-mini-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--pf-fg);
+    }
+
+    /* Top Movers Card */
+    .pf-movers-2col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .pf-mover-hdr {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .pf-mover-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--pf-border);
+      gap: 6px;
+    }
+    .pf-mover-ticker {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--pf-fg);
+    }
+    .pf-mover-sub {
+      font-size: 10px;
+      color: var(--pf-fg-muted);
+    }
+    .pf-watch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--pf-border);
+    }
+    .pf-watch-row:last-child { border-bottom: none; }
+    .pf-watch-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pf-watch-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .pf-watch-name {
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .pf-watch-right {
+      text-align: right;
+    }
+    .pf-watch-price {
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .pf-watch-chg {
+      font-size: 10.5px;
+      color: #10b981;
+      font-weight: 500;
+    }
+
+    /* Market Intelligence Cards */
+    .pf-intel-card {
+      background: var(--pf-card-sec);
+      border-radius: 14px;
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+    .pf-intel-card:last-child { margin-bottom: 0; }
+    .pf-intel-card:hover { border-color: var(--pf-border-strong); }
+    .pf-intel-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--pf-fg-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pf-intel-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--pf-fg);
+      line-height: 1.4;
+    }
+    .pf-intel-impact {
+      font-size: 11px;
+      color: #10b981;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* Zone 4: Asset Class Performance & Detail Cards (2x2 Grid) */
+    .pf-z4-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .pf-z4-metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .pf-z4-stat {
+      background: var(--pf-card-sec);
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+    .pf-z4-stat-lbl {
+      font-size: 10.5px;
+      color: var(--pf-fg-muted);
+    }
+    .pf-z4-stat-val {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--pf-fg);
+      margin-top: 2px;
+    }
+
+    /* Zone 5: Cash Flow Calendar & Architecture (3-Column Grid) */
+    .pf-cal-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 6px;
+      height: 140px;
+      padding-top: 20px;
+      margin: 10px 0;
+    }
+    .pf-cal-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+    .pf-cal-val {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--pf-fg-muted);
+    }
+    .pf-cal-bar-wrap {
+      width: 100%;
+      max-width: 24px;
+      height: 95px;
+      background: var(--pf-card-sec);
+      border-radius: 6px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .pf-cal-bar {
+      width: 100%;
+      border-radius: 6px;
+      transition: height 0.3s ease;
+    }
+    .pf-cal-lbl {
+      font-size: 10px;
+      color: var(--pf-fg-muted);
+    }
+
+    @media (max-width: 1100px) {
+      .pf-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pf-mid-grid,
+      .pf-bot3-grid,
+      .pf-z4-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 768px), (max-width: 900px) and (orientation: portrait) {
+      .pf-shell {
+        padding: 14px;
+        border-radius: 20px;
+      }
+      .pf-kpi-grid,
+      .pf-mid-grid,
+      .pf-bot3-grid,
+      .pf-z4-grid,
+      .pf-z4-metric-row,
+      .pf-mini3-grid,
+      .pf-movers-2col {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+      .pf-donut-flex {
+        flex-direction: column;
+      }
+    }
+
   </style>
 
 </head>
@@ -2068,9 +2753,10 @@
         </div>
       </div>
 
-      <!-- 4 Main Tabs -->
+      <!-- 5 Main Tabs -->
       <nav class="nav-tabs" data-od-id="nav-tabs">
         <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 ภาพรวมความมั่งคั่ง</button>
+        <button class="tab-btn" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')">📊 Portfolio</button>
         <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 กระแสเงินสด</button>
         <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 เงินปันผล</button>
         <button class="tab-btn" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')">🎯 วางแผนเป้าหมาย</button>
@@ -3009,6 +3695,476 @@
 
     </main>
 
+    <!-- =====================================================================
+         TAB 6: 📊 PORTFOLIO INTELLIGENCE (Reference Investment Dashboard UI)
+         Zones 1–5 + Market Intelligence & Technical Architecture
+         ===================================================================== -->
+    <main id="tab-portfolio" class="tab-view" data-od-id="view-portfolio">
+      <div class="pf-shell">
+
+        <!-- Top Header Bar (Matches "Investment" Reference Header) -->
+        <div class="pf-header-bar">
+          <div>
+            <div class="pf-page-title">Investment &amp; Portfolio Intelligence</div>
+            <div style="font-size: 12px; color: var(--pf-fg-muted); margin-top: 2px;">
+              ศูนย์บัญชาการพอร์ตการลงทุนครบวงจร (SET • US • Gold • Crypto • PVD • Insurance)
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span class="pf-badge-soft">🟢 Mark-to-Market &amp; Live Sheets Sync</span>
+            <button type="button" class="pf-ask-ai-btn" onclick="document.getElementById('pfZone5').scrollIntoView({behavior:'smooth'})">
+              <span>✨</span>
+              <span>Portfolio Insights &amp; Architecture</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sub-Navigation & Period/Currency Filter Bar -->
+        <div class="pf-subnav-bar">
+          <div class="pf-subtabs">
+            <button type="button" class="pf-subtab-btn active" data-pf-subtab="overview" onclick="PortfolioUI.setSubTab('overview', this)">Overview (All Zones)</button>
+            <button type="button" class="pf-subtab-btn" data-pf-subtab="holdings" onclick="PortfolioUI.setSubTab('holdings', this)">Holdings &amp; Asset Classes</button>
+            <button type="button" class="pf-subtab-btn" data-pf-subtab="allocation" onclick="PortfolioUI.setSubTab('allocation', this)">Allocation &amp; Rebalance</button>
+            <button type="button" class="pf-subtab-btn" data-pf-subtab="cashflow" onclick="PortfolioUI.setSubTab('cashflow', this)">Market Watch &amp; Tech</button>
+          </div>
+
+          <div class="pf-controls-right">
+            <!-- Timeframe Selector (1M, 3M, YTD, 1Y, ALL) -->
+            <div class="pf-period-group" role="group" aria-label="Timeframe">
+              <button type="button" class="pf-period-btn" data-pf-period="1M" onclick="PortfolioUI.setPeriod('1M', this)">1M</button>
+              <button type="button" class="pf-period-btn" data-pf-period="3M" onclick="PortfolioUI.setPeriod('3M', this)">3M</button>
+              <button type="button" class="pf-period-btn active" data-pf-period="YTD" onclick="PortfolioUI.setPeriod('YTD', this)">📅 This Year (YTD)</button>
+              <button type="button" class="pf-period-btn" data-pf-period="1Y" onclick="PortfolioUI.setPeriod('1Y', this)">1Y</button>
+              <button type="button" class="pf-period-btn" data-pf-period="ALL" onclick="PortfolioUI.setPeriod('ALL', this)">ALL</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================
+             ZONE 1: Top Bar & Quick Summary (5 Reference KPI Cards)
+             ================================================================= -->
+        <section id="pfZone1" class="pf-kpi-grid">
+          <!-- 1. Total Net Worth -->
+          <div class="pf-kpi-card">
+            <div class="pf-kpi-lbl">Total Portfolio Value (มูลค่าพอร์ตสุทธิ)</div>
+            <div id="pfKpiNetWorth" class="pf-kpi-val">฿ 7,105,257</div>
+            <div id="pfKpiNetWorthBadge" class="pf-kpi-foot">
+              <span class="pf-pos">↑ +20.10% (+฿1.19M)</span> <span class="pf-muted">This Year</span>
+            </div>
+          </div>
+
+          <!-- 2. Total Profit/Loss & Return -->
+          <div class="pf-kpi-card">
+            <div class="pf-kpi-lbl">Total P/L &amp; Return (กำไรสุทธิรวมปันผล)</div>
+            <div id="pfKpiTotalPL" class="pf-kpi-val">+฿ 2,009,942</div>
+            <div id="pfKpiTotalPLBadge" class="pf-kpi-foot">
+              <span class="pf-pos">↑ +38.4% Total Return</span> <span class="pf-muted">(Unrealized + Div)</span>
+            </div>
+          </div>
+
+          <!-- 3. Monthly Savings / Cash Flow In -->
+          <div class="pf-kpi-card">
+            <div class="pf-kpi-lbl">Monthly Cash Flow In (เงินลงทุนสมทบ/ด.)</div>
+            <div id="pfKpiMonthlyIn" class="pf-kpi-val">+฿ 77,500</div>
+            <div id="pfKpiMonthlyInBadge" class="pf-kpi-foot">
+              <span class="pf-pos">↑ 56.2% Invest Rate</span> <span class="pf-muted">DCA + PVD + Ins</span>
+            </div>
+          </div>
+
+          <!-- 4. Dividend Income -->
+          <div class="pf-kpi-card">
+            <div class="pf-kpi-lbl">Dividend Income (เงินปันผลรับสะสม)</div>
+            <div id="pfKpiDivYtd" class="pf-kpi-val">฿ 136,201</div>
+            <div id="pfKpiDivYtdBadge" class="pf-kpi-foot">
+              <span class="pf-pos">↑ +75.0% YoY</span> <span class="pf-muted">· YoC 8.27%</span>
+            </div>
+          </div>
+
+          <!-- 5. Risk Score & MWRR/TWRR -->
+          <div class="pf-kpi-card">
+            <div class="pf-kpi-lbl">Risk Score &amp; TWRR / MWRR</div>
+            <div id="pfKpiRiskScore" class="pf-kpi-val">0.84</div>
+            <div id="pfKpiRiskBadge" class="pf-kpi-foot">
+              <span class="pf-pos">MWRR +14.8%</span> <span class="pf-muted">· TWRR +16.2%</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             ZONE 3 & HOLDINGS: Performance vs Benchmarks + Holdings Breakdown
+             ================================================================= -->
+        <section id="pfZoneMiddle" class="pf-mid-grid">
+          <!-- Left: Performance Vs Benchmarks & Net Invested Capital -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">Performance Vs Benchmarks &amp; Net Invested Capital</div>
+                <div style="font-size: 11.5px; color: var(--pf-fg-muted); margin-top: 2px;">
+                  เปรียบเทียบผลตอบแทนพอร์ตจริง (TWRR/MWRR) กับตลาด และมูลค่าพอร์ตเทียบเส้นเงินต้นสะสม
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <span class="pf-badge-soft">Alpha +5.3%</span>
+                <span class="pf-badge-soft">Sharpe 1.28</span>
+                <div class="pf-period-group">
+                  <button type="button" class="pf-period-btn pf-perfmode-btn active" data-pf-perfmode="benchmark" onclick="PortfolioUI.setPerfMode('benchmark', this)">% vs Benchmarks</button>
+                  <button type="button" class="pf-period-btn pf-perfmode-btn" data-pf-perfmode="capital" onclick="PortfolioUI.setPerfMode('capital', this)">฿ Value vs Net Cost</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Legend Row -->
+            <div id="pfPerfLegendRow" class="pf-legend-row"></div>
+
+            <!-- Interactive SVG Line Chart with Reference Dark Callout -->
+            <div id="pfPerfChartWrap" style="width: 100%; margin-top: 6px;"></div>
+          </div>
+
+          <!-- Right: Holdings Breakdown Card (Matches Reference Right Card) -->
+          <div class="pf-card">
+            <div class="pf-card-head" style="margin-bottom: 10px;">
+              <div class="pf-card-title">Holdings &amp; Core Assets</div>
+              <div class="pf-period-group">
+                <button type="button" class="pf-period-btn pf-hold-filter-btn active" data-pf-hold="ALL" onclick="PortfolioUI.setHoldingsFilter('ALL', this)">All</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="SET" onclick="PortfolioUI.setHoldingsFilter('SET', this)">SET</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="US" onclick="PortfolioUI.setHoldingsFilter('US', this)">US</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="ALT" onclick="PortfolioUI.setHoldingsFilter('ALT', this)">Gold/Crypto</button>
+                <button type="button" class="pf-period-btn pf-hold-filter-btn" data-pf-hold="SAFETY" onclick="PortfolioUI.setHoldingsFilter('SAFETY', this)">PVD/Ins</button>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="pf-hold-tbl">
+                <thead>
+                  <tr>
+                    <th>Asset</th>
+                    <th>Value</th>
+                    <th>Weight</th>
+                    <th style="text-align: right;">P/L</th>
+                  </tr>
+                </thead>
+                <tbody id="pfHoldingsTbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             ZONE 2 + TOP MOVERS + MARKET INTELLIGENCE (Bottom 3-Column Row)
+             ================================================================= -->
+        <section id="pfZoneBottom3" class="pf-bot3-grid">
+          <!-- Col 1: Zone 2 Asset Allocation Donut + Target vs Actual Drift + FX Exposure -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">Asset Allocation &amp; Target vs Actual</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">สัดส่วนพอร์ตจริงเทียบเป้าหมาย &amp; จุดเบี่ยงเบน (Drift)</div>
+              </div>
+              <span class="pf-badge-soft">Rebalance Monitor</span>
+            </div>
+
+            <!-- Interactive Donut Chart -->
+            <div id="pfDonutWrap"></div>
+
+            <!-- Target vs Actual Allocation Drift Bars -->
+            <div id="pfDriftTableWrap"></div>
+
+            <!-- Currency & Geography Exposure (3 Mini Reference Boxes) -->
+            <div class="pf-mini3-grid">
+              <div class="pf-mini-box">
+                <div class="pf-mini-lbl">THB vs USD</div>
+                <div id="pfExposureFxVal" class="pf-mini-val">88% : 12%</div>
+              </div>
+              <div class="pf-mini-box">
+                <div class="pf-mini-lbl">Domestic : Global</div>
+                <div id="pfExposureGeoVal" class="pf-mini-val">74% : 26%</div>
+              </div>
+              <div class="pf-mini-box">
+                <div class="pf-mini-lbl">Max Drift</div>
+                <div id="pfExposureDriftVal" class="pf-mini-val" style="color: #f59e0b;">+5.1%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Top Movers (Gainers / Losers & Core Watchlist) -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">Top Movers &amp; Leaders</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">สินทรัพย์ทำกำไรสูงสุด vs ชะลอตัวในพอร์ต</div>
+              </div>
+              <span class="pf-badge-soft">Live Sync</span>
+            </div>
+
+            <div class="pf-movers-2col">
+              <div>
+                <div class="pf-mover-hdr" style="color: #10b981;">GAINERS</div>
+                <div id="pfMoversGainers"></div>
+              </div>
+              <div>
+                <div class="pf-mover-hdr" style="color: #f43f5e;">LAGGARDS / LOSERS</div>
+                <div id="pfMoversLosers"></div>
+              </div>
+            </div>
+
+            <div style="font-size: 11.5px; font-weight: 600; color: var(--pf-fg-muted); margin: 10px 0 6px;">Core Watchlist &amp; Dividend Engines</div>
+            <div id="pfMoversWatchlist"></div>
+          </div>
+
+          <!-- Col 3: Market Intelligence & Insights (Portfolio Linked) -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">Market Intelligence</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">วิเคราะห์ปัจจัยเศรษฐกิจที่ส่งผลต่อพอร์ตโดยตรง</div>
+              </div>
+              <span class="pf-badge-soft">Portfolio Linked</span>
+            </div>
+
+            <div id="pfMarketIntelList"></div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             ZONE 4: Asset Class Performance & Detail Cards (เจาะลึกรายสินทรัพย์)
+             ================================================================= -->
+        <section id="pfZone4" style="margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (เจาะลึกรายหมวดสินทรัพย์)</h3>
+              <div style="font-size: 12px; color: var(--pf-fg-muted);">แยกวิเคราะห์ตามสภาพคล่องและเป้าหมาย: 1. Liquid &amp; Growth Assets vs 2. Long-Term &amp; Safety Assets</div>
+            </div>
+            <div class="pf-period-group">
+              <button type="button" class="pf-period-btn pf-zone4-filter-btn active" data-pf-z4="ALL" onclick="PortfolioUI.setAssetZoneFilter('ALL', this)">ทั้งหมด (4 กลุ่ม)</button>
+              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="LIQUID" onclick="PortfolioUI.setAssetZoneFilter('LIQUID', this)">1. Liquid &amp; Growth</button>
+              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="SAFETY" onclick="PortfolioUI.setAssetZoneFilter('SAFETY', this)">2. Long-Term &amp; Safety</button>
+            </div>
+          </div>
+
+          <!-- Group 1: Liquid & Growth Assets -->
+          <div id="pfZone4LiquidGrid" class="pf-z4-grid">
+            <!-- Card 4.1: SET & US Equities -->
+            <div class="pf-card">
+              <div class="pf-card-head" style="margin-bottom: 8px;">
+                <div>
+                  <span class="pf-badge-soft" style="color: #10b981;">1. Liquid &amp; Growth Asset</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🇹🇭🇺🇸 SET &amp; US Equities (พอร์ตหุ้นไทย &amp; หุ้นสหรัฐฯ)</div>
+                </div>
+                <span class="pf-pl-pill pos">YoC 8.27%</span>
+              </div>
+              <div class="pf-z4-metric-row">
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">Market Value รวม</div>
+                  <div id="pfZ4EqMkt" class="pf-z4-stat-val">฿ 2,460,436</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">Unrealized P/L</div>
+                  <div id="pfZ4EqPl" class="pf-z4-stat-val" style="color: #10b981;">+฿ 618,371 (+33.6%)</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">ปันผลรับสะสมปีนี้</div>
+                  <div class="pf-z4-stat-val" style="color: #6366f1;">฿ 136,201</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between;"><span>• หุ้นไทย (SET - ADVANC, TISCO, KTB, MC, SCB):</span> <strong id="pfZ4SetSplit">฿ 2,082,537 (ทุน ฿1.52M)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• หุ้นสหรัฐฯ (US Dime - JEPQ, QQQI, NVDA, GOOGL):</span> <strong id="pfZ4UsSplit">฿ 377,899 (ทุน ฿320.7k)</strong></div>
+              </div>
+            </div>
+
+            <!-- Card 4.2: Crypto & Gold -->
+            <div class="pf-card">
+              <div class="pf-card-head" style="margin-bottom: 8px;">
+                <div>
+                  <span class="pf-badge-soft" style="color: #f59e0b;">1. Alternative &amp; Inflation Hedge</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🪙⚡ Gold 96.5% &amp; Crypto (สินทรัพย์ทางเลือก &amp; ป้องกันความเสี่ยง)</div>
+                </div>
+                <span class="pf-pl-pill warn">20.1% Weight</span>
+              </div>
+              <div class="pf-z4-metric-row">
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">มูลค่าตลาดปัจจุบัน</div>
+                  <div id="pfZ4AltMkt" class="pf-z4-stat-val">฿ 1,426,559</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">ต้นทุนสะสมเฉลี่ย (DCA Cost)</div>
+                  <div id="pfZ4AltCost" class="pf-z4-stat-val">฿ 1,425,000</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">ความผันผวน (Volatility)</div>
+                  <div class="pf-z4-stat-val">18.4% (Med-High)</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between;"><span>• ทองคำ AOM NOW (Gold 96.5% - Safe Haven):</span> <strong id="pfZ4GoldVal" style="color: #10b981;">฿ 970,072 (+7.8%)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• สินทรัพย์ดิจิทัล Bitkub (Crypto &amp; SiriHub ICO):</span> <strong id="pfZ4CryptoVal">฿ 456,487 (-13.0%)</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2: Long-Term & Safety Assets -->
+          <div id="pfZone4SafetyGrid" class="pf-z4-grid">
+            <!-- Card 4.3: PVD (Provident Fund) -->
+            <div class="pf-card">
+              <div class="pf-card-head" style="margin-bottom: 8px;">
+                <div>
+                  <span class="pf-badge-soft" style="color: #0284c7;">2. Long-Term &amp; Retirement Safety</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🏢 PVD Provident Fund (กองทุนสำรองเลี้ยงชีพ)</div>
+                </div>
+                <span class="pf-pl-pill pos">CAGR +8.4% p.a.</span>
+              </div>
+              <div class="pf-z4-metric-row">
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">มูลค่ารวมสุทธิ (Total NAV)</div>
+                  <div id="pfZ4PvdMkt" class="pf-z4-stat-val">฿ 2,146,259</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">เงินสะสมของตัวเอง (Employee)</div>
+                  <div id="pfZ4PvdEmp" class="pf-z4-stat-val">฿ 892,449 (42%)</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">สมทบนายจ้าง + กำไรสะสม</div>
+                  <div id="pfZ4PvdEmr" class="pf-z4-stat-val" style="color: #10b981;">+฿ 1,253,810 (58%)</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between;"><span>• แผนการลงทุนปัจจุบัน:</span> <strong>ตราสารหนี้ + หุ้นสมดุล (Balanced Growth Plan)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• เงินสะสมหักรายเดือนอัตโนมัติ:</span> <strong style="color: #0284c7;">฿ 7,500 / เดือน (Vesting 100%)</strong></div>
+              </div>
+            </div>
+
+            <!-- Card 4.4: Insurance (Cash Surrender Value vs Protection Coverage) -->
+            <div class="pf-card">
+              <div class="pf-card-head" style="margin-bottom: 8px;">
+                <div>
+                  <span class="pf-badge-soft" style="color: #ec4899;">2. Wealth Protection &amp; Cash Value</span>
+                  <div class="pf-card-title" style="margin-top: 6px;">🛡️ Insurance (ประกันชีวิตสะสมทรัพย์ &amp; วงเงินความคุ้มครอง)</div>
+                </div>
+                <span class="pf-pl-pill info">Cashback ฿12k/ปี</span>
+              </div>
+              <div class="pf-z4-metric-row">
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">มูลค่าเวนคืนเงินสด (นับเป็นสินทรัพย์)</div>
+                  <div id="pfZ4InsCashVal" class="pf-z4-stat-val" style="color: #10b981;">฿ 991,050</div>
+                </div>
+                <div class="pf-z4-stat">
+                  <div class="pf-z4-stat-lbl">เบี้ยสะสมที่จ่ายไปแล้ว</div>
+                  <div id="pfZ4InsPremium" class="pf-z4-stat-val">฿ 956,383</div>
+                </div>
+                <div class="pf-z4-stat" style="border: 1px dashed rgba(236, 72, 153, 0.4);">
+                  <div class="pf-z4-stat-lbl">วงเงินคุ้มครองชีวิตรวม (Protection)</div>
+                  <div id="pfZ4InsCoverage" class="pf-z4-stat-val" style="color: #ec4899;">฿ 3,500,000</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between;"><span>• การบันทึกบัญชีความมั่งคั่ง:</span> <strong>แยกมูลค่าเงินสด (Net Worth) ออกจากทุนประกันชัดเจน</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>• เงินคืนตามกรมธรรม์ (CHUBB Life):</span> <strong style="color: #10b981;">รับเงินคืน ฿ 12,000 ทุกเดือน ส.ค.</strong></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             ZONE 5: Cash Flow Calendar, Rebalancing Alerts & Technical Architecture
+             ================================================================= -->
+        <section id="pfZone5" class="pf-bot3-grid" style="margin-bottom: 0;">
+          <!-- Card 5.1: Dividend & Passive Income Calendar -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">📅 Dividend &amp; Passive Income Calendar</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">ตารางกระแสเงินสดปันผลรายเดือน (SET + US ETFs + Insurance)</div>
+              </div>
+              <span class="pf-pl-pill pos">฿11.3k / ด.</span>
+            </div>
+            <div id="pfDivCalendarBars" class="pf-cal-bars"></div>
+            <div style="font-size: 11.5px; color: var(--pf-fg-sec); display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--pf-border);">
+              <span>🔥 เดือนปันผลสูงสุด: <strong>เม.ย. (฿65.1k) &amp; ก.ย. (฿28.5k)</strong></span>
+              <span class="pf-pos">US ETF จ่ายทุกเดือน</span>
+            </div>
+          </div>
+
+          <!-- Card 5.2: Contribution Tracker & Rebalancing Alerts -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">🔔 Contribution &amp; Rebalancing Alerts</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">แจ้งเตือนปรับสัดส่วนพอร์ต &amp; กำหนดการตัดเงินลงทุนงวดถัดไป</div>
+              </div>
+              <span class="pf-pl-pill warn">1 Alert</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="padding: 10px 12px; border-radius: 12px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); font-size: 12px;">
+                <div style="font-weight: 700; color: #d97706;">⚠️ Rebalance Alert: Alternative Overweight (+5.1%)</div>
+                <div style="color: var(--pf-fg-sec); font-size: 11px; margin-top: 2px;">สัดส่วน Gold + Crypto (20.1%) เกินกรอบเป้าหมาย 15% แนะนำเน้นเติม DCA รอบถัดไปเข้า SET / US Equity</div>
+              </div>
+
+              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                <div>
+                  <div style="font-weight: 600;">🏢 ตัดเงินสะสม PVD งวดถัดไป</div>
+                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">ทุกวันที่ 25 ของเดือน (หักผ่านบัญชีเงินเดือน)</div>
+                </div>
+                <strong style="color: #0284c7;">฿ 7,500</strong>
+              </div>
+
+              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+                <div>
+                  <div style="font-weight: 600;">📈 เติมเงินลงทุน DCA (SET &amp; US Dime)</div>
+                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">ทุกวันที่ 28 ของเดือน + ปันผลทบต้น (Re-invest)</div>
+                </div>
+                <strong style="color: #10b981;">฿ 30,500</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5.3: Technical & Data Architecture -->
+          <div class="pf-card">
+            <div class="pf-card-head">
+              <div>
+                <div class="pf-card-title">⚙️ Data Architecture &amp; Return Engine</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">โครงสร้างความถี่การดึงราคา (Latency) &amp; มาตรฐานคำนวณผลตอบแทน</div>
+              </div>
+              <span class="pf-badge-soft">MWRR / TWRR</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11.5px;">
+              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
+                <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                  <span>⚡ Real-time / End-of-Day API</span>
+                  <span class="pf-pos">Live GVIZ Sync</span>
+                </div>
+                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
+                  หุ้น SET, หุ้น US (Dime), ทองคำ 96.5%, และ Crypto ดึงราคาตลาดอัตโนมัติผ่าน Google Finance &amp; Sheets API
+                </div>
+              </div>
+
+              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
+                <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                  <span>🗓️ Periodic Mark-to-Market / Manual NAV</span>
+                  <span style="color: #0284c7; font-weight: 600;">Monthly NAV</span>
+                </div>
+                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
+                  PVD และ Insurance Cash Value อัปเดต NAV รายเดือน/รายงวดผ่านชีต Portfolio พร้อมแยกเงินต้นสะสมแท้จริง
+                </div>
+              </div>
+
+              <div style="padding: 9px 12px; border-radius: 10px; background: var(--pf-card-sec);">
+                <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                  <span>📐 MWRR (+14.8%) vs TWRR (+16.2%)</span>
+                  <span style="color: #6366f1; font-weight: 600;">Cash-Flow Adjusted</span>
+                </div>
+                <div style="color: var(--pf-fg-muted); font-size: 10.5px; margin-top: 2px;">
+                  แยกกระแสเงินสดเติมเงินต้น (Net Invested Capital) ออกจากกำไรตลาด เพื่อไม่ให้ % ผลตอบแทนเพี้ยนเมื่อ DCA
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
   </div>
 
   <!-- =====================================================================
@@ -3016,6 +4172,7 @@
        ===================================================================== -->
   <nav class="island-dock" data-od-id="island-dock">
     <button class="dock-icon active" data-tab="tab-overview" onclick="switchTab('tab-overview')" title="ภาพรวมความมั่งคั่ง">🌐</button>
+    <button class="dock-icon" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')" title="พอร์ตการลงทุน (Portfolio)">📊</button>
     <button class="dock-icon" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')" title="กระแสเงินสด & ค่าใช้จ่าย">💵</button>
     <button class="dock-icon" data-tab="tab-dividends" onclick="switchTab('tab-dividends')" title="เงินปันผล & ดอกเบี้ย">💰</button>
     <button class="dock-icon" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')" title="เป้าหมาย & วินัยการออม">🎯</button>
@@ -3276,10 +4433,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=39"></script>
-  <script src="js/sheets-api.js?v=39"></script>
-  <script src="js/charts.js?v=39"></script>
-  <script src="js/cashflow-ui.js?v=39"></script>
-  <script src="js/app.js?v=39"></script>
+  <script src="js/data-store.js?v=40"></script>
+  <script src="js/sheets-api.js?v=40"></script>
+  <script src="js/charts.js?v=40"></script>
+  <script src="js/cashflow-ui.js?v=40"></script>
+  <script src="js/portfolio-ui.js?v=40"></script>
+  <script src="js/app.js?v=40"></script>
 </body>
 </html>

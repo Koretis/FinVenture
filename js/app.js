@@ -35,6 +35,8 @@ function switchTab(tabId) {
     FinCharts.renderDividendTimeline();
   } else if (tabId === "tab-roadmap") {
     FinCharts.renderRoadmapView();
+  } else if (tabId === "tab-portfolio") {
+    if (typeof PortfolioUI !== "undefined") PortfolioUI.renderAll();
   }
 }
 
@@ -72,6 +74,7 @@ function setCurrency(cur) {
   FinCharts.renderFreedomGoalCard();
   FinCharts.renderRoadmapView();
   if (typeof renderCashFlowPage === 'function') renderCashFlowPage();
+  if (typeof PortfolioUI !== "undefined") PortfolioUI.renderAll();
 }
 
 // -------------------------------------------------------------
@@ -94,6 +97,7 @@ function setTheme(themeName) {
   FinCharts.renderCategoryDeepDive();
   FinCharts.renderDividendTimeline();
   if (typeof renderCashFlowPage === 'function') renderCashFlowPage();
+  if (typeof PortfolioUI !== "undefined") PortfolioUI.renderAll();
 }
 
 // -------------------------------------------------------------
@@ -311,6 +315,7 @@ function refreshAllDataViews() {
   FinCharts.renderRoadmapView();
   // Render new two-column cash flow page
   if (typeof renderCashFlowPage === 'function') renderCashFlowPage();
+  if (typeof PortfolioUI !== "undefined") PortfolioUI.renderAll();
 }
 
 function updateValEl(elementId, amount, isPrefix = false) {
