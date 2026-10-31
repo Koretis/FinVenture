@@ -182,26 +182,23 @@ var PortfolioUI = {
       zone5: document.getElementById("pfZone5")
     };
 
-    Object.values(zones).forEach(el => { if (el) el.style.display = ""; });
+    if (subTab === "overview") {
+      // Overview: Show all zones
+      Object.values(zones).forEach(el => { if (el) el.style.display = ""; });
+    } else {
+      // Hide all zones first, then show ONLY the selected zone
+      Object.values(zones).forEach(el => { if (el) el.style.display = "none"; });
 
-    if (subTab === "holdings") {
-      if (zones.zoneBottom3) zones.zoneBottom3.style.display = "none";
-      if (zones.zone5) zones.zone5.style.display = "none";
-    } else if (subTab === "allocation") {
-      if (zones.zoneMiddle) zones.zoneMiddle.style.display = "none";
-    } else if (subTab === "cashflow") {
-      if (zones.zoneMiddle) zones.zoneMiddle.style.display = "none";
-      if (zones.zoneBottom3) zones.zoneBottom3.style.display = "none";
-      if (zones.zone4) zones.zone4.style.display = "none";
+      if (subTab === "holdings") {
+        if (zones.zone4) zones.zone4.style.display = "";
+      } else if (subTab === "allocation") {
+        if (zones.zoneBottom3) zones.zoneBottom3.style.display = "";
+      } else if (subTab === "cashflow") {
+        if (zones.zone5) zones.zone5.style.display = "";
+      }
     }
 
     this.renderAll();
-
-    if (subTab === "cashflow" && zones.zone5) {
-      setTimeout(() => {
-        zones.zone5.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 60);
-    }
   },
 
   setPeriod(period) {
