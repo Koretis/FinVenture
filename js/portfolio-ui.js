@@ -7,11 +7,25 @@
 
 var PortfolioUI = {
   state: {
-    subTab: "overview",      // 'overview' | 'holdings' | 'allocation' | 'cashflow'
-    period: "YTD",           // '1M' | '3M' | 'YTD' | '1Y' | 'ALL'
-    perfMode: "capital",     // 'capital' (฿ Value vs Cost) | 'benchmark' (% Return by Risk)
-    holdingsFilter: "ALL",   // 'ALL' | 'High' | 'Mid' | 'Low'
-    assetZoneFilter: "ALL"   // 'ALL' | 'LIQUID' | 'SAFETY'
+    subTab: "overview",            // 'overview' | 'holdings' | 'allocation' | 'cashflow'
+    period: "YTD",                 // '1M' | '3M' | 'YTD' | '1Y' | 'ALL'
+    perfMode: "capital",           // 'capital' (฿ Value vs Cost) | 'benchmark' (% Return by Risk)
+    holdingsFilter: "ALL",         // 'ALL' | 'High' | 'Mid' | 'Low'
+    assetZoneFilter: "ALL",        // 'ALL' | 'LIQUID' | 'SAFETY'
+    tradeLogSheet: "set",          // 'set' | 'usd' | 'gold' | 'crypto'
+    tradeLogHoldingFilter: "ALL",  // 'ALL' | 'ACTIVE'
+    tradeLogTypeFilter: "ALL",     // 'ALL' | 'Buy' | 'Sell' | 'OTHER'
+    tradeLogTickerFilter: "ALL",   // 'ALL' or specific ticker
+    investMonthlyYear: "ALL"       // 'ALL' | '2026' | '2025'
+  },
+
+  fmtUsd(val, decimals = 2) {
+    const n = Number(val) || 0;
+    const sign = n < 0 ? "-" : "";
+    return sign + "$" + Math.abs(n).toLocaleString("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
   },
 
   fmtMoney(val, cur) {
@@ -1007,69 +1021,679 @@ var PortfolioUI = {
     setEl("pfZ4InsCoverage", this.fmtMoney(a.CASH.market));
     setEl("pfZ4CashSplit", `${this.fmtMoney(cashRow.market)} (ทุน ${this.fmtMoney(cashRow.cost)})`);
     setEl("pfZ4BankSplit", `${this.fmtMoney(bankRow.market)} (ทุน ${this.fmtMoney(bankRow.cost)})`);
+
+    // Render Zone 4 Deep-Dive Sheet Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
+    this.renderTradeLogExplorer();
   },
 
   /* =========================================================================
-     ZONE 5: Monthly History Bars, Monthly Ledger & Raw Sheet Table ("Portfolio")
+     ZONE 4 DEEP-DIVE EXPLORER:
+     Sheets: "SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log"
      ========================================================================= */
+  selectTradeLogSheet(sheetKey, scrollToExplorer) {
+    this.state.tradeLogSheet = sheetKey || "set";
+    this.state.tradeLogTickerFilter = "ALL";
+    this.state.tradeLogTypeFilter = "ALL";
+
+    document.querySelectorAll(".pf-tradelog-tab-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-pf-tl") === this.state.tradeLogSheet);
+    });
+    document.querySelectorAll(".pf-tl-type-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-pf-tltype") === "ALL");
+    });
+
+    this.renderTradeLogExplorer();
+
+    if (scrollToExplorer) {
+      const box = document.getElementById("pfZone4TradeLogExplorer");
+      if (box) box.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  },
+
+  setTradeLogHoldingFilter(statusFilter) {
+    this.state.tradeLogHoldingFilter = statusFilter || "ALL";
+    document.querySelectorAll(".pf-tl-holdstatus-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-pf-tlstatus") === this.state.tradeLogHoldingFilter);
+    });
+    this.renderTradeLogExplorer();
+  },
+
+  setTradeLogTypeFilter(typeFilter) {
+    this.state.tradeLogTypeFilter = typeFilter || "ALL";
+    document.querySelectorAll(".pf-tl-type-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-pf-tltype") === this.state.tradeLogTypeFilter);
+    });
+    this.renderTradeLogExplorer(true);
+  },
+
+  setTradeLogTickerFilter(ticker) {
+    this.state.tradeLogTickerFilter = ticker || "ALL";
+    this.renderTradeLogExplorer(true);
+  },
+
+  renderTradeLogExplorer(keepTickerOptions) {
+    const key = this.state.tradeLogSheet || "set";
+    const logs = (typeof currentFinData !== "undefined" && currentFinData && currentFinData.tradeLogs) ? currentFinData.tradeLogs : {};
+    const sheetData = logs[key] || { holdings: [], total: null, trades: [] };
+    const holdings = Array.isArray(sheetData.holdings) ? sheetData.holdings : [];
+    const trades = Array.isArray(sheetData.trades) ? sheetData.trades : [];
+    const total = sheetData.total || null;
+
+    const metaMap = {
+      set: {
+        sheetName: "SET Trade Log",
+        title: "🇹🇭 เจาะลึกพอร์ตหุ้นไทย & ประวัติซื้อขายจากชีต “SET Trade Log”",
+        badgeColor: "#10b981"
+      },
+      usd: {
+        sheetName: "USD Stock Trading Log",
+        title: "🇺🇸 เจาะลึกพอร์ตหุ้นสหรัฐฯ & ประวัติซื้อขายจากชีต “USD Stock Trading Log”",
+        badgeColor: "#6366f1"
+      },
+      gold: {
+        sheetName: "Gold Trade Log",
+        title: "🪙 เจาะลึกพอร์ตทองคำ AOM NOW & ประวัติซื้อขายจากชีต “Gold Trade Log”",
+        badgeColor: "#f59e0b"
+      },
+      crypto: {
+        sheetName: "Crypto Trade Log",
+        title: "⚡ เจาะลึกพอร์ตคริปโต Bitkub & ประวัติซื้อขายจากชีต “Crypto Trade Log”",
+        badgeColor: "#8b5cf6"
+      }
+    };
+    const meta = metaMap[key] || metaMap.set;
+
+    const badgeEl = document.getElementById("pfZ4ExplorerSheetBadge");
+    const titleEl = document.getElementById("pfZ4ExplorerTitle");
+    if (badgeEl) badgeEl.textContent = `Sheet: ${meta.sheetName}`;
+    if (titleEl) titleEl.textContent = meta.title;
+
+    // 1. Render KPI Strip for Selected Trade Log Sheet
+    const kpiStripEl = document.getElementById("pfZ4ExplorerKpiStrip");
+    if (kpiStripEl) {
+      let mktThb = total ? Number(total.mktThb || 0) : holdings.reduce((s, h) => s + Number(h.mktThb || 0), 0);
+      let costThb = total ? Number(total.costThb || 0) : holdings.reduce((s, h) => s + Number(h.costThb || 0), 0);
+      let profitThb = total && total.profitThb !== undefined ? Number(total.profitThb) : (mktThb - costThb);
+      let profitPct = costThb > 0 ? ((profitThb / costThb) * 100) : 0;
+
+      const buyTrades = trades.filter(t => (t.type || "").toLowerCase() === "buy");
+      const sellTrades = trades.filter(t => (t.type || "").toLowerCase() === "sell");
+      const activeHoldings = holdings.filter(h => Number(h.mktThb || 0) > 0 || Number(h.sellable || 0) > 0);
+
+      let extraKpiLbl = "ปันผลรับสุทธิ / ยอดขายสะสม";
+      let extraKpiVal = "—";
+      let extraKpiSub = "";
+
+      if (key === "set") {
+        const netDiv = holdings.reduce((s, h) => s + Number(h.netDivThb || 0), 0);
+        const targetDiv = holdings.reduce((s, h) => s + Number(h.targetDivThb || 0), 0);
+        extraKpiLbl = "เงินปันผลคาดการณ์ต่อปี (Net DIV)";
+        extraKpiVal = this.fmtMoney(netDiv);
+        extraKpiSub = `เป้าหมายปันผล ${this.fmtMoney(targetDiv)} (${targetDiv > 0 ? ((netDiv / targetDiv) * 100).toFixed(1) : 0}%)`;
+      } else if (key === "usd") {
+        const divThb = total ? Number(total.divThb || 0) : holdings.reduce((s, h) => s + Number(h.divThb || 0), 0);
+        const divUsd = total ? Number(total.divUsd || 0) : holdings.reduce((s, h) => s + Number(h.divUsd || 0), 0);
+        extraKpiLbl = "เงินปันผลรับสุทธิ (Dividend Net)";
+        extraKpiVal = `${this.fmtMoney(divThb)} (${this.fmtUsd(divUsd)})`;
+        extraKpiSub = `Mkt USD: ${this.fmtUsd(total?.mktUsd || 0)} · Cost USD: ${this.fmtUsd(total?.costUsd || 0)}`;
+      } else if (key === "gold") {
+        const totalBuyBaht = buyTrades.reduce((s, t) => s + Number(t.weightBaht || 0), 0);
+        const totalBuyAmt = buyTrades.reduce((s, t) => s + Number(t.amountThb || 0), 0);
+        const totalSellAmt = sellTrades.reduce((s, t) => s + Number(t.amountThb || 0), 0);
+        extraKpiLbl = "ยอดซื้อทองสะสม vs ยอดขายออก";
+        extraKpiVal = `ขายแล้ว ${this.fmtMoney(totalSellAmt)}`;
+        extraKpiSub = `ซื้อสะสม ${totalBuyBaht.toFixed(2)} บาททอง (${this.fmtMoney(totalBuyAmt)})`;
+      } else if (key === "crypto") {
+        const totalBuyCost = buyTrades.reduce((s, t) => s + Number(t.totalCostThb || 0), 0);
+        const totalSellVal = sellTrades.reduce((s, t) => s + Number(t.totalCostThb || 0), 0);
+        extraKpiLbl = "ธุรกรรมสะสมบน Bitkub";
+        extraKpiVal = `Buy ${buyTrades.length} ครั้ง · Sell ${sellTrades.length} ครั้ง`;
+        extraKpiSub = `ยอดซื้อรวม ${this.fmtShort(totalBuyCost)} · ยอดขายรวม ${this.fmtShort(totalSellVal)}`;
+      }
+
+      const isPos = profitThb >= 0;
+      kpiStripEl.innerHTML = `
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Market Value (จากชีต ${meta.sheetName})</div>
+          <div class="pf-kpi-val">${this.fmtMoney(mktThb)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-muted">${key === "usd" && total ? `(${this.fmtUsd(total.mktUsd)})` : `อัปเดตสดจากชีต ${meta.sheetName}`}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Cost NAV (ต้นทุนสุทธิในชีต)</div>
+          <div class="pf-kpi-val">${this.fmtMoney(costThb)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-muted">${key === "usd" && total ? `(${this.fmtUsd(total.costUsd)})` : `ต้นทุนสะสมตามตารางสรุปพอร์ต`}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Profit / Loss (กำไร/ขาดทุนในชีต)</div>
+          <div class="pf-kpi-val" style="color:${isPos ? '#10b981' : '#f43f5e'};">${isPos ? '+' : ''}${this.fmtMoney(profitThb)}</div>
+          <div class="pf-kpi-foot">
+            <span class="${isPos ? 'pf-pos' : 'pf-neg'}">${isPos ? '↑ +' : '↓ '}${profitPct.toFixed(2)}%</span>
+            <span class="pf-muted">${key === "usd" && total ? `(${isPos ? '+' : ''}${this.fmtUsd(total.profitUsd)})` : 'Return on Cost'}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">${extraKpiLbl}</div>
+          <div class="pf-kpi-val" style="font-size:18px;">${extraKpiVal}</div>
+          <div class="pf-kpi-foot"><span class="pf-muted">${extraKpiSub}</span></div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">จำนวนสินทรัพย์ &amp; ประวัติเทรด</div>
+          <div class="pf-kpi-val" style="font-size:18px;">${activeHoldings.length}/${holdings.length} สินทรัพย์ · ${trades.length} เทรด</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-pos">Buy ${buyTrades.length}</span>
+            <span class="pf-muted">· Sell ${sellTrades.length} · อื่นๆ ${trades.length - buyTrades.length - sellTrades.length}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. Render Holdings Summary Table (Right-side table of the selected Trade Log sheet)
+    const holdWrap = document.getElementById("pfZ4ExplorerHoldingsWrap");
+    if (holdWrap) {
+      const onlyActive = this.state.tradeLogHoldingFilter === "ACTIVE";
+      const filteredHoldings = holdings.filter(h => {
+        if (!onlyActive) return true;
+        return Number(h.mktThb || 0) > 0 || Number(h.sellable || 0) > 0;
+      });
+
+      if (key === "set") {
+        holdWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>Fund / Stock Name</th>
+                <th>Status</th>
+                <th style="text-align:right;">Sellable / Target</th>
+                <th style="text-align:right;">Avg / Last (THB)</th>
+                <th style="text-align:right;">Cost NAV (THB)</th>
+                <th style="text-align:right;">Mkt Value (THB)</th>
+                <th style="text-align:right;">Net DIV / Yr</th>
+                <th style="text-align:right;">Profit (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredHoldings.map(h => {
+                const isPos = h.profitThb >= 0;
+                const isAct = (h.status || "").toLowerCase() === "active" && h.mktThb > 0;
+                return `
+                  <tr class="pf-hold-row" style="cursor:pointer;" onclick="PortfolioUI.setTradeLogTickerFilter('${h.name === 'Cash' ? 'ALL' : h.name}')">
+                    <td><strong>${h.name}</strong> ${h.portionPct > 0 ? `<span style="font-size:10px; color:var(--pf-fg-muted);">(${h.portionPct.toFixed(1)}%)</span>` : ''}</td>
+                    <td><span class="pf-pl-pill ${isAct ? 'pos' : 'info'}" style="font-size:10px;">${h.status}</span></td>
+                    <td style="text-align:right;">${h.sellable.toLocaleString()} <span style="color:var(--pf-fg-muted); font-size:10px;">/ ${h.targetUnits.toLocaleString()}</span></td>
+                    <td style="text-align:right;">฿${h.avgPriceThb.toFixed(2)} → <strong>฿${h.lastPriceThb.toFixed(2)}</strong></td>
+                    <td style="text-align:right;">${this.fmtMoney(h.costThb)}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(h.mktThb)}</td>
+                    <td style="text-align:right; color:#6366f1; font-weight:600;">${h.netDivThb > 0 ? `${this.fmtMoney(h.netDivThb)} (${h.divPctPerStock.toFixed(2)}%)` : '—'}</td>
+                    <td style="text-align:right;">
+                      <span class="pf-pl-pill ${h.profitThb === 0 ? 'info' : (isPos ? 'pos' : 'neg')}">
+                        ${h.profitThb > 0 ? '+' : ''}${this.fmtMoney(h.profitThb)} (${h.profitPct >= 0 ? '+' : ''}${h.profitPct.toFixed(2)}%)
+                      </span>
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+              ${total ? `
+                <tr class="pf-hold-row" style="background:var(--pf-card); font-weight:800; border-top:2px solid var(--pf-border);">
+                  <td colspan="4">รวมพอร์ต SET ทั้งหมด (Total Row in Sheet)</td>
+                  <td style="text-align:right;">${this.fmtMoney(total.costThb)}</td>
+                  <td style="text-align:right; color:#10b981;">${this.fmtMoney(total.mktThb)}</td>
+                  <td style="text-align:right; color:#6366f1;">${this.fmtMoney(holdings.reduce((s, h) => s + (h.netDivThb || 0), 0))}</td>
+                  <td style="text-align:right;">
+                    <span class="pf-pl-pill ${total.profitThb >= 0 ? 'pos' : 'neg'}">
+                      ${total.profitThb >= 0 ? '+' : ''}${this.fmtMoney(total.profitThb)} (${total.profitPct >= 0 ? '+' : ''}${total.profitPct.toFixed(2)}%)
+                    </span>
+                  </td>
+                </tr>
+              ` : ''}
+            </tbody>
+          </table>
+        `;
+      } else if (key === "usd") {
+        holdWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>Fund Name / Group</th>
+                <th>Status</th>
+                <th style="text-align:right;">Sellable Units</th>
+                <th style="text-align:right;">Avg / Last (USD)</th>
+                <th style="text-align:right;">Cost NAV (USD / THB)</th>
+                <th style="text-align:right;">Mkt Value (USD / THB)</th>
+                <th style="text-align:right;">Dividend Net</th>
+                <th style="text-align:right;">Profit (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredHoldings.map(h => {
+                const isPos = h.profitThb >= 0;
+                const isOngoing = (h.status || "").toLowerCase() === "ongoing";
+                return `
+                  <tr class="pf-hold-row" style="cursor:pointer;" onclick="PortfolioUI.setTradeLogTickerFilter('${h.name === 'Cash' ? 'ALL' : h.name}')">
+                    <td>
+                      <strong>${h.name}</strong>
+                      <span style="font-size:10px; color:var(--pf-fg-muted);">${h.group ? `(${h.group} • ${h.port})` : ''} ${h.allocPct > 0 ? `• ${h.allocPct.toFixed(1)}%` : ''}</span>
+                    </td>
+                    <td><span class="pf-pl-pill ${isOngoing ? 'pos' : 'info'}" style="font-size:10px;">${h.status}</span></td>
+                    <td style="text-align:right;">${h.sellable > 0 ? h.sellable.toFixed(4) : '0'}</td>
+                    <td style="text-align:right;">${h.avgPriceUsd > 0 ? `${this.fmtUsd(h.avgPriceUsd)} → <strong>${this.fmtUsd(h.lastPriceUsd)}</strong>` : '—'}</td>
+                    <td style="text-align:right;">${h.costThb > 0 ? `${this.fmtUsd(h.costUsd)} <span style="color:var(--pf-fg-muted);">(${this.fmtMoney(h.costThb)})</span>` : '—'}</td>
+                    <td style="text-align:right; font-weight:700;">${h.mktThb > 0 ? `${this.fmtUsd(h.mktUsd)} <span style="color:#10b981;">(${this.fmtMoney(h.mktThb)})</span>` : '—'}</td>
+                    <td style="text-align:right; color:#6366f1; font-weight:600;">${h.divThb > 0 ? `${this.fmtUsd(h.divUsd)} (${this.fmtMoney(h.divThb)})` : '—'}</td>
+                    <td style="text-align:right;">
+                      ${h.costThb > 0 || h.profitThb !== 0 ? `
+                        <span class="pf-pl-pill ${h.profitThb === 0 ? 'info' : (isPos ? 'pos' : 'neg')}">
+                          ${h.profitThb > 0 ? '+' : ''}${this.fmtMoney(h.profitThb)} (${h.profitPct >= 0 ? '+' : ''}${h.profitPct.toFixed(2)}%)
+                        </span>
+                      ` : '<span style="color:var(--pf-fg-muted);">Sold / Terminated</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+              ${total ? `
+                <tr class="pf-hold-row" style="background:var(--pf-card); font-weight:800; border-top:2px solid var(--pf-border);">
+                  <td colspan="4">รวมพอร์ต USD Stock ทั้งหมด (Total Row in Sheet)</td>
+                  <td style="text-align:right;">${this.fmtUsd(total.costUsd)} (${this.fmtMoney(total.costThb)})</td>
+                  <td style="text-align:right; color:#10b981;">${this.fmtUsd(total.mktUsd)} (${this.fmtMoney(total.mktThb)})</td>
+                  <td style="text-align:right; color:#6366f1;">${this.fmtUsd(total.divUsd)} (${this.fmtMoney(total.divThb)})</td>
+                  <td style="text-align:right;">
+                    <span class="pf-pl-pill ${total.profitThb >= 0 ? 'pos' : 'neg'}">
+                      +${this.fmtMoney(total.profitThb)} (+${total.profitPct.toFixed(2)}%)
+                    </span>
+                  </td>
+                </tr>
+              ` : ''}
+            </tbody>
+          </table>
+        `;
+      } else if (key === "gold") {
+        holdWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>Gold Agent</th>
+                <th>Status</th>
+                <th style="text-align:right;">Sellable (บาททอง)</th>
+                <th style="text-align:right;">Avg Price / Last Price (THB)</th>
+                <th style="text-align:right;">Cost NAV (THB)</th>
+                <th style="text-align:right;">Mkt Value (THB)</th>
+                <th style="text-align:right;">Profit (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${holdings.map(h => `
+                <tr class="pf-hold-row">
+                  <td><strong>${h.name}</strong></td>
+                  <td><span class="pf-pl-pill ${h.mktThb > 0 ? 'pos' : 'warn'}" style="font-size:10px;">${h.status || 'Sold Out'}</span></td>
+                  <td style="text-align:right;">${h.sellable.toFixed(4)} บาททอง</td>
+                  <td style="text-align:right;">฿${h.avgPriceThb.toLocaleString()} → <strong>฿${h.lastPriceThb.toLocaleString()}</strong></td>
+                  <td style="text-align:right;">${this.fmtMoney(h.costThb)}</td>
+                  <td style="text-align:right; font-weight:700;">${this.fmtMoney(h.mktThb)}</td>
+                  <td style="text-align:right;">
+                    <span class="pf-pl-pill ${h.profitThb >= 0 ? 'pos' : 'info'}">
+                      ${this.fmtMoney(h.profitThb)} (ขายทำกำไร 30-Oct-2026 ยอด ฿909,701)
+                    </span>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      } else if (key === "crypto") {
+        holdWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>Cryptocurrency Name</th>
+                <th>Status</th>
+                <th style="text-align:right;">Sellable Units</th>
+                <th style="text-align:right;">Avg / Last (THB/Unit)</th>
+                <th style="text-align:right;">Cost NAV (THB)</th>
+                <th style="text-align:right;">Mkt Value (THB)</th>
+                <th style="text-align:right;">Profit (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredHoldings.map(h => {
+                const isPos = h.profitThb >= 0;
+                const isHold = (h.status || "").toLowerCase() === "holding" && h.mktThb > 0;
+                return `
+                  <tr class="pf-hold-row" style="cursor:pointer;" onclick="PortfolioUI.setTradeLogTickerFilter('${h.name === 'Cash' ? 'ALL' : h.name}')">
+                    <td><strong>${h.name}</strong></td>
+                    <td><span class="pf-pl-pill ${isHold ? 'pos' : 'info'}" style="font-size:10px;">${h.status || '—'}</span></td>
+                    <td style="text-align:right;">${h.sellable > 0 ? h.sellable.toFixed(6) : '0'}</td>
+                    <td style="text-align:right;">฿${h.avgPriceThb.toLocaleString()} → <strong>฿${h.lastPriceThb.toLocaleString()}</strong></td>
+                    <td style="text-align:right;">${this.fmtMoney(h.costThb)}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(h.mktThb)}</td>
+                    <td style="text-align:right;">
+                      <span class="pf-pl-pill ${h.profitThb === 0 ? 'info' : (isPos ? 'pos' : 'neg')}">
+                        ${h.profitThb > 0 ? '+' : ''}${this.fmtMoney(h.profitThb)} (${h.profitPct >= 0 ? '+' : ''}${h.profitPct.toFixed(2)}%)
+                      </span>
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+              ${total ? `
+                <tr class="pf-hold-row" style="background:var(--pf-card); font-weight:800; border-top:2px solid var(--pf-border);">
+                  <td colspan="4">รวมพอร์ต Crypto ทั้งหมด (Total Row in Sheet)</td>
+                  <td style="text-align:right;">${this.fmtMoney(total.costThb)}</td>
+                  <td style="text-align:right; color:#8b5cf6;">${this.fmtMoney(total.mktThb)}</td>
+                  <td style="text-align:right;">
+                    <span class="pf-pl-pill ${total.profitThb >= 0 ? 'pos' : 'neg'}">
+                      ${total.profitThb >= 0 ? '+' : ''}${this.fmtMoney(total.profitThb)} (${total.profitPct.toFixed(2)}%)
+                    </span>
+                  </td>
+                </tr>
+              ` : ''}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+
+    // 3. Populate Ticker Dropdown for Trade Transactions Log
+    const tickerSel = document.getElementById("pfZ4TradeTickerSelect");
+    if (tickerSel && !keepTickerOptions) {
+      const uniqueTickers = Array.from(new Set(trades.map(t => t.ticker || t.agent).filter(Boolean)));
+      tickerSel.innerHTML = `<option value="ALL">ทุกสินทรัพย์ (${uniqueTickers.length} รายการ)</option>` +
+        uniqueTickers.map(tk => `<option value="${tk}" ${this.state.tradeLogTickerFilter === tk ? 'selected' : ''}>${tk}</option>`).join("");
+    } else if (tickerSel) {
+      tickerSel.value = this.state.tradeLogTickerFilter || "ALL";
+    }
+
+    // 4. Render Trade Transactions Log Table (Left-side table of the selected Trade Log sheet)
+    const tradesWrap = document.getElementById("pfZ4ExplorerTradesWrap");
+    const countSubEl = document.getElementById("pfZ4ExplorerTradeCountSub");
+
+    if (tradesWrap) {
+      const tFilter = this.state.tradeLogTypeFilter || "ALL";
+      const tkFilter = this.state.tradeLogTickerFilter || "ALL";
+
+      const filteredTrades = [...trades].reverse().filter(t => {
+        if (tkFilter !== "ALL" && (t.ticker || t.agent) !== tkFilter) return false;
+        if (tFilter === "ALL") return true;
+        const tp = (t.type || "").toLowerCase();
+        if (tFilter === "Buy") return tp === "buy";
+        if (tFilter === "Sell") return tp === "sell";
+        return tp !== "buy" && tp !== "sell";
+      });
+
+      if (countSubEl) {
+        countSubEl.textContent = `แสดง ${filteredTrades.length} จากทั้งหมด ${trades.length} รายการในชีต “${meta.sheetName}” (เรียงจากล่าสุด)`;
+      }
+
+      if (key === "gold") {
+        tradesWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Agent</th>
+                <th>Type</th>
+                <th style="text-align:right;">Gold Weight (g)</th>
+                <th style="text-align:right;">Gold (บาททอง)</th>
+                <th style="text-align:right;">Price / บาททอง</th>
+                <th style="text-align:right;">Amount (THB)</th>
+                <th style="text-align:right;">Trade P&amp;L (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredTrades.map(t => {
+                const isBuy = (t.type || "").toLowerCase() === "buy";
+                const isPos = t.plThb >= 0;
+                return `
+                  <tr class="pf-hold-row">
+                    <td style="color:var(--pf-fg-muted);">${t.idx}</td>
+                    <td><strong>${t.date}</strong></td>
+                    <td>${t.agent}</td>
+                    <td><span class="pf-pl-pill ${isBuy ? 'pos' : 'warn'}" style="font-size:10px;">${t.type}</span></td>
+                    <td style="text-align:right;">${t.weightG.toFixed(4)} g</td>
+                    <td style="text-align:right;">${t.weightBaht.toFixed(4)} บาท</td>
+                    <td style="text-align:right;">${this.fmtMoney(t.pricePerBaht)}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(t.amountThb)}</td>
+                    <td style="text-align:right;">
+                      ${t.plThb !== 0 ? `<span class="pf-pl-pill ${isPos ? 'pos' : 'neg'}">${isPos ? '+' : ''}${this.fmtMoney(t.plThb)} (${isPos ? '+' : ''}${t.plPct.toFixed(2)}%)</span>` : '<span style="color:var(--pf-fg-muted);">Realized Lot</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        `;
+      } else if (key === "usd") {
+        tradesWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Stock Name</th>
+                <th style="text-align:right;">Qty</th>
+                <th style="text-align:right;">Price (USD)</th>
+                <th style="text-align:right;">Total Cost (USD)</th>
+                <th style="text-align:right;">FX (THB/USD)</th>
+                <th style="text-align:right;">Total Cost (THB)</th>
+                <th style="text-align:right;">Trade P&amp;L (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredTrades.map(t => {
+                const tp = (t.type || "").toLowerCase();
+                const pillCls = tp === "buy" ? "pos" : (tp === "sell" ? "warn" : "info");
+                const isPos = t.plThb >= 0;
+                return `
+                  <tr class="pf-hold-row">
+                    <td style="color:var(--pf-fg-muted);">${t.idx}</td>
+                    <td><strong>${t.date}</strong></td>
+                    <td><span class="pf-pl-pill ${pillCls}" style="font-size:10px;">${t.type}</span></td>
+                    <td><strong>${t.ticker}</strong> <span style="font-size:10px; color:var(--pf-fg-muted);">${t.stage ? `(${t.stage})` : ''}</span></td>
+                    <td style="text-align:right;">${t.qty > 0 ? t.qty.toFixed(4) : '—'}</td>
+                    <td style="text-align:right;">${t.priceUsd > 0 ? this.fmtUsd(t.priceUsd) : '—'}</td>
+                    <td style="text-align:right; font-weight:600;">${this.fmtUsd(t.totalCostUsd)}</td>
+                    <td style="text-align:right; color:var(--pf-fg-muted);">${t.fxRate > 0 ? t.fxRate.toFixed(2) : '—'}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(t.totalCostThb)}</td>
+                    <td style="text-align:right;">
+                      ${t.plThb !== 0 ? `<span class="pf-pl-pill ${isPos ? 'pos' : 'neg'}">${isPos ? '+' : ''}${this.fmtMoney(t.plThb)} (${isPos ? '+' : ''}${t.plPct.toFixed(2)}%)</span>` : '<span style="color:var(--pf-fg-muted);">—</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        `;
+      } else {
+        // SET Trade Log & Crypto Trade Log
+        tradesWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>App / Broker</th>
+                <th>Type</th>
+                <th>${key === "set" ? "Stock Name" : "Crypto Name"}</th>
+                <th style="text-align:right;">Qty</th>
+                <th style="text-align:right;">Price / Unit (THB)</th>
+                <th style="text-align:right;">Commission</th>
+                <th style="text-align:right;">Total Cost (THB)</th>
+                <th style="text-align:right;">Trade P&amp;L (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredTrades.map(t => {
+                const tp = (t.type || "").toLowerCase();
+                const pillCls = tp === "buy" ? "pos" : (tp === "sell" ? "warn" : "info");
+                const isPos = t.plThb >= 0;
+                return `
+                  <tr class="pf-hold-row">
+                    <td style="color:var(--pf-fg-muted);">${t.idx}</td>
+                    <td><strong>${t.date}</strong></td>
+                    <td>${t.platform}</td>
+                    <td><span class="pf-pl-pill ${pillCls}" style="font-size:10px;">${t.type}</span></td>
+                    <td><strong>${t.ticker}</strong></td>
+                    <td style="text-align:right;">${t.qty > 0 ? (key === "crypto" ? t.qty.toFixed(6) : t.qty.toLocaleString()) : '—'}</td>
+                    <td style="text-align:right;">${t.priceThb > 0 ? `฿${t.priceThb.toLocaleString()}` : '—'}</td>
+                    <td style="text-align:right; color:var(--pf-fg-muted);">฿${(t.commThb || 0).toFixed(2)}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(t.totalCostThb)}</td>
+                    <td style="text-align:right;">
+                      ${t.plThb !== 0 ? `<span class="pf-pl-pill ${isPos ? 'pos' : 'neg'}">${isPos ? '+' : ''}${this.fmtMoney(t.plThb)} (${isPos ? '+' : ''}${t.plPct.toFixed(2)}%)</span>` : '<span style="color:var(--pf-fg-muted);">—</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+  },
+
+  /* =========================================================================
+     ZONE 5: Monthly Investment Analytics (from Sheet "Invest Monthly")
+     + Raw Sheet Table ("Portfolio")
+     ========================================================================= */
+  setInvestMonthlyYear(yr) {
+    this.state.investMonthlyYear = yr || "ALL";
+    document.querySelectorAll(".pf-inv-yr-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-pf-invyr") === this.state.investMonthlyYear);
+    });
+    this.renderZone5CashFlowAndTech();
+  },
+
   renderZone5CashFlowAndTech(snap) {
     if (!snap) snap = this.getLatestPortfolioSnapshot();
+    const allInv = (typeof currentFinData !== "undefined" && currentFinData && Array.isArray(currentFinData.investMonthly))
+      ? currentFinData.investMonthly
+      : [];
 
-    // 5.1: Monthly Portfolio Value Bars (Last 12 Months from sheet "Portfolio")
+    const yrFilter = this.state.investMonthlyYear || "ALL";
+    const invRows = allInv.filter(r => yrFilter === "ALL" || String(r.year) === String(yrFilter));
+    const countMonths = Math.max(1, invRows.length);
+
+    // Compute totals across selected period from "Invest Monthly"
+    const sumCol = (k) => invRows.reduce((s, r) => s + Number(r[k] || 0), 0);
+    const totalInvest = sumCol("totalInvest");
+    const totalFromSalary = sumCol("fromSalary");
+    const totalFromDiv = sumCol("fromDiv");
+    const totalFromBonus = sumCol("fromBonus");
+    const totalFromTax = sumCol("fromTaxRefund");
+    const totalFromRebal = sumCol("fromRebalance");
+    const avgMonthlyInvest = totalInvest / countMonths;
+
+    // 5.0: Render 5 KPI Summary Cards from Sheet "Invest Monthly"
+    const kpiGridEl = document.getElementById("pfZ5InvestKpiGrid");
+    if (kpiGridEl) {
+      const latestInv = invRows.length > 0 ? invRows[invRows.length - 1] : null;
+      const salarySharePct = totalInvest > 0 ? ((totalFromSalary / totalInvest) * 100).toFixed(1) : "0.0";
+      const divSharePct = totalInvest > 0 ? ((totalFromDiv / totalInvest) * 100).toFixed(1) : "0.0";
+
+      kpiGridEl.innerHTML = `
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Total Net Invest (เงินลงทุนสุทธิรวม)</div>
+          <div class="pf-kpi-val">${this.fmtMoney(totalInvest)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-pos">เฉลี่ย ${this.fmtMoney(avgMonthlyInvest)} / เดือน</span>
+            <span class="pf-muted">(${invRows.length} เดือน)</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Invest from Salary (ตัดจากเงินเดือน)</div>
+          <div class="pf-kpi-val">${this.fmtMoney(totalFromSalary)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-pos">${salarySharePct}% ของเงินลงทุนสุทธิ</span>
+            <span class="pf-muted">· เดือนล่าสุด ${this.fmtMoney(latestInv?.fromSalary || 0)}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Invest from DIV / Re-invest (ปันผลทบต้น)</div>
+          <div class="pf-kpi-val" style="color:#6366f1;">${this.fmtMoney(totalFromDiv)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-pos">${divSharePct}% ของเงินลงทุนสุทธิ</span>
+            <span class="pf-muted">· เดือนล่าสุด ${this.fmtMoney(latestInv?.fromDiv || 0)}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Bonus &amp; Tax Refund (โบนัส + คืนภาษี)</div>
+          <div class="pf-kpi-val" style="color:#10b981;">${this.fmtMoney(totalFromBonus + totalFromTax)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-muted">Bonus ${this.fmtShort(totalFromBonus)} · Tax Refund ${this.fmtShort(totalFromTax)}</span>
+          </div>
+        </div>
+        <div class="pf-kpi-card">
+          <div class="pf-kpi-lbl">Portfolio Rebalance (สับเปลี่ยนพอร์ตสะสม)</div>
+          <div class="pf-kpi-val" style="color:#f59e0b;">${this.fmtMoney(totalFromRebal)}</div>
+          <div class="pf-kpi-foot">
+            <span class="pf-muted">ย้ายสัดส่วนระหว่างสินทรัพย์ในพอร์ต</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5.1: Monthly Total Invest Bar Chart (from Sheet "Invest Monthly")
     const calEl = document.getElementById("pfDivCalendarBars");
     const peakEl = document.getElementById("pfZ5PeakSummary");
-    const hist12 = (snap.hist || []).slice(-12);
+    const chartRows = invRows.slice(-12);
 
-    if (calEl && hist12.length > 0) {
-      const MONTHS_TH = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-      const maxM = Math.max(...hist12.map(h => h.market), 1);
-      const minM = Math.min(...hist12.map(h => h.market)) * 0.85;
-      const range = Math.max(1, maxM - minM);
+    if (calEl && chartRows.length > 0) {
+      const maxVal = Math.max(...chartRows.map(r => Math.max(0, r.totalInvest)), 1);
 
-      calEl.innerHTML = hist12.map((pt, idx) => {
-        const val = pt.market || 0;
-        const h = Math.max(12, Math.round(((val - minM) / range) * 95));
-        const isLatest = idx === hist12.length - 1;
-        const mLbl = MONTHS_TH[(pt.month || 1) - 1] + String(pt.year).slice(-2);
+      calEl.innerHTML = chartRows.map((r, idx) => {
+        const val = Math.max(0, r.totalInvest || 0);
+        const h = Math.max(10, Math.round((val / maxVal) * 95));
+        const isLatest = idx === chartRows.length - 1;
         return `
-          <div class="pf-cal-col" title="${pt.label}: Value ${this.fmtMoney(pt.market)} | Cost ${this.fmtMoney(pt.cost)}">
-            <div class="pf-cal-val">${(val / 1000000).toFixed(2)}M</div>
+          <div class="pf-cal-col" title="${r.date}: Total Invest ${this.fmtMoney(r.totalInvest)} (Salary ${this.fmtShort(r.fromSalary)} | DIV ${this.fmtShort(r.fromDiv)} | Bonus ${this.fmtShort(r.fromBonus)})">
+            <div class="pf-cal-val">${(val / 1000).toFixed(0)}k</div>
             <div class="pf-cal-bar-wrap">
               <div class="pf-cal-bar" style="height:${h}px; background:${isLatest ? '#10b981' : '#6366f1'};"></div>
             </div>
-            <div class="pf-cal-lbl">${mLbl}</div>
+            <div class="pf-cal-lbl">${r.label}</div>
           </div>
         `;
       }).join("");
 
       if (peakEl) {
-        const bestPt = [...hist12].sort((a, b) => b.market - a.market)[0];
-        peakEl.innerHTML = `<span>📌 เดือนสูงสุดในรอบ 12 ด.: <strong>${bestPt.label.replace(" (ปัจจุบัน)", "")} (${this.fmtMoney(bestPt.market)})</strong></span>`;
+        const bestRow = [...invRows].sort((a, b) => b.totalInvest - a.totalInvest)[0];
+        peakEl.innerHTML = bestRow
+          ? `<span>🔥 เดือนลงทุนสูงสุด: <strong>${bestRow.date} (${this.fmtMoney(bestRow.totalInvest)})</strong></span>`
+          : `<span>—</span>`;
       }
     }
 
-    // 5.2: Recent 5 Months Capital & Value Log from sheet "Portfolio"
+    // 5.2: Funding Sources Mix & Asset Allocation from Sheet "Invest Monthly"
     const logEl = document.getElementById("pfZ5MonthlyLogList");
     if (logEl) {
-      const recent = (snap.hist || []).slice(-5).reverse();
-      logEl.innerHTML = recent.map((pt, idx) => {
-        const prevIdx = snap.hist.indexOf(pt) - 1;
-        const prevPt = prevIdx >= 0 ? snap.hist[prevIdx] : pt;
-        const dVal = pt.market - prevPt.market;
-        const dCost = pt.cost - prevPt.cost;
-        const pl = pt.market - pt.cost;
+      const pvdSum = sumCol("pvdDca");
+      const setSum = sumCol("setFunding") + sumCol("setReinvest");
+      const usSum = sumCol("usFunding") + sumCol("usReinvest");
+      const goldSum = sumCol("goldFunding");
+      const cryptoSum = sumCol("cryptoFunding");
+      const insSum = sumCol("insFunding") + sumCol("insReinvest");
+      const bankSum = sumCol("bankFunding");
+
+      const assetFlows = [
+        { name: "🇺🇸 US Stock (Blended + Re-invest)", val: usSum, color: "#6366f1" },
+        { name: "🇹🇭 SET Equity (Blended + Re-invest)", val: setSum, color: "#10b981" },
+        { name: "⚡ Crypto Blended Funding", val: cryptoSum, color: "#8b5cf6" },
+        { name: "🏢 PVD DCA (สะสมรายเดือน)", val: pvdSum, color: "#0284c7" },
+        { name: "🏦 Bank Saving Blended Funding", val: bankSum, color: "#0ea5e9" },
+        { name: "🛡️ Life Insurance (Funding + Re-invest)", val: insSum, color: "#ec4899" },
+        { name: "🪙 Gold Blended Funding (ซื้อ/ขายสุทธิ)", val: goldSum, color: "#f59e0b" }
+      ];
+
+      logEl.innerHTML = assetFlows.map(af => {
+        const isPos = af.val >= 0;
         return `
-          <div style="padding: 8px 11px; border-radius: 10px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
-            <div>
-              <div style="font-weight: 700;">${pt.label}</div>
-              <div style="font-size: 10.5px; color: var(--pf-fg-muted);">Cost: ${this.fmtMoney(pt.cost)} (${dCost >= 0 ? '+' : ''}${this.fmtShort(dCost)})</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-weight: 700; color: var(--pf-fg);">${this.fmtMoney(pt.market)}</div>
-              <div style="font-size: 10.5px; color: ${dVal >= 0 ? '#10b981' : '#f43f5e'}; font-weight: 600;">
-                MoM ${dVal >= 0 ? '+' : ''}${this.fmtShort(dVal)} · P/L +${this.fmtShort(pl)}
-              </div>
-            </div>
+          <div style="padding: 7px 10px; border-radius: 9px; background: var(--pf-card-sec); display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
+            <span style="font-weight: 600; color: var(--pf-fg);">${af.name}</span>
+            <strong style="color: ${af.val > 0 ? '#10b981' : (af.val < 0 ? '#f43f5e' : 'var(--pf-fg-muted)')};">
+              ${isPos && af.val > 0 ? '+' : ''}${this.fmtMoney(af.val)}
+            </strong>
           </div>
         `;
       }).join("");
@@ -1100,6 +1724,89 @@ var PortfolioUI = {
                 <td style="text-align:right; color:var(--pf-fg-sec);">${this.fmtMoney(r.cost)}</td>
               </tr>
             `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // 5.4: Full-Width Monthly Investment Table from Sheet "Invest Monthly"
+    const invTblWrap = document.getElementById("pfZ5InvestMonthlyTableWrap");
+    const invCountBadge = document.getElementById("pfZ5InvestTableCountBadge");
+    if (invCountBadge) invCountBadge.textContent = `${invRows.length} เดือน (${yrFilter === 'ALL' ? 'Jan-2025 – Oct-2026' : yrFilter})`;
+
+    if (invTblWrap) {
+      const fmtCell = (v) => {
+        const n = Number(v || 0);
+        if (Math.abs(n) < 0.01) return `<span style="color:var(--pf-fg-muted);">—</span>`;
+        const c = n > 0 ? "var(--pf-fg)" : "#f43f5e";
+        return `<span style="color:${c}; font-weight:${Math.abs(n) >= 10000 ? '700' : '500'};">${n > 0 ? '+' : ''}${Math.round(n).toLocaleString("th-TH")}</span>`;
+      };
+
+      const rowsDesc = [...invRows].reverse();
+      invTblWrap.innerHTML = `
+        <table class="pf-hold-tbl" style="font-size:11px; white-space:nowrap;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th style="text-align:right;">PVD DCA</th>
+              <th style="text-align:right;">SET (Fund + Re-inv)</th>
+              <th style="text-align:right;">US Stock (Fund + Re-inv)</th>
+              <th style="text-align:right;">Gold</th>
+              <th style="text-align:right;">Crypto</th>
+              <th style="text-align:right;">Bank Saving</th>
+              <th style="text-align:right;">Insurance (+Re-inv)</th>
+              <th style="text-align:right;">Jitta / LTF / Bond</th>
+              <th style="text-align:right; background:rgba(16,185,129,0.08);">Total Invest</th>
+              <th style="text-align:right;">From Salary</th>
+              <th style="text-align:right;">From DIV/Re-inv</th>
+              <th style="text-align:right;">From Bonus</th>
+              <th style="text-align:right;">Tax Refund</th>
+              <th style="text-align:right;">Rebalance</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsDesc.map(r => {
+              const setNet = (r.setFunding || 0) + (r.setReinvest || 0);
+              const usNet = (r.usFunding || 0) + (r.usReinvest || 0);
+              const insNet = (r.insFunding || 0) + (r.insReinvest || 0);
+              const otherNet = (r.jittaFunding || 0) + (r.ltfFunding || 0) + (r.bondFunding || 0);
+              return `
+                <tr class="pf-hold-row">
+                  <td><strong>${r.date}</strong></td>
+                  <td style="text-align:right;">${fmtCell(r.pvdDca)}</td>
+                  <td style="text-align:right;" title="Funding: ${r.setFunding} | Re-invest: ${r.setReinvest}">${fmtCell(setNet)}</td>
+                  <td style="text-align:right;" title="Funding: ${r.usFunding} | Re-invest: ${r.usReinvest}">${fmtCell(usNet)}</td>
+                  <td style="text-align:right;">${fmtCell(r.goldFunding)}</td>
+                  <td style="text-align:right;">${fmtCell(r.cryptoFunding)}</td>
+                  <td style="text-align:right;">${fmtCell(r.bankFunding)}</td>
+                  <td style="text-align:right;" title="Funding: ${r.insFunding} | Re-invest: ${r.insReinvest}">${fmtCell(insNet)}</td>
+                  <td style="text-align:right;" title="Jitta: ${r.jittaFunding} | LTF: ${r.ltfFunding} | Bond: ${r.bondFunding}">${fmtCell(otherNet)}</td>
+                  <td style="text-align:right; font-weight:800; color:#10b981; background:rgba(16,185,129,0.05);">${this.fmtMoney(r.totalInvest)}</td>
+                  <td style="text-align:right;">${fmtCell(r.fromSalary)}</td>
+                  <td style="text-align:right;">${fmtCell(r.fromDiv)}</td>
+                  <td style="text-align:right;">${fmtCell(r.fromBonus)}</td>
+                  <td style="text-align:right;">${fmtCell(r.fromTaxRefund)}</td>
+                  <td style="text-align:right;">${fmtCell(r.fromRebalance)}</td>
+                </tr>
+              `;
+            }).join("")}
+            <tr class="pf-hold-row" style="background:var(--pf-card); font-weight:800; border-top:2px solid var(--pf-border);">
+              <td>รวม (${invRows.length} ด.)</td>
+              <td style="text-align:right;">${fmtCell(sumCol("pvdDca"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("setFunding") + sumCol("setReinvest"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("usFunding") + sumCol("usReinvest"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("goldFunding"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("cryptoFunding"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("bankFunding"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("insFunding") + sumCol("insReinvest"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("jittaFunding") + sumCol("ltfFunding") + sumCol("bondFunding"))}</td>
+              <td style="text-align:right; color:#10b981; background:rgba(16,185,129,0.1);">${this.fmtMoney(totalInvest)}</td>
+              <td style="text-align:right;">${fmtCell(totalFromSalary)}</td>
+              <td style="text-align:right;">${fmtCell(totalFromDiv)}</td>
+              <td style="text-align:right;">${fmtCell(totalFromBonus)}</td>
+              <td style="text-align:right;">${fmtCell(totalFromTax)}</td>
+              <td style="text-align:right;">${fmtCell(totalFromRebal)}</td>
+            </tr>
           </tbody>
         </table>
       `;

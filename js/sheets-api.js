@@ -183,11 +183,17 @@ var SheetsAPI = {
 
       row.c.forEach((cell, idx) => {
         const key = headers[idx] || `col_${idx}`;
+        const colKey = `col_${idx}`;
         if (cell && cell.v !== null && cell.v !== undefined) {
           rowObj[key] = cell.v;
-          if (cell.f) rowObj[key + "_formatted"] = cell.f;
+          rowObj[colKey] = cell.v;
+          if (cell.f) {
+            rowObj[key + "_formatted"] = cell.f;
+            rowObj[colKey + "_formatted"] = cell.f;
+          }
         } else {
-          rowObj[key] = null;
+          if (rowObj[key] === undefined) rowObj[key] = null;
+          rowObj[colKey] = null;
         }
       });
       return rowObj;
@@ -210,6 +216,10 @@ var SheetsAPI = {
       "Forecast SET70_US30-V2",
       "Expenses-Monthly",
       "Invest Monthly",
+      "USD Stock Trading Log",
+      "SET Trade Log",
+      "Gold Trade Log",
+      "Crypto Trade Log",
       "Settrade-HIS",
       "USD-Stock",
       "Dividen-Fund",
@@ -569,26 +579,89 @@ var SheetsAPI = {
     }
 
     // -------------------------------------------------------------------------
-    // 3. Expenses-Monthly & Invest Monthly: 3-Bar Cash Flow & Category Deep Dive
+    // 3. Expenses-Monthly & Invest Monthly: 3-Bar Cash Flow, Monthly Invest & Category Deep Dive
     // -------------------------------------------------------------------------
     const expRows = sheetResults["Expenses-Monthly"] || [];
     const invRows = sheetResults["Invest Monthly"] || [];
 
-    // Build Invest Monthly dictionary keyed by ym
+    // Build Invest Monthly dictionary keyed by ym + full array for Portfolio Zone 5
     const invByYm = {};
+    const investMonthlyList = [];
     invRows.forEach(r => {
-      const dRaw = r["Date "] || r["Date"] || r["col_0"];
+      const dRaw = r["Date "] !== undefined && r["Date "] !== null ? r["Date "] : (r["Date"] !== undefined && r["Date"] !== null ? r["Date"] : r["col_0"]);
       const dFmt = r["Date _formatted"] || r["Date_formatted"] || r["col_0_formatted"];
+      if (!dRaw && !dFmt) return;
       const d = this.parseGvizDate(dRaw, dFmt);
       if (d && d.ym) {
-        invByYm[d.ym] = {
-          total: this.parseNum(r["Total invest "] || r["Total invest"] || r["col_14"]),
-          salary: this.parseNum(r["Invest from Saraly "] || r["Invest from Saraly"] || r["col_19"]),
-          bonus: this.parseNum(r["Invest from Bonus "] || r["col_16"]),
-          divReinvest: this.parseNum(r["Invest from DIV/Reinvest "] || r["col_15"])
+        const cleanNum = (v) => {
+          const n = this.parseNum(v, 0);
+          return Math.abs(n) < 0.005 ? 0 : Math.round(n * 100) / 100;
         };
+        const pvdDca = cleanNum(r["col_1"] !== undefined ? r["col_1"] : r["PVD DCA"]);
+        const setFunding = cleanNum(r["col_2"] !== undefined ? r["col_2"] : r["SET Blended Funding"]);
+        const setReinvest = cleanNum(r["col_3"]);
+        const usFunding = cleanNum(r["col_4"] !== undefined ? r["col_4"] : r["US Stock Blended Funding"]);
+        const usReinvest = cleanNum(r["col_5"]);
+        const goldFunding = cleanNum(r["col_6"] !== undefined ? r["col_6"] : r["Gold Blended Funding"]);
+        const cryptoFunding = cleanNum(r["col_7"] !== undefined ? r["col_7"] : r["Crypto Blended Funding"]);
+        const bankFunding = cleanNum(r["col_8"] !== undefined ? r["col_8"] : r["Bank Saving Blended Funding"]);
+        const insFunding = cleanNum(r["col_9"] !== undefined ? r["col_9"] : r["Life Insurrance Blended Funding"]);
+        const insReinvest = cleanNum(r["col_10"]);
+        const jittaFunding = cleanNum(r["col_11"] !== undefined ? r["col_11"] : r["Jitta Blended Funding"]);
+        const ltfFunding = cleanNum(r["col_12"] !== undefined ? r["col_12"] : r["LTF Blended Funding"]);
+        const bondFunding = cleanNum(r["col_13"] !== undefined ? r["col_13"] : r["Bond Blended Funding"]);
+        const totalInvest = cleanNum(r["col_14"] !== undefined ? r["col_14"] : (r["Total invest "] || r["Total invest"]));
+        const fromDiv = cleanNum(r["col_15"] !== undefined ? r["col_15"] : r["Invest from DIV/Reinvest "]);
+        const fromBonus = cleanNum(r["col_16"] !== undefined ? r["col_16"] : r["Invest from Bonus "]);
+        const fromTaxRefund = cleanNum(r["col_17"] !== undefined ? r["col_17"] : r["Invest from Tax refund "]);
+        const fromRebalance = cleanNum(r["col_18"] !== undefined ? r["col_18"] : r["Invest from rebalance "]);
+        const fromSalary = cleanNum(r["col_19"] !== undefined ? r["col_19"] : (r["Invest from Saraly "] || r["Invest from Saraly"]));
+
+        invByYm[d.ym] = {
+          total: totalInvest,
+          salary: fromSalary,
+          bonus: fromBonus,
+          divReinvest: fromDiv
+        };
+
+        investMonthlyList.push({
+          ym: d.ym,
+          year: d.year,
+          month: d.month,
+          date: (dFmt && !dFmt.toString().includes("Date(")) ? dFmt.toString().trim() : `${this.getThaiMonthShort(d.month)} ${d.year}`,
+          label: `${this.getThaiMonthShort(d.month)} ${d.year.toString().slice(2)}`,
+          pvdDca,
+          setFunding,
+          setReinvest,
+          usFunding,
+          usReinvest,
+          goldFunding,
+          cryptoFunding,
+          bankFunding,
+          insFunding,
+          insReinvest,
+          jittaFunding,
+          ltfFunding,
+          bondFunding,
+          totalInvest,
+          fromDiv,
+          fromBonus,
+          fromTaxRefund,
+          fromRebalance,
+          fromSalary
+        });
       }
     });
+
+    if (investMonthlyList.length > 0) {
+      investMonthlyList.sort((a, b) => a.ym.localeCompare(b.ym));
+      currentFinData.investMonthly = investMonthlyList;
+    }
+
+    // -------------------------------------------------------------------------
+    // 3a. Trade Logs Deep-Dive Sheets ("USD Stock Trading Log", "SET Trade Log", "Gold Trade Log", "Crypto Trade Log")
+    // -------------------------------------------------------------------------
+    this.parseTradeLogSheets(sheetResults);
 
     if (expRows.length > 0) {
       const cfList = [];
@@ -1359,6 +1432,253 @@ var SheetsAPI = {
         prevMonthlyHistory: prevHistOf("Health", "Sport & Shoe")
       }
     ];
+  },
+
+  /**
+   * Parses the 4 Asset Trade Log sheets ("USD Stock Trading Log", "SET Trade Log", "Gold Trade Log", "Crypto Trade Log")
+   * into currentFinData.tradeLogs for Zone 4 Deep-Dive Explorer.
+   */
+  parseTradeLogSheets(sheetResults) {
+    currentFinData.tradeLogs = currentFinData.tradeLogs || {};
+
+    const cleanNum = (v, decimals = 2) => {
+      const n = this.parseNum(v, 0);
+      if (Math.abs(n) < 1e-9) return 0;
+      const factor = Math.pow(10, decimals);
+      return Math.round(n * factor) / factor;
+    };
+
+    const cellStr = (r, idx) => {
+      const f = r[`col_${idx}_formatted`];
+      const v = r[`col_${idx}`];
+      const val = (f !== undefined && f !== null && !f.toString().includes("Date(")) ? f : v;
+      if (val === undefined || val === null) return "";
+      const s = val.toString().trim();
+      if (s.startsWith("Date(")) {
+        const d = this.parseGvizDate(s, "");
+        const en = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return `${d.day}-${en[(d.month - 1) % 12]}-${d.year}`;
+      }
+      return s;
+    };
+
+    // 1. USD Stock Trading Log
+    const usdRows = sheetResults["USD Stock Trading Log"] || [];
+    if (usdRows.length > 0) {
+      const holdings = [];
+      let total = null;
+      const trades = [];
+
+      usdRows.forEach((r, idx) => {
+        const stock = cellStr(r, 4);
+        const ttype = cellStr(r, 3);
+        if (stock || ttype) {
+          trades.push({
+            idx: idx + 1,
+            date: cellStr(r, 0) || "—",
+            platform: cellStr(r, 2) || "Dime",
+            type: ttype || "Buy",
+            ticker: stock || "—",
+            qty: cleanNum(r["col_5"], 6),
+            priceUsd: cleanNum(r["col_6"], 4),
+            valueUsd: cleanNum(r["col_7"], 2),
+            commUsd: cleanNum(r["col_8"], 2),
+            totalCostUsd: cleanNum(r["col_9"], 2),
+            totalCostThb: cleanNum(r["col_11"], 2),
+            fxRate: cleanNum(r["col_12"], 2),
+            stage: cellStr(r, 13),
+            plThb: cleanNum(r["col_14"], 2),
+            plPct: cleanNum(this.parseNum(r["col_15"], 0) * 100, 2)
+          });
+        }
+
+        const fname = cellStr(r, 20);
+        if (fname) {
+          const item = {
+            name: fname,
+            group: cellStr(r, 21),
+            port: cellStr(r, 22),
+            sellable: cleanNum(r["col_23"], 6),
+            allocPct: cleanNum(this.parseNum(r["col_24"], 0) * 100, 2),
+            avgPriceUsd: cleanNum(r["col_25"], 2),
+            lastPriceUsd: cleanNum(r["col_26"], 2),
+            costUsd: cleanNum(r["col_27"], 2),
+            mktUsd: cleanNum(r["col_28"], 2),
+            costThb: cleanNum(r["col_29"], 2),
+            mktThb: cleanNum(r["col_30"], 2),
+            divUsd: cleanNum(r["col_31"], 2),
+            divThb: cleanNum(r["col_32"], 2),
+            profitUsd: cleanNum(r["col_33"], 2),
+            profitThb: cleanNum(r["col_34"], 2),
+            profitPct: cleanNum(this.parseNum(r["col_35"], 0) * 100, 2),
+            status: cellStr(r, 36) || "Ongoing",
+            totalProfitUsd: cleanNum(r["col_37"], 2),
+            totalProfitPct: cleanNum(this.parseNum(r["col_38"], 0) * 100, 2)
+          };
+          if (fname.toLowerCase() === "total") {
+            total = item;
+          } else {
+            holdings.push(item);
+          }
+        }
+      });
+
+      currentFinData.tradeLogs.usd = { holdings, total, trades };
+    }
+
+    // 2. SET Trade Log
+    const setRows = sheetResults["SET Trade Log"] || [];
+    if (setRows.length > 0) {
+      const holdings = [];
+      let total = null;
+      const trades = [];
+
+      setRows.forEach((r, idx) => {
+        const stock = cellStr(r, 3);
+        const ttype = cellStr(r, 2);
+        const qty = cleanNum(r["col_4"], 4);
+        const costThb = cleanNum(r["col_8"], 2) || cleanNum(r["col_6"], 2);
+        if ((stock || ttype) && (qty > 0 || costThb > 0)) {
+          trades.push({
+            idx: idx + 1,
+            date: cellStr(r, 0) || "Initial Lot",
+            platform: cellStr(r, 1) || "KTZMICO",
+            type: ttype || "Buy",
+            ticker: stock || (ttype === "TR in" ? "Cash Transfer In" : "—"),
+            qty: qty,
+            priceThb: cleanNum(r["col_5"], 2),
+            costThb: cleanNum(r["col_6"], 2),
+            commThb: cleanNum(r["col_7"], 2),
+            totalCostThb: costThb,
+            plPct: cleanNum(this.parseNum(r["col_9"], 0) * 100, 2),
+            plThb: cleanNum(r["col_10"], 2)
+          });
+        }
+
+        const fname = cellStr(r, 15);
+        if (fname) {
+          const item = {
+            name: fname,
+            sellable: cleanNum(r["col_16"], 2),
+            targetUnits: cleanNum(r["col_17"], 2),
+            avgPriceThb: cleanNum(r["col_18"], 2),
+            lastPriceThb: cleanNum(r["col_19"], 2),
+            costThb: cleanNum(r["col_20"], 2),
+            mktThb: cleanNum(r["col_21"], 2),
+            profitThb: cleanNum(r["col_22"], 2),
+            profitPct: cleanNum(this.parseNum(r["col_23"], 0) * 100, 2),
+            status: cellStr(r, 24) || "Active",
+            expectedYield: cleanNum(r["col_25"], 2),
+            netDivThb: cleanNum(r["col_26"], 2),
+            targetDivThb: cleanNum(r["col_27"], 2),
+            progressPct: cleanNum(this.parseNum(r["col_28"], 0) * 100, 2),
+            portionPct: cleanNum(this.parseNum(r["col_29"], 0) * 100, 2),
+            divPctPerStock: cleanNum(this.parseNum(r["col_31"], 0) * 100, 2)
+          };
+          if (fname.toLowerCase() === "total") {
+            total = item;
+          } else {
+            holdings.push(item);
+          }
+        }
+      });
+
+      currentFinData.tradeLogs.set = { holdings, total, trades };
+    }
+
+    // 3. Gold Trade Log
+    const goldRows = sheetResults["Gold Trade Log"] || [];
+    if (goldRows.length > 0) {
+      const holdings = [];
+      const trades = [];
+
+      goldRows.forEach((r, idx) => {
+        const ttype = cellStr(r, 2);
+        if (ttype) {
+          trades.push({
+            idx: idx + 1,
+            date: cellStr(r, 0) || "—",
+            agent: cellStr(r, 1) || "Aom Now",
+            type: ttype,
+            weightG: cleanNum(r["col_3"], 4),
+            weightBaht: cleanNum(r["col_4"], 6),
+            pricePerBaht: cleanNum(r["col_5"], 2),
+            amountThb: cleanNum(r["col_6"], 2),
+            plThb: cleanNum(r["col_7"], 2),
+            plPct: cleanNum(this.parseNum(r["col_8"], 0) * 100, 2)
+          });
+        }
+
+        const gagent = cellStr(r, 10);
+        if (gagent) {
+          holdings.push({
+            name: gagent,
+            sellable: cleanNum(r["col_11"], 6),
+            avgPriceThb: cleanNum(r["col_12"], 2),
+            lastPriceThb: cleanNum(r["col_13"], 2),
+            costThb: cleanNum(r["col_14"], 2),
+            mktThb: cleanNum(r["col_15"], 2),
+            profitThb: cleanNum(r["col_16"], 2),
+            profitPct: cleanNum(this.parseNum(r["col_17"], 0) * 100, 2),
+            status: cleanNum(r["col_15"], 2) > 0 ? "Holding" : "Sold Out"
+          });
+        }
+      });
+
+      currentFinData.tradeLogs.gold = { holdings, total: holdings[0] || null, trades };
+    }
+
+    // 4. Crypto Trade Log
+    const cryptoRows = sheetResults["Crypto Trade Log"] || [];
+    if (cryptoRows.length > 0) {
+      const holdings = [];
+      let total = null;
+      const trades = [];
+
+      cryptoRows.forEach((r, idx) => {
+        const cname = cellStr(r, 3);
+        const ttype = cellStr(r, 2);
+        if (cname || ttype) {
+          trades.push({
+            idx: idx + 1,
+            date: cellStr(r, 0) || "—",
+            platform: cellStr(r, 1) || "Bitkub",
+            type: ttype || "Buy",
+            ticker: cname || "—",
+            qty: cleanNum(r["col_4"], 8),
+            priceThb: cleanNum(r["col_5"], 2),
+            costThb: cleanNum(r["col_6"], 2),
+            commThb: cleanNum(r["col_7"], 2),
+            totalCostThb: cleanNum(r["col_8"], 2),
+            plThb: cleanNum(r["col_9"], 2),
+            plPct: cleanNum(this.parseNum(r["col_10"], 0) * 100, 2),
+            status: cellStr(r, 11)
+          });
+        }
+
+        const hname = cellStr(r, 13);
+        if (hname) {
+          const item = {
+            name: hname,
+            sellable: cleanNum(r["col_14"], 8),
+            avgPriceThb: cleanNum(r["col_15"], 2),
+            lastPriceThb: cleanNum(r["col_16"], 2),
+            costThb: cleanNum(r["col_17"], 2),
+            mktThb: cleanNum(r["col_18"], 2),
+            profitThb: cleanNum(r["col_19"], 2),
+            profitPct: cleanNum(this.parseNum(r["col_20"], 0) * 100, 2),
+            status: cellStr(r, 21) || "Holding"
+          };
+          if (hname.toLowerCase() === "total") {
+            total = item;
+          } else {
+            holdings.push(item);
+          }
+        }
+      });
+
+      currentFinData.tradeLogs.crypto = { holdings, total, trades };
+    }
   },
 
   /**

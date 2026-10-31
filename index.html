@@ -3927,12 +3927,13 @@
 
         <!-- =================================================================
              ZONE 4: Asset Class Performance & Detail Cards (เจาะลึกรายหมวดจากชีต)
+             + Deep-Dive Trade Log Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
              ================================================================= -->
         <section id="pfZone4" style="margin-bottom: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
             <div>
-              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (ข้อมูลจริงจากชีต Portfolio)</h3>
-              <div style="font-size: 12px; color: var(--pf-fg-muted);">แยกตามหมวดสินทรัพย์ในชีต: 1. Equities &amp; Alternatives vs 2. Provident Fund, Insurance &amp; Cash</div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (ข้อมูลจริงจากชีต Portfolio &amp; Trade Logs)</h3>
+              <div style="font-size: 12px; color: var(--pf-fg-muted);">สรุปภาพรวมรายหมวดจากชีต &ldquo;Portfolio&rdquo; พร้อมเจาะลึกพอร์ตรายตัว &amp; ประวัติซื้อขายจากชีต &ldquo;SET Trade Log&rdquo;, &ldquo;USD Stock Trading Log&rdquo;, &ldquo;Gold Trade Log&rdquo;, &ldquo;Crypto Trade Log&rdquo;</div>
             </div>
             <div class="pf-period-group">
               <button type="button" class="pf-period-btn pf-zone4-filter-btn active" data-pf-z4="ALL" onclick="PortfolioUI.setAssetZoneFilter('ALL', this)">ทั้งหมด (4 กลุ่ม)</button>
@@ -3967,8 +3968,18 @@
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• SET (Assess Type: SET):</span> <strong id="pfZ4SetSplit">฿ —</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• Dime (Assess Type: USD Stock):</span> <strong id="pfZ4UsSplit">฿ —</strong></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <span>• SET (Assess Type: SET):</span>
+                  <strong id="pfZ4SetSplit">฿ —</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <span>• Dime (Assess Type: USD Stock):</span>
+                  <strong id="pfZ4UsSplit">฿ —</strong>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--pf-border);">
+                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('set', true)">🇹🇭 เจาะลึกชีต &ldquo;SET Trade Log&rdquo;</button>
+                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('usd', true)">🇺🇸 เจาะลึกชีต &ldquo;USD Stock Trading Log&rdquo;</button>
               </div>
             </div>
 
@@ -3996,8 +4007,18 @@
                 </div>
               </div>
               <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• AOM NOW (Assess Type: GOLD):</span> <strong id="pfZ4GoldVal">฿ —</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• Bitkub (Assess Type: Crypto):</span> <strong id="pfZ4CryptoVal">฿ —</strong></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <span>• AOM NOW (Assess Type: GOLD):</span>
+                  <strong id="pfZ4GoldVal">฿ —</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <span>• Bitkub (Assess Type: Crypto):</span>
+                  <strong id="pfZ4CryptoVal">฿ —</strong>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--pf-border);">
+                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('gold', true)">🪙 เจาะลึกชีต &ldquo;Gold Trade Log&rdquo;</button>
+                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('crypto', true)">⚡ เจาะลึกชีต &ldquo;Crypto Trade Log&rdquo;</button>
               </div>
             </div>
           </div>
@@ -4062,52 +4083,149 @@
               </div>
             </div>
           </div>
+
+          <!-- ===============================================================
+               ZONE 4 DEEP-DIVE EXPLORER:
+               Select and inspect "SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log"
+               =============================================================== -->
+          <div id="pfZone4TradeLogExplorer" class="pf-card" style="margin-top: 14px;">
+            <div class="pf-card-head" style="flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span class="pf-badge-soft" style="color: #6366f1;">🔎 Zone 4 Deep-Dive Sheet Explorer</span>
+                  <span id="pfZ4ExplorerSheetBadge" class="pf-pl-pill info">Sheet: SET Trade Log</span>
+                </div>
+                <div id="pfZ4ExplorerTitle" class="pf-card-title" style="margin-top: 6px;">
+                  เจาะลึกพอร์ตรายตัว &amp; ประวัติซื้อขายจากชีต &ldquo;SET Trade Log&rdquo;
+                </div>
+              </div>
+
+              <!-- 4 Sheet Selector Buttons -->
+              <div class="pf-period-group" role="group" aria-label="Select Trade Log Sheet">
+                <button type="button" class="pf-period-btn pf-tradelog-tab-btn active" data-pf-tl="set" onclick="PortfolioUI.selectTradeLogSheet('set', false)">🇹🇭 SET Trade Log</button>
+                <button type="button" class="pf-period-btn pf-tradelog-tab-btn" data-pf-tl="usd" onclick="PortfolioUI.selectTradeLogSheet('usd', false)">🇺🇸 USD Stock Trading Log</button>
+                <button type="button" class="pf-period-btn pf-tradelog-tab-btn" data-pf-tl="gold" onclick="PortfolioUI.selectTradeLogSheet('gold', false)">🪙 Gold Trade Log</button>
+                <button type="button" class="pf-period-btn pf-tradelog-tab-btn" data-pf-tl="crypto" onclick="PortfolioUI.selectTradeLogSheet('crypto', false)">⚡ Crypto Trade Log</button>
+              </div>
+            </div>
+
+            <!-- Selected Sheet KPI Summary Strip -->
+            <div id="pfZ4ExplorerKpiStrip" class="pf-kpi-grid" style="margin-bottom: 14px;"></div>
+
+            <!-- Sub-controls: Holdings Status Filter & Trade Type / Ticker Filter -->
+            <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+              <!-- Part A: Holdings Summary Table in the Selected Trade Log Sheet -->
+              <div style="background: var(--pf-card-sec); border: 1px solid var(--pf-border); border-radius: 14px; padding: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+                  <div>
+                    <div style="font-size: 13.5px; font-weight: 700; color: var(--pf-fg);">📌 สินทรัพย์รายตัวและสรุปสถานะพอร์ตในชีต (Holdings Summary in Sheet)</div>
+                    <div style="font-size: 11px; color: var(--pf-fg-muted);">ดึงจากตารางสรุปพอร์ตด้านขวาของชีตโดยตรง</div>
+                  </div>
+                  <div class="pf-period-group">
+                    <button type="button" class="pf-period-btn pf-tl-holdstatus-btn active" data-pf-tlstatus="ALL" onclick="PortfolioUI.setTradeLogHoldingFilter('ALL')">ทั้งหมด (รวมที่ขายแล้ว)</button>
+                    <button type="button" class="pf-period-btn pf-tl-holdstatus-btn" data-pf-tlstatus="ACTIVE" onclick="PortfolioUI.setTradeLogHoldingFilter('ACTIVE')">เฉพาะที่ถืออยู่ (Active/Holding)</button>
+                  </div>
+                </div>
+                <div id="pfZ4ExplorerHoldingsWrap" style="overflow-x: auto;"></div>
+              </div>
+
+              <!-- Part B: Individual Trade Transactions Log from the Selected Sheet -->
+              <div style="background: var(--pf-card-sec); border: 1px solid var(--pf-border); border-radius: 14px; padding: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+                  <div>
+                    <div style="font-size: 13.5px; font-weight: 700; color: var(--pf-fg);">📜 ประวัติธุรกรรมการซื้อ-ขายรายรายการ (Trade Transactions Log)</div>
+                    <div id="pfZ4ExplorerTradeCountSub" style="font-size: 11px; color: var(--pf-fg-muted);">ดึงจากตารางบันทึกการเทรดด้านซ้ายของชีตโดยตรง</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <select id="pfZ4TradeTickerSelect" onchange="PortfolioUI.setTradeLogTickerFilter(this.value)" style="padding: 5px 10px; border-radius: 8px; border: 1px solid var(--pf-border); background: var(--pf-card); color: var(--pf-fg); font-size: 11.5px; font-weight: 600;">
+                      <option value="ALL">ทุกสินทรัพย์ (All Tickers)</option>
+                    </select>
+                    <div class="pf-period-group">
+                      <button type="button" class="pf-period-btn pf-tl-type-btn active" data-pf-tltype="ALL" onclick="PortfolioUI.setTradeLogTypeFilter('ALL')">All</button>
+                      <button type="button" class="pf-period-btn pf-tl-type-btn" data-pf-tltype="Buy" onclick="PortfolioUI.setTradeLogTypeFilter('Buy')">Buy</button>
+                      <button type="button" class="pf-period-btn pf-tl-type-btn" data-pf-tltype="Sell" onclick="PortfolioUI.setTradeLogTypeFilter('Sell')">Sell</button>
+                      <button type="button" class="pf-period-btn pf-tl-type-btn" data-pf-tltype="OTHER" onclick="PortfolioUI.setTradeLogTypeFilter('OTHER')">Div / TR in</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="pfZ4ExplorerTradesWrap" style="overflow-x: auto; max-height: 420px; overflow-y: auto;"></div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- =================================================================
-             ZONE 5: Monthly Value Progression, Cost Log & Raw Sheet Table
+             ZONE 5: Monthly Investment Analytics (จากชีต "Invest Monthly")
              ================================================================= -->
-        <section id="pfZone5" class="pf-bot3-grid" style="margin-bottom: 0;">
-          <!-- Card 5.1: 12-Month Portfolio Value Progression -->
-          <div class="pf-card">
-            <div class="pf-card-head">
-              <div>
-                <div class="pf-card-title">📊 12-Month Portfolio Value (จากชีต Portfolio)</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">เปรียบเทียบมูลค่าพอร์ตรายเดือนย้อนหลัง 12 เดือนล่าสุด</div>
-              </div>
-              <span class="pf-badge-soft">Monthly Value</span>
+        <section id="pfZone5" style="margin-bottom: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 5: Monthly Investment &amp; Funding Analytics (ข้อมูลการลงทุนรายเดือนจากชีต &ldquo;Invest Monthly&rdquo;)</h3>
+              <div style="font-size: 12px; color: var(--pf-fg-muted);">เจาะลึกยอดเงินลงทุนรายเดือน แหล่งที่มาของเงินทุน 5 แหล่ง (Salary • DIV/Re-invest • Bonus • Tax Refund • Rebalance) และการจัดสรรเข้าแต่ละสินทรัพย์</div>
             </div>
-            <div id="pfDivCalendarBars" class="pf-cal-bars"></div>
-            <div style="font-size: 11.5px; color: var(--pf-fg-sec); display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--pf-border);">
-              <span id="pfZ5PeakSummary">กำลังโหลดข้อมูล...</span>
-              <span class="pf-pos">Live Sheet</span>
+            <div class="pf-period-group" role="group" aria-label="Invest Monthly Year Filter">
+              <button type="button" class="pf-period-btn pf-inv-yr-btn active" data-pf-invyr="ALL" onclick="PortfolioUI.setInvestMonthlyYear('ALL', this)">ทั้งหมด (2025–2026)</button>
+              <button type="button" class="pf-period-btn pf-inv-yr-btn" data-pf-invyr="2026" onclick="PortfolioUI.setInvestMonthlyYear('2026', this)">ปี 2026</button>
+              <button type="button" class="pf-period-btn pf-inv-yr-btn" data-pf-invyr="2025" onclick="PortfolioUI.setInvestMonthlyYear('2025', this)">ปี 2025</button>
             </div>
           </div>
 
-          <!-- Card 5.2: Recent Monthly Cost & Value Changes -->
-          <div class="pf-card">
-            <div class="pf-card-head">
-              <div>
-                <div class="pf-card-title">📈 ประวัติการเปลี่ยนแปลง Value &amp; Cost รายเดือน</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">ข้อมูลย้อนหลัง 5 เดือนล่าสุดจากชีต Portfolio</div>
+          <!-- 5 KPI Cards from Sheet "Invest Monthly" -->
+          <div id="pfZ5InvestKpiGrid" class="pf-kpi-grid" style="margin-bottom: 14px;"></div>
+
+          <!-- 3-Column Visual Analytics Grid -->
+          <div class="pf-bot3-grid" style="margin-bottom: 14px;">
+            <!-- Card 5.1: Monthly Total Invest Bar Chart (from sheet "Invest Monthly") -->
+            <div class="pf-card">
+              <div class="pf-card-head">
+                <div>
+                  <div class="pf-card-title">📊 ยอดเงินลงทุนสุทธิรายเดือน (Total Invest)</div>
+                  <div style="font-size: 11px; color: var(--pf-fg-muted);">ดึงจากคอลัมน์ Total invest ในชีต &ldquo;Invest Monthly&rdquo;</div>
+                </div>
+                <span class="pf-badge-soft">Invest Monthly</span>
               </div>
-              <span class="pf-badge-soft">MoM Log</span>
+              <div id="pfDivCalendarBars" class="pf-cal-bars"></div>
+              <div style="font-size: 11.5px; color: var(--pf-fg-sec); display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--pf-border);">
+                <span id="pfZ5PeakSummary">กำลังโหลดข้อมูล...</span>
+                <span class="pf-pos">Sheet: Invest Monthly</span>
+              </div>
             </div>
 
-            <div id="pfZ5MonthlyLogList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            <!-- Card 5.2: 5 Funding Sources & Asset Class Allocation Breakdown -->
+            <div class="pf-card">
+              <div class="pf-card-head">
+                <div>
+                  <div class="pf-card-title">💰 แหล่งเงินลงทุน 5 แหล่ง &amp; การจัดสรรรายสินทรัพย์</div>
+                  <div style="font-size: 11px; color: var(--pf-fg-muted);">สรุปสัดส่วนแหล่งเงินทุนและยอดเติมเงินสุทธิตามชีต &ldquo;Invest Monthly&rdquo;</div>
+                </div>
+                <span class="pf-badge-soft">Funding Mix</span>
+              </div>
+              <div id="pfZ5MonthlyLogList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
+            <!-- Card 5.3: Raw Sheet "Portfolio" Inspector (Latest Month) -->
+            <div class="pf-card">
+              <div class="pf-card-head">
+                <div>
+                  <div class="pf-card-title">📋 ข้อมูลดิบจากชีต &ldquo;Portfolio&rdquo; (เดือนล่าสุด)</div>
+                  <div style="font-size: 11px; color: var(--pf-fg-muted);">แสดงทุกแถวของเดือนล่าสุดตรงตามชีต Portfolio 100%</div>
+                </div>
+                <span class="pf-badge-soft">Raw Sheet Rows</span>
+              </div>
+              <div id="pfZ5RawSheetTable"></div>
+            </div>
           </div>
 
-          <!-- Card 5.3: Raw Sheet "Portfolio" Inspector (Latest Month) -->
+          <!-- Full-Width Monthly Investment Table from Sheet "Invest Monthly" -->
           <div class="pf-card">
-            <div class="pf-card-head">
+            <div class="pf-card-head" style="flex-wrap: wrap; gap: 8px;">
               <div>
-                <div class="pf-card-title">📋 ข้อมูลดิบจากชีต &ldquo;Portfolio&rdquo; (เดือนล่าสุด)</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">แสดงทุกแถวของเดือนล่าสุดตรงตาม Google Sheet 100%</div>
+                <div class="pf-card-title">📑 ตารางข้อมูลการลงทุนรายเดือนจากชีต &ldquo;Invest Monthly&rdquo; (ครบทุกคอลัมน์)</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">แสดงยอดเงินลงทุนรายเดือนแยกตามสินทรัพย์ (Blended Funding + Re-invest) และแหล่งที่มาของเงินทุนทั้ง 5 แหล่งตรงตาม Google Sheet</div>
               </div>
-              <span class="pf-badge-soft">Raw Sheet Rows</span>
+              <span id="pfZ5InvestTableCountBadge" class="pf-badge-soft">22 เดือน</span>
             </div>
-
-            <div id="pfZ5RawSheetTable"></div>
+            <div id="pfZ5InvestMonthlyTableWrap" style="overflow-x: auto;"></div>
           </div>
         </section>
 
@@ -4382,11 +4500,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=41"></script>
-  <script src="js/sheets-api.js?v=41"></script>
-  <script src="js/charts.js?v=41"></script>
-  <script src="js/cashflow-ui.js?v=41"></script>
-  <script src="js/portfolio-ui.js?v=41"></script>
-  <script src="js/app.js?v=41"></script>
+  <script src="js/data-store.js?v=42"></script>
+  <script src="js/sheets-api.js?v=42"></script>
+  <script src="js/charts.js?v=42"></script>
+  <script src="js/cashflow-ui.js?v=42"></script>
+  <script src="js/portfolio-ui.js?v=42"></script>
+  <script src="js/app.js?v=42"></script>
 </body>
 </html>
