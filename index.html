@@ -229,6 +229,8 @@
       justify-content: space-between;
       gap: 12px;
       box-shadow: var(--shadow-sm);
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      letter-spacing: -0.015em;
     }
 
     @media (max-width: 1024px) {
@@ -241,14 +243,23 @@
       display: flex; align-items: center; justify-content: center;
       color: #ffffff; font-weight: 800; font-size: 15px; letter-spacing: -0.05em;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     }
-    .brand-name { font-size: 18px; font-weight: 800; letter-spacing: -0.04em; }
+    .brand-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
 
     .sync-tag {
       display: flex; align-items: center; gap: 6px; padding: 4px 10px;
       background: var(--surface-sec); border-radius: 9999px;
       font-size: 11px; font-weight: 600; color: var(--fg-sec);
       cursor: pointer; transition: all 0.2s; border: 1px solid var(--border);
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+      font-feature-settings: "tnum" 1, "zero" 1;
     }
     .sync-tag:hover { border-color: var(--border-strong); }
 
@@ -268,12 +279,15 @@
     .nav-tabs {
       display: flex; align-items: center; background: var(--surface-sec);
       padding: 3px; border-radius: 9999px; gap: 2px; overflow-x: auto;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
     }
     @media (max-width: 1024px) { .nav-tabs { order: 3; width: 100%; margin-top: 4px; } }
 
     .tab-btn {
       border: none; background: transparent; color: var(--fg-sec);
-      font-family: inherit; font-size: 12.5px; font-weight: 600;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
+      font-size: 12.5px; font-weight: 600;
+      letter-spacing: -0.015em;
       padding: 7px 14px; border-radius: 9999px; cursor: pointer;
       display: flex; align-items: center; gap: 6px; white-space: nowrap;
       transition: all 0.18s ease;
@@ -285,16 +299,23 @@
     }
 
     /* Utilities */
-    .util-group { display: flex; align-items: center; gap: 8px; }
+    .util-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
+    }
     .seg-ctrl {
       display: inline-flex; padding: 2px; background: var(--surface-sec);
       border-radius: 9999px; border: 1px solid var(--border);
     }
     .seg-btn {
       border: none; background: transparent; color: var(--fg-muted);
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
       font-size: 11.5px; font-weight: 600; padding: 4px 10px;
       border-radius: 9999px; cursor: pointer; transition: all 0.15s ease;
       white-space: nowrap;
+      letter-spacing: -0.01em;
     }
     .seg-btn.active {
       background: var(--surface); color: var(--fg); font-weight: 700;
@@ -819,6 +840,7 @@
       overflow-y: auto;
       box-sizing: border-box;
       color: var(--fg);
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     .mobile-sheet-overlay.open .mobile-sheet-box {
       transform: translateY(0);
@@ -839,6 +861,7 @@
       border-radius: 18px;
       border: 1px solid var(--border);
       margin-bottom: 20px;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
     }
     .mobile-profile-avatar {
       width: 46px;
@@ -862,23 +885,30 @@
       min-width: 0;
     }
     .mobile-profile-name {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
       font-size: 15px;
       font-weight: 700;
       color: var(--fg);
+      letter-spacing: -0.025em;
     }
     .mobile-profile-role {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
       font-size: 11.5px;
       color: var(--fg-sec);
+      letter-spacing: -0.01em;
     }
     .mobile-profile-status {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
       font-size: 10.5px;
       color: #10b981;
       display: flex;
       align-items: center;
       gap: 5px;
       margin-top: 2px;
+      letter-spacing: -0.01em;
     }
     .mobile-sheet-label {
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
@@ -903,8 +933,10 @@
       align-items: center;
       gap: 5px;
       cursor: pointer;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
       font-size: 11.5px;
       font-weight: 600;
+      letter-spacing: -0.015em;
       color: var(--fg-sec);
       transition: all 0.2s ease;
     }
@@ -929,8 +961,10 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
       font-size: 12.5px;
       font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--fg-sec);
       transition: all 0.2s ease;
     }
@@ -956,7 +990,9 @@
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
       font-size: 13.5px;
+      letter-spacing: -0.015em;
       color: var(--fg);
     }
     .mobile-menu-item:hover, .mobile-menu-item:active {
@@ -984,8 +1020,10 @@
       background: rgba(239, 68, 68, 0.12);
       border: 1px solid rgba(239, 68, 68, 0.25);
       color: #ef4444;
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', sans-serif;
       font-size: 13.5px;
       font-weight: 600;
+      letter-spacing: -0.015em;
       display: flex;
       align-items: center;
       justify-content: center;
