@@ -747,6 +747,13 @@
       .cf-mobile-only {
         display: block !important;
       }
+      /* Remove outer container padding/border on mobile for edge-to-edge app feel */
+      .bento-card[data-od-id="cf-balance"] {
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
       .top-nav {
         flex-wrap: nowrap !important;
         border-radius: 9999px !important;
@@ -1113,21 +1120,25 @@
       font-variant-numeric: tabular-nums;
     }
     .cf-mf-eye-btn {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      color: rgba(255, 255, 255, 0.95);
       cursor: pointer;
-      font-size: 18px;
+      font-size: 13px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
-      transition: color 0.15s ease, transform 0.15s ease;
+      padding: 0;
+      transition: background 0.15s ease, transform 0.15s ease;
       line-height: 1;
+      backdrop-filter: blur(4px);
     }
     .cf-mf-eye-btn:hover {
-      color: #ffffff;
-      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.32);
+      transform: scale(1.08);
     }
     .cf-mf-actions-grid {
       display: grid;
@@ -3391,85 +3402,6 @@
          ===================================================================== -->
     <main id="tab-overview" class="tab-view active" data-od-id="view-overview">
       
-      <!-- Mobile Fintech Blue Card View (Shown exclusively on Overview tab on mobile < 768px) -->
-      <div class="cf-mobile-only cf-fintech-mobile-wrap" style="margin-bottom: 18px;">
-        <div class="cf-mobile-fintech-card">
-          <!-- Top Row: Greeting + Avatar -->
-          <div class="cf-mf-header">
-            <span class="cf-mf-greeting" id="cfMobileGreeting">Good morning, Amanda!</span>
-            <div class="cf-mf-avatar" onclick="openMobileAccountSheet()" title="Account Settings" style="cursor: pointer;">
-              <svg viewBox="0 0 24 24" style="width: 17px; height: 17px; fill: #ffffff;">
-                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- Balance Row -->
-          <div class="cf-mf-balance-box">
-            <div class="cf-mf-label">Current Balance (สภาพคล่องพร้อมใช้)</div>
-            <div class="cf-mf-balance-row">
-              <span class="cf-mf-amount num" id="cfMobileCashBalance">฿ —</span>
-              <button type="button" class="cf-mf-eye-btn" onclick="toggleMobileBalanceEye()" title="Show/Hide Balance" id="cfMobileEyeBtn">
-                👁️
-              </button>
-            </div>
-          </div>
-
-          <!-- 4 Quick Action Circles (Matching Reference) -->
-          <div class="cf-mf-actions-grid">
-            <!-- 1. Receive -->
-            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('receive')">
-              <div class="cf-mf-action-circle">
-                <span>↙</span>
-              </div>
-              <span class="cf-mf-action-lbl">Receive</span>
-            </div>
-
-            <!-- 2. Pay -->
-            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('pay')">
-              <div class="cf-mf-action-circle">
-                <span>↗</span>
-              </div>
-              <span class="cf-mf-action-lbl">Pay</span>
-            </div>
-
-            <!-- 3. Saving & Invest -->
-            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('saving')">
-              <div class="cf-mf-action-circle">
-                <span>💎</span>
-              </div>
-              <span class="cf-mf-action-lbl">Invest</span>
-            </div>
-
-            <!-- 4. Stats -->
-            <div class="cf-mf-action-item" onclick="switchTab('tab-cashflow')">
-              <div class="cf-mf-action-circle">
-                <span>📊</span>
-              </div>
-              <span class="cf-mf-action-lbl">Stats</span>
-            </div>
-          </div>
-
-          <!-- Summary Strip -->
-          <div class="cf-mf-summary-strip">
-            <div class="cf-mf-metric">
-              <span class="cf-mf-metric-lbl">Monthly Income</span>
-              <span class="cf-mf-metric-val num" id="cfMobileIncome" style="color: #6ee7b7;">฿ —</span>
-            </div>
-            <div class="cf-mf-divider"></div>
-            <div class="cf-mf-metric">
-              <span class="cf-mf-metric-lbl">Net Expense</span>
-              <span class="cf-mf-metric-val num" id="cfMobileOutcome" style="color: #fca5a5;">฿ —</span>
-            </div>
-            <div class="cf-mf-divider"></div>
-            <div class="cf-mf-metric" style="text-align: right;">
-              <span class="cf-mf-metric-lbl">Savings Rate</span>
-              <span class="cf-mf-metric-val num" id="cfMobileSavingsRate" style="color: #93c5fd;">—%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Top Bento Grid: Hero KPI Strip + Milestone Card -->
       <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr;" data-od-id="overview-hero">
         
@@ -3843,69 +3775,132 @@
 
           <!-- Balance Overview Card -->
           <section class="bento-card cf-balance-card" data-od-id="cf-balance">
-            <!-- Balance Head -->
-            <div class="cf-balance-head">
-              <div>
-                <div class="cf-eyebrow">Current Balance</div>
-                <div id="cfCashBalance" class="cf-balance-amount num">฿ —</div>
-                <div id="cfCashSubtitle" class="cf-sub" style="margin-top: 2px;">Available Cash Balance (Cash)</div>
+            <!-- Desktop Balance View (Shown on desktop >= 769px) -->
+            <div class="cf-desktop-only" style="flex-direction: column; width: 100%;">
+              <div class="cf-balance-head">
+                <div>
+                  <div class="cf-eyebrow">Current Balance</div>
+                  <div id="cfCashBalance" class="cf-balance-amount num">฿ —</div>
+                  <div id="cfCashSubtitle" class="cf-sub" style="margin-top: 2px;">Available Cash Balance (Cash)</div>
+                </div>
+                <span class="pill pill-sky flex-none">Live</span>
               </div>
-              <span class="pill pill-sky flex-none">Live</span>
-            </div>
 
-            <!-- Balance Body -->
-            <div class="cf-balance-body">
-              <div class="cf-circles-wrap">
-                <svg class="cf-circle-bridge-svg" viewBox="0 0 364 108" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="cfBridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.85)" />
-                      <stop offset="30%" stop-color="rgba(240, 246, 255, 0.92)" />
-                      <stop offset="50%" stop-color="rgba(129, 140, 248, 0.55)" />
-                      <stop offset="70%" stop-color="rgba(240, 246, 255, 0.92)" />
-                      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.85)" />
-                    </linearGradient>
-                    <linearGradient id="cfBridgeGradDark" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="rgba(30, 41, 59, 0.6)" />
-                      <stop offset="30%" stop-color="rgba(30, 41, 59, 0.8)" />
-                      <stop offset="50%" stop-color="rgba(99, 102, 241, 0.5)" />
-                      <stop offset="70%" stop-color="rgba(30, 41, 59, 0.8)" />
-                      <stop offset="100%" stop-color="rgba(30, 41, 59, 0.6)" />
-                    </linearGradient>
-                  </defs>
-                  <path class="cf-bridge-contour"
-                    d="M 88.7,12.6 Q 118,32 147.3,12.6 A 54 54 0 0 1 216.7 12.6 Q 246,32 275.3 12.6 A 54 54 0 1 1 275.3 95.4 Q 246,76 216.7 95.4 A 54 54 0 0 1 147.3 95.4 Q 118,76 88.7 95.4 A 54 54 0 1 1 88.7 12.6 Z"
-                    fill="url(#cfBridgeGrad)"
-                    stroke="none"
-                  />
-                </svg>
-                <div class="cf-circles" id="cfCirclesContainer">
-                  <div class="cf-circle" id="cfCircleIncomeWrap">
-                    <span id="cfCircleIncome" class="cf-circle-val num" style="color:#10b981;">฿ —</span>
-                    <span class="cf-circle-lbl">Income</span>
-                  </div>
-                  <div class="cf-circle active" id="cfCircleCashWrap">
-                    <span id="cfCircleCash" class="cf-circle-val num">฿ —</span>
-                    <span class="cf-circle-lbl">Cash Balance</span>
-                  </div>
-                  <div class="cf-circle" id="cfCircleOutcomeWrap">
-                    <span id="cfCircleOutcome" class="cf-circle-val num" style="color:#f43f5e;">฿ —</span>
-                    <span class="cf-circle-lbl">Expense</span>
+              <!-- Balance Body -->
+              <div class="cf-balance-body">
+                <div class="cf-circles-wrap">
+                  <svg class="cf-circle-bridge-svg" viewBox="0 0 364 108" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="cfBridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.85)" />
+                        <stop offset="30%" stop-color="rgba(240, 246, 255, 0.92)" />
+                        <stop offset="50%" stop-color="rgba(129, 140, 248, 0.55)" />
+                        <stop offset="70%" stop-color="rgba(240, 246, 255, 0.92)" />
+                        <stop offset="100%" stop-color="rgba(255, 255, 255, 0.85)" />
+                      </linearGradient>
+                      <linearGradient id="cfBridgeGradDark" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="rgba(30, 41, 59, 0.6)" />
+                        <stop offset="30%" stop-color="rgba(30, 41, 59, 0.8)" />
+                        <stop offset="50%" stop-color="rgba(99, 102, 241, 0.5)" />
+                        <stop offset="70%" stop-color="rgba(30, 41, 59, 0.8)" />
+                        <stop offset="100%" stop-color="rgba(30, 41, 59, 0.6)" />
+                      </linearGradient>
+                    </defs>
+                    <path class="cf-bridge-contour"
+                      d="M 88.7,12.6 Q 118,32 147.3,12.6 A 54 54 0 0 1 216.7 12.6 Q 246,32 275.3 12.6 A 54 54 0 1 1 275.3 95.4 Q 246,76 216.7 95.4 A 54 54 0 0 1 147.3 95.4 Q 118,76 88.7 95.4 A 54 54 0 1 1 88.7 12.6 Z"
+                      fill="url(#cfBridgeGrad)"
+                      stroke="none"
+                    />
+                  </svg>
+                  <div class="cf-circles" id="cfCirclesContainer">
+                    <div class="cf-circle" id="cfCircleIncomeWrap">
+                      <span id="cfCircleIncome" class="cf-circle-val num" style="color:#10b981;">฿ —</span>
+                      <span class="cf-circle-lbl">Income</span>
+                    </div>
+                    <div class="cf-circle active" id="cfCircleCashWrap">
+                      <span id="cfCircleCash" class="cf-circle-val num">฿ —</span>
+                      <span class="cf-circle-lbl">Cash Balance</span>
+                    </div>
+                    <div class="cf-circle" id="cfCircleOutcomeWrap">
+                      <span id="cfCircleOutcome" class="cf-circle-val num" style="color:#f43f5e;">฿ —</span>
+                      <span class="cf-circle-lbl">Expense</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Quick Action Buttons: Receive, Pay, Saving & Invest (Right Stacked Style) -->
-              <div class="cf-actions-stacked">
-                <button type="button" class="ref-btn ref-btn-outline" onclick="openExpenseRecordModal('receive')" title="Record Income to Sheet Expense">
-                  Receive
-                </button>
-                <button type="button" class="ref-btn ref-btn-dark" onclick="openExpenseRecordModal('pay')" title="Record Expense to Sheet Expense">
-                  Pay
-                </button>
-                <button type="button" class="ref-btn ref-btn-indigo" onclick="openExpenseRecordModal('saving')" title="Record Saving &amp; Investment to Sheet Expense">
-                  Saving &amp; Invest
-                </button>
+                <!-- Quick Action Buttons: Receive, Pay, Saving & Invest (Right Stacked Style) -->
+                <div class="cf-actions-stacked">
+                  <button type="button" class="ref-btn ref-btn-outline" onclick="openExpenseRecordModal('receive')" title="Record Income to Sheet Expense">
+                    Receive
+                  </button>
+                  <button type="button" class="ref-btn ref-btn-dark" onclick="openExpenseRecordModal('pay')" title="Record Expense to Sheet Expense">
+                    Pay
+                  </button>
+                  <button type="button" class="ref-btn ref-btn-indigo" onclick="openExpenseRecordModal('saving')" title="Record Saving &amp; Investment to Sheet Expense">
+                    Saving &amp; Invest
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Fintech Blue Card (Shown on mobile < 768px in place of Current Balance box) -->
+            <div class="cf-mobile-only cf-fintech-mobile-wrap">
+              <div class="cf-mobile-fintech-card">
+                <!-- Top Row: Greeting + Avatar -->
+                <div class="cf-mf-header">
+                  <span class="cf-mf-greeting" id="cfMobileGreeting">Good morning, Takeshiro!</span>
+                  <div class="cf-mf-avatar" onclick="openMobileAccountSheet()" title="Account Settings" style="cursor: pointer;">
+                    <svg viewBox="0 0 24 24" style="width: 17px; height: 17px; fill: #ffffff;">
+                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Balance Row -->
+                <div class="cf-mf-balance-box">
+                  <div class="cf-mf-label" style="text-transform: uppercase; font-size: 11px; font-weight: 700; letter-spacing: 0.04em;">CURRENT BALANCE (สภาพคล่อง)</div>
+                  <div class="cf-mf-balance-row">
+                    <span class="cf-mf-amount num" id="cfMobileCashBalance">฿ —</span>
+                    <button type="button" class="cf-mf-eye-btn" onclick="toggleMobileBalanceEye()" title="Show/Hide Balance" id="cfMobileEyeBtn">
+                      👁️
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 4 Quick Action Circles (Matching Reference Screenshot) -->
+                <div class="cf-mf-actions-grid">
+                  <!-- 1. Receive -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('receive')">
+                    <div class="cf-mf-action-circle">
+                      <span>↙</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Receive</span>
+                  </div>
+
+                  <!-- 2. Pay -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('pay')">
+                    <div class="cf-mf-action-circle">
+                      <span>↗</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Pay</span>
+                  </div>
+
+                  <!-- 3. Saving & Invest -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('saving')">
+                    <div class="cf-mf-action-circle">
+                      <span>💎</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Invest</span>
+                  </div>
+
+                  <!-- 4. Stats -->
+                  <div class="cf-mf-action-item" onclick="document.querySelector('[data-od-id=\'cf-expense-stat\']')?.scrollIntoView({behavior:'smooth'})">
+                    <div class="cf-mf-action-circle">
+                      <span>📊</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Stats</span>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

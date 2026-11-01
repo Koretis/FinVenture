@@ -172,7 +172,7 @@ function _renderCfBalance(cfList, data) {
   let greetingTime = 'Good morning';
   if (hour >= 12 && hour < 17) greetingTime = 'Good afternoon';
   else if (hour >= 17) greetingTime = 'Good evening';
-  const rawUser = localStorage.getItem('finventure_auth_user') || 'Amanda';
+  const rawUser = localStorage.getItem('finventure_auth_user') || 'Takeshiro';
   s('cfMobileGreeting', `${greetingTime}, ${rawUser}!`);
 
   // Bind Hover Events for all 3 circles
