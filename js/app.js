@@ -47,11 +47,15 @@ function setCurrency(cur) {
   currentCurrency = cur;
   currentFinData.meta.currency = cur;
 
-  // Button active state
+  // Button active state (Desktop & Mobile)
   const btnThb = document.getElementById("curr-thb");
   const btnUsd = document.getElementById("curr-usd");
+  const mBtnThb = document.getElementById("mobile-curr-thb");
+  const mBtnUsd = document.getElementById("mobile-curr-usd");
   if (btnThb) btnThb.classList.toggle("active", cur === "THB");
   if (btnUsd) btnUsd.classList.toggle("active", cur === "USD");
+  if (mBtnThb) mBtnThb.classList.toggle("active", cur === "THB");
+  if (mBtnUsd) mBtnUsd.classList.toggle("active", cur === "USD");
 
   // Update all data-val-thb nodes in the DOM
   document.querySelectorAll("[data-val-thb]").forEach(el => {
@@ -746,6 +750,46 @@ async function handleSaveAccountCredentials() {
     closeAccountModal();
   }, 900);
 }
+
+// -------------------------------------------------------------
+// Mobile Account Action Sheet Controller
+// -------------------------------------------------------------
+function openMobileAccountSheet() {
+  const sheet = document.getElementById("mobileAccountSheet");
+  if (!sheet) return;
+
+  // Sync display username
+  try {
+    const cred = typeof getStoredCredentials === "function" ? getStoredCredentials() : null;
+    const uName = cred && cred.username ? cred.username : (localStorage.getItem("finventure_auth_user") || "Admin");
+    const nameEl = document.getElementById("mobileSheetUsername");
+    if (nameEl) nameEl.textContent = uName;
+  } catch (e) {}
+
+  // Sync active theme state
+  const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+  document.querySelectorAll(".mobile-theme-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-theme") === currentTheme);
+  });
+
+  // Sync active currency state
+  const mBtnThb = document.getElementById("mobile-curr-thb");
+  const mBtnUsd = document.getElementById("mobile-curr-usd");
+  if (mBtnThb) mBtnThb.classList.toggle("active", currentCurrency === "THB");
+  if (mBtnUsd) mBtnUsd.classList.toggle("active", currentCurrency === "USD");
+
+  sheet.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeMobileAccountSheet() {
+  const sheet = document.getElementById("mobileAccountSheet");
+  if (sheet) sheet.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+window.openMobileAccountSheet = openMobileAccountSheet;
+window.closeMobileAccountSheet = closeMobileAccountSheet;
 
 // -------------------------------------------------------------
 // 7. Application Initialization

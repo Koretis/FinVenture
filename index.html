@@ -699,7 +699,13 @@
     .cf-col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
     .flex-none { flex: none; }
 
-    /* Responsive Mobile Fintech Viewport Visibility */
+    /* Responsive Viewport Visibility */
+    .desktop-only {
+      display: flex !important;
+    }
+    .mobile-only {
+      display: none !important;
+    }
     .cf-mobile-only {
       display: none !important;
     }
@@ -708,19 +714,288 @@
     }
 
     @media (max-width: 768px) {
+      .desktop-only {
+        display: none !important;
+      }
+      .mobile-only {
+        display: flex !important;
+      }
       .cf-desktop-only {
         display: none !important;
       }
       .cf-mobile-only {
         display: block !important;
       }
-      /* Remove outer container padding/border on mobile for edge-to-edge app feel */
-      .bento-card[data-od-id="cf-balance"] {
-        padding: 0 !important;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
+      .top-nav {
+        flex-wrap: nowrap !important;
+        border-radius: 9999px !important;
+        padding: 6px 14px !important;
+        margin-bottom: 18px !important;
+        gap: 8px !important;
+        justify-content: space-between !important;
       }
+      .brand-row {
+        gap: 8px !important;
+      }
+      .brand-name {
+        font-size: 15px !important;
+      }
+      .sync-tag {
+        padding: 3px 8px !important;
+        font-size: 10.5px !important;
+      }
+    }
+
+    /* Circular Account Profile Button on Top Bar (Mobile Reference Style) */
+    .mobile-account-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+      flex-shrink: 0;
+    }
+    .mobile-account-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5), 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+    .mobile-account-btn:active {
+      transform: scale(0.96);
+    }
+    .mobile-account-btn svg {
+      width: 19px;
+      height: 19px;
+      fill: #ffffff;
+    }
+    .mobile-account-btn .online-indicator {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid var(--surface);
+    }
+
+    /* Mobile Account Action Sheet (Bottom Drawer) */
+    .mobile-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .mobile-sheet-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-sheet-box {
+      width: 100%;
+      max-height: 85vh;
+      background: var(--surface);
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      border-top: 1px solid var(--border-strong);
+      padding: 14px 20px 36px 20px;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+      transform: translateY(100%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      box-sizing: border-box;
+      color: var(--fg);
+    }
+    .mobile-sheet-overlay.open .mobile-sheet-box {
+      transform: translateY(0);
+    }
+    .mobile-sheet-handle {
+      width: 44px;
+      height: 5px;
+      border-radius: 9999px;
+      background: var(--border-strong);
+      margin: 0 auto 16px auto;
+    }
+    .mobile-profile-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      background: var(--surface-sec);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .mobile-profile-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      flex-shrink: 0;
+    }
+    .mobile-profile-avatar svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+    }
+    .mobile-profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .mobile-profile-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .mobile-profile-role {
+      font-size: 11.5px;
+      color: var(--fg-sec);
+    }
+    .mobile-profile-status {
+      font-size: 10.5px;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+    }
+    .mobile-sheet-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--fg-muted);
+      margin-bottom: 8px;
+      padding-left: 2px;
+    }
+    .mobile-theme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .mobile-theme-btn {
+      background: var(--surface-sec);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--fg-sec);
+      transition: all 0.2s ease;
+    }
+    .mobile-theme-btn.active {
+      border-color: #3b82f6;
+      background: rgba(37, 99, 235, 0.14);
+      color: var(--fg);
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+    .mobile-currency-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .mobile-curr-btn {
+      background: var(--surface-sec);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--fg-sec);
+      transition: all 0.2s ease;
+    }
+    .mobile-curr-btn.active {
+      border-color: #3b82f6;
+      background: rgba(37, 99, 235, 0.14);
+      color: var(--fg);
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+    .mobile-sheet-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .mobile-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--surface-sec);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 13.5px;
+      color: var(--fg);
+    }
+    .mobile-menu-item:hover, .mobile-menu-item:active {
+      border-color: var(--border-strong);
+      background: var(--surface-glass);
+    }
+    .mobile-menu-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mobile-menu-icon {
+      font-size: 16px;
+      width: 24px;
+      text-align: center;
+    }
+    .mobile-menu-arrow {
+      color: var(--fg-muted);
+      font-size: 13px;
+    }
+    .mobile-sheet-logout-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .mobile-sheet-logout-btn:hover, .mobile-sheet-logout-btn:active {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: #ef4444;
     }
 
     /* Mobile Fintech Blue Card (Reference Design) */
@@ -761,16 +1036,20 @@
       letter-spacing: -0.01em;
     }
     .cf-mf-avatar {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.22);
-      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: 2px solid rgba(255, 255, 255, 0.95);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .cf-mf-avatar:hover {
+      transform: scale(1.05);
     }
     .cf-mf-balance-box {
       margin-bottom: 24px;
@@ -831,22 +1110,23 @@
       transform: translateY(-2px);
     }
     .cf-mf-action-circle {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(8px);
+      background: #ffffff;
+      color: #1d4ed8;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      font-size: 19px;
-      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+      font-size: 18px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      border: none;
     }
     .cf-mf-action-item:hover .cf-mf-action-circle {
-      background: rgba(255, 255, 255, 0.28);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.26);
     }
     .cf-mf-action-lbl {
       font-size: 11.5px;
@@ -3028,8 +3308,8 @@
         </div>
       </div>
 
-      <!-- 5 Main Tabs -->
-      <nav class="nav-tabs" data-od-id="nav-tabs">
+      <!-- 5 Main Tabs (Desktop Only) -->
+      <nav class="nav-tabs desktop-only" data-od-id="nav-tabs">
         <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 ภาพรวมความมั่งคั่ง</button>
         <button class="tab-btn" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')">📊 Portfolio</button>
         <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 Cash Flow</button>
@@ -3037,8 +3317,8 @@
         <button class="tab-btn" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')">🎯 วางแผนเป้าหมาย</button>
       </nav>
 
-      <!-- Top Utility Controls -->
-      <div class="util-group">
+      <!-- Top Utility Controls (Desktop Only) -->
+      <div class="util-group desktop-only">
         <!-- Currency Toggle -->
         <div class="seg-ctrl">
           <button id="curr-thb" class="seg-btn active" onclick="setCurrency('THB')">฿ THB</button>
@@ -3058,6 +3338,14 @@
         <button class="icon-btn" onclick="openAccountModal()" title="ตั้งค่าบัญชีผู้ใช้ / เปลี่ยนรหัสผ่าน">🔐</button>
         <button class="icon-btn" onclick="handleLogout()" title="ออกจากระบบ (Logout)" style="color: #f43f5e;">🚪</button>
       </div>
+
+      <!-- Mobile Circular Account Button (Shown ONLY on mobile < 768px on the right) -->
+      <button type="button" class="mobile-account-btn mobile-only" onclick="openMobileAccountSheet()" title="ตั้งค่าบัญชี, ธีม และระบบ" aria-label="Account Settings">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+        <span class="online-indicator"></span>
+      </button>
     </header>
 
     <!-- =====================================================================
@@ -3065,6 +3353,85 @@
          ===================================================================== -->
     <main id="tab-overview" class="tab-view active" data-od-id="view-overview">
       
+      <!-- Mobile Fintech Blue Card View (Shown exclusively on Overview tab on mobile < 768px) -->
+      <div class="cf-mobile-only cf-fintech-mobile-wrap" style="margin-bottom: 18px;">
+        <div class="cf-mobile-fintech-card">
+          <!-- Top Row: Greeting + Avatar -->
+          <div class="cf-mf-header">
+            <span class="cf-mf-greeting" id="cfMobileGreeting">Good morning, Amanda!</span>
+            <div class="cf-mf-avatar" onclick="openMobileAccountSheet()" title="Account Settings" style="cursor: pointer;">
+              <svg viewBox="0 0 24 24" style="width: 17px; height: 17px; fill: #ffffff;">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Balance Row -->
+          <div class="cf-mf-balance-box">
+            <div class="cf-mf-label">Current Balance (สภาพคล่องพร้อมใช้)</div>
+            <div class="cf-mf-balance-row">
+              <span class="cf-mf-amount num" id="cfMobileCashBalance">฿ —</span>
+              <button type="button" class="cf-mf-eye-btn" onclick="toggleMobileBalanceEye()" title="Show/Hide Balance" id="cfMobileEyeBtn">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 Quick Action Circles (Matching Reference) -->
+          <div class="cf-mf-actions-grid">
+            <!-- 1. Receive -->
+            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('receive')">
+              <div class="cf-mf-action-circle">
+                <span>↙</span>
+              </div>
+              <span class="cf-mf-action-lbl">Receive</span>
+            </div>
+
+            <!-- 2. Pay -->
+            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('pay')">
+              <div class="cf-mf-action-circle">
+                <span>↗</span>
+              </div>
+              <span class="cf-mf-action-lbl">Pay</span>
+            </div>
+
+            <!-- 3. Saving & Invest -->
+            <div class="cf-mf-action-item" onclick="openExpenseRecordModal('saving')">
+              <div class="cf-mf-action-circle">
+                <span>💎</span>
+              </div>
+              <span class="cf-mf-action-lbl">Invest</span>
+            </div>
+
+            <!-- 4. Stats -->
+            <div class="cf-mf-action-item" onclick="switchTab('tab-cashflow')">
+              <div class="cf-mf-action-circle">
+                <span>📊</span>
+              </div>
+              <span class="cf-mf-action-lbl">Stats</span>
+            </div>
+          </div>
+
+          <!-- Summary Strip -->
+          <div class="cf-mf-summary-strip">
+            <div class="cf-mf-metric">
+              <span class="cf-mf-metric-lbl">Monthly Income</span>
+              <span class="cf-mf-metric-val num" id="cfMobileIncome" style="color: #6ee7b7;">฿ —</span>
+            </div>
+            <div class="cf-mf-divider"></div>
+            <div class="cf-mf-metric">
+              <span class="cf-mf-metric-lbl">Net Expense</span>
+              <span class="cf-mf-metric-val num" id="cfMobileOutcome" style="color: #fca5a5;">฿ —</span>
+            </div>
+            <div class="cf-mf-divider"></div>
+            <div class="cf-mf-metric" style="text-align: right;">
+              <span class="cf-mf-metric-lbl">Savings Rate</span>
+              <span class="cf-mf-metric-val num" id="cfMobileSavingsRate" style="color: #93c5fd;">—%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Top Bento Grid: Hero KPI Strip + Milestone Card -->
       <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr;" data-od-id="overview-hero">
         
@@ -3438,8 +3805,8 @@
 
           <!-- Balance Overview Card -->
           <section class="bento-card cf-balance-card" data-od-id="cf-balance">
-            <!-- Desktop Balance Head (hidden on mobile) -->
-            <div class="cf-balance-head cf-desktop-only">
+            <!-- Balance Head -->
+            <div class="cf-balance-head">
               <div>
                 <div class="cf-eyebrow">Current Balance</div>
                 <div id="cfCashBalance" class="cf-balance-amount num">฿ —</div>
@@ -3448,8 +3815,8 @@
               <span class="pill pill-sky flex-none">Live</span>
             </div>
 
-            <!-- Desktop Balance Body (hidden on mobile) -->
-            <div class="cf-balance-body cf-desktop-only">
+            <!-- Balance Body -->
+            <div class="cf-balance-body">
               <div class="cf-circles-wrap">
                 <svg class="cf-circle-bridge-svg" viewBox="0 0 364 108" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -3503,84 +3870,6 @@
                 </button>
               </div>
             </div>
-
-            <!-- Mobile Fintech Blue Card View (shown only on mobile < 768px) -->
-            <div class="cf-mobile-only cf-fintech-mobile-wrap">
-              <div class="cf-mobile-fintech-card">
-                <!-- Top Row: Greeting + Avatar -->
-                <div class="cf-mf-header">
-                  <span class="cf-mf-greeting" id="cfMobileGreeting">Good morning, Amanda!</span>
-                  <div class="cf-mf-avatar" title="Account">
-                    <span>👤</span>
-                  </div>
-                </div>
-
-                <!-- Balance Row -->
-                <div class="cf-mf-balance-box">
-                  <div class="cf-mf-label">Current Balance</div>
-                  <div class="cf-mf-balance-row">
-                    <span class="cf-mf-amount num" id="cfMobileCashBalance">฿ —</span>
-                    <button type="button" class="cf-mf-eye-btn" onclick="toggleMobileBalanceEye()" title="Show/Hide Balance" id="cfMobileEyeBtn">
-                      👁️
-                    </button>
-                  </div>
-                </div>
-
-                <!-- 4 Quick Action Circles -->
-                <div class="cf-mf-actions-grid">
-                  <!-- 1. Receive -->
-                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('receive')">
-                    <div class="cf-mf-action-circle">
-                      <span>↙</span>
-                    </div>
-                    <span class="cf-mf-action-lbl">Receive</span>
-                  </div>
-
-                  <!-- 2. Pay -->
-                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('pay')">
-                    <div class="cf-mf-action-circle">
-                      <span>↗</span>
-                    </div>
-                    <span class="cf-mf-action-lbl">Pay</span>
-                  </div>
-
-                  <!-- 3. Saving & Invest -->
-                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('saving')">
-                    <div class="cf-mf-action-circle">
-                      <span>💎</span>
-                    </div>
-                    <span class="cf-mf-action-lbl">Invest</span>
-                  </div>
-
-                  <!-- 4. Stats -->
-                  <div class="cf-mf-action-item" onclick="document.querySelector('[data-od-id=\'cf-expense-stat\']')?.scrollIntoView({behavior:'smooth'})">
-                    <div class="cf-mf-action-circle">
-                      <span>📊</span>
-                    </div>
-                    <span class="cf-mf-action-lbl">Stats</span>
-                  </div>
-                </div>
-
-                <!-- Summary Strip -->
-                <div class="cf-mf-summary-strip">
-                  <div class="cf-mf-metric">
-                    <span class="cf-mf-metric-lbl">Monthly Income</span>
-                    <span class="cf-mf-metric-val num" id="cfMobileIncome" style="color: #6ee7b7;">฿ —</span>
-                  </div>
-                  <div class="cf-mf-divider"></div>
-                  <div class="cf-mf-metric">
-                    <span class="cf-mf-metric-lbl">Net Expense</span>
-                    <span class="cf-mf-metric-val num" id="cfMobileOutcome" style="color: #fca5a5;">฿ —</span>
-                  </div>
-                  <div class="cf-mf-divider"></div>
-                  <div class="cf-mf-metric" style="text-align: right;">
-                    <span class="cf-mf-metric-lbl">Savings Rate</span>
-                    <span class="cf-mf-metric-val num" id="cfMobileSavingsRate" style="color: #93c5fd;">—%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
           </section>
 
           <!-- Expense Stats + Financial Health (side by side) -->
@@ -4835,6 +5124,107 @@
     </div>
   </div>
 
+  <!-- =====================================================================
+       MOBILE ACCOUNT ACTION SHEET (Slide-up drawer for mobile)
+       ===================================================================== -->
+  <div id="mobileAccountSheet" class="mobile-sheet-overlay" onclick="closeMobileAccountSheet()">
+    <div class="mobile-sheet-box" onclick="event.stopPropagation()">
+      <div class="mobile-sheet-handle"></div>
+
+      <!-- User Profile Header -->
+      <div class="mobile-profile-header">
+        <div class="mobile-profile-avatar">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </div>
+        <div class="mobile-profile-info">
+          <div class="mobile-profile-name" id="mobileSheetUsername">Takeshiro</div>
+          <div class="mobile-profile-role">Executive Portfolio Admin</div>
+          <div class="mobile-profile-status">
+            <span class="live-dot dot-live" style="width: 6px; height: 6px;"></span>
+            <span>Google Sheet Live Connected</span>
+          </div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeMobileAccountSheet()" style="padding: 4px 8px; font-size: 16px;">✕</button>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="mobile-sheet-label">ธีมการแสดงผล (Color Theme)</div>
+      <div class="mobile-theme-grid">
+        <button type="button" class="mobile-theme-btn theme-btn" data-theme="dark" onclick="setTheme('dark')">
+          <span style="font-size: 16px;">🌙</span>
+          <span>Dark</span>
+        </button>
+        <button type="button" class="mobile-theme-btn theme-btn" data-theme="light" onclick="setTheme('light')">
+          <span style="font-size: 16px;">☀️</span>
+          <span>Light</span>
+        </button>
+        <button type="button" class="mobile-theme-btn theme-btn" data-theme="blue" onclick="setTheme('blue')">
+          <span style="font-size: 16px;">🔷</span>
+          <span>Blue</span>
+        </button>
+        <button type="button" class="mobile-theme-btn theme-btn" data-theme="bento" onclick="setTheme('bento')">
+          <span style="font-size: 16px;">🌿</span>
+          <span>Bento</span>
+        </button>
+      </div>
+
+      <!-- Currency Switcher -->
+      <div class="mobile-sheet-label">สกุลเงินหลัก (Base Currency)</div>
+      <div class="mobile-currency-grid">
+        <button type="button" class="mobile-curr-btn" id="mobile-curr-thb" onclick="setCurrency('THB')">
+          <span>฿ THB (บาท)</span>
+        </button>
+        <button type="button" class="mobile-curr-btn" id="mobile-curr-usd" onclick="setCurrency('USD')">
+          <span>$ USD (ดอลลาร์)</span>
+        </button>
+      </div>
+
+      <!-- System Quick Actions -->
+      <div class="mobile-sheet-label">การจัดการระบบ &amp; ข้อมูล</div>
+      <div class="mobile-sheet-menu">
+        <div class="mobile-menu-item" onclick="closeMobileAccountSheet(); openGuideModal();">
+          <div class="mobile-menu-item-left">
+            <span class="mobile-menu-icon">📋</span>
+            <span>คู่มือโครงสร้าง Google Sheet</span>
+          </div>
+          <span class="mobile-menu-arrow">→</span>
+        </div>
+
+        <div class="mobile-menu-item" onclick="closeMobileAccountSheet(); openAccountModal();">
+          <div class="mobile-menu-item-left">
+            <span class="mobile-menu-icon">🔐</span>
+            <span>ตั้งค่าบัญชี / เปลี่ยนรหัสผ่าน</span>
+          </div>
+          <span class="mobile-menu-arrow">→</span>
+        </div>
+
+        <div class="mobile-menu-item" onclick="closeMobileAccountSheet(); triggerSync();">
+          <div class="mobile-menu-item-left">
+            <span class="mobile-menu-icon">🔄</span>
+            <span>ซิงค์ข้อมูล Google Sheet ทันที</span>
+          </div>
+          <span class="mobile-menu-arrow">→</span>
+        </div>
+
+        <div class="mobile-menu-item" onclick="closeMobileAccountSheet(); openSheetModal();">
+          <div class="mobile-menu-item-left">
+            <span class="mobile-menu-icon">⚙️</span>
+            <span>ตั้งค่า Google Sheet ID / URL</span>
+          </div>
+          <span class="mobile-menu-arrow">→</span>
+        </div>
+      </div>
+
+      <!-- Logout Button -->
+      <button type="button" class="mobile-sheet-logout-btn" onclick="closeMobileAccountSheet(); handleLogout();">
+        <span>🚪</span>
+        <span>ออกจากระบบ (Logout)</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Floating Toast Notification -->
   <div id="cfToast">
     <span id="cfToastIcon">✅</span>
@@ -4842,11 +5232,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=45"></script>
-  <script src="js/sheets-api.js?v=45"></script>
-  <script src="js/charts.js?v=45"></script>
-  <script src="js/cashflow-ui.js?v=45"></script>
-  <script src="js/portfolio-ui.js?v=45"></script>
-  <script src="js/app.js?v=45"></script>
+  <script src="js/data-store.js?v=46"></script>
+  <script src="js/sheets-api.js?v=46"></script>
+  <script src="js/charts.js?v=46"></script>
+  <script src="js/cashflow-ui.js?v=46"></script>
+  <script src="js/portfolio-ui.js?v=46"></script>
+  <script src="js/app.js?v=46"></script>
 </body>
 </html>
