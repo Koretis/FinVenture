@@ -699,22 +699,189 @@
     .cf-col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
     .flex-none { flex: none; }
 
-    /* Clean Geometric Sans-Serif Typography for Cash Flow Page (Reference UI Match) */
-    #tab-cashflow,
-    #tab-cashflow *,
-    #tab-cashflow .num,
-    #tab-cashflow svg text,
-    #cfExpenseRecordModal,
-    #cfExpenseRecordModal *,
-    #cfExpenseRecordModal .num,
-    #cfToast,
-    #cfToast * {
-      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    /* Responsive Mobile Fintech Viewport Visibility */
+    .cf-mobile-only {
+      display: none !important;
     }
-    #tab-cashflow .num,
-    #cfExpenseRecordModal .num {
+    .cf-desktop-only {
+      display: flex !important;
+    }
+
+    @media (max-width: 768px) {
+      .cf-desktop-only {
+        display: none !important;
+      }
+      .cf-mobile-only {
+        display: block !important;
+      }
+      /* Remove outer container padding/border on mobile for edge-to-edge app feel */
+      .bento-card[data-od-id="cf-balance"] {
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Mobile Fintech Blue Card (Reference Design) */
+    .cf-fintech-mobile-wrap {
+      width: 100%;
+    }
+    .cf-mobile-fintech-card {
+      background: linear-gradient(155deg, #1d68f2 0%, #1754db 55%, #1042c4 100%);
+      border-radius: 26px;
+      padding: 24px 22px 22px 22px;
+      color: #ffffff;
+      box-shadow: 0 16px 36px -6px rgba(23, 84, 219, 0.42), 0 4px 12px rgba(23, 84, 219, 0.18);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .cf-mobile-fintech-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+    }
+    .cf-mf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .cf-mf-greeting {
+      font-size: 15.5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+      letter-spacing: -0.01em;
+    }
+    .cf-mf-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .cf-mf-balance-box {
+      margin-bottom: 24px;
+    }
+    .cf-mf-label {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: -0.005em;
+    }
+    .cf-mf-balance-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .cf-mf-amount {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #ffffff;
       font-variant-numeric: tabular-nums;
-      letter-spacing: -0.02em;
+    }
+    .cf-mf-eye-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.78);
+      cursor: pointer;
+      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      transition: color 0.15s ease, transform 0.15s ease;
+      line-height: 1;
+    }
+    .cf-mf-eye-btn:hover {
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+    .cf-mf-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      text-align: center;
+    }
+    .cf-mf-action-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cf-mf-action-item:hover {
+      transform: translateY(-2px);
+    }
+    .cf-mf-action-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 19px;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+    .cf-mf-action-item:hover .cf-mf-action-circle {
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    }
+    .cf-mf-action-lbl {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .cf-mf-summary-strip {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+    }
+    .cf-mf-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .cf-mf-metric-lbl {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 10.5px;
+    }
+    .cf-mf-metric-val {
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: -0.01em;
+    }
+    .cf-mf-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .cf-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
@@ -3271,7 +3438,8 @@
 
           <!-- Balance Overview Card -->
           <section class="bento-card cf-balance-card" data-od-id="cf-balance">
-            <div class="cf-balance-head">
+            <!-- Desktop Balance Head (hidden on mobile) -->
+            <div class="cf-balance-head cf-desktop-only">
               <div>
                 <div class="cf-eyebrow">Current Balance</div>
                 <div id="cfCashBalance" class="cf-balance-amount num">฿ —</div>
@@ -3280,7 +3448,8 @@
               <span class="pill pill-sky flex-none">Live</span>
             </div>
 
-            <div class="cf-balance-body">
+            <!-- Desktop Balance Body (hidden on mobile) -->
+            <div class="cf-balance-body cf-desktop-only">
               <div class="cf-circles-wrap">
                 <svg class="cf-circle-bridge-svg" viewBox="0 0 364 108" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -3334,6 +3503,84 @@
                 </button>
               </div>
             </div>
+
+            <!-- Mobile Fintech Blue Card View (shown only on mobile < 768px) -->
+            <div class="cf-mobile-only cf-fintech-mobile-wrap">
+              <div class="cf-mobile-fintech-card">
+                <!-- Top Row: Greeting + Avatar -->
+                <div class="cf-mf-header">
+                  <span class="cf-mf-greeting" id="cfMobileGreeting">Good morning, Amanda!</span>
+                  <div class="cf-mf-avatar" title="Account">
+                    <span>👤</span>
+                  </div>
+                </div>
+
+                <!-- Balance Row -->
+                <div class="cf-mf-balance-box">
+                  <div class="cf-mf-label">Current Balance</div>
+                  <div class="cf-mf-balance-row">
+                    <span class="cf-mf-amount num" id="cfMobileCashBalance">฿ —</span>
+                    <button type="button" class="cf-mf-eye-btn" onclick="toggleMobileBalanceEye()" title="Show/Hide Balance" id="cfMobileEyeBtn">
+                      👁️
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 4 Quick Action Circles -->
+                <div class="cf-mf-actions-grid">
+                  <!-- 1. Receive -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('receive')">
+                    <div class="cf-mf-action-circle">
+                      <span>↙</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Receive</span>
+                  </div>
+
+                  <!-- 2. Pay -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('pay')">
+                    <div class="cf-mf-action-circle">
+                      <span>↗</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Pay</span>
+                  </div>
+
+                  <!-- 3. Saving & Invest -->
+                  <div class="cf-mf-action-item" onclick="openExpenseRecordModal('saving')">
+                    <div class="cf-mf-action-circle">
+                      <span>💎</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Invest</span>
+                  </div>
+
+                  <!-- 4. Stats -->
+                  <div class="cf-mf-action-item" onclick="document.querySelector('[data-od-id=\'cf-expense-stat\']')?.scrollIntoView({behavior:'smooth'})">
+                    <div class="cf-mf-action-circle">
+                      <span>📊</span>
+                    </div>
+                    <span class="cf-mf-action-lbl">Stats</span>
+                  </div>
+                </div>
+
+                <!-- Summary Strip -->
+                <div class="cf-mf-summary-strip">
+                  <div class="cf-mf-metric">
+                    <span class="cf-mf-metric-lbl">Monthly Income</span>
+                    <span class="cf-mf-metric-val num" id="cfMobileIncome" style="color: #6ee7b7;">฿ —</span>
+                  </div>
+                  <div class="cf-mf-divider"></div>
+                  <div class="cf-mf-metric">
+                    <span class="cf-mf-metric-lbl">Net Expense</span>
+                    <span class="cf-mf-metric-val num" id="cfMobileOutcome" style="color: #fca5a5;">฿ —</span>
+                  </div>
+                  <div class="cf-mf-divider"></div>
+                  <div class="cf-mf-metric" style="text-align: right;">
+                    <span class="cf-mf-metric-lbl">Savings Rate</span>
+                    <span class="cf-mf-metric-val num" id="cfMobileSavingsRate" style="color: #93c5fd;">—%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
           </section>
 
           <!-- Expense Stats + Financial Health (side by side) -->

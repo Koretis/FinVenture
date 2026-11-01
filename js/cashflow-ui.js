@@ -95,6 +95,20 @@ function renderCashFlowPage() {
 
 
 let _cfBalanceDefault = { amt: 0, sub: 'Available Cash Balance (Cash)' };
+let _cfMobileEyeHidden = false;
+
+function toggleMobileBalanceEye() {
+  _cfMobileEyeHidden = !_cfMobileEyeHidden;
+  const amtEl = document.getElementById('cfMobileCashBalance');
+  const btn = document.getElementById('cfMobileEyeBtn');
+  if (amtEl) {
+    amtEl.textContent = _cfMobileEyeHidden ? '฿ ••••••' : cfFmt(_cfBalanceDefault.amt);
+  }
+  if (btn) {
+    btn.textContent = _cfMobileEyeHidden ? '🙈' : '👁️';
+  }
+}
+window.toggleMobileBalanceEye = toggleMobileBalanceEye;
 
 function onCfCircleHover(amt, sub) {
   const amtEl = document.getElementById('cfCashBalance');
@@ -145,6 +159,21 @@ function _renderCfBalance(cfList, data) {
   s('cfCircleIncome', cfFmtK(incomeVal));
   s('cfCircleCash',   cfFmtK(cashVal));
   s('cfCircleOutcome',cfFmtK(outcomeVal));
+
+  // Sync Mobile Fintech Blue Card elements
+  s('cfMobileCashBalance', _cfMobileEyeHidden ? '฿ ••••••' : cfFmt(cashVal));
+  s('cfMobileIncome',      `+${cfFmt(incomeVal)}`);
+  s('cfMobileOutcome',     `-${cfFmt(outcomeVal)}`);
+  const savingsRate = incomeVal > 0 ? Math.round(((incomeVal - outcomeVal) / incomeVal) * 1000) / 10 : 50;
+  s('cfMobileSavingsRate', `${savingsRate}%`);
+
+  // Dynamic Greeting based on time of day
+  const hour = new Date().getHours();
+  let greetingTime = 'Good morning';
+  if (hour >= 12 && hour < 17) greetingTime = 'Good afternoon';
+  else if (hour >= 17) greetingTime = 'Good evening';
+  const rawUser = localStorage.getItem('finventure_auth_user') || 'Amanda';
+  s('cfMobileGreeting', `${greetingTime}, ${rawUser}!`);
 
   // Bind Hover Events for all 3 circles
   const incomeWrap  = document.getElementById('cfCircleIncomeWrap');
