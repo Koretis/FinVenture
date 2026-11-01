@@ -8,16 +8,68 @@ let _cfRange = '6M';
 
 const CF_CAT_COLORS = {
   housing:  '#6366f1', tax: '#f59e0b', food: '#10b981', travel: '#0ea5e9',
-  gadgets: '#8b5cf6', family: '#ec4899', transport: '#f43f5e', health: '#14b8a6',
+  gadgets: '#8b5cf6', it: '#8b5cf6', family: '#ec4899', transport: '#f43f5e', health: '#14b8a6',
 };
 const CF_CAT_EMOJI = {
   housing: '🏠', tax: '📑', food: '🍔', travel: '✈️',
-  gadgets: '💻', family: '👨‍👩‍👦', transport: '🚗', health: '🏃',
+  gadgets: '💻', it: '💻', family: '👨‍👩‍👦', transport: '🚗', health: '🏃',
 };
+const CF_CAT_EN_NAMES = {
+  housing:   'Housing & Condo',
+  tax:       'Income Tax',
+  food:      'Food & Dining',
+  travel:    'Travel & Leisure',
+  gadgets:   'Tech & Gadgets',
+  it:        'Tech & Gadgets',
+  family:    'Family Support',
+  transport: 'Transport & Car',
+  health:    'Health & Sports',
+};
+const CF_MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const CF_TH_TO_EN_MONTH = {
+  'ม.ค.': 'Jan', 'ก.พ.': 'Feb', 'มี.ค.': 'Mar', 'เม.ย.': 'Apr',
+  'พ.ค.': 'May', 'มิ.ย.': 'Jun', 'ก.ค.': 'Jul', 'ส.ค.': 'Aug',
+  'ก.ย.': 'Sep', 'ต.ค.': 'Oct', 'พ.ย.': 'Nov', 'ธ.ค.': 'Dec'
+};
+
+function cfToEnText(str) {
+  if (!str) return '';
+  let out = String(str);
+  Object.keys(CF_TH_TO_EN_MONTH).forEach(th => {
+    out = out.split(th).join(CF_TH_TO_EN_MONTH[th]);
+  });
+  out = out.replace(/\(สด\)/g, '').replace(/\(ปัจจุบัน\)/g, '').trim();
+  return out;
+}
+
+function cfGetCatName(cat) {
+  if (!cat) return 'Category';
+  if (CF_CAT_EN_NAMES[cat.id]) return CF_CAT_EN_NAMES[cat.id];
+  const raw = cat.shortName || cat.name || cat.id || 'Category';
+  const parenMatch = raw.match(/\(([^)]+)\)/);
+  if (parenMatch && /[A-Za-z]/.test(parenMatch[1])) return parenMatch[1];
+  return cfToEnText(raw);
+}
+
+function cfResolveMonthLbl(m) {
+  if (!m) return '';
+  if (m.month) {
+    const parts = m.month.toString().split('-');
+    const mNum = typeof m.month === 'number' ? m.month : parseInt(parts[1] || parts[0] || '1', 10);
+    if (!isNaN(mNum) && mNum >= 1 && mNum <= 12) {
+      return CF_MONTHS_EN[(mNum - 1) % 12];
+    }
+  }
+  if (m.label) {
+    const rawLbl = m.label.split(' ')[0];
+    return CF_TH_TO_EN_MONTH[rawLbl] || cfToEnText(rawLbl);
+  }
+  return '';
+}
 
 function cfFmt(n) {
   if (!n || isNaN(n)) return '฿ —';
-  return `฿ ${Math.round(n).toLocaleString('th-TH')}`;
+  return `฿ ${Math.round(n).toLocaleString('en-US')}`;
 }
 function cfFmtK(n) {
   if (!n || isNaN(n)) return '—';
@@ -42,7 +94,7 @@ function renderCashFlowPage() {
 }
 
 
-let _cfBalanceDefault = { amt: 0, sub: 'เงินสดคงเหลือพร้อมใช้ (Cash)' };
+let _cfBalanceDefault = { amt: 0, sub: 'Available Cash Balance (Cash)' };
 
 function onCfCircleHover(amt, sub) {
   const amtEl = document.getElementById('cfCashBalance');
@@ -58,15 +110,15 @@ function onCfCircleLeave() {
   if (subEl) subEl.textContent = _cfBalanceDefault.sub;
 }
 
-// 1. Balance Overview (ภาพรวมกระแสเงินสด)
+// 1. Balance Overview (Current Balance)
 function _renderCfBalance(cfList, data) {
   const last = cfList.slice(-1)[0];
   const o = (data && data.overview) || (typeof currentFinData !== 'undefined' && currentFinData.overview) || {};
   
-  // 1. รายรับเดือนนี้ (Income)
+  // 1. Monthly Income
   const incomeVal = (last && last.income) ? last.income : (o.latestIncome || 137906);
 
-  // 2. เงินสดคงเหลือพร้อมใช้ (Cash only จาก Sheet Portfolio-Lastest)
+  // 2. Available Cash Balance (from Sheet Portfolio-Lastest)
   let cashVal = 0;
   if (o.cashAmount !== undefined && o.cashAmount !== null && !isNaN(o.cashAmount) && o.cashAmount > 0) {
     cashVal = o.cashAmount;
@@ -78,36 +130,36 @@ function _renderCfBalance(cfList, data) {
   }
   if (!cashVal || isNaN(cashVal)) cashVal = 70130;
 
-  // 3. รายจ่ายสุทธิ (Outcome)
+  // 3. Net Expense (Outcome)
   const outcomeVal = (last && last.outcome) ? last.outcome : (o.latestNetExpense || 67604);
 
-  // ค่าเริ่มต้น: แสดงข้อมูล "เงินสดคงเหลือพร้อมใช้ (Cash)"
+  // Default: show "Available Cash Balance (Cash)"
   _cfBalanceDefault = {
     amt: cashVal,
-    sub: 'เงินสดคงเหลือพร้อมใช้ (Cash)'
+    sub: 'Available Cash Balance (Cash)'
   };
 
   const s = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
   s('cfCashBalance',  cfFmt(cashVal));
-  s('cfCashSubtitle', 'เงินสดคงเหลือพร้อมใช้ (Cash)');
+  s('cfCashSubtitle', 'Available Cash Balance (Cash)');
   s('cfCircleIncome', cfFmtK(incomeVal));
   s('cfCircleCash',   cfFmtK(cashVal));
   s('cfCircleOutcome',cfFmtK(outcomeVal));
 
-  // ผูก Event Hover สำหรับวงกลมทั้ง 3 วง
+  // Bind Hover Events for all 3 circles
   const incomeWrap  = document.getElementById('cfCircleIncomeWrap');
   const cashWrap    = document.getElementById('cfCircleCashWrap');
   const outcomeWrap = document.getElementById('cfCircleOutcomeWrap');
   const circlesContainer = document.getElementById('cfCirclesContainer');
 
   if (incomeWrap) {
-    incomeWrap.onmouseenter = () => onCfCircleHover(incomeVal, 'รายรับเดือนนี้ (Income)');
+    incomeWrap.onmouseenter = () => onCfCircleHover(incomeVal, 'Monthly Income');
   }
   if (cashWrap) {
-    cashWrap.onmouseenter = () => onCfCircleHover(cashVal, 'เงินสดคงเหลือพร้อมใช้ (Cash)');
+    cashWrap.onmouseenter = () => onCfCircleHover(cashVal, 'Available Cash Balance (Cash)');
   }
   if (outcomeWrap) {
-    outcomeWrap.onmouseenter = () => onCfCircleHover(outcomeVal, 'รายจ่ายสุทธิ (Outcome)');
+    outcomeWrap.onmouseenter = () => onCfCircleHover(outcomeVal, 'Net Expense (Outcome)');
   }
   if (circlesContainer) {
     circlesContainer.onmouseleave = onCfCircleLeave;
@@ -131,7 +183,7 @@ function onCfBarHover(lbl, outcomeAmt, incomeAmt) {
   if (noteEl) {
     const netSave = (incomeAmt || 0) - (outcomeAmt || 0);
     const saveTxt = netSave >= 0 ? `+${cfFmt(netSave)}` : `-${cfFmt(Math.abs(netSave))}`;
-    noteEl.textContent = `เดือน ${lbl} · รายรับ ${cfFmt(incomeAmt)} · รายจ่าย ${cfFmt(outcomeAmt)} (ออม ${saveTxt})`;
+    noteEl.textContent = `${lbl} · Income ${cfFmt(incomeAmt)} · Expense ${cfFmt(outcomeAmt)} (Saved ${saveTxt})`;
   }
 }
 
@@ -147,33 +199,24 @@ function _renderCfBars(cfList, range) {
   const valid  = (cfList || []).filter(m => (m.outcome > 0 || m.income > 0));
   const count  = range === '6M' ? 6 : 12;
   const months = valid.slice(-count);
-  if (!months.length) { el.innerHTML = '<div style="font-size:11px;color:var(--fg-muted);padding:20px;text-align:center;">ไม่มีข้อมูล</div>'; return; }
+  if (!months.length) { el.innerHTML = '<div style="font-size:11px;color:var(--fg-muted);padding:20px;text-align:center;">No data available</div>'; return; }
   
   // Calculate unified scale for Income (bars) and Outcome (line)
   const maxVal    = Math.max(...months.map(m => Math.max(m.outcome || 0, m.income || 0)), 1);
   const peakIncM  = months.reduce((b, m) => (m.income || 0) > (b.income || 0) ? m : b, months[0]);
   const peakOutM  = months.reduce((b, m) => (m.outcome || 0) > (b.outcome || 0) ? m : b, months[0]);
   const trackH    = 120;
-  const MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   const n = months.length;
 
   el.onmouseleave = onCfBarLeave;
 
-  // 1. Build Bars HTML (Income / รายรับ)
+  // 1. Build Bars HTML (Income)
   const barsHtml = months.map((m, i) => {
     const h      = Math.max(16, Math.round(((m.income || 0) / maxVal) * trackH));
     const isPeak = (m === peakIncM) || (m.income === peakIncM.income);
     const isFeatured = isPeak;
 
-    // Resolve month label for horizontal axis (แกนนอน)
-    let lbl = '';
-    if (m.label) {
-      lbl = m.label.split(' ')[0];
-    }
-    if (!lbl && m.month) {
-      const mNum = typeof m.month === 'number' ? m.month : parseInt(m.month.toString().split('-')[1] || '1', 10);
-      lbl = MONTHS_TH[(mNum - 1) % 12] || '';
-    }
+    const lbl = cfResolveMonthLbl(m);
 
     const badge = `<div class="cf-peak-badge" style="bottom:${h}px;"><span class="cf-peak-dot"></span><span class="cf-peak-pill">${cfFmtK(m.income)}</span></div>`;
 
@@ -182,7 +225,7 @@ function _renderCfBars(cfList, range) {
       <span class="cf-bar-lbl">${lbl}</span></div>`;
   }).join('');
 
-  // 2. Build Sky Blue Outcome (Expenses / รายจ่าย) Line Overlay (500 x 120 coordinate space)
+  // 2. Build Sky Blue Outcome (Expenses) Line Overlay (500 x 120 coordinate space)
   const outcomePts = months.map((m, i) => {
     const x = ((i + 0.5) / n) * 500;
     const y = Math.max(8, Math.min(112, Math.round((1 - (m.outcome || 0) / maxVal) * trackH)));
@@ -209,15 +252,10 @@ function _renderCfBars(cfList, range) {
   el.innerHTML = overlaySvg + barsHtml;
 
   if (noteEl) {
-    let peakOutLbl = '';
-    if (peakOutM.label) peakOutLbl = peakOutM.label.split(' ')[0];
-    if (!peakOutLbl && peakOutM.month) {
-      const mNum = typeof peakOutM.month === 'number' ? peakOutM.month : parseInt(peakOutM.month.toString().split('-')[1] || '1', 10);
-      peakOutLbl = MONTHS_TH[(mNum - 1) % 12] || '';
-    }
+    const peakOutLbl = cfResolveMonthLbl(peakOutM);
     const avgInc = Math.round(months.reduce((acc, m) => acc + (m.income || 0), 0) / (months.length || 1));
     const avgOut = Math.round(months.reduce((acc, m) => acc + (m.outcome || 0), 0) / (months.length || 1));
-    _cfDefaultBarsNote = `แท่ง: รายรับ (เฉลี่ย ${cfFmtK(avgInc)}) · เส้นฟ้า: รายจ่าย (เฉลี่ย ${cfFmtK(avgOut)} / สูงสุด ${peakOutLbl} ${cfFmt(peakOutM.outcome)})`;
+    _cfDefaultBarsNote = `Bars: Income (Avg ${cfFmtK(avgInc)}) · Blue Line: Expense (Avg ${cfFmtK(avgOut)} / Peak ${peakOutLbl} ${cfFmt(peakOutM.outcome)})`;
     noteEl.textContent = _cfDefaultBarsNote;
   }
 }
@@ -260,7 +298,7 @@ function _renderCfHealth(cfList, range) {
   const diff = Math.round((lastRate - prevRate) * 10) / 10;
 
   const s = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  const defaultTrend = diff >= 0 ? `▲ เพิ่มขึ้น +${diff}% จากเดือนที่แล้ว` : `▼ ลดลง ${Math.abs(diff)}% จากเดือนที่แล้ว`;
+  const defaultTrend = diff >= 0 ? `▲ +${diff}% from last month` : `▼ -${Math.abs(diff)}% from last month`;
   
   s('cfHealthVal', `${lastRate}%`);
   s('cfHealthTrend', defaultTrend);
@@ -280,15 +318,10 @@ function _renderCfHealth(cfList, range) {
     return { x, y };
   });
 
-  const MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const healthPoints = pts.map((pt, i) => {
     const m = months[i];
-    let lbl = '';
-    if (m.label) lbl = m.label.split(' ')[0];
-    if (!lbl && m.month) {
-      const mNum = typeof m.month === 'number' ? m.month : parseInt(m.month.toString().split('-')[1] || '1', 10);
-      lbl = MONTHS_TH[(mNum - 1) % 12] || '';
-    }
+    const lbl = cfResolveMonthLbl(m);
     return {
       x: pt.x,
       y: pt.y,
@@ -328,7 +361,7 @@ function _renderCfHealth(cfList, range) {
       dotVal.textContent = `${pt.rate}%`;
     }
     s('cfHealthVal', `${pt.rate}%`);
-    s('cfHealthTrend', `เดือน ${pt.monthLbl} · อัตราการออม ${pt.rate}%`);
+    s('cfHealthTrend', `${pt.monthLbl} · Savings Rate ${pt.rate}%`);
   };
 
   const resetToDefault = () => {
@@ -399,9 +432,9 @@ function _renderCfLatest(txns) {
   const countEl = document.getElementById('cfLatestCount');
   if (!listEl) return;
   const show = txns.slice(0, 10);
-  if (countEl) countEl.textContent = `${show.length} รายการ`;
+  if (countEl) countEl.textContent = `${show.length} items`;
   if (!show.length) {
-    listEl.innerHTML = '<div style="font-size:12px;color:var(--fg-muted);padding:16px 0;text-align:center;">ไม่พบข้อมูลใน sheet Expense</div>';
+    listEl.innerHTML = '<div style="font-size:12px;color:var(--fg-muted);padding:16px 0;text-align:center;">No records found in Expense sheet</div>';
     return;
   }
 
@@ -505,8 +538,9 @@ function _renderCfCatList(cats, selectedId) {
     const pct   = Math.max(3, Math.round((c.latestAmount / maxAmt) * 100));
     const color = CF_CAT_COLORS[c.id] || '#6366f1';
     const em    = CF_CAT_EMOJI[c.id] || '📊';
+    const cName = cfGetCatName(c);
     return `<div class="cf-cat-row${c.id===selectedId?' selected':''}" onclick="onCfCatRowClick('${c.id}')">
-      <div class="cf-cat-name">${em} ${c.shortName||c.id}</div>
+      <div class="cf-cat-name">${em} ${cName}</div>
       <div class="cf-cat-val" style="color:${color};">${cfFmtK(c.latestAmount)}</div>
       <div class="cf-cat-track"><div class="cf-cat-fill" style="width:${pct}%;background:${color};"></div></div>
     </div>`;
@@ -516,7 +550,7 @@ function _renderCfCatList(cats, selectedId) {
     s('cfCatTotal', cfFmt(sel.latestAmount));
     s('cfCatAvg',   sel.yearlyAvg ? cfFmt(sel.yearlyAvg) : '—');
     s('cfCatShare', sel.sharePercent != null ? `${sel.sharePercent}%` : '—%');
-    s('cfCatPeak',  sel.peakMonth || '—');
+    s('cfCatPeak',  cfToEnText(sel.peakMonth) || '—');
   }
 }
 
@@ -541,7 +575,7 @@ function _renderCfDeepDiveLine(catId, cats) {
 
   const cat = (cats || []).find(c => c.id === catId) || (cats || [])[0];
   if (!cat || !cat.monthlyHistory || cat.monthlyHistory.length < 2) {
-    container.innerHTML = '<div style="font-size:11px;color:var(--fg-muted);padding:16px;text-align:center;">ข้อมูลไม่เพียงพอ</div>';
+    container.innerHTML = '<div style="font-size:11px;color:var(--fg-muted);padding:16px;text-align:center;">Insufficient data</div>';
     return;
   }
 
@@ -552,6 +586,7 @@ function _renderCfDeepDiveLine(catId, cats) {
   const color   = CF_CAT_COLORS[cat.id] || '#6366f1';
   const em      = CF_CAT_EMOJI[cat.id] || '📊';
   const n       = history.length;
+  const catDisplayName = cfGetCatName(cat);
 
   const lastVal = history[n - 1] || cat.latestAmount;
   const prevVal = n > 1 ? history[n - 2] : lastVal;
@@ -559,8 +594,8 @@ function _renderCfDeepDiveLine(catId, cats) {
   const pctDiff = prevVal > 0 ? Math.round((Math.abs(diff) / prevVal) * 100) : 0;
 
   let defaultTrendText = diff === 0 
-    ? 'ทรงตัวเท่ากับเดือนก่อน' 
-    : (diff > 0 ? `▲ เพิ่มขึ้น +${cfFmt(diff)} (+${pctDiff}%) จากเดือนก่อน` : `▼ ลดลง -${cfFmt(Math.abs(diff))} (-${pctDiff}%) จากเดือนก่อน`);
+    ? 'Flat vs previous month' 
+    : (diff > 0 ? `▲ +${cfFmt(diff)} (+${pctDiff}%) vs last month` : `▼ -${cfFmt(Math.abs(diff))} (-${pctDiff}%) vs last month`);
 
   if (hasPrev && prevHistory[n - 1] !== undefined) {
     const lastPrevVal = prevHistory[n - 1];
@@ -568,18 +603,18 @@ function _renderCfDeepDiveLine(catId, cats) {
     const yoyPct = lastPrevVal > 0 ? Math.round((Math.abs(yoyDiff) / lastPrevVal) * 100) : 0;
     const yoySign = yoyDiff >= 0 ? '+' : '-';
     defaultTrendText = yoyDiff === 0
-      ? `เทียบปีก่อนหน้า: ทรงตัวเท่ากัน (฿${cfFmt(lastPrevVal)})`
-      : (yoyDiff > 0 ? `เทียบปีก่อนหน้า: ▲ เพิ่มขึ้น +${cfFmt(yoyDiff)} (+${yoyPct}%) จาก ฿${cfFmt(lastPrevVal)}` : `เทียบปีก่อนหน้า: ▼ ลดลง -${cfFmt(Math.abs(yoyDiff))} (-${yoyPct}%) จาก ฿${cfFmt(lastPrevVal)}`);
+      ? `vs previous year: Flat (${cfFmt(lastPrevVal)})`
+      : (yoyDiff > 0 ? `vs previous year: ▲ +${cfFmt(yoyDiff)} (+${yoyPct}%) vs ${cfFmt(lastPrevVal)}` : `vs previous year: ▼ -${cfFmt(Math.abs(yoyDiff))} (-${yoyPct}%) vs ${cfFmt(lastPrevVal)}`);
   }
 
   const s = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  s('cfDeepDiveSub', `${em} ${cat.shortName || cat.name || catId} · แนวโน้มรายเดือนย้อนหลัง`);
+  s('cfDeepDiveSub', `${em} ${catDisplayName} · Monthly trend`);
   s('cfDeepDiveAmt', cfFmt(lastVal));
   s('cfDeepDiveTrend', defaultTrendText);
 
   const badgeEl = document.getElementById('cfDeepDiveBadge');
   if (badgeEl) {
-    badgeEl.textContent = `${em} ${cat.shortName || cat.name || catId}`;
+    badgeEl.textContent = `${em} ${catDisplayName}`;
     badgeEl.style.background = `${color}18`;
     badgeEl.style.color = color;
     badgeEl.style.border = `1px solid ${color}30`;
@@ -629,10 +664,9 @@ function _renderCfDeepDiveLine(catId, cats) {
     `;
   }
 
-  const MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   const step = n <= 6 ? 1 : 2;
   const xLbls = xs.map((x, i) => (i % step === 0 || i === n - 1)
-    ? `<text x="${x.toFixed(1)}" y="${H - 3}" text-anchor="middle" font-size="9" font-weight="600" fill="var(--fg-muted)">${MONTHS_TH[i % 12] || ''}</text>`
+    ? `<text x="${x.toFixed(1)}" y="${H - 3}" text-anchor="middle" font-size="9" font-weight="600" fill="var(--fg-muted)">${CF_MONTHS_EN[i % 12] || ''}</text>`
     : '').join('');
 
   const gridVals = yMin > 0
@@ -650,7 +684,7 @@ function _renderCfDeepDiveLine(catId, cats) {
     y: pt.y,
     val: history[i],
     idx: i,
-    monthLbl: MONTHS_TH[i % 12] || `M${i + 1}`
+    monthLbl: CF_MONTHS_EN[i % 12] || `M${i + 1}`
   }));
 
   const lastPt = ddPoints[ddPoints.length - 1];
@@ -670,12 +704,12 @@ function _renderCfDeepDiveLine(catId, cats) {
     <!-- Interactive Previous Year Hover Dot (Continuous, smooth cubic transition) -->
     <g id="cfDdPrevDotGroup" style="display:none; transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0.55;">
       <circle cx="0" cy="0" r="3" fill="${color}" stroke="#ffffff" stroke-width="1.2"/>
-      <text id="cfDdPrevDotVal" x="0" y="-8" text-anchor="middle" fill="${color}" font-size="10" font-weight="700" font-family="'JetBrains Mono', monospace"></text>
+      <text id="cfDdPrevDotVal" x="0" y="-8" text-anchor="middle" fill="${color}" font-size="10" font-weight="700" font-family="'Plus Jakarta Sans', 'Inter', sans-serif"></text>
     </g>
     <!-- Interactive Current Year Hover Dot & Plain Text Label (Smooth cubic transition matching cfHealth) -->
     <g id="cfDdDotGroup" style="transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);">
       <circle cx="0" cy="0" r="3.5" fill="${color}" stroke="#ffffff" stroke-width="1.5"/>
-      <text id="cfDdDotVal" x="0" y="-8" text-anchor="middle" fill="${color}" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace">${cfFmtK(lastVal)}</text>
+      <text id="cfDdDotVal" x="0" y="-8" text-anchor="middle" fill="${color}" font-size="11" font-weight="700" font-family="'Plus Jakarta Sans', 'Inter', sans-serif">${cfFmtK(lastVal)}</text>
     </g>
   </svg>`;
 
@@ -709,10 +743,10 @@ function _renderCfDeepDiveLine(catId, cats) {
       const pVal = prevPts[idx].val;
       const pDiff = pt.val - pVal;
       const pPct = pVal > 0 ? Math.round((Math.abs(pDiff) / pVal) * 100) : 0;
-      const pDiffTxt = pDiff === 0 ? 'เท่าปีก่อน' : (pDiff > 0 ? `▲ +${cfFmt(pDiff)} (+${pPct}%)` : `▼ -${cfFmt(Math.abs(pDiff))} (-${pPct}%)`);
-      s('cfDeepDiveTrend', `เดือน ${pt.monthLbl} · ปีนี้ ${cfFmt(pt.val)} (ปีก่อน ${cfFmt(pVal)} | YoY ${pDiffTxt})`);
+      const pDiffTxt = pDiff === 0 ? 'Flat' : (pDiff > 0 ? `▲ +${cfFmt(pDiff)} (+${pPct}%)` : `▼ -${cfFmt(Math.abs(pDiff))} (-${pPct}%)`);
+      s('cfDeepDiveTrend', `${pt.monthLbl} · This Year ${cfFmt(pt.val)} (Last Year ${cfFmt(pVal)} | YoY ${pDiffTxt})`);
     } else {
-      s('cfDeepDiveTrend', `เดือน ${pt.monthLbl} · ยอดใช้จ่าย ${cfFmt(pt.val)}`);
+      s('cfDeepDiveTrend', `${pt.monthLbl} · Expense ${cfFmt(pt.val)}`);
     }
   };
 
@@ -948,11 +982,11 @@ function openExpenseRecordModal(mode) {
   // 1. Title & Header
   if (title) {
     if (mode === 'receive') {
-      title.innerHTML = '📥 บันทึกรายรับ (Receive)';
+      title.innerHTML = '📥 Record Income (Receive)';
     } else if (mode === 'pay') {
-      title.innerHTML = '📤 บันทึกรายจ่าย (Pay)';
+      title.innerHTML = '📤 Record Expense (Pay)';
     } else if (mode === 'saving') {
-      title.innerHTML = '💎 บันทึกการออม &amp; ลงทุน (Saving &amp; Invest)';
+      title.innerHTML = '💎 Record Saving &amp; Investment';
     }
   }
 
@@ -1043,9 +1077,9 @@ function openExpenseRecordModal(mode) {
   const statusIndicator = document.getElementById('cfAppsScriptStatusIndicator');
   if (statusIndicator) {
     if (scriptUrl && scriptUrl.startsWith('http')) {
-      statusIndicator.innerHTML = `<span>📊 บันทึกตรงสู่ Google Sheet: <strong>Expense</strong></span> <span class="pill pill-em" style="font-size:10.5px; padding:2px 8px;">Auto-Sync ⚡</span>`;
+      statusIndicator.innerHTML = `<span>📊 Target Sheet: <strong>Expense</strong></span> <span class="pill pill-em" style="font-size:10.5px; padding:2px 8px;">Auto-Sync ⚡</span>`;
     } else {
-      statusIndicator.innerHTML = `<span>📊 ชีตเป้าหมาย: <strong>Expense</strong></span> <span style="font-size:10.5px; color:var(--fg-muted);">(ซิงค์ด่วนในแดชบอร์ด)</span>`;
+      statusIndicator.innerHTML = `<span>📊 Target Sheet: <strong>Expense</strong></span> <span style="font-size:10.5px; color:var(--fg-muted);">(Dashboard Sync)</span>`;
     }
   }
 
@@ -1428,7 +1462,7 @@ async function handleSaveExpenseRecord() {
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'บันทึกข้อมูล (Save)';
+      submitBtn.textContent = 'Save Record';
     }
   }
 }

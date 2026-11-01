@@ -698,11 +698,30 @@
     @media (max-width: 1080px) { .cf-layout { grid-template-columns: minmax(0, 1fr); } }
     .cf-col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
     .flex-none { flex: none; }
+
+    /* Clean Geometric Sans-Serif Typography for Cash Flow Page (Reference UI Match) */
+    #tab-cashflow,
+    #tab-cashflow *,
+    #tab-cashflow .num,
+    #tab-cashflow svg text,
+    #cfExpenseRecordModal,
+    #cfExpenseRecordModal *,
+    #cfExpenseRecordModal .num,
+    #cfToast,
+    #cfToast * {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+    #tab-cashflow .num,
+    #cfExpenseRecordModal .num {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
     .cf-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-    .cf-card-title { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
-    .cf-eyebrow { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--fg-muted); }
-    .cf-sub { font-size: 12px; color: var(--fg-muted); }
-    .cf-note { font-size: 11.5px; color: var(--fg-muted); font-weight: 600; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .cf-card-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+    .cf-eyebrow { font-size: 12.5px; font-weight: 500; letter-spacing: -0.005em; color: var(--fg-sec); }
+    .cf-sub { font-size: 12px; font-weight: 500; color: var(--fg-muted); letter-spacing: -0.005em; }
+    .cf-note { font-size: 11.5px; color: var(--fg-muted); font-weight: 500; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
 
     .cf-balance-card,
     .bento-card[data-od-id="cf-balance"],
@@ -737,7 +756,7 @@
     }
 
     .cf-balance-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .cf-balance-amount { font-size: 38px; font-weight: 800; letter-spacing: -0.05em; line-height: 1.05; margin-top: 4px; }
+    .cf-balance-amount { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; margin-top: 4px; font-variant-numeric: tabular-nums; }
     @media (max-width: 600px) { .cf-balance-amount { font-size: 28px; } }
     .cf-balance-body {
       display: flex;
@@ -790,14 +809,15 @@
       line-height: 1.25;
     }
     .cf-action-name {
-      font-weight: 800;
+      font-weight: 700;
       font-size: 13.5px;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
     .cf-action-desc {
       font-size: 11px;
       font-weight: 500;
-      opacity: 0.75;
+      opacity: 0.72;
+      letter-spacing: -0.005em;
     }
 
     /* Receive */
@@ -973,6 +993,7 @@
       pointer-events: auto;
     }
 
+    /* 3 Connected Circles (BORDERLESS - ไม่มีเส้นขอบทั้ง bridge และ circles) */
     .cf-circles-wrap {
       position: relative;
       display: inline-flex;
@@ -981,6 +1002,7 @@
       width: 364px;
       height: 108px;
       margin: 4px 0;
+      flex-shrink: 0;
     }
     .cf-circle-bridge-svg {
       position: absolute;
@@ -990,12 +1012,15 @@
       height: 108px;
       z-index: 0;
       pointer-events: none;
-      filter: drop-shadow(0 6px 14px rgba(99, 102, 241, 0.15));
+      filter: drop-shadow(0 8px 18px rgba(99, 102, 241, 0.16));
       transition: filter 0.3s ease;
+    }
+    .cf-bridge-contour {
+      stroke: none !important;
     }
     [data-theme="dark"] .cf-bridge-contour {
       fill: url(#cfBridgeGradDark) !important;
-      stroke: rgba(255, 255, 255, 0.08) !important;
+      stroke: none !important;
     }
 
     .cf-circles {
@@ -1018,9 +1043,10 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.85) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.88) 100%);
+      border: none !important;
+      outline: none !important;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
       text-align: center;
       padding: 10px;
       z-index: 1;
@@ -1030,19 +1056,20 @@
     }
     [data-theme="dark"] .cf-circle {
       background: linear-gradient(145deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: none !important;
+      outline: none !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     .cf-circle-val {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.02em;
       transition: color 0.25s ease, font-size 0.25s ease;
     }
     .cf-circle-lbl {
       font-size: 11px;
-      font-weight: 400; /* Not bold / ไม่เป็นตัวหนา */
+      font-weight: 500;
       color: var(--fg-muted);
       line-height: 1.25;
       transition: color 0.25s ease;
@@ -1053,7 +1080,8 @@
     .cf-circle.primary {
       transform: scale(1.12);
       background: linear-gradient(135deg, #818cf8 0%, #6366f1 45%, #3b82f6 100%);
-      border: 1px solid rgba(255, 255, 255, 0.35);
+      border: none !important;
+      outline: none !important;
       color: #ffffff;
       box-shadow: 0 14px 34px -4px rgba(99, 102, 241, 0.55);
       z-index: 3;
@@ -1061,29 +1089,28 @@
     .cf-circle.active .cf-circle-val,
     .cf-circle.primary .cf-circle-val {
       color: #ffffff !important;
-      font-size: 15px;
+      font-size: 16px;
     }
     .cf-circle.active .cf-circle-lbl,
     .cf-circle.primary .cf-circle-lbl {
       color: rgba(255, 255, 255, 0.9) !important;
-      font-weight: 400;
+      font-weight: 500;
     }
 
-    /* Interactive hover on any circle:
-       1. Non-hovered circles smoothly turn into frosted white glass.
-       2. Hovered circle expands to glowing purple-blue neon with white text!
-    */
+    /* Interactive hover on any circle */
     .cf-circles:hover .cf-circle:not(:hover) {
       transform: scale(0.96);
       background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.85) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: none !important;
+      outline: none !important;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
       color: inherit;
       z-index: 1;
     }
     [data-theme="dark"] .cf-circles:hover .cf-circle:not(:hover) {
       background: linear-gradient(145deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: none !important;
+      outline: none !important;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     }
     .cf-circles:hover .cf-circle:not(:hover) .cf-circle-lbl {
@@ -1106,17 +1133,98 @@
     .cf-circle:hover {
       transform: scale(1.15) !important;
       background: linear-gradient(135deg, #818cf8 0%, #6366f1 45%, #3b82f6 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.35) !important;
+      border: none !important;
+      outline: none !important;
       box-shadow: 0 16px 36px -4px rgba(99, 102, 241, 0.6) !important;
       z-index: 4 !important;
     }
     .cf-circle:hover .cf-circle-val {
       color: #ffffff !important;
-      font-size: 15px !important;
+      font-size: 16px !important;
     }
     .cf-circle:hover .cf-circle-lbl {
       color: rgba(255, 255, 255, 0.9) !important;
-      font-weight: 400 !important;
+      font-weight: 500 !important;
+    }
+
+    /* Stacked Action Buttons on the Right (Reference Style) */
+    .cf-actions-stacked {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 180px;
+    }
+    @media (max-width: 820px) {
+      .cf-actions-stacked {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .cf-actions-stacked .ref-btn {
+        flex: 1 1 130px;
+      }
+    }
+    .ref-btn {
+      width: 100%;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+    .ref-btn-outline {
+      background: rgba(255, 255, 255, 0.55);
+      color: #0f172a;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 6px rgba(100, 130, 180, 0.05);
+    }
+    .ref-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(15, 23, 42, 0.25);
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 12px rgba(100, 130, 180, 0.1);
+    }
+    .ref-btn-dark {
+      background: #0f1115;
+      color: #ffffff;
+      border: 1px solid #0f1115;
+      box-shadow: 0 8px 18px -4px rgba(15, 17, 21, 0.3);
+    }
+    .ref-btn-dark:hover {
+      background: #1e2430;
+      transform: translateY(-1.5px);
+      box-shadow: 0 10px 22px -4px rgba(15, 17, 21, 0.4);
+    }
+    .ref-btn-indigo {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      box-shadow: 0 8px 18px -4px rgba(79, 70, 229, 0.32);
+    }
+    .ref-btn-indigo:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1.5px);
+      box-shadow: 0 10px 22px -4px rgba(79, 70, 229, 0.4);
+    }
+
+    [data-theme="dark"] .ref-btn-outline {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    [data-theme="dark"] .ref-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .cf-chart-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 18px; }
@@ -2757,7 +2865,7 @@
       <nav class="nav-tabs" data-od-id="nav-tabs">
         <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 ภาพรวมความมั่งคั่ง</button>
         <button class="tab-btn" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')">📊 Portfolio</button>
-        <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 กระแสเงินสด</button>
+        <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 Cash Flow</button>
         <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 เงินปันผล</button>
         <button class="tab-btn" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')">🎯 วางแผนเป้าหมาย</button>
       </nav>
@@ -3152,7 +3260,7 @@
     </main>
 
     <!-- =====================================================================
-         TAB 2: 💵 กระแสเงินสด & วิเคราะห์รายจ่าย (Cash Flow & Expenses)
+         TAB 2: 💵 Cash Flow & Expenses
          ===================================================================== -->
     <main id="tab-cashflow" class="tab-view" data-od-id="view-cashflow">
 
@@ -3165,9 +3273,9 @@
           <section class="bento-card cf-balance-card" data-od-id="cf-balance">
             <div class="cf-balance-head">
               <div>
-                <div class="cf-eyebrow">ภาพรวมกระแสเงินสด</div>
+                <div class="cf-eyebrow">Current Balance</div>
                 <div id="cfCashBalance" class="cf-balance-amount num">฿ —</div>
-                <div id="cfCashSubtitle" class="cf-sub" style="margin-top: 2px;">เงินสดคงเหลือพร้อมใช้ (Cash)</div>
+                <div id="cfCashSubtitle" class="cf-sub" style="margin-top: 2px;">Available Cash Balance (Cash)</div>
               </div>
               <span class="pill pill-sky flex-none">Live</span>
             </div>
@@ -3177,11 +3285,11 @@
                 <svg class="cf-circle-bridge-svg" viewBox="0 0 364 108" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="cfBridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.75)" />
-                      <stop offset="30%" stop-color="rgba(240, 246, 255, 0.85)" />
-                      <stop offset="50%" stop-color="rgba(129, 140, 248, 0.5)" />
-                      <stop offset="70%" stop-color="rgba(240, 246, 255, 0.85)" />
-                      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.75)" />
+                      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.85)" />
+                      <stop offset="30%" stop-color="rgba(240, 246, 255, 0.92)" />
+                      <stop offset="50%" stop-color="rgba(129, 140, 248, 0.55)" />
+                      <stop offset="70%" stop-color="rgba(240, 246, 255, 0.92)" />
+                      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.85)" />
                     </linearGradient>
                     <linearGradient id="cfBridgeGradDark" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stop-color="rgba(30, 41, 59, 0.6)" />
@@ -3194,48 +3302,35 @@
                   <path class="cf-bridge-contour"
                     d="M 88.7,12.6 Q 118,32 147.3,12.6 A 54 54 0 0 1 216.7 12.6 Q 246,32 275.3 12.6 A 54 54 0 1 1 275.3 95.4 Q 246,76 216.7 95.4 A 54 54 0 0 1 147.3 95.4 Q 118,76 88.7 95.4 A 54 54 0 1 1 88.7 12.6 Z"
                     fill="url(#cfBridgeGrad)"
-                    stroke="rgba(255, 255, 255, 0.9)"
-                    stroke-width="1.2"
+                    stroke="none"
                   />
                 </svg>
                 <div class="cf-circles" id="cfCirclesContainer">
                   <div class="cf-circle" id="cfCircleIncomeWrap">
                     <span id="cfCircleIncome" class="cf-circle-val num" style="color:#10b981;">฿ —</span>
-                    <span class="cf-circle-lbl">รายรับเดือนนี้</span>
+                    <span class="cf-circle-lbl">Income</span>
                   </div>
                   <div class="cf-circle active" id="cfCircleCashWrap">
                     <span id="cfCircleCash" class="cf-circle-val num">฿ —</span>
-                    <span class="cf-circle-lbl">เงินสดคงเหลือ</span>
+                    <span class="cf-circle-lbl">Cash Balance</span>
                   </div>
                   <div class="cf-circle" id="cfCircleOutcomeWrap">
                     <span id="cfCircleOutcome" class="cf-circle-val num" style="color:#f43f5e;">฿ —</span>
-                    <span class="cf-circle-lbl">รายจ่ายสุทธิ</span>
+                    <span class="cf-circle-lbl">Expense</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Quick Action Buttons: Receive, Pay, Saving & Invest -->
-              <div class="cf-balance-actions">
-                <button type="button" class="cf-action-btn cf-btn-receive" onclick="openExpenseRecordModal('receive')" title="บันทึกรายรับลง Sheet Expense">
-                  <span class="cf-action-icon">↓</span>
-                  <div class="cf-action-info">
-                    <span class="cf-action-name">Receive</span>
-                    <span class="cf-action-desc">รายรับ</span>
-                  </div>
+              <!-- Quick Action Buttons: Receive, Pay, Saving & Invest (Right Stacked Style) -->
+              <div class="cf-actions-stacked">
+                <button type="button" class="ref-btn ref-btn-outline" onclick="openExpenseRecordModal('receive')" title="Record Income to Sheet Expense">
+                  Receive
                 </button>
-                <button type="button" class="cf-action-btn cf-btn-pay" onclick="openExpenseRecordModal('pay')" title="บันทึกรายจ่ายลง Sheet Expense">
-                  <span class="cf-action-icon">↑</span>
-                  <div class="cf-action-info">
-                    <span class="cf-action-name">Pay</span>
-                    <span class="cf-action-desc">รายจ่าย</span>
-                  </div>
+                <button type="button" class="ref-btn ref-btn-dark" onclick="openExpenseRecordModal('pay')" title="Record Expense to Sheet Expense">
+                  Pay
                 </button>
-                <button type="button" class="cf-action-btn cf-btn-saving" onclick="openExpenseRecordModal('saving')" title="บันทึกเงินออมและลงทุนลง Sheet Expense">
-                  <span class="cf-action-icon">💎</span>
-                  <div class="cf-action-info">
-                    <span class="cf-action-name">Saving &amp; Invest</span>
-                    <span class="cf-action-desc">ออม &amp; ลงทุน</span>
-                  </div>
+                <button type="button" class="ref-btn ref-btn-indigo" onclick="openExpenseRecordModal('saving')" title="Record Saving &amp; Investment to Sheet Expense">
+                  Saving &amp; Invest
                 </button>
               </div>
             </div>
@@ -3244,33 +3339,33 @@
           <!-- Expense Stats + Financial Health (side by side) -->
           <div class="cf-chart-row">
 
-            <!-- สถิติรายจ่าย (cf-bars with Income line overlay) -->
+            <!-- Income & Expense Statistics (cf-bars with Expense line overlay) -->
             <section class="bento-card" data-od-id="cf-expense-stat">
               <div class="cf-card-head">
                 <div>
-                  <div class="cf-card-title">สถิติรายจ่าย & รายรับ</div>
+                  <div class="cf-card-title">Income &amp; Expense Statistics</div>
                   <div class="cf-sub" style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
-                    <span><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:linear-gradient(180deg,#60a5fa,#6366f1); vertical-align:middle; margin-right:3px;"></span>แท่ง: รายรับ</span>
-                    <span><span style="display:inline-block; width:12px; height:2.5px; background:#38bdf8; border-radius:1px; vertical-align:middle; margin-right:3px;"></span>เส้นฟ้า: รายจ่าย</span>
+                    <span><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:linear-gradient(180deg,#60a5fa,#6366f1); vertical-align:middle; margin-right:3px;"></span>Bars: Income</span>
+                    <span><span style="display:inline-block; width:12px; height:2.5px; background:#38bdf8; border-radius:1px; vertical-align:middle; margin-right:3px;"></span>Blue Line: Expense</span>
                   </div>
                 </div>
                 <div class="seg-ctrl flex-none">
-                  <button id="cf-range-6" class="seg-btn active" onclick="setCfRange('6M', this)">6 ด.</button>
-                  <button id="cf-range-12" class="seg-btn" onclick="setCfRange('1Y', this)">1 ปี</button>
+                  <button id="cf-range-6" class="seg-btn active" onclick="setCfRange('6M', this)">6M</button>
+                  <button id="cf-range-12" class="seg-btn" onclick="setCfRange('1Y', this)">1Y</button>
                 </div>
               </div>
               <div class="cf-bars" id="cfBars"></div>
-              <div class="cf-note" id="cfBarsNote">กำลังโหลด...</div>
+              <div class="cf-note" id="cfBarsNote">Loading...</div>
             </section>
 
-            <!-- สุขภาพการเงิน -->
+            <!-- Financial Health -->
             <section class="bento-card cf-health" data-od-id="cf-health">
-              <div class="cf-card-title">สุขภาพการเงิน</div>
-              <div class="cf-sub" style="color: rgba(255, 255, 255, 0.8);">Savings Rate = (Income−Outcome)/Income</div>
+              <div class="cf-card-title">Financial Health</div>
+              <div class="cf-sub" style="color: rgba(255, 255, 255, 0.8);">Savings Rate = (Income − Outcome) / Income</div>
               <div id="cfHealthVal" class="cf-health-val num">—%</div>
-              <div id="cfHealthTrend" class="cf-sub" style="color: rgba(255, 255, 255, 0.85);">กำลังโหลด...</div>
+              <div id="cfHealthTrend" class="cf-sub" style="color: rgba(255, 255, 255, 0.85);">Loading...</div>
               <div class="cf-health-chart">
-                <svg id="cfHealthSvg" viewBox="0 0 300 110" role="img" aria-label="แนวโน้มอัตราการออม" style="overflow: visible;">
+                <svg id="cfHealthSvg" viewBox="0 0 300 110" role="img" aria-label="Savings Rate Trend" style="overflow: visible;">
                   <defs>
                     <linearGradient id="cfHealthGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25"/>
@@ -3280,11 +3375,11 @@
                   <path id="cfHealthArea" fill="url(#cfHealthGrad)"/>
                   <path id="cfHealthLine" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                   <!-- Static start/min label (plain white text, no frame) -->
-                  <text id="cfHealthStartLbl" x="14" y="98" fill="rgba(255,255,255,0.75)" font-size="10.5" font-weight="600" font-family="'JetBrains Mono', monospace"></text>
+                  <text id="cfHealthStartLbl" x="14" y="98" fill="rgba(255,255,255,0.75)" font-size="10.5" font-weight="600" font-family="'Plus Jakarta Sans', 'Inter', sans-serif"></text>
                   <!-- Interactive Hover White Dot & Plain White Label (no frame) -->
                   <g id="cfHealthDotGroup" style="transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);">
                     <circle id="cfHealthDot" cx="0" cy="0" r="3.5" fill="#ffffff"/>
-                    <text id="cfHealthDotVal" x="0" y="14" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" font-family="'JetBrains Mono', monospace">—%</text>
+                    <text id="cfHealthDotVal" x="0" y="14" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" font-family="'Plus Jakarta Sans', 'Inter', sans-serif">—%</text>
                   </g>
                 </svg>
               </div>
@@ -3296,23 +3391,23 @@
             <div>
               <div class="cf-card-head" style="margin-bottom: 6px;">
                 <div>
-                  <div class="cf-card-title">เจาะลึกรายจ่ายรายหมวด</div>
-                  <div id="cfDeepDiveSub" class="cf-sub">คลิกเลือกหมวดหมู่จากกล่อง "สัดส่วนรายหมวด"</div>
+                  <div class="cf-card-title">Category Expense Deep Dive</div>
+                  <div id="cfDeepDiveSub" class="cf-sub">Select a category from "Category Breakdown"</div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                  <label class="cf-toggle-wrap" title="เปรียบเทียบกับปีก่อนหน้า">
+                  <label class="cf-toggle-wrap" title="Compare to previous year">
                     <input type="checkbox" id="cfComparePrevToggle" onchange="onCfToggleComparePrev(this.checked)">
                     <span class="cf-toggle-track"><span class="cf-toggle-thumb"></span></span>
                     <span class="cf-toggle-label">Compare to previous year</span>
                   </label>
-                  <span id="cfDeepDiveBadge" class="pill pill-mint flex-none">🍔 อาหาร</span>
+                  <span id="cfDeepDiveBadge" class="pill pill-mint flex-none">🍔 Food &amp; Dining</span>
                 </div>
               </div>
 
               <!-- Top Amount & Trend for Active Category -->
               <div style="margin: 8px 0 12px;">
-                <div id="cfDeepDiveAmt" class="num" style="font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1;">฿ —</div>
-                <div id="cfDeepDiveTrend" class="cf-sub" style="margin-top: 2px;">กำลังโหลด...</div>
+                <div id="cfDeepDiveAmt" class="num" style="font-size: 30px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;">฿ —</div>
+                <div id="cfDeepDiveTrend" class="cf-sub" style="margin-top: 2px;">Loading...</div>
               </div>
             </div>
 
@@ -3325,14 +3420,14 @@
         <!-- ======================== RIGHT COLUMN ======================== -->
         <div class="cf-col">
 
-          <!-- รายการล่าสุด (10 items from Expense sheet) -->
+          <!-- Recent Transactions (10 items from Expense sheet) -->
           <section class="bento-card" data-od-id="cf-latest">
             <div class="cf-card-head">
-              <div class="cf-card-title">รายการล่าสุด</div>
-              <span class="pill pill-mint" id="cfLatestCount">— รายการ</span>
+              <div class="cf-card-title">Recent Transactions</div>
+              <span class="pill pill-mint" id="cfLatestCount">— items</span>
             </div>
             <div class="cf-list" id="cfLatestList">
-              <div style="font-size:12px;color:var(--fg-muted);padding:16px 0;text-align:center;">กำลังโหลด...</div>
+              <div style="font-size:12px;color:var(--fg-muted);padding:16px 0;text-align:center;">Loading...</div>
             </div>
           </section>
 
@@ -3340,24 +3435,24 @@
           <!-- Category Breakdown (cf-cat-list) — synced with left dropdown -->
           <section class="bento-card" data-od-id="cf-category">
             <div class="cf-card-head" style="margin-bottom: 8px;">
-              <div class="cf-card-title">สัดส่วนรายหมวด</div>
+              <div class="cf-card-title">Category Breakdown</div>
             </div>
             <div class="cf-cat-list" id="cfCatList"></div>
             <div class="cf-stats">
               <div class="cf-stat">
-                <span class="cf-stat-lbl">ยอดรวมเดือนล่าสุด</span>
+                <span class="cf-stat-lbl">Latest Month Total</span>
                 <span class="cf-stat-val num" id="cfCatTotal">฿ —</span>
               </div>
               <div class="cf-stat">
-                <span class="cf-stat-lbl">เฉลี่ย/เดือน (ปีนี้)</span>
+                <span class="cf-stat-lbl">Monthly Avg (YTD)</span>
                 <span class="cf-stat-val num" id="cfCatAvg">฿ —</span>
               </div>
               <div class="cf-stat">
-                <span class="cf-stat-lbl">สัดส่วนในรายจ่ายรวม</span>
+                <span class="cf-stat-lbl">Share of Total Expense</span>
                 <span class="cf-stat-val num" id="cfCatShare">—%</span>
               </div>
               <div class="cf-stat">
-                <span class="cf-stat-lbl">เดือนสูงสุด (Peak)</span>
+                <span class="cf-stat-lbl">Peak Month</span>
                 <span class="cf-stat-val" id="cfCatPeak">—</span>
               </div>
             </div>
@@ -4377,7 +4472,7 @@
   <div id="cfExpenseRecordModal" class="modal-overlay" style="z-index: 10000;">
     <div class="modal-box" style="max-width: 520px;">
       <div class="modal-header">
-        <div id="cfRecModalTitle" class="modal-title">📥 บันทึกรายการ</div>
+        <div id="cfRecModalTitle" class="modal-title">📥 Record Transaction</div>
         <button type="button" class="close-btn" onclick="closeExpenseRecordModal()">✕</button>
       </div>
 
@@ -4385,7 +4480,7 @@
 
         <!-- Date Field -->
         <div>
-          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">📅 วันที่ (Date):</label>
+          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">📅 Date:</label>
           <input type="date" id="cfRecDate" class="form-input" style="font-family: inherit;" />
         </div>
 
@@ -4393,7 +4488,7 @@
         <div id="cfRecCatRow" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <!-- Category Container -->
           <div id="cfRecCategoryContainer">
-            <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">📂 หมวดหมู่ (Category):</label>
+            <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">📂 Category:</label>
             <!-- Select for Pay -->
             <select id="cfRecCategorySelect" class="form-input" onchange="onPayCategoryChange()">
               <option value="Fixed costs">Fixed costs</option>
@@ -4408,7 +4503,7 @@
 
           <!-- Subcategory Container -->
           <div id="cfRecSubcategoryContainer">
-            <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">🏷️ หมวดหมู่ย่อย (Subcategory):</label>
+            <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">🏷️ Subcategory:</label>
             <select id="cfRecSubcategorySelect" class="form-input">
               <!-- Dynamically populated -->
             </select>
@@ -4422,10 +4517,10 @@
         <!-- Description Field with Customizable Defaults -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-weight: 700; font-size: 12.5px;">📝 รายละเอียด (Description):</label>
-            <button type="button" class="cf-chip-manage-btn" onclick="toggleDescManager()">⚙️ ปรับแต่งค่าเริ่มต้น (สูงสุด 5 รายการ)</button>
+            <label style="font-weight: 700; font-size: 12.5px;">📝 Description:</label>
+            <button type="button" class="cf-chip-manage-btn" onclick="toggleDescManager()">⚙️ Customize Presets (Max 5)</button>
           </div>
-          <input type="text" id="cfRecDescInput" class="form-input" placeholder="พิมพ์ชื่อรายการหรือเลือกจากปุ่มลัดด้านล่าง..." />
+          <input type="text" id="cfRecDescInput" class="form-input" placeholder="Enter description or select a preset below..." />
 
           <!-- Quick Chips Container -->
           <div id="cfRecChipsContainer" class="cf-desc-chips"></div>
@@ -4433,26 +4528,26 @@
           <!-- Inline Default Description Manager (collapsible) -->
           <div id="cfDescManagerBox" style="display: none; margin-top: 10px; padding: 12px; background: var(--surface-sec); border-radius: 12px; border: 1px solid var(--border);">
             <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between;">
-              <span>จัดการค่าเริ่มต้น (Customize Defaults - สูงสุด 5 ข้อความ):</span>
+              <span>Customize Presets (Max 5 items):</span>
               <span id="cfDescCountText" style="color: var(--fg-muted);">0/5</span>
             </div>
             <div id="cfDescManagerList" style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;"></div>
             <div id="cfDescAddRow" style="display: flex; gap: 8px;">
-              <input type="text" id="cfNewDescInput" class="form-input" style="padding: 6px 12px; font-size: 12px;" placeholder="พิมพ์ข้อความใหม่..." />
-              <button type="button" class="seg-btn" style="padding: 6px 14px; white-space: nowrap;" onclick="handleAddCustomDesc()">+ เพิ่ม</button>
+              <input type="text" id="cfNewDescInput" class="form-input" style="padding: 6px 12px; font-size: 12px;" placeholder="Enter new preset..." />
+              <button type="button" class="seg-btn" style="padding: 6px 14px; white-space: nowrap;" onclick="handleAddCustomDesc()">+ Add</button>
             </div>
           </div>
         </div>
 
         <!-- Amount (THB) Field -->
         <div>
-          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">💰 จำนวนเงิน (Amount THB):</label>
-          <input type="number" id="cfRecAmountInput" class="form-input num" step="any" min="0.01" placeholder="0.00" style="font-size: 18px; font-weight: 800;" />
+          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">💰 Amount (THB):</label>
+          <input type="number" id="cfRecAmountInput" class="form-input num" step="any" min="0.01" placeholder="0.00" style="font-size: 18px; font-weight: 700;" />
         </div>
 
         <!-- Payment Method Field (shown only for Pay) -->
         <div id="cfRecPaymentContainer">
-          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">💳 รูปแบบการชำระเงิน (Payment Method):</label>
+          <label style="font-weight: 700; font-size: 12.5px; display: block; margin-bottom: 6px;">💳 Payment Method:</label>
           <select id="cfRecPaymentSelect" class="form-input">
             <option value="Cash" selected>Cash</option>
             <option value="Credit card">Credit card</option>
@@ -4463,21 +4558,21 @@
         <div style="background: var(--surface-sec); border-radius: 12px; padding: 10px 14px; font-size: 11.5px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <div id="cfAppsScriptStatusIndicator" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
-              <span>📊 บันทึกลง Sheet: <strong>Expense</strong></span>
+              <span>📊 Target Sheet: <strong>Expense</strong></span>
             </div>
-            <button type="button" class="cf-chip-manage-btn" onclick="toggleAppsScriptGuide()">⚙️ ตั้งค่า Apps Script</button>
+            <button type="button" class="cf-chip-manage-btn" onclick="toggleAppsScriptGuide()">⚙️ Apps Script Setup</button>
           </div>
 
           <!-- Apps Script inline configuration -->
           <div id="cfAppsScriptConfigBox" style="display: none; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px;">
-            <label style="font-weight: 600; font-size: 11px; display: block; margin-bottom: 4px;">Apps Script Web App URL (สำหรับเขียนข้อมูลลงชีตสด):</label>
+            <label style="font-weight: 600; font-size: 11px; display: block; margin-bottom: 4px;">Apps Script Web App URL (for live Google Sheets sync):</label>
             <div style="display: flex; gap: 6px; margin-bottom: 8px;">
               <input type="text" id="cfAppsScriptUrlInput" class="form-input" style="padding: 6px 10px; font-size: 11.5px;" placeholder="https://script.google.com/macros/s/.../exec" />
-              <button type="button" class="seg-btn" style="padding: 6px 12px; white-space: nowrap;" onclick="handleSaveAppsScriptUrl()">บันทึก</button>
+              <button type="button" class="seg-btn" style="padding: 6px 12px; white-space: nowrap;" onclick="handleSaveAppsScriptUrl()">Save</button>
             </div>
             <div style="display: flex; gap: 8px;">
-              <button type="button" class="seg-btn" style="font-size: 11px; padding: 4px 10px;" onclick="copyAppsScriptCode()">📋 คัดลอกโค้ด Apps Script</button>
-              <button type="button" class="seg-btn" style="font-size: 11px; padding: 4px 10px;" onclick="window.open('https://docs.google.com/spreadsheets/d/' + (SheetsAPI.getConfig().sheetId || DEFAULT_SHEET_ID), '_blank')">เปิด Google Sheet ↗</button>
+              <button type="button" class="seg-btn" style="font-size: 11px; padding: 4px 10px;" onclick="copyAppsScriptCode()">📋 Copy Apps Script Code</button>
+              <button type="button" class="seg-btn" style="font-size: 11px; padding: 4px 10px;" onclick="window.open('https://docs.google.com/spreadsheets/d/' + (SheetsAPI.getConfig().sheetId || DEFAULT_SHEET_ID), '_blank')">Open Google Sheet ↗</button>
             </div>
           </div>
         </div>
@@ -4487,8 +4582,8 @@
       </div>
 
       <div class="modal-actions">
-        <button type="button" class="icon-btn" style="width: auto; padding: 8px 18px; border-radius: 9999px;" onclick="closeExpenseRecordModal()">ยกเลิก</button>
-        <button type="button" id="cfRecSubmitBtn" class="icon-btn primary" style="width: auto; padding: 8px 24px; border-radius: 9999px;" onclick="handleSaveExpenseRecord()">บันทึกข้อมูล (Save)</button>
+        <button type="button" class="icon-btn" style="width: auto; padding: 8px 18px; border-radius: 9999px;" onclick="closeExpenseRecordModal()">Cancel</button>
+        <button type="button" id="cfRecSubmitBtn" class="icon-btn primary" style="width: auto; padding: 8px 24px; border-radius: 9999px;" onclick="handleSaveExpenseRecord()">Save Record</button>
       </div>
     </div>
   </div>
@@ -4496,15 +4591,15 @@
   <!-- Floating Toast Notification -->
   <div id="cfToast">
     <span id="cfToastIcon">✅</span>
-    <span id="cfToastMsg">บันทึกสำเร็จ</span>
+    <span id="cfToastMsg">Saved successfully</span>
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=44"></script>
-  <script src="js/sheets-api.js?v=44"></script>
-  <script src="js/charts.js?v=44"></script>
-  <script src="js/cashflow-ui.js?v=44"></script>
-  <script src="js/portfolio-ui.js?v=44"></script>
-  <script src="js/app.js?v=44"></script>
+  <script src="js/data-store.js?v=45"></script>
+  <script src="js/sheets-api.js?v=45"></script>
+  <script src="js/charts.js?v=45"></script>
+  <script src="js/cashflow-ui.js?v=45"></script>
+  <script src="js/portfolio-ui.js?v=45"></script>
+  <script src="js/app.js?v=45"></script>
 </body>
 </html>
