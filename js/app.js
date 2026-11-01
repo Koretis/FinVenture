@@ -480,6 +480,36 @@ function getStoredCredentials() {
   return { username: "kortis", passHash: MASTER_ADMIN_HASH, isDefault: true };
 }
 
+function getAuthenticatedUser() {
+  try {
+    const directUser = localStorage.getItem("finventure_auth_user") || sessionStorage.getItem("finventure_auth_user");
+    if (directUser && directUser.trim()) return directUser.trim();
+    const cred = getStoredCredentials();
+    if (cred && cred.username && cred.username.trim()) return cred.username.trim();
+  } catch (e) {}
+  return "Kortis";
+}
+
+function updateAuthenticatedUserUI() {
+  const user = getAuthenticatedUser();
+  const formatted = user.charAt(0).toUpperCase() + user.slice(1);
+
+  // Update mobile action sheet username
+  const nameEl = document.getElementById("mobileSheetUsername");
+  if (nameEl) nameEl.textContent = formatted;
+
+  // Update Blue Card greeting
+  const hour = new Date().getHours();
+  let greetingTime = "Good morning";
+  if (hour >= 12 && hour < 17) greetingTime = "Good afternoon";
+  else if (hour >= 17) greetingTime = "Good evening";
+  const greetingEl = document.getElementById("cfMobileGreeting");
+  if (greetingEl) greetingEl.textContent = `${greetingTime}, ${formatted}!`;
+}
+
+window.getAuthenticatedUser = getAuthenticatedUser;
+window.updateAuthenticatedUserUI = updateAuthenticatedUserUI;
+
 function isUserAuthenticated() {
   try {
     if (localStorage.getItem(AUTH_SESSION_KEY) === "authenticated") return true;
@@ -499,6 +529,7 @@ function unlockDashboard() {
   document.body.classList.remove("auth-locked");
   const screen = document.getElementById("loginScreen");
   if (screen) screen.classList.add("hidden");
+  updateAuthenticatedUserUI();
 }
 
 function lockDashboard() {
@@ -636,6 +667,8 @@ async function handleLoginSubmit(e) {
 
   if (isAuthorized) {
     try {
+      localStorage.setItem("finventure_auth_user", inputUser);
+      sessionStorage.setItem("finventure_auth_user", inputUser);
       if (remember) {
         localStorage.setItem(AUTH_SESSION_KEY, "authenticated");
       } else {

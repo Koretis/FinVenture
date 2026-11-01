@@ -167,12 +167,29 @@ function _renderCfBalance(cfList, data) {
   const savingsRate = incomeVal > 0 ? Math.round(((incomeVal - outcomeVal) / incomeVal) * 1000) / 10 : 50;
   s('cfMobileSavingsRate', `${savingsRate}%`);
 
-  // Dynamic Greeting based on time of day
+  // Dynamic Greeting based on time of day and authenticated user
   const hour = new Date().getHours();
   let greetingTime = 'Good morning';
   if (hour >= 12 && hour < 17) greetingTime = 'Good afternoon';
   else if (hour >= 17) greetingTime = 'Good evening';
-  const rawUser = localStorage.getItem('finventure_auth_user') || 'Takeshiro';
+
+  let rawUser = 'Kortis';
+  try {
+    if (typeof getAuthenticatedUser === 'function') {
+      rawUser = getAuthenticatedUser();
+    } else {
+      const stored = localStorage.getItem('finventure_auth_user') || sessionStorage.getItem('finventure_auth_user');
+      if (stored) rawUser = stored;
+      else if (typeof getStoredCredentials === 'function') {
+        const cred = getStoredCredentials();
+        if (cred && cred.username) rawUser = cred.username;
+      }
+    }
+  } catch (e) {}
+
+  if (rawUser && rawUser.length > 0) {
+    rawUser = rawUser.charAt(0).toUpperCase() + rawUser.slice(1);
+  }
   s('cfMobileGreeting', `${greetingTime}, ${rawUser}!`);
 
   // Bind Hover Events for all 3 circles
