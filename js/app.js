@@ -11,6 +11,17 @@ let activeTabId = "tab-overview";
 // -------------------------------------------------------------
 function switchTab(tabId) {
   activeTabId = tabId;
+  document.body.setAttribute("data-active-tab", tabId);
+
+  // Sync Top Nav visibility: Top Bar shows ONLY on Overall tab on mobile
+  const topNav = document.querySelector(".top-nav");
+  if (topNav) {
+    if (window.innerWidth <= 768) {
+      topNav.style.display = (tabId === "tab-overview") ? "flex" : "none";
+    } else {
+      topNav.style.display = "flex";
+    }
+  }
 
   // Toggle tab views
   document.querySelectorAll(".tab-view").forEach(el => el.classList.remove("active"));
@@ -817,7 +828,20 @@ document.addEventListener("DOMContentLoaded", () => {
   refreshAllDataViews(); // render demo data immediately while sheet loads
   triggerSync(true);     // then overwrite with live data from Google Sheets silently
 
-  // Responsive resize
+  // Initialize active tab attribute for mobile top nav control
+  document.body.setAttribute("data-active-tab", activeTabId || "tab-overview");
+
+  // Responsive resize: Top Bar visibility on mobile
+  window.addEventListener("resize", () => {
+    const topNav = document.querySelector(".top-nav");
+    if (!topNav) return;
+    if (window.innerWidth <= 768) {
+      topNav.style.display = (activeTabId === "tab-overview") ? "flex" : "none";
+    } else {
+      topNav.style.display = "flex";
+    }
+  });
+
   // Periodic auto-sync if enabled
   const cfg = SheetsAPI.getConfig();
   if (cfg.autoSync && cfg.syncIntervalMin && cfg.syncIntervalMin > 0) {

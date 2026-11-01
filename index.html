@@ -754,23 +754,41 @@
         border: none !important;
         box-shadow: none !important;
       }
+      /* Mobile: Top Bar visible ONLY on Overall tab */
+      body:not([data-active-tab="tab-overview"]) .top-nav {
+        display: none !important;
+      }
       .top-nav {
+        display: flex !important;
+        flex-direction: row !important;
         flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
         border-radius: 9999px !important;
         padding: 6px 14px !important;
-        margin-bottom: 18px !important;
+        margin-bottom: 16px !important;
         gap: 8px !important;
-        justify-content: space-between !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .brand-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
         gap: 8px !important;
+        width: auto !important;
+        min-width: 0 !important;
       }
       .brand-name {
         font-size: 15px !important;
+        white-space: nowrap !important;
       }
       .sync-tag {
         padding: 3px 8px !important;
         font-size: 10.5px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
       }
     }
 
@@ -2368,23 +2386,28 @@
         overflow-x: hidden;
       }
 
-      /* Top Navigation Bar Responsive Wrap */
+      /* Top Navigation Bar Responsive (Clean Single Row) */
       .top-nav {
-        padding: 10px 12px;
-        border-radius: 20px;
-        gap: 8px;
-        margin-bottom: 16px;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        border-radius: 9999px !important;
+        padding: 6px 14px !important;
+        margin-bottom: 16px !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .brand-row {
-        width: 100%;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-      .util-group {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 6px;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: auto !important;
+        min-width: 0 !important;
       }
       .util-group .seg-ctrl {
         max-width: 100%;
@@ -3346,20 +3369,22 @@
     <!-- Top Navigation Bar -->
     <header class="top-nav" data-od-id="nav-bar">
       <div class="brand-row">
-        <a href="#" class="brand-row" style="text-decoration: none; color: inherit;" onclick="switchTab('tab-overview'); return false;">
+        <a href="#" style="text-decoration: none; color: inherit; display: flex; align-items: center;" onclick="switchTab('tab-overview'); return false;" title="Go to Overall">
           <div class="brand-badge">FV</div>
-          <span class="brand-name">FinVenture</span>
         </a>
         <div class="sync-tag" onclick="triggerSync()" title="คลิกเพื่อซิงค์ข้อมูลสดจาก Google Sheets ทันที" style="cursor: pointer;">
           <div id="syncDot" class="live-dot dot-live"></div>
           <span id="syncText">Sheets Live Sync</span>
           <span style="font-size: 11px; opacity: 0.8; margin-left: 2px;" onclick="event.stopPropagation(); openSheetModal();" title="ตั้งค่า Sheet URL">⚙️</span>
         </div>
+        <a href="#" style="text-decoration: none; color: inherit; display: flex; align-items: center;" onclick="switchTab('tab-overview'); return false;" title="Go to Overall">
+          <span class="brand-name">FinVenture</span>
+        </a>
       </div>
 
       <!-- 5 Main Tabs (Desktop Only) -->
       <nav class="nav-tabs desktop-only" data-od-id="nav-tabs">
-        <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 ภาพรวมความมั่งคั่ง</button>
+        <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 Overall</button>
         <button class="tab-btn" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')">📊 Portfolio</button>
         <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 Cash Flow</button>
         <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 เงินปันผล</button>
@@ -4902,7 +4927,7 @@
        Floating Island Dock (Bottom Navigation Bar)
        ===================================================================== -->
   <nav class="island-dock" data-od-id="island-dock">
-    <button class="dock-icon active" data-tab="tab-overview" onclick="switchTab('tab-overview')" title="ภาพรวมความมั่งคั่ง">🌐</button>
+    <button class="dock-icon active" data-tab="tab-overview" onclick="switchTab('tab-overview')" title="Overall">🌐</button>
     <button class="dock-icon" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')" title="พอร์ตการลงทุน (Portfolio)">📊</button>
     <button class="dock-icon" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')" title="กระแสเงินสด & ค่าใช้จ่าย">💵</button>
     <button class="dock-icon" data-tab="tab-dividends" onclick="switchTab('tab-dividends')" title="เงินปันผล & ดอกเบี้ย">💰</button>
@@ -5265,11 +5290,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data-store.js?v=46"></script>
-  <script src="js/sheets-api.js?v=46"></script>
-  <script src="js/charts.js?v=46"></script>
-  <script src="js/cashflow-ui.js?v=46"></script>
-  <script src="js/portfolio-ui.js?v=46"></script>
-  <script src="js/app.js?v=46"></script>
+  <script src="js/data-store.js?v=47"></script>
+  <script src="js/sheets-api.js?v=47"></script>
+  <script src="js/charts.js?v=47"></script>
+  <script src="js/cashflow-ui.js?v=47"></script>
+  <script src="js/portfolio-ui.js?v=47"></script>
+  <script src="js/app.js?v=47"></script>
 </body>
 </html>
