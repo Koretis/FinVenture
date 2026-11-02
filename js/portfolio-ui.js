@@ -264,6 +264,51 @@ var PortfolioUI = {
     this.renderAllocationRadar(snap);
   },
 
+  getRoundedPolygonPath(pts, radius = 16) {
+    if (!pts || pts.length < 3) return "";
+    const len = pts.length;
+    let d = "";
+
+    for (let i = 0; i < len; i++) {
+      const prev = pts[(i - 1 + len) % len];
+      const curr = pts[i];
+      const next = pts[(i + 1) % len];
+
+      // Vector curr -> prev
+      const vPrevX = prev.x - curr.x;
+      const vPrevY = prev.y - curr.y;
+      const dPrev = Math.hypot(vPrevX, vPrevY);
+
+      // Vector curr -> next
+      const vNextX = next.x - curr.x;
+      const vNextY = next.y - curr.y;
+      const dNext = Math.hypot(vNextX, vNextY);
+
+      // Clamped corner radius based on shortest adjacent segment
+      const rClamped = Math.min(radius, dPrev * 0.45, dNext * 0.45);
+
+      // Fillet start point (receding from curr along curr->prev)
+      const pStartX = curr.x + (vPrevX / dPrev) * rClamped;
+      const pStartY = curr.y + (vPrevY / dPrev) * rClamped;
+
+      // Fillet end point (advancing from curr along curr->next)
+      const pEndX = curr.x + (vNextX / dNext) * rClamped;
+      const pEndY = curr.y + (vNextY / dNext) * rClamped;
+
+      if (i === 0) {
+        d += `M ${pStartX.toFixed(1)} ${pStartY.toFixed(1)} `;
+      } else {
+        d += `L ${pStartX.toFixed(1)} ${pStartY.toFixed(1)} `;
+      }
+
+      // Quadratic Bézier curve through control point curr to pEnd
+      d += `Q ${curr.x.toFixed(1)} ${curr.y.toFixed(1)}, ${pEndX.toFixed(1)} ${pEndY.toFixed(1)} `;
+    }
+
+    d += "Z";
+    return d;
+  },
+
   renderAll() {
     const snap = this.getLatestPortfolioSnapshot();
     this.renderTopSummaryKPIs(snap);
@@ -441,15 +486,19 @@ var PortfolioUI = {
 
     if (corePoly) {
       const coreR = RADIUS * 0.22;
-      const corePts = ANGLES.map(ang => `${(CX + coreR * Math.cos(ang)).toFixed(1)},${(CY + coreR * Math.sin(ang)).toFixed(1)}`).join(" ");
-      corePoly.setAttribute("points", corePts);
+      const coreCoords = ANGLES.map((ang) => ({
+        x: CX + coreR * Math.cos(ang),
+        y: CY + coreR * Math.sin(ang)
+      }));
+      corePoly.setAttribute("d", this.getRoundedPolygonPath(coreCoords, 8));
     }
 
+    const PEDESTAL_BASE_R = 204; // Outer platform circle edge (81.5% of 500 = 407.5 / 2)
     if (gSpokes) {
       gSpokes.innerHTML = "";
       ANGLES.forEach(ang => {
-        const x2 = CX + RADIUS * Math.cos(ang);
-        const y2 = CY + RADIUS * Math.sin(ang);
+        const x2 = CX + PEDESTAL_BASE_R * Math.cos(ang);
+        const y2 = CY + PEDESTAL_BASE_R * Math.sin(ang);
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", CX);
         line.setAttribute("y1", CY);
@@ -468,7 +517,7 @@ var PortfolioUI = {
         const ang = ANGLES[i];
         const x = CX + r * Math.cos(ang);
         const y = CY + r * Math.sin(ang);
-        return { x, y, asset, val };
+        return { x, y, r, ang, asset, val };
       });
     };
 
@@ -480,7 +529,7 @@ var PortfolioUI = {
 
     if (mPoly) {
       if (this.radarState.showMarket) {
-        mPoly.setAttribute("points", marketCoords.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" "));
+        mPoly.setAttribute("d", this.getRoundedPolygonPath(marketCoords, 16));
         mPoly.style.display = "";
       } else {
         mPoly.style.display = "none";
@@ -489,22 +538,25 @@ var PortfolioUI = {
 
     if (cPoly) {
       if (this.radarState.showCost) {
-        cPoly.setAttribute("points", costCoords.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" "));
+        cPoly.setAttribute("d", this.getRoundedPolygonPath(costCoords, 16));
         cPoly.style.display = "";
       } else {
         cPoly.style.display = "none";
       }
     }
 
-    const renderDots = (groupId, coords, dotClass, isVisible) => {
+    // Dots rendering: floating slightly outside vertex, priority to Market Value when both lines visible
+    const renderDots = (groupId, coords, dotClass, isVisible, offset = 6) => {
       const g = document.getElementById(groupId);
       if (!g) return;
       g.innerHTML = "";
       if (!isVisible) return;
       coords.forEach(pt => {
+        const dotX = CX + (pt.r + offset) * Math.cos(pt.ang);
+        const dotY = CY + (pt.r + offset) * Math.sin(pt.ang);
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", pt.x.toFixed(1));
-        circle.setAttribute("cy", pt.y.toFixed(1));
+        circle.setAttribute("cx", dotX.toFixed(1));
+        circle.setAttribute("cy", dotY.toFixed(1));
         circle.setAttribute("class", `pf-vertex-dot ${dotClass}`);
         circle.onmouseenter = (e) => this.showRadarTooltip(e, pt.asset);
         circle.onmouseleave = () => this.hideRadarTooltip();
@@ -512,22 +564,25 @@ var PortfolioUI = {
       });
     };
 
-    renderDots("pfMarketDotsGroup", marketCoords, "pf-vertex-dot-market", this.radarState.showMarket);
-    renderDots("pfCostDotsGroup", costCoords, "pf-vertex-dot-cost", this.radarState.showCost);
+    const showMarketDots = this.radarState.showMarket;
+    const showCostDots = this.radarState.showCost && !this.radarState.showMarket;
+
+    renderDots("pfMarketDotsGroup", marketCoords, "pf-vertex-dot-market", showMarketDots, 6);
+    renderDots("pfCostDotsGroup", costCoords, "pf-vertex-dot-cost", showCostDots, 6);
 
     const labelsContainer = document.getElementById("pfSpokeLabelsContainer");
     if (labelsContainer) {
       labelsContainer.innerHTML = "";
-      const dist = 196;
+      const R_PCT = 47.0; // 47% from center (pedestal base is 40.75%, so labels are always strictly outside)
       assets7.forEach((asset, i) => {
         const ang = ANGLES[i];
-        const px = 255 + dist * Math.cos(ang);
-        const py = 255 + dist * Math.sin(ang);
+        const pctX = 50 + R_PCT * Math.cos(ang);
+        const pctY = 50 + R_PCT * Math.sin(ang);
 
         const el = document.createElement("div");
         el.className = "pf-radar-spoke-label";
-        el.style.left = `${px}px`;
-        el.style.top = `${py}px`;
+        el.style.left = `${pctX.toFixed(2)}%`;
+        el.style.top = `${pctY.toFixed(2)}%`;
 
         const share = total > 0 ? ((asset.market / total) * 100).toFixed(1) : "0.0";
         const valText = asset.market >= 1000000 ? `฿${(asset.market / 1000000).toFixed(2)}M (${share}%)` : `฿${Math.round(asset.market).toLocaleString()} (${share}%)`;
@@ -541,6 +596,11 @@ var PortfolioUI = {
         labelsContainer.appendChild(el);
       });
     }
+
+    const legCostBtn = document.getElementById("pfLegCostBtn");
+    const legMarketBtn = document.getElementById("pfLegMarketBtn");
+    if (legCostBtn) legCostBtn.style.opacity = this.radarState.showCost ? "1" : "0.35";
+    if (legMarketBtn) legMarketBtn.style.opacity = this.radarState.showMarket ? "1" : "0.35";
 
     const legCostText = document.getElementById("pfLegCostText");
     const legMktText = document.getElementById("pfLegMarketText");
