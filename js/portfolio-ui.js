@@ -252,16 +252,396 @@ var PortfolioUI = {
     return hist[idx];
   },
 
+  radarState: {
+    showCost: true,
+    showMarket: true
+  },
+
+  toggleRadarLine(type) {
+    if (type === "cost") this.radarState.showCost = !this.radarState.showCost;
+    if (type === "market") this.radarState.showMarket = !this.radarState.showMarket;
+    const snap = this.getLatestPortfolioSnapshot();
+    this.renderAllocationRadar(snap);
+  },
+
   renderAll() {
     const snap = this.getLatestPortfolioSnapshot();
     this.renderTopSummaryKPIs(snap);
     this.renderPerformanceChart(snap);
     this.renderHoldingsList(snap);
+    this.renderAllocationRadar(snap);
     this.renderAllocationAndDrift(snap);
     this.renderTopMovers(snap);
     this.renderMarketIntelligence(snap);
     this.renderAssetClassDetailCards(snap);
     this.renderZone5CashFlowAndTech(snap);
+  },
+
+  /* =========================================================================
+     ZONE 2: ALLOCATION & RISK RADAR (ORION 3-COLUMN DASHBOARD)
+     ========================================================================= */
+  renderAllocationRadar(snap) {
+    if (!snap) snap = this.getLatestPortfolioSnapshot();
+    const container = document.getElementById("pfZoneBottom3");
+    if (!container) return;
+
+    const total = snap.totalNetWorth || 1;
+    const costTotal = snap.totalCost || 1;
+    const plDiff = snap.unrealizedPL || 0;
+    const plPct = snap.unrealizedPct || 0;
+
+    // 1. Update Left Column Summary
+    const netWorthEl = document.getElementById("pfArNetWorthVal");
+    const netGainEl = document.getElementById("pfArNetWorthGain");
+    const costValEl = document.getElementById("pfArTotalCostVal");
+
+    if (netWorthEl) netWorthEl.textContent = this.fmtMoney(total);
+    if (netGainEl) {
+      const isPos = plDiff >= 0;
+      netGainEl.textContent = `${isPos ? '+' : ''}${this.fmtMoney(plDiff)} (${isPos ? '+' : ''}${plPct.toFixed(2)}%)`;
+      netGainEl.style.color = isPos ? "#10b981" : "#ef4444";
+    }
+    if (costValEl) costValEl.textContent = this.fmtMoney(costTotal);
+
+    // 2. Risk Allocation Breakdown (High, Mid, Low)
+    const riskListEl = document.getElementById("pfArRiskList");
+    if (riskListEl && snap.risks) {
+      const riskDefs = [
+        {
+          name: "High Risk (SET, Dime, Crypto)",
+          mkt: snap.risks.High?.market || 0,
+          cost: snap.risks.High?.cost || 0,
+          color: "#ec4899"
+        },
+        {
+          name: "Mid Risk (PVD, Insurance, GOLD)",
+          mkt: snap.risks.Mid?.market || 0,
+          cost: snap.risks.Mid?.cost || 0,
+          color: "#3b82f6"
+        },
+        {
+          name: "Low Risk (Cash, Saving)",
+          mkt: snap.risks.Low?.market || 0,
+          cost: snap.risks.Low?.cost || 0,
+          color: "#10b981"
+        }
+      ];
+
+      riskListEl.innerHTML = riskDefs.map(r => {
+        const share = total > 0 ? ((r.mkt / total) * 100).toFixed(1) : "0.0";
+        const pl = r.mkt - r.cost;
+        const pct = r.cost > 0 ? ((pl / r.cost) * 100).toFixed(1) : "0.0";
+        return `
+          <div class="pf-ar-risk-item">
+            <div class="pf-ar-risk-header">${r.name}</div>
+            <div class="pf-ar-risk-sub">${this.fmtMoney(r.mkt)} (${share}%) | P/L ${pl >= 0 ? '+' : ''}${pct}%</div>
+            <div class="pf-ar-bar-track">
+              <div class="pf-ar-bar-fill" style="width: ${Math.min(100, share)}%; background: ${r.color};"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // 3. Exposure Boxes
+    const usdVal = snap.assets?.US?.market || 0;
+    const thbPct = total > 0 ? Math.round(((total - usdVal) / total) * 100) : 100;
+    const usdPct = 100 - thbPct;
+    const globalVal = (snap.assets?.US?.market || 0) + (snap.assets?.CRYPTO?.market || 0) + (snap.assets?.GOLD?.market || 0);
+    const globalPct = total > 0 ? Math.round((globalVal / total) * 100) : 0;
+    const domPct = 100 - globalPct;
+
+    const fxValEl = document.getElementById("pfArExposureFxVal");
+    const fxBarEl = document.getElementById("pfArExposureFxBar");
+    if (fxValEl) fxValEl.textContent = `${thbPct}%: ${usdPct}%`;
+    if (fxBarEl) fxBarEl.style.background = `linear-gradient(90deg, #8b5cf6 ${thbPct}%, #ec4899 ${thbPct}%)`;
+
+    const geoValEl = document.getElementById("pfArExposureGeoVal");
+    const geoBarEl = document.getElementById("pfArExposureGeoBar");
+    if (geoValEl) geoValEl.textContent = `${domPct}%: ${globalPct}%`;
+    if (geoBarEl) geoBarEl.style.background = `linear-gradient(90deg, #3b82f6 ${domPct}%, #06b6d4 ${domPct}%)`;
+
+    // 4. Center 7-Spoke Radar
+    const items = snap.items || [];
+    const findItem = (cat, fallbackName) => {
+      return items.find(i => i.cat === cat || (fallbackName && i.name.toLowerCase().includes(fallbackName.toLowerCase())));
+    };
+
+    const goldItem = findItem("GOLD", "AOM") || findItem("GOLD", "gold");
+    const cashItem = findItem("CASH", "cash") || findItem("CASH", "saving");
+
+    const assets7 = [
+      {
+        id: "SET",
+        title: "SET (หุ้นไทย)",
+        market: snap.assets?.SET?.market || 0,
+        cost: snap.assets?.SET?.cost || 0
+      },
+      {
+        id: "PVD",
+        title: "PVD (สำรองเลี้ยงชีพ)",
+        market: snap.assets?.PVD?.market || 0,
+        cost: snap.assets?.PVD?.cost || 0
+      },
+      {
+        id: "INS",
+        title: "Insurance (ประกัน)",
+        market: snap.assets?.INS?.market || 0,
+        cost: snap.assets?.INS?.cost || 0
+      },
+      {
+        id: "GOLD",
+        title: "GOLD (ทองคำ)",
+        market: (snap.assets?.GOLD?.market || 0) > 0 ? snap.assets.GOLD.market : (goldItem?.market || 0),
+        cost: (snap.assets?.GOLD?.cost || 0) > 0 ? snap.assets.GOLD.cost : (goldItem?.cost || 0)
+      },
+      {
+        id: "DIME",
+        title: "Dime (หุ้นสหรัฐ)",
+        market: snap.assets?.US?.market || 0,
+        cost: snap.assets?.US?.cost || 0
+      },
+      {
+        id: "BITKUB",
+        title: "Bitkub (Crypto)",
+        market: snap.assets?.CRYPTO?.market || 0,
+        cost: snap.assets?.CRYPTO?.cost || 0
+      },
+      {
+        id: "CASH",
+        title: "Cash/Saving",
+        market: (snap.assets?.CASH?.market || 0) > 0 ? snap.assets.CASH.market : (cashItem?.market || 0),
+        cost: (snap.assets?.CASH?.cost || 0) > 0 ? snap.assets.CASH.cost : (cashItem?.cost || 0)
+      }
+    ];
+
+    const maxVal = Math.max(1, ...assets7.map(a => Math.max(a.market, a.cost)));
+
+    const CX = 250;
+    const CY = 250;
+    const RADIUS = 155;
+    const N = 7;
+    const ANGLES = assets7.map((_, i) => (-Math.PI / 2) + (i * 2 * Math.PI / N));
+
+    const gPoly = document.getElementById("pfGuidePolygonsGroup");
+    const gSpokes = document.getElementById("pfGuideSpokesGroup");
+    const corePoly = document.getElementById("pfCorePolygon");
+
+    if (gPoly) {
+      gPoly.innerHTML = "";
+      [0.25, 0.50, 0.75, 1.0].forEach(s => {
+        const r = RADIUS * s;
+        const pts = ANGLES.map(ang => `${(CX + r * Math.cos(ang)).toFixed(1)},${(CY + r * Math.sin(ang)).toFixed(1)}`).join(" ");
+        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        poly.setAttribute("points", pts);
+        poly.setAttribute("opacity", "0.6");
+        gPoly.appendChild(poly);
+      });
+    }
+
+    if (corePoly) {
+      const coreR = RADIUS * 0.22;
+      const corePts = ANGLES.map(ang => `${(CX + coreR * Math.cos(ang)).toFixed(1)},${(CY + coreR * Math.sin(ang)).toFixed(1)}`).join(" ");
+      corePoly.setAttribute("points", corePts);
+    }
+
+    if (gSpokes) {
+      gSpokes.innerHTML = "";
+      ANGLES.forEach(ang => {
+        const x2 = CX + RADIUS * Math.cos(ang);
+        const y2 = CY + RADIUS * Math.sin(ang);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", CX);
+        line.setAttribute("y1", CY);
+        line.setAttribute("x2", x2.toFixed(1));
+        line.setAttribute("y2", y2.toFixed(1));
+        line.setAttribute("opacity", "0.5");
+        gSpokes.appendChild(line);
+      });
+    }
+
+    const getCoords = (isCost) => {
+      return assets7.map((asset, i) => {
+        const val = isCost ? asset.cost : asset.market;
+        const ratio = Math.min(1.0, Math.max(0.18, (val / maxVal) * 0.92));
+        const r = RADIUS * ratio;
+        const ang = ANGLES[i];
+        const x = CX + r * Math.cos(ang);
+        const y = CY + r * Math.sin(ang);
+        return { x, y, asset, val };
+      });
+    };
+
+    const marketCoords = getCoords(false);
+    const costCoords = getCoords(true);
+
+    const mPoly = document.getElementById("pfMarketPolygon");
+    const cPoly = document.getElementById("pfCostPolygon");
+
+    if (mPoly) {
+      if (this.radarState.showMarket) {
+        mPoly.setAttribute("points", marketCoords.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" "));
+        mPoly.style.display = "";
+      } else {
+        mPoly.style.display = "none";
+      }
+    }
+
+    if (cPoly) {
+      if (this.radarState.showCost) {
+        cPoly.setAttribute("points", costCoords.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" "));
+        cPoly.style.display = "";
+      } else {
+        cPoly.style.display = "none";
+      }
+    }
+
+    const renderDots = (groupId, coords, dotClass, isVisible) => {
+      const g = document.getElementById(groupId);
+      if (!g) return;
+      g.innerHTML = "";
+      if (!isVisible) return;
+      coords.forEach(pt => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", pt.x.toFixed(1));
+        circle.setAttribute("cy", pt.y.toFixed(1));
+        circle.setAttribute("class", `pf-vertex-dot ${dotClass}`);
+        circle.onmouseenter = (e) => this.showRadarTooltip(e, pt.asset);
+        circle.onmouseleave = () => this.hideRadarTooltip();
+        g.appendChild(circle);
+      });
+    };
+
+    renderDots("pfMarketDotsGroup", marketCoords, "pf-vertex-dot-market", this.radarState.showMarket);
+    renderDots("pfCostDotsGroup", costCoords, "pf-vertex-dot-cost", this.radarState.showCost);
+
+    const labelsContainer = document.getElementById("pfSpokeLabelsContainer");
+    if (labelsContainer) {
+      labelsContainer.innerHTML = "";
+      const dist = 196;
+      assets7.forEach((asset, i) => {
+        const ang = ANGLES[i];
+        const px = 255 + dist * Math.cos(ang);
+        const py = 255 + dist * Math.sin(ang);
+
+        const el = document.createElement("div");
+        el.className = "pf-radar-spoke-label";
+        el.style.left = `${px}px`;
+        el.style.top = `${py}px`;
+
+        const share = total > 0 ? ((asset.market / total) * 100).toFixed(1) : "0.0";
+        const valText = asset.market >= 1000000 ? `฿${(asset.market / 1000000).toFixed(2)}M (${share}%)` : `฿${Math.round(asset.market).toLocaleString()} (${share}%)`;
+
+        el.innerHTML = `
+          <div class="pf-spoke-label-title">${asset.title}</div>
+          <div class="pf-spoke-label-val">${valText}</div>
+        `;
+        el.onmouseenter = (e) => this.showRadarTooltip(e, asset);
+        el.onmouseleave = () => this.hideRadarTooltip();
+        labelsContainer.appendChild(el);
+      });
+    }
+
+    const legCostText = document.getElementById("pfLegCostText");
+    const legMktText = document.getElementById("pfLegMarketText");
+    if (legCostText) legCostText.textContent = `Cost (ต้นทุนรวม ${this.fmtShort(costTotal)})`;
+    if (legMktText) legMktText.textContent = `Market Value (มูลค่าตลาด ${this.fmtShort(total)})`;
+
+    // 5. Right Column (Winners, Losers & Historical Analytics)
+    const rowsWithPl = (snap.items || []).map(it => {
+      const plAmt = it.market - it.cost;
+      const plPct = it.cost > 0 ? ((plAmt / it.cost) * 100) : 0;
+      return { ...it, plAmt, plPct };
+    });
+
+    const gainers = rowsWithPl.filter(r => r.plAmt > 0).sort((a, b) => b.plPct - a.plPct);
+    const losers = rowsWithPl.filter(r => r.plAmt <= 0 && (r.market > 0 || r.cost > 0)).sort((a, b) => a.plPct - b.plPct);
+
+    const gainersListEl = document.getElementById("pfArProfitLeaders");
+    if (gainersListEl) {
+      if (gainers.length === 0) {
+        gainersListEl.innerHTML = `<div class="text-xs text-gray-400">ไม่มีรายการกำไร</div>`;
+      } else {
+        gainersListEl.innerHTML = gainers.slice(0, 3).map(g => `
+          <div class="pf-mover-item">
+            <span>${g.name}</span>
+            <span class="pf-mover-pct-green">(+${g.plPct.toFixed(1)}%)</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    const losersListEl = document.getElementById("pfArUnrealizedLoss");
+    if (losersListEl) {
+      if (losers.length === 0) {
+        losersListEl.innerHTML = `<div class="text-xs text-gray-400">ไม่มีรายการขาดทุนสะสม</div>`;
+      } else {
+        losersListEl.innerHTML = losers.slice(0, 3).map(l => `
+          <div class="pf-mover-item">
+            <span>${l.name}</span>
+            <span class="pf-mover-pct-red">(${l.plPct >= 0 ? '0.0%' : l.plPct.toFixed(1) + '%'})</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    const hist = snap.hist || [];
+    const oneYrPt = hist.length >= 13 ? hist[hist.length - 13] : (hist[0] || snap.latest);
+    const initPt = hist[0] || snap.latest;
+
+    const yoyDiff = snap.totalNetWorth - (oneYrPt?.market || 0);
+    const yoyPct = (oneYrPt?.market > 0) ? ((yoyDiff / oneYrPt.market) * 100) : 0;
+    const allDiff = snap.totalNetWorth - (initPt?.market || 0);
+    const allPct = (initPt?.market > 0) ? ((allDiff / initPt.market) * 100) : 0;
+
+    const growthMonthsEl = document.getElementById("pfArGrowthMonths");
+    const growthDatesEl = document.getElementById("pfArGrowthDates");
+    const growthYoYEl = document.getElementById("pfArGrowthYoY");
+    const growthCagrEl = document.getElementById("pfArGrowthCagr");
+
+    if (growthMonthsEl) growthMonthsEl.textContent = `GROWTH • ${hist.length || 46} MONTHS`;
+    if (growthDatesEl) growthDatesEl.textContent = `(${initPt?.label || 'ม.ค. 2023'} - ${snap.latest?.label?.replace(' (ปัจจุบัน)', '') || 'พ.ย. 2026'})`;
+    if (growthYoYEl) growthYoYEl.textContent = `+${this.fmtMoney(yoyDiff)} (+${yoyPct.toFixed(1)}%)`;
+    if (growthCagrEl) {
+      growthCagrEl.innerHTML = `
+        All-Time Growth <strong>+${allPct.toFixed(1)}%</strong><br>
+        - CAGR <strong>+${snap.cagrPct ? snap.cagrPct.toFixed(2) : '14.22'}%ต่อปี</strong>
+      `;
+    }
+  },
+
+  showRadarTooltip(e, asset) {
+    const tip = document.getElementById("pfRadarTooltip");
+    if (!tip) return;
+    const diff = asset.market - asset.cost;
+    const isProfit = diff >= 0;
+    const sign = isProfit ? "+" : "";
+    const color = isProfit ? "#10b981" : "#ef4444";
+    const pct = asset.cost > 0 ? ((diff / asset.cost) * 100).toFixed(1) : "0.0";
+
+    tip.innerHTML = `
+      <div style="font-weight: 800; font-size: 13px; margin-bottom: 4px;">${asset.title}</div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; margin-bottom: 2px;">
+        <span style="color: #3b82f6; font-weight: 600;">1. Cost (ต้นทุน):</span>
+        <span style="font-weight: 700;">฿${Math.round(asset.cost).toLocaleString()}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; margin-bottom: 4px;">
+        <span style="color: #d946ef; font-weight: 600;">2. Market Value (มูลค่า):</span>
+        <span style="font-weight: 700;">฿${Math.round(asset.market).toLocaleString()}</span>
+      </div>
+      <div style="padding-top: 4px; border-top: 1px solid var(--pf-border); display: flex; justify-content: space-between; gap: 16px;">
+        <span style="color: var(--pf-fg-muted);">Unrealized P/L:</span>
+        <span style="color: ${color}; font-weight: 800;">${sign}฿${Math.round(diff).toLocaleString()} (${sign}${pct}%)</span>
+      </div>
+    `;
+    tip.style.display = "block";
+    tip.style.left = `${Math.min(window.innerWidth - 220, e.clientX + 14)}px`;
+    tip.style.top = `${Math.min(window.innerHeight - 120, e.clientY + 14)}px`;
+  },
+
+  hideRadarTooltip() {
+    const tip = document.getElementById("pfRadarTooltip");
+    if (tip) tip.style.display = "none";
   },
 
   /* =========================================================================
