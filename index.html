@@ -3770,6 +3770,304 @@
       }
     }
 
+    /* =========================================================================
+       ZONE 5 HERO: INVESTMENT FLOW SANKEY & 3-CARD WIDGETS
+       ========================================================================= */
+    .pf-flow-hero-card {
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      border-radius: 24px;
+      padding: 24px 20px 22px;
+      margin-bottom: 22px;
+      position: relative;
+      box-shadow: var(--pf-shadow);
+      transition: all 0.3s ease;
+    }
+    .pf-flow-hero-card .timeline-pill-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--pf-card-sec);
+      padding: 3.5px;
+      border-radius: 9999px;
+      border: 1px solid var(--pf-border);
+    }
+    .pf-flow-hero-card .timeline-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      color: var(--pf-fg-sec);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pf-flow-hero-card .timeline-pill.active {
+      background: #4f46e5;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    }
+    .pf-visualizer-stage {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+    .pf-flow-svg {
+      width: 100%;
+      max-width: 980px;
+      height: auto;
+      min-height: 380px;
+      overflow: visible;
+    }
+    .pf-large-stage-circle {
+      fill: var(--pf-card);
+      transition: fill 0.3s ease;
+    }
+    .pf-large-stage-dashed-ring {
+      fill: none;
+      stroke: var(--pf-border-strong);
+      stroke-width: 1.6;
+      stroke-dasharray: 6 5;
+    }
+    .pf-small-hub-circle {
+      fill: var(--pf-card);
+      stroke: rgba(99, 102, 241, 0.3);
+      stroke-width: 1.8;
+      transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+    .pf-hub-icon-bg {
+      fill: rgba(99, 102, 241, 0.14);
+    }
+    .pf-hub-label-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      fill: var(--pf-fg-muted);
+    }
+    .pf-hub-number-text {
+      font-size: 14px;
+      font-weight: 800;
+      fill: var(--pf-fg);
+    }
+    .pf-flow-ribbon {
+      opacity: 0.88;
+      transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .pf-flow-ribbon:hover, .pf-flow-ribbon.highlighted {
+      opacity: 1;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+    }
+    .pf-flow-ribbon.dimmed {
+      opacity: 0.18;
+    }
+    .pf-node-label-group {
+      cursor: pointer;
+      user-select: none;
+    }
+    .pf-node-label-group:hover text {
+      fill: #4f46e5;
+    }
+    .pf-svg-lbl-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      fill: var(--pf-fg);
+      letter-spacing: -0.01em;
+    }
+    .pf-svg-lbl-val {
+      font-size: 16px;
+      font-weight: 800;
+      fill: var(--pf-fg);
+    }
+    .pf-svg-lbl-sub {
+      font-size: 11px;
+      font-weight: 600;
+      fill: var(--pf-fg-muted);
+    }
+    .pf-flow-svg.is-mobile .pf-svg-lbl-title { font-size: 16px; }
+    .pf-flow-svg.is-mobile .pf-svg-lbl-val   { font-size: 21px; }
+    .pf-flow-svg.is-mobile .pf-svg-lbl-sub   { font-size: 14px; }
+    .pf-flow-svg.is-mobile .pf-hub-label-text  { font-size: 10px; }
+    .pf-flow-svg.is-mobile .pf-hub-number-text { font-size: 16.5px; }
+
+    /* 3 Bottom Cards */
+    .pf-flow-widgets-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+      width: 100%;
+    }
+    .pf-flow-widget-card {
+      background: var(--pf-card-sec);
+      border: 1px solid var(--pf-border);
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 74px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .pf-flow-widget-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.12);
+      border-color: rgba(99, 102, 241, 0.35);
+    }
+    .pf-w-main-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      min-width: max-content;
+    }
+    .pf-w-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--w-tint);
+      color: var(--w-color);
+      flex-shrink: 0;
+    }
+    .pf-w-icon svg { width: 20px; height: 20px; }
+    .pf-w-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .pf-w-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--pf-fg-sec);
+      line-height: 1.2;
+    }
+    .pf-w-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--pf-fg);
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+    .pf-w-chart {
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+    .pf-w-chart-trend {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      height: 34px;
+    }
+    .pf-trend-wave-svg {
+      flex: 1 1 0%;
+      max-width: 140px;
+      height: 32px;
+      overflow: visible;
+    }
+    .pf-trend-pct-badge {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--pf-fg);
+      white-space: nowrap;
+    }
+
+    /* Pulse: live dynamic monthly bars */
+    .pf-w-chart-pulse {
+      width: 100%;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .pf-pulse-bars {
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 5px;
+      height: 30px;
+      box-sizing: border-box;
+    }
+    .pf-pulse-bar {
+      flex: 1 1 0%;
+      max-width: 22px;
+      min-width: 5px;
+      border-radius: 999px;
+      background: rgba(223, 161, 102, 0.45);
+      transition: height 0.35s ease, background 0.2s ease;
+      cursor: pointer;
+    }
+    .pf-pulse-bar:hover { background: rgba(223, 161, 102, 0.85); }
+    .pf-pulse-bar.latest { background: #dfa166; }
+    .pf-pulse-bar.latest:hover { background: #c8894d; }
+
+    /* Activity */
+    .pf-w-chart-activity {
+      width: 100%;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .pf-activity-rows {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4.5px;
+    }
+    .pf-act-track {
+      width: 100%;
+      height: 4.5px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.18);
+      overflow: hidden;
+    }
+    .pf-act-fill {
+      height: 100%;
+      display: flex;
+      border-radius: 999px;
+      overflow: hidden;
+      transition: width 0.4s ease;
+    }
+    .pf-act-fill span { height: 100%; }
+
+    /* Floating Tooltip */
+    #pfFlowTooltip {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      z-index: 1000;
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      padding: 12px 16px;
+      border-radius: 14px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
+      font-size: 12px;
+      min-width: 220px;
+    }
+
+    @media (max-width: 768px) {
+      .pf-flow-widgets-row { grid-template-columns: 1fr; gap: 10px; }
+      .pf-flow-hero-card { padding: 18px 12px 18px; border-radius: 20px; }
+      .pf-flow-svg { min-height: 0; }
+      .pf-pulse-bars { gap: 5px; height: 28px; }
+      .pf-pulse-bar { max-width: 20px; min-width: 4px; }
+    }
+
   </style>
 
 </head>
@@ -4873,7 +5171,7 @@
             <span class="pf-badge-soft">🟢 Live Sheet &ldquo;Portfolio&rdquo; Sync</span>
             <button type="button" class="pf-ask-ai-btn" onclick="PortfolioUI.setSubTab('cashflow')">
               <span>📋</span>
-              <span>Investment &amp; Funding (Zone 5)</span>
+              <span>Investment Flow (Zone 5)</span>
             </button>
           </div>
         </div>
@@ -5377,19 +5675,169 @@
         </section>
 
         <!-- =================================================================
-             ZONE 5: Monthly Investment Analytics (จากชีต "Invest Monthly")
+             ZONE 5: Investment Flow & Monthly Analytics (จากชีต "Invest Monthly")
              ================================================================= -->
         <section id="pfZone5" style="margin-bottom: 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-            <div>
-              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 5: Monthly Investment &amp; Funding Analytics (ข้อมูลการลงทุนรายเดือนจากชีต &ldquo;Invest Monthly&rdquo;)</h3>
-              <div style="font-size: 12px; color: var(--pf-fg-muted);">เจาะลึกยอดเงินลงทุนรายเดือน แหล่งที่มาของเงินทุน 5 แหล่ง (Salary • DIV/Re-invest • Bonus • Tax Refund • Rebalance) และการจัดสรรเข้าแต่ละสินทรัพย์</div>
+
+          <!-- TOP HERO CARD: INVESTMENT FLOW -->
+          <div class="pf-flow-hero-card">
+            <!-- Timeline & Title Header -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 10px;">
+              <div style="font-size: 10px; letter-spacing: 0.28em; font-weight: 800; color: var(--pf-fg-muted); text-transform: uppercase; margin-bottom: 8px;">TIMELINE</div>
+              
+              <div class="timeline-pill-group" style="margin-bottom: 12px;" role="group" aria-label="Investment Flow Timeline Filter">
+                <button type="button" class="timeline-pill pf-inv-yr-btn active" data-pf-invyr="ALL" onclick="PortfolioUI.setInvestMonthlyYear('ALL', this)">ทั้งหมด (2025–2026)</button>
+                <button type="button" class="timeline-pill pf-inv-yr-btn" data-pf-invyr="2026" onclick="PortfolioUI.setInvestMonthlyYear('2026', this)">ปี 2026</button>
+                <button type="button" class="timeline-pill pf-inv-yr-btn" data-pf-invyr="2025" onclick="PortfolioUI.setInvestMonthlyYear('2025', this)">ปี 2025</button>
+              </div>
+
+              <h2 style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--pf-fg); margin: 0;">
+                Investment Flow
+              </h2>
+              <p style="font-size: 12px; color: var(--pf-fg-muted); margin: 4px 0 0 0; max-width: 500px;">
+                แผนภาพการไหลของเงินทุน: แหล่งเงินทุน (Inflows) รวมที่ศูนย์กลาง และจัดสรรออกสู่สินทรัพย์ (Outflows)
+              </p>
             </div>
-            <div class="pf-period-group" role="group" aria-label="Invest Monthly Year Filter">
-              <button type="button" class="pf-period-btn pf-inv-yr-btn active" data-pf-invyr="ALL" onclick="PortfolioUI.setInvestMonthlyYear('ALL', this)">ทั้งหมด (2025–2026)</button>
-              <button type="button" class="pf-period-btn pf-inv-yr-btn" data-pf-invyr="2026" onclick="PortfolioUI.setInvestMonthlyYear('2026', this)">ปี 2026</button>
-              <button type="button" class="pf-period-btn pf-inv-yr-btn" data-pf-invyr="2025" onclick="PortfolioUI.setInvestMonthlyYear('2025', this)">ปี 2025</button>
+
+            <!-- SVG Flow Canvas Stage -->
+            <div class="pf-visualizer-stage" id="pfStageContainer">
+              <svg class="pf-flow-svg" id="pfFlowSvg" viewBox="45 25 910 510" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <filter id="pfHubDropShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(100, 116, 139, 0.24)" />
+                  </filter>
+                  <filter id="pfLargeStageShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="rgba(148, 163, 184, 0.16)" />
+                  </filter>
+
+                  <!-- Left Inflow Gradients -->
+                  <linearGradient id="pfGradCoral" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#fb7185" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#fda4af" stop-opacity="0.8" />
+                  </linearGradient>
+                  <linearGradient id="pfGradGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#166534" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#15803d" stop-opacity="0.8" />
+                  </linearGradient>
+                  <linearGradient id="pfGradNavy" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#1e293b" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.8" />
+                  </linearGradient>
+                  <linearGradient id="pfGradSlate" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#2e4a62" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#475569" stop-opacity="0.8" />
+                  </linearGradient>
+                  <linearGradient id="pfGradCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.8" />
+                  </linearGradient>
+
+                  <!-- Right Outflow Gradients -->
+                  <linearGradient id="pfGradRose" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#fb7185" stop-opacity="0.95" />
+                  </linearGradient>
+                  <linearGradient id="pfGradOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ea580c" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#f97316" stop-opacity="0.95" />
+                  </linearGradient>
+                  <linearGradient id="pfGradPeach" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#fb923c" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#fed7aa" stop-opacity="0.95" />
+                  </linearGradient>
+                  <linearGradient id="pfGradPink" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ec4899" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#f472b6" stop-opacity="0.95" />
+                  </linearGradient>
+                  <linearGradient id="pfGradAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#d97706" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.95" />
+                  </linearGradient>
+                </defs>
+
+                <!-- LAYER 2: Large White Stage Disc (Radius = 125px) -->
+                <g id="pfLargeCircleStageGroup">
+                  <circle cx="500" cy="280" r="125" class="pf-large-stage-circle" filter="url(#pfLargeStageShadow)" />
+                  <circle cx="500" cy="280" r="125" class="pf-large-stage-dashed-ring" />
+                </g>
+
+                <!-- LAYER 3: Ribbons -->
+                <g id="pfInflowRibbonsGroup"></g>
+                <g id="pfOutflowRibbonsGroup"></g>
+
+                <!-- LAYER 4: Central Hub Disc (Radius = 58px) -->
+                <g id="pfCenterHubGroup" style="cursor: pointer;">
+                  <circle cx="500" cy="280" r="58" class="pf-small-hub-circle" filter="url(#pfHubDropShadow)" />
+                  <g transform="translate(500, 256)">
+                    <rect x="-10" y="-10" width="20" height="20" rx="6" class="pf-hub-icon-bg" />
+                    <path d="M-5 -1 L-1 3 L3 -3 L6 3" stroke="#4f46e5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                  </g>
+                  <text x="500" y="277" text-anchor="middle" class="pf-hub-label-text">Total Net Invest</text>
+                  <text x="500" y="297" text-anchor="middle" class="pf-hub-number-text" id="pfHubMainNumber">฿ —</text>
+                </g>
+
+                <!-- LAYER 5: Symmetrical Native SVG Text Labels -->
+                <g id="pfSvgLabelsGroup"></g>
+              </svg>
             </div>
+
+            <!-- 3 Bottom Reference Cards -->
+            <div class="pf-flow-widgets-row">
+              <!-- Card 1: Monthly Trend -->
+              <div class="pf-flow-widget-card" style="--w-color:#6366f1; --w-tint:rgba(99,102,241,0.12);">
+                <div class="pf-w-main-info">
+                  <div class="pf-w-icon">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><rect x="2.5" y="9.5" width="3" height="7.5" rx="1.5"/><rect x="8.5" y="4" width="3" height="13" rx="1.5"/><rect x="14.5" y="7" width="3" height="10" rx="1.5"/></svg>
+                  </div>
+                  <div class="pf-w-text">
+                    <div class="pf-w-title">Monthly Trend</div>
+                    <div class="pf-w-value" id="pfWidgetTrendVal">2025–2026</div>
+                  </div>
+                </div>
+                <div class="pf-w-chart pf-w-chart-trend">
+                  <svg id="pfTrendMiniSvg" class="pf-trend-wave-svg" viewBox="0 0 100 36" preserveAspectRatio="none"></svg>
+                  <span class="pf-trend-pct-badge" id="pfWidgetTrendPct">34%</span>
+                </div>
+              </div>
+
+              <!-- Card 2: Pulse (live dynamic monthly bars) -->
+              <div class="pf-flow-widget-card" style="--w-color:#d08a4a; --w-tint:rgba(223,161,102,0.18);">
+                <div class="pf-w-main-info">
+                  <div class="pf-w-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                  </div>
+                  <div class="pf-w-text">
+                    <div class="pf-w-title">Pulse</div>
+                    <div class="pf-w-value" id="pfWidgetPulseVal">7</div>
+                  </div>
+                </div>
+                <div class="pf-w-chart pf-w-chart-pulse">
+                  <div class="pf-pulse-bars" id="pfPulseBars"></div>
+                </div>
+              </div>
+
+              <!-- Card 3: Activity -->
+              <div class="pf-flow-widget-card" style="--w-color:#3b82f6; --w-tint:rgba(59,130,246,0.12);">
+                <div class="pf-w-main-info">
+                  <div class="pf-w-icon">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><rect x="2" y="3.5" width="13" height="2.6" rx="1.3"/><rect x="2" y="8.7" width="16" height="2.6" rx="1.3"/><rect x="2" y="13.9" width="10" height="2.6" rx="1.3"/></svg>
+                  </div>
+                  <div class="pf-w-text">
+                    <div class="pf-w-title">Activity</div>
+                    <div class="pf-w-value" id="pfWidgetActivityVal">154</div>
+                  </div>
+                </div>
+                <div class="pf-w-chart pf-w-chart-activity">
+                  <div class="pf-activity-rows" id="pfActivityRows"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Subtitle for Details -->
+          <div style="font-size: 15px; font-weight: 700; color: var(--pf-fg); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>📊</span>
+            <span>ภาพรวมเงินลงทุนรายเดือน &amp; แหล่งเงินทุน (Invest Monthly Analytics)</span>
           </div>
 
           <!-- 5 KPI Cards from Sheet "Invest Monthly" -->
@@ -5450,6 +5898,28 @@
             <div id="pfZ5InvestMonthlyTableWrap" style="overflow-x: auto;"></div>
           </div>
         </section>
+
+        <!-- Floating Tooltip for Investment Flow -->
+        <div id="pfFlowTooltip">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--pf-border); padding-bottom: 6px; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: var(--pf-fg);" id="pfTipTitle">Flow Details</span>
+            <span style="font-size: 10px; padding: 2px 8px; border-radius: 9999px; font-weight: 700;" id="pfTipBadge">Inflow</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--pf-fg-sec);">
+            <div style="display: flex; justify-content: space-between; gap: 16px;">
+              <span style="color: var(--pf-fg-muted);">จำนวนเงิน:</span>
+              <span style="font-weight: 700; color: var(--pf-fg);" id="pfTipValue">฿0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 16px;">
+              <span style="color: var(--pf-fg-muted);">สัดส่วนในรอบปี:</span>
+              <span style="font-weight: 600; color: #6366f1;" id="pfTipShare">0.0%</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 16px;">
+              <span style="color: var(--pf-fg-muted);">รายละเอียด:</span>
+              <span style="font-weight: 500;" id="pfTipDesc">—</span>
+            </div>
+          </div>
+        </div>
 
       </div>
     </main>

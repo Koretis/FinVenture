@@ -2029,7 +2029,10 @@ var PortfolioUI = {
     const totalFromRebal = sumCol("fromRebalance");
     const avgMonthlyInvest = totalInvest / countMonths;
 
-    // 5.0: Render 5 KPI Summary Cards from Sheet "Invest Monthly"
+    // 5.0 HERO: Render Top Investment Flow Sankey + 3 Bottom Cards
+    this.renderZone5InvestmentFlow(invRows, totalInvest);
+
+    // 5.1: Render 5 KPI Summary Cards from Sheet "Invest Monthly"
     const kpiGridEl = document.getElementById("pfZ5InvestKpiGrid");
     if (kpiGridEl) {
       const latestInv = invRows.length > 0 ? invRows[invRows.length - 1] : null;
@@ -2255,6 +2258,436 @@ var PortfolioUI = {
         </table>
       `;
     }
+  },
+
+  /* =========================================================================
+     ZONE 5 HERO: INVESTMENT FLOW SANKEY & 3-CARD WIDGETS
+     ========================================================================= */
+  renderZone5InvestmentFlow(invRows, totalInvest) {
+    const yr = this.state.investMonthlyYear || "ALL";
+
+    const FLOW_DATA = {
+      ALL: {
+        totalNet: 1404962,
+        periodText: "22 เดือน (2025–2026)",
+        trendVal: "2025–2026",
+        trendPct: "34%",
+        pulseVal: "7",
+        pulseHistFull: [
+          ["ม.ค. 25", 4], ["ก.พ. 25", 4], ["มี.ค. 25", 5], ["เม.ย. 25", 5],
+          ["พ.ค. 25", 5], ["มิ.ย. 25", 5], ["ก.ค. 25", 5], ["ส.ค. 25", 5],
+          ["ก.ย. 25", 5], ["ต.ค. 25", 5], ["พ.ย. 25", 4], ["ธ.ค. 25", 5],
+          ["ม.ค. 26", 6], ["ก.พ. 26", 6], ["มี.ค. 26", 8], ["เม.ย. 26", 6],
+          ["พ.ค. 26", 7], ["มิ.ย. 26", 6], ["ก.ค. 26", 6], ["ส.ค. 26", 7],
+          ["ก.ย. 26", 6], ["ต.ค. 26", 7]
+        ],
+        activityVal: "154",
+        activityHist: [["ก.ค.", 134], ["ส.ค.", 141], ["ก.ย.", 147], ["ต.ค.", 154]],
+        trendHist: [["ก.ค.", 1277512], ["ส.ค.", 1319830], ["ก.ย.", 1361087], ["ต.ค.", 1404962]],
+        inflows: [
+          { id: "other", title: "Other / Tax Refund", val: 104044, share: "7.4%", sub: "คืนภาษี & ออมเสริม", grad: "url(#pfGradCoral)", color: "#fb7185", desc: "เงินคืนภาษีจาก SSF/RMF/ประกัน + ก้อนเงินออมเสริม" },
+          { id: "bonus", title: "Annual Bonus", val: 340000, share: "24.2%", sub: "ก้อนพิเศษ มี.ค. 26", grad: "url(#pfGradGreen)", color: "#166534", desc: "เงินโบนัสประจำปีทบเข้าพอร์ตเพื่อเร่งผลตอบแทน" },
+          { id: "pvd_comp", title: "Employer Match", val: 80334, share: "5.7%", sub: "สมทบจากนายจ้าง", grad: "url(#pfGradNavy)", color: "#1e293b", desc: "เงินสมทบกองทุนสำรองเลี้ยงชีพจากนายจ้างรายเดือน" },
+          { id: "div", title: "DIV / Re-invest", val: 253825, share: "18.1%", sub: "Dime + SET ปันผล", grad: "url(#pfGradSlate)", color: "#2e4a62", desc: "เงินปันผลที่ได้รับนำกลับไปซื้อสินทรัพย์ทบต้นทันที" },
+          { id: "salary", title: "Salary Deduction", val: 626759, share: "44.6%", sub: "ตัดเงินเดือนรายเดือน", grad: "url(#pfGradCyan)", color: "#06b6d4", desc: "เงินออมตัดลงทุนอัตโนมัติรายเดือนจากเงินเดือน" }
+        ],
+        outflows: [
+          { id: "set", title: "SET Equity", val: 505503, share: "36.0%", sub: "Blended + Re-invest", grad: "url(#pfGradRose)", color: "#f43f5e", desc: "ลงทุนหุ้นไทยและกองทุนรวมหุ้นไทยพร้อมปันผลทบต้น" },
+          { id: "gold", title: "Gold Bullion", val: 502799, share: "35.8%", sub: "ซื้อ/ขายสุทธิสะสม", grad: "url(#pfGradOrange)", color: "#ea580c", desc: "ทองคำแท่งความบริสุทธิ์สูงเพื่อกระจายความเสี่ยง" },
+          { id: "us", title: "US Stocks", val: 453758, share: "32.3%", sub: "Dime Tech & S&P", grad: "url(#pfGradPeach)", color: "#fb923c", desc: "หุ้นเทคโนโลยีและดัชนี S&P 500 ผ่าน Dime" },
+          { id: "crypto", title: "Crypto", val: 225000, share: "16.0%", sub: "Bitkub DCA Funding", grad: "url(#pfGradPink)", color: "#ec4899", desc: "Bitcoin และสินทรัพย์ดิจิทัลชั้นนำบน Bitkub" },
+          { id: "pvd", title: "PVD", val: 160669, share: "11.4%", sub: "สะสมรายเดือนคงที่", grad: "url(#pfGradAmber)", color: "#d97706", desc: "กองทุนสำรองเลี้ยงชีพหักสะสมอัตโนมัติพร้อมนายจ้างสมทบ" }
+        ]
+      },
+      2026: {
+        totalNet: 971087,
+        periodText: "10 เดือน (ปี 2026)",
+        trendVal: "ปี 2026",
+        trendPct: "48%",
+        pulseVal: "7",
+        pulseHistFull: [
+          ["ม.ค.", 6], ["ก.พ.", 6], ["มี.ค.", 8], ["เม.ย.", 6],
+          ["พ.ค.", 7], ["มิ.ย.", 6], ["ก.ค.", 6], ["ส.ค.", 7],
+          ["ก.ย.", 6], ["ต.ค.", 7]
+        ],
+        activityVal: "70",
+        activityHist: [["ก.ค.", 50], ["ส.ค.", 57], ["ก.ย.", 63], ["ต.ค.", 70]],
+        trendHist: [["ก.ค.", 843637], ["ส.ค.", 885955], ["ก.ย.", 927212], ["ต.ค.", 971087]],
+        inflows: [
+          { id: "other", title: "Other / Tax Refund", val: 89044, share: "9.2%", sub: "คืนภาษี 2568", grad: "url(#pfGradCoral)", color: "#fb7185", desc: "เงินคืนภาษีและเงินออมเสริมพิเศษปี 2026" },
+          { id: "bonus", title: "Annual Bonus", val: 340000, share: "35.0%", sub: "ก้อนพิเศษ มี.ค. 26", grad: "url(#pfGradGreen)", color: "#166534", desc: "เงินโบนัสประจำปีทบเข้าพอร์ตปี 2026" },
+          { id: "pvd_comp", title: "Employer Match", val: 36515, share: "3.8%", sub: "สมทบ 10 เดือน", grad: "url(#pfGradNavy)", color: "#1e293b", desc: "เงินสมทบนายจ้าง PVD รอบ 10 เดือนปี 2026" },
+          { id: "div", title: "DIV / Re-invest", val: 162103, share: "16.7%", sub: "ปันผลทบต้นปี 26", grad: "url(#pfGradSlate)", color: "#2e4a62", desc: "ปันผลรับเข้าพอร์ตปี 2026" },
+          { id: "salary", title: "Salary Deduction", val: 343425, share: "35.4%", sub: "ตัดเฉลี่ย ฿34.3k/ด.", grad: "url(#pfGradCyan)", color: "#06b6d4", desc: "ตัดออมจากเงินเดือน 10 เดือนปี 2026" }
+        ],
+        outflows: [
+          { id: "gold", title: "Gold Bullion", val: 365000, share: "37.6%", sub: "เข้าทองคำหนักช่วง Q1", grad: "url(#pfGradOrange)", color: "#ea580c", desc: "จัดสรรเข้าทองคำแท่งรอบปี 2026" },
+          { id: "set", title: "SET Equity", val: 318500, share: "32.8%", sub: "หุ้นไทย & ปันผลทบ", grad: "url(#pfGradRose)", color: "#f43f5e", desc: "จัดสรรเข้าหุ้นไทยรอบปี 2026" },
+          { id: "us", title: "US Stocks", val: 280000, share: "28.8%", sub: "Dime US Stock", grad: "url(#pfGradPeach)", color: "#fb923c", desc: "จัดสรรเข้าหุ้นสหรัฐรอบปี 2026" },
+          { id: "crypto", title: "Crypto", val: 145000, share: "14.9%", sub: "Bitkub DCA", grad: "url(#pfGradPink)", color: "#ec4899", desc: "จัดสรรเข้าสินทรัพย์ดิจิทัลปี 2026" },
+          { id: "pvd", title: "PVD", val: 73031, share: "7.5%", sub: "DCA 10 เดือน", grad: "url(#pfGradAmber)", color: "#d97706", desc: "เงินสะสม PVD รอบ 10 เดือนปี 2026" }
+        ]
+      },
+      2025: {
+        totalNet: 433875,
+        periodText: "12 เดือน (ปี 2025)",
+        trendVal: "ปี 2025",
+        trendPct: "28%",
+        pulseVal: "5",
+        pulseHistFull: [
+          ["ม.ค.", 4], ["ก.พ.", 4], ["มี.ค.", 5], ["เม.ย.", 5],
+          ["พ.ค.", 5], ["มิ.ย.", 5], ["ก.ค.", 5], ["ส.ค.", 5],
+          ["ก.ย.", 5], ["ต.ค.", 5], ["พ.ย.", 4], ["ธ.ค.", 5]
+        ],
+        activityVal: "60",
+        activityHist: [["ก.ย.", 46], ["ต.ค.", 51], ["พ.ย.", 55], ["ธ.ค.", 60]],
+        trendHist: [["ก.ย.", 337563], ["ต.ค.", 369719], ["พ.ย.", 401719], ["ธ.ค.", 433875]],
+        inflows: [
+          { id: "other", title: "Other / Tax Refund", val: 15000, share: "3.5%", sub: "คืนภาษี 2567", grad: "url(#pfGradCoral)", color: "#fb7185", desc: "เงินคืนภาษีและเงินเสริมปี 2025" },
+          { id: "bonus", title: "Annual Bonus", val: 0, share: "0.0%", sub: "ไม่มีโบนัสในรอบนี้", grad: "url(#pfGradGreen)", color: "#166534", desc: "ไม่มีการจัดสรรโบนัสในปี 2025" },
+          { id: "pvd_comp", title: "Employer Match", val: 43819, share: "10.1%", sub: "สมทบ 12 เดือน", grad: "url(#pfGradNavy)", color: "#1e293b", desc: "เงินสมทบนายจ้าง PVD รอบ 12 เดือนปี 2025" },
+          { id: "div", title: "DIV / Re-invest", val: 91722, share: "21.1%", sub: "ปันผลทบต้นปี 25", grad: "url(#pfGradSlate)", color: "#2e4a62", desc: "ปันผลรับเข้าพอร์ตปี 2025" },
+          { id: "salary", title: "Salary Deduction", val: 283334, share: "65.3%", sub: "ตัดเฉลี่ย ฿23.6k/ด.", grad: "url(#pfGradCyan)", color: "#06b6d4", desc: "ตัดออมจากเงินเดือน 12 เดือนปี 2025" }
+        ],
+        outflows: [
+          { id: "set", title: "SET Equity", val: 187003, share: "43.1%", sub: "หุ้นไทยปี 2025", grad: "url(#pfGradRose)", color: "#f43f5e", desc: "จัดสรรเข้าหุ้นไทยรอบปี 2025" },
+          { id: "us", title: "US Stocks", val: 173758, share: "40.0%", sub: "Dime US Stock", grad: "url(#pfGradPeach)", color: "#fb923c", desc: "จัดสรรเข้าหุ้นสหรัฐรอบปี 2025" },
+          { id: "gold", title: "Gold Bullion", val: 137799, share: "31.8%", sub: "ทยอยออมทอง", grad: "url(#pfGradOrange)", color: "#ea580c", desc: "จัดสรรเข้าทองคำแท่งรอบปี 2025" },
+          { id: "pvd", title: "PVD", val: 87638, share: "20.2%", sub: "DCA 12 เดือน", grad: "url(#pfGradAmber)", color: "#d97706", desc: "เงินสะสม PVD รอบ 12 เดือนปี 2025" },
+          { id: "crypto", title: "Crypto", val: 80000, share: "18.4%", sub: "Bitkub DCA", grad: "url(#pfGradPink)", color: "#ec4899", desc: "จัดสรรเข้าสินทรัพย์ดิจิทัลปี 2025" }
+        ]
+      }
+    };
+
+    const d = FLOW_DATA[yr] || FLOW_DATA.ALL;
+    this._flowDataCache = FLOW_DATA;
+    const finalTotal = totalInvest > 0 ? totalInvest : d.totalNet;
+
+    // 1. Center Hub
+    const hubNumEl = document.getElementById("pfHubMainNumber");
+    if (hubNumEl) hubNumEl.textContent = this.fmtMoney(finalTotal);
+
+    const hubGroup = document.getElementById("pfCenterHubGroup");
+    if (hubGroup) {
+      hubGroup.onclick = () => {
+        alert(`รอบ ${yr}: ยอดเงินลงทุนสุทธิรวม ${this.fmtMoney(finalTotal)} (${d.periodText})`);
+      };
+    }
+
+    // 2. Responsive Geometry for SVG
+    const svgEl = document.getElementById("pfFlowSvg");
+    const isMobile = window.innerWidth < 640;
+    if (svgEl) {
+      svgEl.setAttribute("viewBox", isMobile ? "168 46 664 470" : "45 25 910 510");
+      svgEl.classList.toggle("is-mobile", isMobile);
+    }
+
+    const CX = 500, CY = 280;
+    const xL = isMobile ? 330 : 250;
+    const xR = isMobile ? 670 : 750;
+    const TEXT_GAP = 12;
+
+    const inGroup = document.getElementById("pfInflowRibbonsGroup");
+    const outGroup = document.getElementById("pfOutflowRibbonsGroup");
+    const lblGroup = document.getElementById("pfSvgLabelsGroup");
+
+    if (inGroup && outGroup && lblGroup) {
+      inGroup.innerHTML = "";
+      outGroup.innerHTML = "";
+      lblGroup.innerHTML = "";
+
+      const activeIn = d.inflows.filter(f => f.val > 0);
+      const activeOut = d.outflows.filter(f => f.val > 0);
+      const maxVal = Math.max(...activeIn.map(f => f.val), ...activeOut.map(f => f.val), 1);
+
+      // Left Inflows
+      const nIn = activeIn.length;
+      const yInStart = 90, yInEnd = 470;
+      const yInStep = nIn > 1 ? (yInEnd - yInStart) / (nIn - 1) : 0;
+      const hubInTop = CY - 16, hubInBot = CY + 16;
+      const hubInStep = nIn > 1 ? (hubInBot - hubInTop) / (nIn - 1) : 0;
+
+      activeIn.forEach((item, idx) => {
+        const yL = yInStart + idx * yInStep;
+        const thicknessL = Math.max(20, Math.min(45, (item.val / maxVal) * 42.5));
+        const halfThickL = thicknessL / 2;
+        const thicknessC = Math.max(19, Math.min(42.5, (item.val / maxVal) * 40));
+        const yC_center = hubInTop + idx * hubInStep;
+        const yC_top = yC_center - thicknessC / 2;
+        const yC_bot = yC_center + thicknessC / 2;
+        const xC = CX - 30;
+        const dx = xC - xL;
+
+        const pathD = `
+          M ${xL} ${yL - halfThickL}
+          C ${xL + dx * 0.55} ${yL - halfThickL}, ${xC - dx * 0.35} ${yC_top}, ${xC} ${yC_top}
+          L ${xC} ${yC_bot}
+          C ${xC - dx * 0.35} ${yC_bot}, ${xL + dx * 0.55} ${yL + halfThickL}, ${xL} ${yL + halfThickL}
+          Z
+        `.trim();
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", pathD);
+        path.setAttribute("fill", item.grad);
+        path.setAttribute("class", "pf-flow-ribbon");
+        path.setAttribute("data-id", item.id);
+        path.addEventListener("mouseenter", (e) => this.showFlowTooltip(item, "Inflow", e));
+        path.addEventListener("mouseleave", () => this.hideFlowTooltip());
+        inGroup.appendChild(path);
+
+        // Native SVG Text Label Left
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.setAttribute("class", "pf-node-label-group");
+        g.addEventListener("mouseenter", (e) => this.showFlowTooltip(item, "Inflow", e));
+        g.addEventListener("mouseleave", () => this.hideFlowTooltip());
+
+        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t1.setAttribute("x", xL - TEXT_GAP);
+        t1.setAttribute("y", (yL - (isMobile ? 14 : 10)).toFixed(1));
+        t1.setAttribute("text-anchor", "end");
+        t1.setAttribute("class", "pf-svg-lbl-title");
+        t1.textContent = item.title;
+
+        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t2.setAttribute("x", xL - TEXT_GAP);
+        t2.setAttribute("y", (yL + (isMobile ? 8 : 7)).toFixed(1));
+        t2.setAttribute("text-anchor", "end");
+        t2.setAttribute("class", "pf-svg-lbl-val");
+        t2.textContent = this.fmtMoney(item.val);
+
+        const t3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t3.setAttribute("x", xL - TEXT_GAP);
+        t3.setAttribute("y", (yL + (isMobile ? 26 : 21)).toFixed(1));
+        t3.setAttribute("text-anchor", "end");
+        t3.setAttribute("class", "pf-svg-lbl-sub");
+        t3.textContent = isMobile ? item.share : `${item.share} · ${item.sub}`;
+
+        g.appendChild(t1);
+        g.appendChild(t2);
+        g.appendChild(t3);
+        lblGroup.appendChild(g);
+      });
+
+      // Right Outflows
+      const nOut = activeOut.length;
+      const yOutStart = 90, yOutEnd = 470;
+      const yOutStep = nOut > 1 ? (yOutEnd - yOutStart) / (nOut - 1) : 0;
+      const hubOutTop = CY - 16, hubOutBot = CY + 16;
+      const hubOutStep = nOut > 1 ? (hubOutBot - hubOutTop) / (nOut - 1) : 0;
+
+      activeOut.forEach((item, idx) => {
+        const yR = yOutStart + idx * yOutStep;
+        const thicknessR = Math.max(20, Math.min(45, (item.val / maxVal) * 42.5));
+        const halfThickR = thicknessR / 2;
+        const thicknessC = Math.max(19, Math.min(42.5, (item.val / maxVal) * 40));
+        const yC_center = hubOutTop + idx * hubOutStep;
+        const yC_top = yC_center - thicknessC / 2;
+        const yC_bot = yC_center + thicknessC / 2;
+        const xC = CX + 30;
+        const dx = xR - xC;
+
+        const pathD = `
+          M ${xC} ${yC_top}
+          C ${xC + dx * 0.35} ${yC_top}, ${xR - dx * 0.55} ${yR - halfThickR}, ${xR} ${yR - halfThickR}
+          L ${xR} ${yR + halfThickR}
+          C ${xR - dx * 0.55} ${yR + halfThickR}, ${xC + dx * 0.35} ${yC_bot}, ${xC} ${yC_bot}
+          Z
+        `.trim();
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", pathD);
+        path.setAttribute("fill", item.grad);
+        path.setAttribute("class", "pf-flow-ribbon");
+        path.setAttribute("data-id", item.id);
+        path.addEventListener("mouseenter", (e) => this.showFlowTooltip(item, "Outflow", e));
+        path.addEventListener("mouseleave", () => this.hideFlowTooltip());
+        outGroup.appendChild(path);
+
+        // Native SVG Text Label Right
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.setAttribute("class", "pf-node-label-group");
+        g.addEventListener("mouseenter", (e) => this.showFlowTooltip(item, "Outflow", e));
+        g.addEventListener("mouseleave", () => this.hideFlowTooltip());
+
+        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t1.setAttribute("x", xR + TEXT_GAP);
+        t1.setAttribute("y", (yR - (isMobile ? 14 : 10)).toFixed(1));
+        t1.setAttribute("text-anchor", "start");
+        t1.setAttribute("class", "pf-svg-lbl-title");
+        t1.textContent = item.title;
+
+        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t2.setAttribute("x", xR + TEXT_GAP);
+        t2.setAttribute("y", (yR + (isMobile ? 8 : 7)).toFixed(1));
+        t2.setAttribute("text-anchor", "start");
+        t2.setAttribute("class", "pf-svg-lbl-val");
+        t2.textContent = this.fmtMoney(item.val);
+
+        const t3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t3.setAttribute("x", xR + TEXT_GAP);
+        t3.setAttribute("y", (yR + (isMobile ? 26 : 21)).toFixed(1));
+        t3.setAttribute("text-anchor", "start");
+        t3.setAttribute("class", "pf-svg-lbl-sub");
+        t3.textContent = isMobile ? item.share : `${item.share} · ${item.sub}`;
+
+        g.appendChild(t1);
+        g.appendChild(t2);
+        g.appendChild(t3);
+        lblGroup.appendChild(g);
+      });
+    }
+
+    // 3. Bottom Cards
+    const trendValEl = document.getElementById("pfWidgetTrendVal");
+    const trendPctEl = document.getElementById("pfWidgetTrendPct");
+    if (trendValEl) trendValEl.textContent = d.trendVal;
+    if (trendPctEl) trendPctEl.textContent = d.trendPct;
+
+    const trendSvgEl = document.getElementById("pfTrendMiniSvg");
+    if (trendSvgEl) {
+      const th = d.trendHist || [];
+      const tv = th.map(x => x[1]);
+      const tMin = Math.min(...tv), tMax = Math.max(...tv);
+      const W = 100, H = 36, padX = 2, padY = 5;
+      trendSvgEl.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+      const pts = th.map((x, i) => [
+        padX + (W - padX * 2) * i / 3,
+        H - padY - (tMax === tMin ? 0.5 : (x[1] - tMin) / (tMax - tMin)) * (H - padY * 2)
+      ]);
+      let line = `M ${pts[0][0]} ${pts[0][1]}`;
+      for (let i = 1; i < pts.length; i++) {
+        const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
+        const cx = (x0 + x1) / 2;
+        line += ` C ${cx} ${y0}, ${cx} ${y1}, ${x1} ${y1}`;
+      }
+      const lastPt = pts[pts.length - 1];
+      const area = `${line} L ${lastPt[0]} ${H} L ${pts[0][0]} ${H} Z`;
+
+      trendSvgEl.innerHTML = `
+        <defs>
+          <linearGradient id="pfTrendMiniGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.30"/>
+            <stop offset="100%" stop-color="#6366f1" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <path d="${area}" fill="url(#pfTrendMiniGrad)"/>
+        <path d="${line}" fill="none" stroke="#6366f1" stroke-width="2.2" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+        <circle cx="${lastPt[0]}" cy="${lastPt[1]}" r="3.2" fill="#a5b4fc" stroke="#6366f1" stroke-width="1.3"/>
+      `;
+    }
+
+    // Pulse
+    const pulseValEl = document.getElementById("pfWidgetPulseVal");
+    if (pulseValEl) pulseValEl.textContent = d.pulseVal;
+    this.renderPulseBarsDynamic(d);
+
+    // Activity
+    const actValEl = document.getElementById("pfWidgetActivityVal");
+    if (actValEl) actValEl.textContent = d.activityVal;
+    const actRowsEl = document.getElementById("pfActivityRows");
+    if (actRowsEl) {
+      const ah = d.activityHist || [];
+      const aMax = Math.max(...ah.map(x => x[1]), 1);
+      const ACT_SPLIT = [
+        { label: "SET", color: "#6366f1", p: 0.28 },
+        { label: "Gold", color: "#3b82f6", p: 0.24 },
+        { label: "US", color: "#10b981", p: 0.22 },
+        { label: "Crypto", color: "#f97316", p: 0.14 },
+        { label: "PVD", color: "#f43f5e", p: 0.12 }
+      ];
+      actRowsEl.innerHTML = ah.map(x => `
+        <div class="pf-act-track" title="${x[0]}: สะสม ${x[1]}"><div class="pf-act-fill" style="width:${(x[1] / aMax) * 100}%">
+          ${ACT_SPLIT.map(s => `<span style="width:${s.p * 100}%;background:${s.color}"></span>`).join("")}
+        </div></div>`).join("");
+    }
+
+    // Attach Observer once
+    this.setupPulseBarsObserver();
+  },
+
+  renderPulseBarsDynamic(d) {
+    if (!d) {
+      const yr = this.state.investMonthlyYear || "ALL";
+      d = (this._flowDataCache && this._flowDataCache[yr]) ? this._flowDataCache[yr] : null;
+    }
+    const container = document.getElementById("pfPulseBars");
+    if (!container) return;
+    const chartBox = container.parentElement;
+    const w = (chartBox && chartBox.clientWidth > 0) ? chartBox.clientWidth : (container.clientWidth > 0 ? container.clientWidth : 140);
+
+    const full = (d && d.pulseHistFull) ? d.pulseHistFull : [
+      ["ม.ค.", 6], ["ก.พ.", 6], ["มี.ค.", 8], ["เม.ย.", 6],
+      ["พ.ค.", 7], ["มิ.ย.", 6], ["ก.ค.", 6], ["ส.ค.", 7],
+      ["ก.ย.", 6], ["ต.ค.", 7]
+    ];
+    const slotWidth = 16;
+    const count = Math.max(4, Math.min(full.length, Math.floor(w / slotWidth)));
+    const ph = full.slice(-count);
+    const pMax = Math.max(...ph.map(x => x[1]), 1);
+
+    container.innerHTML = ph.map((x, i) => {
+      const isLatest = i === ph.length - 1;
+      const hPct = Math.max(22, Math.round((x[1] / pMax) * 100));
+      return `<div class="pf-pulse-bar ${isLatest ? 'latest' : ''}" style="height:${hPct}%" title="${x[0]}: ${x[1]}"></div>`;
+    }).join("");
+  },
+
+  setupPulseBarsObserver() {
+    if (this._pulseObsInit) return;
+    this._pulseObsInit = true;
+    const chartPulse = document.querySelector(".pf-w-chart-pulse");
+    if (chartPulse && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => {
+        this.renderPulseBarsDynamic();
+      });
+      ro.observe(chartPulse);
+    }
+    window.addEventListener("resize", () => {
+      const isMobile = window.innerWidth < 640;
+      const svg = document.getElementById("pfFlowSvg");
+      if (svg) {
+        svg.setAttribute("viewBox", isMobile ? "168 46 664 470" : "45 25 910 510");
+        svg.classList.toggle("is-mobile", isMobile);
+      }
+      this.renderPulseBarsDynamic();
+    });
+  },
+
+  showFlowTooltip(item, type, e) {
+    document.querySelectorAll(".pf-flow-ribbon").forEach(r => {
+      if (r.getAttribute("data-id") === item.id) {
+        r.classList.add("highlighted");
+        r.classList.remove("dimmed");
+      } else {
+        r.classList.add("dimmed");
+        r.classList.remove("highlighted");
+      }
+    });
+
+    const tip = document.getElementById("pfFlowTooltip");
+    if (!tip) return;
+    document.getElementById("pfTipTitle").textContent = item.title;
+    const badge = document.getElementById("pfTipBadge");
+    badge.textContent = type;
+    badge.style.backgroundColor = type === "Inflow" ? "rgba(79, 70, 229, 0.15)" : "rgba(244, 63, 94, 0.15)";
+    badge.style.color = type === "Inflow" ? "#4f46e5" : "#f43f5e";
+    document.getElementById("pfTipValue").textContent = this.fmtMoney(item.val);
+    document.getElementById("pfTipShare").textContent = item.share;
+    document.getElementById("pfTipDesc").textContent = item.desc;
+
+    tip.style.display = "block";
+    tip.style.left = `${Math.min(window.innerWidth - 240, e.clientX + 16)}px`;
+    tip.style.top = `${Math.min(window.innerHeight - 150, e.clientY + 16)}px`;
+  },
+
+  hideFlowTooltip() {
+    document.querySelectorAll(".pf-flow-ribbon").forEach(r => {
+      r.classList.remove("highlighted");
+      r.classList.remove("dimmed");
+    });
+    const tip = document.getElementById("pfFlowTooltip");
+    if (tip) tip.style.display = "none";
   }
 };
 
