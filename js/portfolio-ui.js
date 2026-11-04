@@ -2029,20 +2029,21 @@ var PortfolioUI = {
 
     // 2. Update Header Badges
     const bAct = document.getElementById("pfSetUsBadgeActual");
-    if (bAct) bAct.textContent = `สัดส่วนจริง: SET ${setPct.toFixed(1)}% : US ${usPct.toFixed(1)}% (${ratio} : 1)`;
+    if (bAct) bAct.textContent = `Actual: SET ${setPct.toFixed(1)}% : US ${usPct.toFixed(1)}% (${ratio} : 1)`;
 
     const bGap = document.getElementById("pfSetUsBadgeGap");
     if (bGap) {
-      const sign = gapUsPct >= 0 ? "+" : "";
-      bGap.textContent = `Gap: US ขาดอีก ${sign}${gapUsPct.toFixed(1)}% (~${this.fmtMoney(Math.abs(gapUsVal))})`;
+      const sign = gapUsPct >= 0 ? "+" : "-";
+      const statusLabel = gapUsPct >= 0 ? "Deficit" : "Surplus";
+      bGap.textContent = `Gap: US ${statusLabel} ${sign}${Math.abs(gapUsPct).toFixed(1)}% (~${this.fmtMoney(Math.abs(gapUsVal))})`;
     }
 
     // 3. Update Left Column
     const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-    setTxt("pfSetUsStockTotal", `พอร์ตหุ้นรวม ฿ ${Math.round(totalStocks).toLocaleString()}`);
+    setTxt("pfSetUsStockTotal", `Total Equities ฿ ${Math.round(totalStocks).toLocaleString()}`);
 
     const actMeta = document.getElementById("pfSetUsActMeta");
-    if (actMeta) actMeta.innerHTML = `<span style="color:#34d399;">SET ${setPct.toFixed(1)}%</span> • <span style="color:#38bdf8;">US ${usPct.toFixed(1)}%</span>`;
+    if (actMeta) actMeta.innerHTML = `<span style="color:#10b981;">SET ${setPct.toFixed(1)}%</span> • <span style="color:#0ea5e9;">US ${usPct.toFixed(1)}%</span>`;
 
     const segSetAct = document.getElementById("pfSetUsSegSetAct");
     if (segSetAct) {
@@ -2057,8 +2058,8 @@ var PortfolioUI = {
 
     setTxt("pfSetUsActSetSub", `SET: ฿ ${Math.round(setMkt).toLocaleString()}`);
     setTxt("pfSetUsActUsSub", `US (Dime): ฿ ${Math.round(usMkt).toLocaleString()}`);
-    setTxt("pfSetUsTgtSetSub", `เป้าหมาย SET: ~฿ ${Math.round(tgtSetVal).toLocaleString()}`);
-    setTxt("pfSetUsTgtUsSub", `เป้าหมาย US: ~฿ ${Math.round(tgtUsVal).toLocaleString()}`);
+    setTxt("pfSetUsTgtSetSub", `Target SET: ~฿ ${Math.round(tgtSetVal).toLocaleString()}`);
+    setTxt("pfSetUsTgtUsSub", `Target US: ~฿ ${Math.round(tgtUsVal).toLocaleString()}`);
 
     // Update Donut
     const circ = 2 * Math.PI * 38; // ~238.76
@@ -2078,14 +2079,14 @@ var PortfolioUI = {
     // Update Insight Desc
     const insDesc = document.getElementById("pfSetUsInsightDesc");
     if (insDesc) {
-      insDesc.innerHTML = `ปัจจุบันสัดส่วนหุ้นสหรัฐฯ อยู่ที่ <strong style="color:#ffffff;">${usPct.toFixed(1)}%</strong> เติบโตขึ้นจาก 2.9% ในปี 2025 อย่างต่อเนื่อง หากต้องการปรับพอร์ตให้แตะเป้าหมาย <strong style="color:#ffffff;">70:30</strong> ควรกระจายเงินลงทุนใหม่ (DCA / Fresh Capital) เข้าสู่ Dime US Stock อีกประมาณ <span style="color:#34d399; font-weight:700; font-family:'JetBrains Mono', monospace;">฿ ${Math.round(Math.abs(gapUsVal)).toLocaleString()}</span> โดยไม่ต้องขายหุ้นไทยออกเพื่อลดผลกระทบทางภาษีและรักษาเงินปันผล`;
+      insDesc.innerHTML = `US Equities currently represent <strong style="color:var(--pf-fg);">${usPct.toFixed(1)}%</strong>, expanding steadily from 2.9% in Sep 2025. To align with the <strong style="color:var(--pf-fg);">70:30</strong> target allocation, allocate fresh capital / DCA of approx <span style="color:#10b981; font-weight:700; font-family:'JetBrains Mono', monospace;">฿ ${Math.round(Math.abs(gapUsVal)).toLocaleString()}</span> into Dime US Stock without liquidating Thai stocks, optimizing tax efficiency and preserving dividend yield.`;
     }
 
     // 4. Extract Historical Progression (from 2025-09 onwards)
-    const thMonths = {
-      "01": "ม.ค.", "02": "ก.พ.", "03": "มี.ค.", "04": "เม.ย.",
-      "05": "พ.ค.", "06": "มิ.ย.", "07": "ก.ค.", "08": "ส.ค.",
-      "09": "ก.ย.", "10": "ต.ค.", "11": "พ.ย.", "12": "ธ.ค."
+    const enMonths = {
+      "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr",
+      "05": "May", "06": "Jun", "07": "Jul", "08": "Aug",
+      "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
     };
 
     let progression = [];
@@ -2099,7 +2100,7 @@ var PortfolioUI = {
           const parts = d.split("-");
           const yr2 = (parts[0] || "").slice(-2);
           const mo = parts[1] || "";
-          const lbl = `${thMonths[mo] || mo} ${yr2}`;
+          const lbl = `${enMonths[mo] || mo} '${yr2}`;
           progression.push({
             date: d,
             label: lbl,
@@ -2115,20 +2116,20 @@ var PortfolioUI = {
 
     if (progression.length === 0) {
       progression = [
-        { date: "2025-09", label: "ก.ย. 25", setMkt: 1324900, usMkt: 39559, setPct: 97.1, usPct: 2.9 },
-        { date: "2025-10", label: "ต.ค. 25", setMkt: 1244649, usMkt: 107039, setPct: 92.1, usPct: 7.9 },
-        { date: "2025-11", label: "พ.ย. 25", setMkt: 1244438, usMkt: 99410, setPct: 92.6, usPct: 7.4 },
-        { date: "2025-12", label: "ธ.ค. 25", setMkt: 1277954, usMkt: 94876, setPct: 93.1, usPct: 6.9 },
-        { date: "2026-01", label: "ม.ค. 26", setMkt: 1377654, usMkt: 97637, setPct: 93.4, usPct: 6.6 },
-        { date: "2026-02", label: "ก.พ. 26", setMkt: 1468025, usMkt: 85511, setPct: 94.5, usPct: 5.5 },
-        { date: "2026-03", label: "มี.ค. 26", setMkt: 1858660, usMkt: 82948, setPct: 95.7, usPct: 4.3 },
-        { date: "2026-04", label: "เม.ย. 26", setMkt: 1862251, usMkt: 284236, setPct: 86.8, usPct: 13.2 },
-        { date: "2026-05", label: "พ.ค. 26", setMkt: 1944951, usMkt: 336983, setPct: 85.2, usPct: 14.8 },
-        { date: "2026-06", label: "มิ.ย. 26", setMkt: 2036536, usMkt: 355129, setPct: 85.2, usPct: 14.8 },
-        { date: "2026-07", label: "ก.ค. 26", setMkt: 2098487, usMkt: 346927, setPct: 85.8, usPct: 14.2 },
-        { date: "2026-08", label: "ส.ค. 26", setMkt: 2068525, usMkt: 362787, setPct: 85.1, usPct: 14.9 },
-        { date: "2026-09", label: "ก.ย. 26", setMkt: 2005878, usMkt: 374543, setPct: 84.3, usPct: 15.7 },
-        { date: "2026-10", label: "ต.ค. 26", setMkt: 2039760, usMkt: 420741, setPct: 82.9, usPct: 17.1 }
+        { date: "2025-09", label: "Sep '25", setMkt: 1324900, usMkt: 39559, setPct: 97.1, usPct: 2.9 },
+        { date: "2025-10", label: "Oct '25", setMkt: 1244649, usMkt: 107039, setPct: 92.1, usPct: 7.9 },
+        { date: "2025-11", label: "Nov '25", setMkt: 1244438, usMkt: 99410, setPct: 92.6, usPct: 7.4 },
+        { date: "2025-12", label: "Dec '25", setMkt: 1277954, usMkt: 94876, setPct: 93.1, usPct: 6.9 },
+        { date: "2026-01", label: "Jan '26", setMkt: 1377654, usMkt: 97637, setPct: 93.4, usPct: 6.6 },
+        { date: "2026-02", label: "Feb '26", setMkt: 1468025, usMkt: 85511, setPct: 94.5, usPct: 5.5 },
+        { date: "2026-03", label: "Mar '26", setMkt: 1858660, usMkt: 82948, setPct: 95.7, usPct: 4.3 },
+        { date: "2026-04", label: "Apr '26", setMkt: 1862251, usMkt: 284236, setPct: 86.8, usPct: 13.2 },
+        { date: "2026-05", label: "May '26", setMkt: 1944951, usMkt: 336983, setPct: 85.2, usPct: 14.8 },
+        { date: "2026-06", label: "Jun '26", setMkt: 2036536, usMkt: 355129, setPct: 85.2, usPct: 14.8 },
+        { date: "2026-07", label: "Jul '26", setMkt: 2098487, usMkt: 346927, setPct: 85.8, usPct: 14.2 },
+        { date: "2026-08", label: "Aug '26", setMkt: 2068525, usMkt: 362787, setPct: 85.1, usPct: 14.9 },
+        { date: "2026-09", label: "Sep '26", setMkt: 2005878, usMkt: 374543, setPct: 84.3, usPct: 15.7 },
+        { date: "2026-10", label: "Oct '26", setMkt: 2039760, usMkt: 420741, setPct: 82.9, usPct: 17.1 }
       ];
     }
 
@@ -2138,9 +2139,9 @@ var PortfolioUI = {
     // 6. Update Footer Stats
     const firstPt = progression[0];
     const lastPt = progression[progression.length - 1];
-    setTxt("pfSetUsFootStart", `เริ่มต้นสะสม Dime: ${firstPt.label} (${firstPt.usPct.toFixed(1)}%)`);
+    setTxt("pfSetUsFootStart", `Started Dime: ${firstPt.label} (${firstPt.usPct.toFixed(1)}%)`);
     const progressGain = lastPt.usPct - firstPt.usPct;
-    setTxt("pfSetUsFootProg", `ก้าวหน้าสู่เป้าหมาย: +${progressGain.toFixed(1)}% ใน ${progression.length} เดือน`);
+    setTxt("pfSetUsFootProg", `Progress to Target: +${progressGain.toFixed(1)}% in ${progression.length} mos`);
   },
 
   renderSetUsProgressionChart(progression) {
@@ -2177,7 +2178,7 @@ var PortfolioUI = {
         txt.setAttribute("text-anchor", "end");
         txt.setAttribute("font-size", "10");
         txt.setAttribute("font-family", "'JetBrains Mono', monospace");
-        txt.setAttribute("fill", "#64748b");
+        txt.setAttribute("fill", "var(--pf-fg-muted, #94a3b8)");
         txt.textContent = `${pct}%`;
         gridG.appendChild(txt);
       }
@@ -2215,7 +2216,7 @@ var PortfolioUI = {
         cS.setAttribute("cy", ySet.toFixed(1));
         cS.setAttribute("r", "3");
         cS.setAttribute("fill", "#10b981");
-        cS.setAttribute("stroke", "#0f172a");
+        cS.setAttribute("stroke", "var(--pf-card, #0f172a)");
         cS.setAttribute("stroke-width", "1.5");
         dotsSetG.appendChild(cS);
       }
@@ -2226,7 +2227,7 @@ var PortfolioUI = {
         cU.setAttribute("cy", yUs.toFixed(1));
         cU.setAttribute("r", "3");
         cU.setAttribute("fill", "#0ea5e9");
-        cU.setAttribute("stroke", "#0f172a");
+        cU.setAttribute("stroke", "var(--pf-card, #0f172a)");
         cU.setAttribute("stroke-width", "1.5");
         dotsUsG.appendChild(cU);
       }
