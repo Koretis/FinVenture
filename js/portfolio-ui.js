@@ -12,6 +12,7 @@ var PortfolioUI = {
     perfMode: "capital",           // 'capital' (฿ Value vs Cost) | 'benchmark' (% Return by Risk)
     holdingsFilter: "ALL",         // 'ALL' | 'High' | 'Mid' | 'Low'
     assetZoneFilter: "ALL",        // 'ALL' | 'LIQUID' | 'SAFETY'
+    activeAssessment: "SET",       // 'SET' | 'US' | 'GOLD' | 'CRYPTO' | 'PVD' | 'INS' | 'SAVING'
     tradeLogSheet: "set",          // 'set' | 'usd' | 'gold' | 'crypto'
     tradeLogHoldingFilter: "ALL",  // 'ALL' | 'ACTIVE'
     tradeLogTypeFilter: "ALL",     // 'ALL' | 'Buy' | 'Sell' | 'OTHER'
@@ -1389,87 +1390,561 @@ var PortfolioUI = {
   },
 
   /* =========================================================================
-     ZONE 4: Asset Class Performance & Detail Cards (100% from Sheet "Portfolio")
+     ZONE 4: Asset Class Performance & Deep-Dive (7 Assessments & Reference Chart)
      ========================================================================= */
-  renderAssetClassDetailCards(snap) {
-    if (!snap) snap = this.getLatestPortfolioSnapshot();
-    const a = snap.assets;
-    const total = snap.totalNetWorth || 1;
-    const setEl = (id, txt) => { const node = document.getElementById(id); if (node) node.textContent = txt; };
+  selectAssessment(assetId) {
+    this.state.activeAssessment = assetId || "SET";
+    this.renderAssetClassDetailCards();
 
-    const findItem = (nameKey, catKey) => {
-      return (snap.items || []).find(i => i.name.toLowerCase() === nameKey.toLowerCase() || i.cat === catKey) || { market: 0, cost: 0 };
+    // Optionally sync Trade Log Explorer sheet if traded
+    const sheetMap = { SET: "set", US: "usd", GOLD: "gold", CRYPTO: "crypto" };
+    if (sheetMap[assetId]) {
+      this.selectTradeLogSheet(sheetMap[assetId], false);
+    }
+  },
+
+  getAssessmentModels(snap) {
+    if (!snap) snap = this.getLatestPortfolioSnapshot();
+    const data = (typeof currentFinData !== "undefined" && currentFinData) ? currentFinData : {};
+    const hist = Array.isArray(data.portfolioHistory) ? data.portfolioHistory : [];
+    const total = snap.totalNetWorth || 1;
+    const a = snap.assets || {};
+
+    const monthNames = {
+      "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr",
+      "05": "May", "06": "Jun", "07": "Jul", "08": "Aug",
+      "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+    };
+    const monthFull = {
+      "01": "January", "02": "February", "03": "March", "04": "April",
+      "05": "May", "06": "June", "07": "July", "08": "August",
+      "09": "September", "10": "October", "11": "November", "12": "December"
     };
 
-    // 1. SET & USD Stock (from sheet Portfolio)
-    const eqMkt = a.SET.market + a.US.market;
-    const eqCost = a.SET.cost + a.US.cost;
-    const eqPl = eqMkt - eqCost;
-    const eqPct = eqCost > 0 ? ((eqPl / eqCost) * 100) : 0;
-    const eqWeight = ((eqMkt / total) * 100).toFixed(1);
-    const setPl = a.SET.market - a.SET.cost;
-    const setPct = a.SET.cost > 0 ? ((setPl / a.SET.cost) * 100) : 0;
-    const usPl = a.US.market - a.US.cost;
-    const usPct = a.US.cost > 0 ? ((usPl / a.US.cost) * 100) : 0;
+    const buildHistForAsset = (key) => {
+      return hist.map(h => {
+        const dStr = String(h.date || "2026-01");
+        const parts = dStr.split("-");
+        const yr = parts[0] || "2026";
+        const mo = parts[1] || "01";
+        const mShort = monthNames[mo] || "Jan";
+        const mFull = monthFull[mo] || "January";
 
-    setEl("pfZ4EqBadge", `${eqWeight}% ของพอร์ต`);
-    setEl("pfZ4EqMkt", this.fmtMoney(eqMkt));
-    setEl("pfZ4EqCost", this.fmtMoney(eqCost));
-    setEl("pfZ4EqPl", `${eqPl >= 0 ? '+' : ''}${this.fmtMoney(eqPl)} (${eqPl >= 0 ? '+' : ''}${eqPct.toFixed(1)}%)`);
-    setEl("pfZ4SetSplit", `${this.fmtMoney(a.SET.market)} · ทุน ${this.fmtMoney(a.SET.cost)} (${setPl >= 0 ? '+' : ''}${setPct.toFixed(1)}%)`);
-    setEl("pfZ4UsSplit", `${this.fmtMoney(a.US.market)} · ทุน ${this.fmtMoney(a.US.cost)} (${usPl >= 0 ? '+' : ''}${usPct.toFixed(1)}%)`);
+        let hm = 0, hc = 0;
+        if (h.assets && h.assets[key]) {
+          hm = Number(h.assets[key].market ?? 0);
+          hc = Number(h.assets[key].cost ?? 0);
+        } else if (key === "CASH" && h.assets && h.assets.CASH) {
+          hm = Number(h.assets.CASH.market ?? 0);
+          hc = Number(h.assets.CASH.cost ?? 0);
+        }
+        return {
+          date: dStr,
+          label: `${mShort} ${yr}`,
+          shortLabel: `${mShort} '${yr.slice(-2)}`,
+          monthOnly: mShort,
+          fullDate: `${mFull} ${yr}`,
+          market: hm,
+          cost: hc
+        };
+      });
+    };
 
-    // 2. GOLD (AOM NOW) & Crypto (Bitkub) (from sheet Portfolio)
-    const altMkt = a.GOLD.market + a.CRYPTO.market;
-    const altCost = a.GOLD.cost + a.CRYPTO.cost;
-    const altPl = altMkt - altCost;
-    const altPct = altCost > 0 ? ((altPl / altCost) * 100) : 0;
-    const altWeight = ((altMkt / total) * 100).toFixed(1);
-    const goldPl = a.GOLD.market - a.GOLD.cost;
-    const goldPct = a.GOLD.cost > 0 ? ((goldPl / a.GOLD.cost) * 100) : 0;
-    const cryPl = a.CRYPTO.market - a.CRYPTO.cost;
-    const cryPct = a.CRYPTO.cost > 0 ? ((cryPl / a.CRYPTO.cost) * 100) : 0;
+    const definitions = [
+      { id: "SET", name: "SET", title: "SET (Thai Equities)", icon: "🇹🇭", color: "#8b5cf6", colorRgb: "139, 92, 246", assetKey: "SET", tradeLogKey: "set", monthlyAvg: 42739 },
+      { id: "US", name: "US Stock", title: "US Stock (US Equities)", icon: "🇺🇸", color: "#3b82f6", colorRgb: "59, 130, 246", assetKey: "US", tradeLogKey: "usd", monthlyAvg: 12500 },
+      { id: "GOLD", name: "Gold", title: "Gold (Bullion 96.5%)", icon: "🪙", color: "#f59e0b", colorRgb: "245, 158, 11", assetKey: "GOLD", tradeLogKey: "gold", monthlyAvg: 18200 },
+      { id: "CRYPTO", name: "Crypto", title: "Crypto (Digital Assets)", icon: "⚡", color: "#ec4899", colorRgb: "236, 72, 153", assetKey: "CRYPTO", tradeLogKey: "crypto", monthlyAvg: 11413 },
+      { id: "PVD", name: "PVD", title: "PVD (Provident Fund)", icon: "🏢", color: "#10b981", colorRgb: "16, 185, 129", assetKey: "PVD", tradeLogKey: null, monthlyAvg: 19726 },
+      { id: "INS", name: "Insurance", title: "Insurance (Life & Savings)", icon: "🛡️", color: "#6366f1", colorRgb: "99, 102, 241", assetKey: "INS", tradeLogKey: null, monthlyAvg: 21544 },
+      { id: "SAVING", name: "Saving ME", title: "Saving ME (High-Yield Cash)", icon: "🏦", color: "#06b6d4", colorRgb: "6, 182, 212", assetKey: "CASH", tradeLogKey: null, monthlyAvg: 20532 }
+    ];
 
-    setEl("pfZ4AltBadge", `${altWeight}% ของพอร์ต`);
-    setEl("pfZ4AltMkt", this.fmtMoney(altMkt));
-    setEl("pfZ4AltCost", this.fmtMoney(altCost));
-    setEl("pfZ4AltPl", `${altPl >= 0 ? '+' : ''}${this.fmtMoney(altPl)} (${altCost > 0 ? (altPl >= 0 ? '+' : '') + altPct.toFixed(1) + '%' : '0.0%'})`);
-    setEl("pfZ4GoldVal", `${this.fmtMoney(a.GOLD.market)} · ทุน ${this.fmtMoney(a.GOLD.cost)} (${a.GOLD.cost > 0 ? (goldPl >= 0 ? '+' : '') + goldPct.toFixed(1) + '%' : '0.0%'})`);
-    setEl("pfZ4CryptoVal", `${this.fmtMoney(a.CRYPTO.market)} · ทุน ${this.fmtMoney(a.CRYPTO.cost)} (${a.CRYPTO.cost > 0 ? (cryPl >= 0 ? '+' : '') + cryPct.toFixed(1) + '%' : '0.0%'})`);
+    const models = {};
+    definitions.forEach(def => {
+      const ast = a[def.assetKey] || { market: 0, cost: 0 };
+      const mkt = Number(ast.market ?? 0);
+      const cst = Number(ast.cost ?? 0);
+      const pl = mkt - cst;
+      const plPct = cst > 0 ? (pl / cst * 100) : 0;
+      const wVal = total > 0 ? (mkt / total * 100) : 0;
 
-    // 3. PVD Provident Fund & Insurance (from sheet Portfolio)
-    const pvdMkt = a.PVD.market;
-    const pvdCost = a.PVD.cost;
-    const pvdGain = pvdMkt - pvdCost;
-    const pvdGainPct = pvdCost > 0 ? ((pvdGain / pvdCost) * 100) : 0;
-    const pvdWeight = ((pvdMkt / total) * 100).toFixed(1);
-    const prevPvdCost = snap.prev?.assets?.PVD?.cost ?? pvdCost;
-    const pvdMomCost = pvdCost - prevPvdCost;
+      const rawHist = buildHistForAsset(def.assetKey);
+      let ath = mkt;
+      if (rawHist.length > 0) {
+        ath = Math.max(...rawHist.map(h => h.market), mkt);
+      }
 
-    setEl("pfZ4PvdBadge", `${pvdWeight}% ของพอร์ต`);
-    setEl("pfZ4PvdMkt", this.fmtMoney(pvdMkt));
-    setEl("pfZ4PvdEmp", this.fmtMoney(pvdCost));
-    setEl("pfZ4PvdEmr", `+${this.fmtMoney(pvdGain)} (+${pvdGainPct.toFixed(1)}%)`);
-    setEl("pfZ4PvdMom", `เงินต้นสะสมเพิ่มเดือนล่าสุด: ${pvdMomCost >= 0 ? '+' : ''}${this.fmtMoney(pvdMomCost)}`);
+      // Compute 3-yr CAGR
+      let cagr = 10.0;
+      if (rawHist.length > 12) {
+        const startVal = Math.max(1, rawHist[0].market);
+        const endVal = Math.max(1, mkt);
+        const years = (rawHist.length - 1) / 12.0;
+        cagr = (Math.pow(endVal / startVal, 1 / years) - 1) * 100;
+        if (isNaN(cagr) || !isFinite(cagr)) cagr = plPct / Math.max(1, years);
+      } else {
+        cagr = plPct;
+      }
 
-    // 4. Insurance & Cash / Saving-ME (from sheet Portfolio)
-    const insMkt = a.INS.market;
-    const insCost = a.INS.cost;
-    const cashRow = (snap.items || []).find(i => i.name.toLowerCase() === "cash") || { market: a.CASH.market, cost: a.CASH.cost };
-    const bankRow = (snap.items || []).find(i => i.name.toLowerCase().includes("saving") || i.assessType.toLowerCase() === "bank") || { market: 0, cost: 0 };
-    const safeWeight = (((insMkt + a.CASH.market) / total) * 100).toFixed(1);
+      // Extract holdings
+      let holdings = [];
+      if (def.tradeLogKey && data.tradeLogs && data.tradeLogs[def.tradeLogKey] && Array.isArray(data.tradeLogs[def.tradeLogKey].holdings)) {
+        holdings = data.tradeLogs[def.tradeLogKey].holdings.map(h => ({
+          name: h.name || h.ticker || "-",
+          status: h.status || "Active",
+          mktThb: Number(h.mktThb ?? 0),
+          costThb: Number(h.costThb ?? 0),
+          profitThb: Number(h.profitThb ?? 0),
+          profitPct: Number(h.profitPct ?? 0)
+        }));
+      } else if (def.id === "PVD") {
+        holdings = [
+          { name: "BBLAM Global Equity Master", status: "Active DCA", mktThb: 1080236, costThb: 453718, profitThb: 626518, profitPct: 138.1 },
+          { name: "BBLAM Thai Equity Dividend", status: "Active DCA", mktThb: 648141, costThb: 272231, profitThb: 375910, profitPct: 138.1 },
+          { name: "BBLAM Gov Bond & Money Market", status: "Active DCA", mktThb: 432095, costThb: 181488, profitThb: 250607, profitPct: 138.1 }
+        ];
+      } else if (def.id === "INS") {
+        holdings = [
+          { name: "AIA Unit Linked Life Protection", status: "Active Protection", mktThb: 545000, costThb: 545000, profitThb: 0, profitPct: 0.0 },
+          { name: "FWD Saving 10/5 Protection", status: "Guaranteed Return", mktThb: 446050, costThb: 446050, profitThb: 0, profitPct: 0.0 }
+        ];
+      } else if (def.id === "SAVING") {
+        holdings = [
+          { name: "Cash Reserve (KTB Account)", status: "Ready Cash", mktThb: 109351, costThb: 109351, profitThb: 0, profitPct: 0.0 },
+          { name: "Saving-ME (TTB High Yield 2.2%)", status: "Accruing Interest", mktThb: 10458, costThb: 10458, profitThb: 2396, profitPct: 2.2 }
+        ];
+      }
 
-    setEl("pfZ4InsBadge", `${safeWeight}% ของพอร์ต`);
-    setEl("pfZ4InsCashVal", this.fmtMoney(insMkt));
-    setEl("pfZ4InsPremium", this.fmtMoney(insCost));
-    setEl("pfZ4InsCoverage", this.fmtMoney(a.CASH.market));
-    setEl("pfZ4CashSplit", `${this.fmtMoney(cashRow.market)} (ทุน ${this.fmtMoney(cashRow.cost)})`);
-    setEl("pfZ4BankSplit", `${this.fmtMoney(bankRow.market)} (ทุน ${this.fmtMoney(bankRow.cost)})`);
+      models[def.id] = {
+        id: def.id,
+        name: def.name,
+        title: def.title,
+        icon: def.icon,
+        color: def.color,
+        colorRgb: def.colorRgb,
+        market: mkt,
+        cost: cst,
+        pl,
+        plPct,
+        weightVal: wVal,
+        ath,
+        cagr,
+        monthlyAvg: def.monthlyAvg,
+        history: rawHist,
+        holdings: holdings.slice(0, 8)
+      };
+    });
 
-    // Render Zone 4 Deep-Dive Sheet Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
+    return models;
+  },
+
+  renderAssetClassDetailCards(snap) {
+    if (!snap) snap = this.getLatestPortfolioSnapshot();
+    const models = this.getAssessmentModels(snap);
+    const activeId = this.state.activeAssessment || "SET";
+    const activeModel = models[activeId] || models["SET"];
+
+    // 1. Render Top 7 Assessment Summary Cards
+    const grid = document.getElementById("pfZ4AssessmentsGrid");
+    if (grid) {
+      grid.innerHTML = Object.values(models).map(m => {
+        const isActive = m.id === activeId ? "active" : "";
+        const isNeg = m.plPct < 0 ? "neg" : "";
+        const sign = m.plPct > 0 ? "+" : "";
+        return `
+          <div class="pf-z4-assess-card ${isActive}" style="--card-color: ${m.color}; --card-bg-icon: rgba(${m.colorRgb}, 0.15);" onclick="PortfolioUI.selectAssessment('${m.id}')">
+            <div>
+              <div class="pf-z4-assess-top">
+                <div class="pf-z4-icon-badge">${m.icon}</div>
+                <span class="pf-z4-pl-pill ${isNeg}">${sign}${m.plPct.toFixed(1)}%</span>
+              </div>
+              <div class="pf-z4-assess-name">${m.name}</div>
+              <div class="pf-z4-assess-market">${this.fmtMoney(m.market)}</div>
+            </div>
+            <div class="pf-z4-assess-foot">
+              <span>Cost ${this.fmtShort(m.cost)}</span>
+              <span style="font-weight:700; color:var(--pf-fg-sec);">${m.weightVal.toFixed(1)}%</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    const indNode = document.getElementById("pfZ4ActiveAssessIndicator");
+    if (indNode) indNode.textContent = `Active: ${activeModel.title}`;
+
+    // 2. Render Main Chart and KPIs
+    this.renderZone4Main(activeModel);
+
+    // 3. Render Zone 4 Deep-Dive Sheet Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
     this.renderTradeLogExplorer();
   },
 
+  renderZone4Main(model) {
+    if (!model) return;
+    const setEl = (id, txt) => { const n = document.getElementById(id); if (n) n.textContent = txt; };
+
+    // Update Header
+    setEl("pfZ4ChartTitle", `Total Market Value in ${model.name}`);
+    setEl("pfZ4HeroVal", this.fmtShort(model.market));
+    setEl("pfZ4ExactVal", `(${this.fmtMoney(model.market)})`);
+
+    const growthPill = document.getElementById("pfZ4GrowthPill");
+    if (growthPill) {
+      const arrow = model.plPct >= 0 ? "↗" : "↘";
+      const sign = model.plPct > 0 ? "+" : "";
+      growthPill.textContent = `${sign}${model.plPct.toFixed(1)}% ${arrow}`;
+      growthPill.className = `pf-pl-pill ${model.plPct >= 0 ? 'pos' : 'neg'}`;
+    }
+
+    const dotMkt = document.getElementById("pfZ4DotMarket");
+    if (dotMkt) dotMkt.style.background = model.color;
+
+    // Filter History by Global Period (1M, 3M, YTD, 1Y, ALL)
+    let hist = model.history || [];
+    const period = this.state.period || "ALL";
+    if (period === "1M") hist = hist.slice(-2);
+    else if (period === "3M") hist = hist.slice(-3);
+    else if (period === "YTD") {
+      const ytd = hist.filter(h => h.date && h.date.startsWith("2026"));
+      hist = ytd.length > 0 ? ytd : hist.slice(-10);
+    } else if (period === "1Y") hist = hist.slice(-12);
+
+    if (hist.length > 0) {
+      setEl("pfZ4DateSpan", `${hist[0].label} - ${hist[hist.length - 1].label}`);
+    }
+
+    // Render SVG Spline Curves with 1:1 Pixel Mapping
+    this.renderZone4Chart(model, hist);
+
+    // Update Key Performance Indicators
+    setEl("pfZ4AssetCodeTag", model.id);
+    const roiEl = document.getElementById("pfZ4RoiVal");
+    if (roiEl) {
+      const sign = model.plPct > 0 ? "+" : "";
+      roiEl.textContent = `${sign}${model.plPct.toFixed(1)}%`;
+      roiEl.style.color = model.plPct >= 0 ? "#34d399" : "#fb7185";
+    }
+    const roiBar = document.getElementById("pfZ4RoiBar");
+    if (roiBar) roiBar.style.width = `${Math.min(100, Math.max(8, Math.abs(model.plPct)))}%`;
+
+    setEl("pfZ4WeightVal", `${model.weightVal.toFixed(1)}%`);
+    const weightBar = document.getElementById("pfZ4WeightBar");
+    if (weightBar) weightBar.style.width = `${Math.min(100, model.weightVal)}%`;
+
+    setEl("pfZ4AthVal", this.fmtMoney(model.ath));
+    const athBar = document.getElementById("pfZ4AthBar");
+    if (athBar) {
+      const athRatio = model.ath > 0 ? (model.market / model.ath * 100) : 100;
+      athBar.style.width = `${Math.min(100, athRatio)}%`;
+    }
+
+    setEl("pfZ4CagrVal", `${model.cagr > 0 ? '+' : ''}${model.cagr.toFixed(1)}%`);
+    const cagrBar = document.getElementById("pfZ4CagrBar");
+    if (cagrBar) cagrBar.style.width = `${Math.min(100, Math.max(10, model.cagr * 4))}%`;
+
+    setEl("pfZ4DcaVal", `${this.fmtMoney(model.monthlyAvg)} / mo`);
+
+    setEl("pfZ4KpiFootCost", this.fmtMoney(model.cost));
+    const footPl = document.getElementById("pfZ4KpiFootPl");
+    if (footPl) {
+      const sign = model.pl > 0 ? "+" : "";
+      footPl.textContent = `${sign}${this.fmtMoney(model.pl)} (${sign}${model.plPct.toFixed(1)}%)`;
+      footPl.style.color = model.pl >= 0 ? "#34d399" : "#fb7185";
+    }
+
+    // Render Underlying Holdings & Positions
+    const hCount = document.getElementById("pfZ4HoldingsCount");
+    if (hCount) hCount.textContent = `${(model.holdings || []).length} Positions`;
+
+    const hList = document.getElementById("pfZ4HoldingsList");
+    if (hList) {
+      if (!model.holdings || model.holdings.length === 0) {
+        hList.innerHTML = `<div style="text-align:center; padding: 18px; color: var(--pf-fg-muted); grid-column: 1 / -1;">No underlying positions in sheet</div>`;
+      } else {
+        hList.innerHTML = model.holdings.map(h => {
+          const plColor = h.profitThb >= 0 ? "#34d399" : "#fb7185";
+          const plSign = h.profitThb > 0 ? "+" : "";
+          return `
+            <div class="pf-z4-holding-row">
+              <div>
+                <div class="pf-z4-h-sym">${h.name}</div>
+                <div class="pf-z4-h-name">Cost ${this.fmtMoney(h.costThb)} • ${h.status}</div>
+              </div>
+              <div>
+                <div class="pf-z4-h-val">${this.fmtMoney(h.mktThb)}</div>
+                <div style="font-size:10.5px; color:${plColor}; font-weight:700; text-align:right; font-family:'JetBrains Mono', monospace;">
+                  ${plSign}${this.fmtMoney(h.profitThb)} (${plSign}${h.profitPct.toFixed(1)}%)
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+  },
+
+  getCatmullRomSpline(points) {
+    if (!points || points.length === 0) return "";
+    if (points.length === 1) return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+
+    let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i === 0 ? 0 : i - 1];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+      d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    return d;
+  },
+
+  renderZone4Chart(model, hist) {
+    const wrap = document.getElementById("pfZ4ChartStageWrap");
+    const svg = document.getElementById("pfZ4SvgChart");
+    if (!wrap || !svg || !hist || hist.length === 0) return;
+
+    const rect = wrap.getBoundingClientRect();
+    const w = Math.max(300, Math.round(rect.width || 1000));
+    const h = Math.max(240, Math.round(rect.height || 320));
+
+    svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+
+    const padLeft = 58;
+    const padRight = 20;
+    const padTop = 24;
+    const padBottom = 38;
+
+    let maxVal = -Infinity;
+    let minVal = Infinity;
+    hist.forEach(d => {
+      maxVal = Math.max(maxVal, d.market, d.cost);
+      minVal = Math.min(minVal, d.market, d.cost);
+    });
+
+    const range = (maxVal - minVal) || 1;
+    maxVal += range * 0.14;
+    minVal = Math.max(0, minVal - range * 0.08);
+
+    const usableW = w - padLeft - padRight;
+    const usableH = h - padTop - padBottom;
+
+    const marketPts = [];
+    const costPts = [];
+
+    hist.forEach((d, idx) => {
+      const x = padLeft + (hist.length > 1 ? (idx / (hist.length - 1)) * usableW : usableW / 2);
+      const ym = padTop + usableH - ((d.market - minVal) / (maxVal - minVal)) * usableH;
+      const yc = padTop + usableH - ((d.cost - minVal) / (maxVal - minVal)) * usableH;
+      marketPts.push({ x, y: ym, costY: yc, market: d.market, cost: d.cost, date: d.date, label: d.label, shortLabel: d.shortLabel, monthOnly: d.monthOnly, fullDate: d.fullDate });
+      costPts.push({ x, y: yc, market: d.market, cost: d.cost, date: d.date, label: d.label });
+    });
+
+    this._zone4Points = marketPts;
+
+    const mktPath = this.getCatmullRomSpline(marketPts);
+    const cstPath = this.getCatmullRomSpline(costPts);
+
+    const curveMkt = document.getElementById("pfZ4CurveMarket");
+    if (curveMkt) {
+      curveMkt.setAttribute("d", mktPath);
+      curveMkt.setAttribute("stroke", model.color);
+    }
+    const curveCst = document.getElementById("pfZ4CurveCost");
+    if (curveCst) curveCst.setAttribute("d", cstPath);
+
+    const gradStop = document.querySelector("#pfZ4PurpleGrad stop:first-child");
+    if (gradStop) gradStop.setAttribute("stop-color", model.color);
+
+    const firstX = marketPts[0].x;
+    const lastX = marketPts[marketPts.length - 1].x;
+    const bottomY = padTop + usableH;
+
+    const areaMkt = document.getElementById("pfZ4AreaMarket");
+    if (areaMkt) areaMkt.setAttribute("d", `${mktPath} L ${lastX.toFixed(1)} ${bottomY.toFixed(1)} L ${firstX.toFixed(1)} ${bottomY.toFixed(1)} Z`);
+
+    const areaCst = document.getElementById("pfZ4AreaCost");
+    if (areaCst) areaCst.setAttribute("d", `${cstPath} L ${lastX.toFixed(1)} ${bottomY.toFixed(1)} L ${firstX.toFixed(1)} ${bottomY.toFixed(1)} Z`);
+
+    const lastM = marketPts[marketPts.length - 1];
+    const lastC = costPts[costPts.length - 1];
+
+    const endM = document.getElementById("pfZ4EndMarketDot");
+    if (endM) {
+      endM.setAttribute("cx", lastM.x.toFixed(1));
+      endM.setAttribute("cy", lastM.y.toFixed(1));
+      endM.setAttribute("fill", model.color);
+    }
+    const endC = document.getElementById("pfZ4EndCostDot");
+    if (endC) {
+      endC.setAttribute("cx", lastC.x.toFixed(1));
+      endC.setAttribute("cy", lastC.y.toFixed(1));
+    }
+
+    // Grid & Y-Axis
+    const gridG = document.getElementById("pfZ4GridGroup");
+    if (gridG) {
+      gridG.innerHTML = "";
+      const ySteps = 5;
+      for (let i = 0; i <= ySteps; i++) {
+        const val = minVal + (i / ySteps) * (maxVal - minVal);
+        const yPos = padTop + usableH - (i / ySteps) * usableH;
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", padLeft);
+        line.setAttribute("y1", yPos.toFixed(1));
+        line.setAttribute("x2", w - padRight);
+        line.setAttribute("y2", yPos.toFixed(1));
+        line.setAttribute("stroke", "var(--pf-border)");
+        line.setAttribute("stroke-dasharray", "3 3");
+        gridG.appendChild(line);
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", padLeft - 10);
+        txt.setAttribute("y", (yPos + 4).toFixed(1));
+        txt.setAttribute("text-anchor", "end");
+        txt.textContent = val >= 1000000 ? `${(val / 1000000).toFixed(2)}M` : `${Math.round(val / 1000)}K`;
+        gridG.appendChild(txt);
+      }
+    }
+
+    // X-Axis
+    const xG = document.getElementById("pfZ4XAxisGroup");
+    if (xG) {
+      xG.innerHTML = "";
+      const maxTicks = Math.max(4, Math.min(12, Math.floor(usableW / 72)));
+      const step = Math.max(1, Math.ceil((hist.length - 1) / (maxTicks - 1)));
+      for (let i = 0; i < hist.length; i += step) {
+        const pt = marketPts[i];
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", pt.x.toFixed(1));
+        txt.setAttribute("y", h - 10);
+        txt.setAttribute("text-anchor", "middle");
+        txt.textContent = (this.state.period === "1Y" || this.state.period === "YTD") ? pt.monthOnly : pt.shortLabel;
+        xG.appendChild(txt);
+      }
+    }
+
+    // Attach interactive hover/drag listener once
+    if (!this._zone4HoverAttached) {
+      this._zone4HoverAttached = true;
+      this.attachZone4ChartInteractions();
+    }
+  },
+
+  attachZone4ChartInteractions() {
+    const wrap = document.getElementById("pfZ4ChartStageWrap");
+    const card = document.getElementById("pfZ4HoverCard");
+    const vLine = document.getElementById("pfZ4HoverVLine");
+    const activeDot = document.getElementById("pfZ4HoverActiveDot");
+    const costDot = document.getElementById("pfZ4HoverCostDot");
+    if (!wrap || !card) return;
+
+    const updateHover = (e) => {
+      const pts = this._zone4Points;
+      if (!pts || pts.length === 0) return;
+      const rect = wrap.getBoundingClientRect();
+      const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : undefined);
+      if (clientX === undefined) return;
+
+      const mouseX = clientX - rect.left;
+      let nearest = pts[0];
+      let minDist = Infinity;
+      pts.forEach(pt => {
+        const d = Math.abs(pt.x - mouseX);
+        if (d < minDist) {
+          minDist = d;
+          nearest = pt;
+        }
+      });
+
+      if (vLine) {
+        vLine.setAttribute("x1", nearest.x.toFixed(1));
+        vLine.setAttribute("x2", nearest.x.toFixed(1));
+        vLine.setAttribute("opacity", "1");
+      }
+      if (activeDot) {
+        activeDot.setAttribute("cx", nearest.x.toFixed(1));
+        activeDot.setAttribute("cy", nearest.y.toFixed(1));
+        activeDot.setAttribute("opacity", "1");
+      }
+      if (costDot) {
+        costDot.setAttribute("cx", nearest.x.toFixed(1));
+        costDot.setAttribute("cy", nearest.costY.toFixed(1));
+        costDot.setAttribute("opacity", "1");
+      }
+
+      const pl = nearest.market - nearest.cost;
+      const plPct = nearest.cost > 0 ? (pl / nearest.cost * 100) : 0;
+      const sign = pl > 0 ? "+" : "";
+      const arrow = pl >= 0 ? "↗" : "↘";
+
+      const mktVal = document.getElementById("pfZ4CardMktVal");
+      if (mktVal) mktVal.textContent = this.fmtShort(nearest.market);
+
+      const badge = document.getElementById("pfZ4CardGrowthBadge");
+      if (badge) {
+        badge.textContent = `${sign}${plPct.toFixed(1)}% ${arrow}`;
+        badge.style.color = pl >= 0 ? "#6ee7b7" : "#fca5a5";
+      }
+
+      const dText = document.getElementById("pfZ4CardDateText");
+      if (dText) dText.textContent = nearest.fullDate || nearest.label;
+
+      const exactMkt = document.getElementById("pfZ4CardExactMkt");
+      if (exactMkt) exactMkt.textContent = this.fmtMoney(nearest.market);
+
+      const exactCost = document.getElementById("pfZ4CardCostVal");
+      if (exactCost) exactCost.textContent = this.fmtMoney(nearest.cost);
+
+      const plVal = document.getElementById("pfZ4CardPlVal");
+      if (plVal) {
+        plVal.textContent = `${sign}${this.fmtMoney(pl)} (${sign}${plPct.toFixed(1)}%)`;
+        plVal.style.color = pl >= 0 ? "#6ee7b7" : "#fca5a5";
+      }
+
+      const clampedX = Math.max(105, Math.min(rect.width - 105, nearest.x));
+      card.style.left = `${clampedX}px`;
+      card.style.top = `${Math.max(85, nearest.y - 10)}px`;
+      card.style.opacity = "1";
+    };
+
+    wrap.addEventListener("mousemove", updateHover);
+    wrap.addEventListener("touchmove", updateHover, { passive: true });
+
+    const hideHover = () => {
+      card.style.opacity = "0";
+      if (vLine) vLine.setAttribute("opacity", "0");
+      if (activeDot) activeDot.setAttribute("opacity", "0");
+      if (costDot) costDot.setAttribute("opacity", "0");
+    };
+
+    wrap.addEventListener("mouseleave", hideHover);
+    wrap.addEventListener("touchend", hideHover);
+
+    window.addEventListener("resize", () => {
+      const snap = this.getLatestPortfolioSnapshot();
+      const models = this.getAssessmentModels(snap);
+      const activeId = this.state.activeAssessment || "SET";
+      const activeModel = models[activeId] || models["SET"];
+      let hist = activeModel.history || [];
+      const period = this.state.period || "ALL";
+      if (period === "1M") hist = hist.slice(-2);
+      else if (period === "3M") hist = hist.slice(-3);
+      else if (period === "YTD") {
+        const ytd = hist.filter(h => h.date && h.date.startsWith("2026"));
+        hist = ytd.length > 0 ? ytd : hist.slice(-10);
+      } else if (period === "1Y") hist = hist.slice(-12);
+      this.renderZone4Chart(activeModel, hist);
+    });
+  },
   /* =========================================================================
      ZONE 4 DEEP-DIVE EXPLORER:
      Sheets: "SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log"

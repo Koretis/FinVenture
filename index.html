@@ -3672,34 +3672,286 @@
       margin-top: 6px;
     }
 
-    /* Zone 4: Asset Class Performance & Detail Cards (2x2 Grid) */
-    .pf-z4-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-bottom: 16px;
+    /* =========================================================================
+       Zone 4 Redesign: 7 Assessments, Reference Spline Chart & KPI Panel
+       ========================================================================= */
+    .pf-z4-assessments-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--pf-fg-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .pf-z4-metric-row {
+
+    .pf-z4-assessments-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(7, 1fr);
       gap: 10px;
-      margin: 12px 0;
+      margin-bottom: 18px;
     }
-    .pf-z4-stat {
-      background: var(--pf-card-sec);
-      padding: 10px 12px;
-      border-radius: 12px;
+
+    @media (max-width: 1200px) {
+      .pf-z4-assessments-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
-    .pf-z4-stat-lbl {
+    @media (max-width: 768px) {
+      .pf-z4-assessments-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .pf-z4-assess-card {
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .pf-z4-assess-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-color, #8b5cf6);
+      opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+
+    .pf-z4-assess-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--pf-border-strong);
+      box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.25);
+    }
+
+    .pf-z4-assess-card.active {
+      background: linear-gradient(180deg, var(--pf-card) 0%, rgba(139, 92, 246, 0.12) 100%);
+      border-color: var(--card-color, #8b5cf6);
+      box-shadow: 0 0 0 1.5px var(--card-color, #8b5cf6), 0 10px 24px -8px rgba(139, 92, 246, 0.4);
+    }
+
+    .pf-z4-assess-card.active::before {
+      opacity: 1;
+      height: 4px;
+    }
+
+    .pf-z4-assess-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .pf-z4-icon-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      background: var(--card-bg-icon, rgba(139, 92, 246, 0.15));
+      border: 1px solid var(--pf-border);
+    }
+
+    .pf-z4-pl-pill {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .pf-z4-pl-pill.neg {
+      background: rgba(244, 63, 94, 0.16);
+      color: #fb7185;
+      border-color: rgba(244, 63, 94, 0.3);
+    }
+
+    .pf-z4-assess-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--pf-fg-sec);
+      margin-bottom: 2px;
+    }
+    .pf-z4-assess-card.active .pf-z4-assess-name {
+      color: var(--pf-fg);
+    }
+
+    .pf-z4-assess-market {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--pf-fg);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.02em;
+      margin-bottom: 5px;
+    }
+
+    .pf-z4-assess-foot {
       font-size: 10.5px;
       color: var(--pf-fg-muted);
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .pf-z4-stat-val {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--pf-fg);
-      margin-top: 2px;
+
+    /* Main Chart + KPI Row */
+    .pf-z4-chart-kpi-row {
+      display: grid;
+      grid-template-columns: 2.15fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: stretch;
     }
+    @media (max-width: 1024px) {
+      .pf-z4-chart-kpi-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pf-z4-chart-card {
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      position: relative;
+    }
+
+    .pf-z4-kpi-panel {
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pf-z4-ratios-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .pf-z4-ratio-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .pf-z4-ratio-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+    }
+    .pf-z4-ratio-lbl { color: var(--pf-fg-sec); font-weight: 600; }
+    .pf-z4-ratio-val { color: var(--pf-fg); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .pf-z4-ratio-bar-bg {
+      width: 100%;
+      height: 7px;
+      background: var(--pf-border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .pf-z4-ratio-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .pf-z4-kpi-foot {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--pf-card-sec);
+      border: 1px solid var(--pf-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    /* Chart SVG Stage: 1:1 Pixel Mapping */
+    .pf-z4-chart-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .pf-z4-chart-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      cursor: crosshair;
+      display: block;
+    }
+
+    .pf-z4-chart-svg text {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      fill: var(--pf-fg-muted);
+      user-select: none;
+    }
+
+    /* Floating Tooltip Card */
+    .pf-z4-floating-card {
+      position: absolute;
+      pointer-events: none;
+      background: #4338ca;
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 11px 15px;
+      box-shadow: 0 14px 30px -4px rgba(67, 56, 202, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.18);
+      z-index: 30;
+      min-width: 195px;
+      transform: translate(-50%, -120%);
+      transition: opacity 0.12s ease, left 0.05s ease, top 0.05s ease;
+      opacity: 0;
+    }
+
+    .pf-z4-holdings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .pf-z4-holdings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .pf-z4-holding-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--pf-card-sec);
+      border: 1px solid var(--pf-border);
+      font-size: 12px;
+    }
+    .pf-z4-h-sym { font-weight: 700; color: var(--pf-fg); font-family: 'JetBrains Mono', monospace; }
+    .pf-z4-h-name { font-size: 11px; color: var(--pf-fg-muted); }
+    .pf-z4-h-val { font-weight: 700; color: var(--pf-fg); font-family: 'JetBrains Mono', monospace; text-align: right; }
 
     /* Zone 5: Cash Flow Calendar & Architecture (3-Column Grid) */
     .pf-cal-bars {
@@ -5450,158 +5702,163 @@
              + Deep-Dive Trade Log Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
              ================================================================= -->
         <section id="pfZone4" style="margin-bottom: 18px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-            <div>
-              <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg);">Zone 4: Asset Class Performance &amp; Deep-Dive Cards (ข้อมูลจริงจากชีต Portfolio &amp; Trade Logs)</h3>
-              <div style="font-size: 12px; color: var(--pf-fg-muted);">สรุปภาพรวมรายหมวดจากชีต &ldquo;Portfolio&rdquo; พร้อมเจาะลึกพอร์ตรายตัว &amp; ประวัติซื้อขายจากชีต &ldquo;SET Trade Log&rdquo;, &ldquo;USD Stock Trading Log&rdquo;, &ldquo;Gold Trade Log&rdquo;, &ldquo;Crypto Trade Log&rdquo;</div>
+          <!-- Zone 4 Header -->
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg); margin-bottom: 3px;">Zone 4: Asset Class Performance &amp; Deep-Dive (Portfolio &amp; Trade Logs)</h3>
+            <div style="font-size: 12px; color: var(--pf-fg-muted);">Historical Market Value vs. Accumulated Cost across 7 Core Asset Assessments</div>
+          </div>
+
+          <!-- 1. Top 7 Assessment Summary Cards -->
+          <div class="pf-z4-assessments-bar">
+            <span>Select Asset Class (7 Assessments)</span>
+            <span id="pfZ4ActiveAssessIndicator" style="color: #a78bfa; font-weight: 700;">Active: SET (Thai Equities)</span>
+          </div>
+          <div class="pf-z4-assessments-grid" id="pfZ4AssessmentsGrid">
+            <!-- Dynamically populated by PortfolioUI -->
+          </div>
+
+          <!-- 2. Main Row: Reference Spline Chart (Left) + Key Performance Indicators (Right) -->
+          <div class="pf-z4-chart-kpi-row">
+            <!-- Left: Reference Spline Chart -->
+            <div class="pf-card pf-z4-chart-card">
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 18px;">
+                <div>
+                  <div style="font-size: 14px; font-weight: 700; color: var(--pf-fg-sec); letter-spacing: -0.01em; margin-bottom: 4px;" id="pfZ4ChartTitle">Total Market Value in SET</div>
+                  <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--pf-fg); letter-spacing: -0.03em; line-height: 1;" id="pfZ4HeroVal">฿ —</div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--pf-fg-muted); font-family: 'JetBrains Mono', monospace;" id="pfZ4ExactVal">(฿ —)</div>
+                    <div class="pf-pl-pill pos" id="pfZ4GrowthPill" style="font-weight: 700; font-family: 'JetBrains Mono', monospace;">+0.0% ↗</div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+                  <div style="display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--pf-fg-sec);">
+                    <span style="width: 9px; height: 9px; border-radius: 50%; background: #8b5cf6; box-shadow: 0 0 8px rgba(139, 92, 246, 0.7);" id="pfZ4DotMarket"></span>
+                    <span>Market Value</span>
+                  </div>
+                  <div style="display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--pf-fg-sec);">
+                    <span style="width: 9px; height: 9px; border-radius: 50%; background: #06b6d4; box-shadow: 0 0 8px rgba(6, 182, 212, 0.7);"></span>
+                    <span>Cost</span>
+                  </div>
+                  <div style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 9999px; background: var(--pf-card-sec); border: 1px solid var(--pf-border); font-size: 11.5px; font-weight: 600; color: var(--pf-fg-sec);">
+                    <span>📅</span>
+                    <span id="pfZ4DateSpan">Jan 2023 - Oct 2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SVG Chart Stage: 1:1 Pixel Mapping -->
+              <div class="pf-z4-chart-canvas-wrap" id="pfZ4ChartStageWrap">
+                <svg class="pf-z4-chart-svg" id="pfZ4SvgChart" viewBox="0 0 1000 320">
+                  <defs>
+                    <linearGradient id="pfZ4PurpleGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.32"/>
+                      <stop offset="92%" stop-color="#8b5cf6" stop-opacity="0.0"/>
+                    </linearGradient>
+                    <linearGradient id="pfZ4CyanGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.12"/>
+                      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0"/>
+                    </linearGradient>
+                  </defs>
+
+                  <g id="pfZ4GridGroup"></g>
+                  <path id="pfZ4AreaMarket" fill="url(#pfZ4PurpleGrad)" d=""></path>
+                  <path id="pfZ4AreaCost" fill="url(#pfZ4CyanGrad)" d=""></path>
+                  <path id="pfZ4CurveCost" fill="none" stroke="#06b6d4" stroke-width="2.6" d=""></path>
+                  <path id="pfZ4CurveMarket" fill="none" stroke="#8b5cf6" stroke-width="3.4" d=""></path>
+                  <circle id="pfZ4EndCostDot" cx="0" cy="0" r="4.5" fill="#06b6d4" stroke="#ffffff" stroke-width="2"/>
+                  <circle id="pfZ4EndMarketDot" cx="0" cy="0" r="5.5" fill="#8b5cf6" stroke="#ffffff" stroke-width="2"/>
+                  <line id="pfZ4HoverVLine" x1="0" y1="24" x2="0" y2="282" stroke="rgba(139, 92, 246, 0.45)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0"/>
+                  <circle id="pfZ4HoverActiveDot" cx="0" cy="0" r="7" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="3" opacity="0"/>
+                  <circle id="pfZ4HoverCostDot" cx="0" cy="0" r="5" fill="#06b6d4" stroke="#ffffff" stroke-width="2" opacity="0"/>
+                  <g id="pfZ4XAxisGroup"></g>
+                </svg>
+
+                <!-- Floating Tooltip Card -->
+                <div class="pf-z4-floating-card" id="pfZ4HoverCard">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 3px;">
+                    <span style="font-size: 17px; font-weight: 800; color: #ffffff;" id="pfZ4CardMktVal">฿0</span>
+                    <span style="font-size: 10.5px; font-weight: 700; background: rgba(16, 185, 129, 0.28); color: #6ee7b7; padding: 2px 6px; border-radius: 5px; font-family: 'JetBrains Mono', monospace;" id="pfZ4CardGrowthBadge">+0% ↗</span>
+                  </div>
+                  <div style="font-size: 11px; color: rgba(255, 255, 255, 0.78); margin-bottom: 6px; font-weight: 500;" id="pfZ4CardDateText">October 2026</div>
+                  <div style="font-size: 11px; color: #e0e7ff; border-top: 1px solid rgba(255, 255, 255, 0.16); padding-top: 6px; display: flex; flex-direction: column; gap: 3px; font-family: 'JetBrains Mono', monospace;">
+                    <div>Market Value: <strong id="pfZ4CardExactMkt">฿0</strong></div>
+                    <div>Total Cost: <strong id="pfZ4CardCostVal">฿0</strong></div>
+                    <div>Net P/L: <strong id="pfZ4CardPlVal" style="color: #6ee7b7;">+฿0 (+0.0%)</strong></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="pf-period-group">
-              <button type="button" class="pf-period-btn pf-zone4-filter-btn active" data-pf-z4="ALL" onclick="PortfolioUI.setAssetZoneFilter('ALL', this)">ทั้งหมด (4 กลุ่ม)</button>
-              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="LIQUID" onclick="PortfolioUI.setAssetZoneFilter('LIQUID', this)">1. Equities &amp; Alt</button>
-              <button type="button" class="pf-period-btn pf-zone4-filter-btn" data-pf-z4="SAFETY" onclick="PortfolioUI.setAssetZoneFilter('SAFETY', this)">2. PVD, Ins &amp; Cash</button>
+
+            <!-- Right: Key Performance Indicators -->
+            <div class="pf-card pf-z4-kpi-panel">
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--pf-fg); margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Key Performance Indicators</span>
+                <span style="font-size: 11px; color: #818cf8; font-family: 'JetBrains Mono', monospace;" id="pfZ4AssetCodeTag">SET</span>
+              </div>
+
+              <div class="pf-z4-ratios-stack">
+                <div class="pf-z4-ratio-item">
+                  <div class="pf-z4-ratio-meta">
+                    <span class="pf-z4-ratio-lbl">Return on Capital (ROI)</span>
+                    <span class="pf-z4-ratio-val" id="pfZ4RoiVal" style="color: #34d399;">+0.0%</span>
+                  </div>
+                  <div class="pf-z4-ratio-bar-bg"><div class="pf-z4-ratio-bar-fill" id="pfZ4RoiBar" style="width: 15%;"></div></div>
+                </div>
+
+                <div class="pf-z4-ratio-item">
+                  <div class="pf-z4-ratio-meta">
+                    <span class="pf-z4-ratio-lbl">Portfolio Allocation (Weight %)</span>
+                    <span class="pf-z4-ratio-val" id="pfZ4WeightVal">0.0%</span>
+                  </div>
+                  <div class="pf-z4-ratio-bar-bg"><div class="pf-z4-ratio-bar-fill" id="pfZ4WeightBar" style="width: 0%;"></div></div>
+                </div>
+
+                <div class="pf-z4-ratio-item">
+                  <div class="pf-z4-ratio-meta">
+                    <span class="pf-z4-ratio-lbl">All-Time High Record (ATH)</span>
+                    <span class="pf-z4-ratio-val" id="pfZ4AthVal">฿0</span>
+                  </div>
+                  <div class="pf-z4-ratio-bar-bg"><div class="pf-z4-ratio-bar-fill" id="pfZ4AthBar" style="width: 98%;"></div></div>
+                </div>
+
+                <div class="pf-z4-ratio-item">
+                  <div class="pf-z4-ratio-meta">
+                    <span class="pf-z4-ratio-lbl">Annualized Growth (3-Yr CAGR)</span>
+                    <span class="pf-z4-ratio-val" id="pfZ4CagrVal">+0.0%</span>
+                  </div>
+                  <div class="pf-z4-ratio-bar-bg"><div class="pf-z4-ratio-bar-fill" id="pfZ4CagrBar" style="width: 56%;"></div></div>
+                </div>
+
+                <div class="pf-z4-ratio-item">
+                  <div class="pf-z4-ratio-meta">
+                    <span class="pf-z4-ratio-lbl">Avg. Monthly DCA</span>
+                    <span class="pf-z4-ratio-val" id="pfZ4DcaVal">฿0 / mo</span>
+                  </div>
+                  <div class="pf-z4-ratio-bar-bg"><div class="pf-z4-ratio-bar-fill" id="pfZ4DcaBar" style="width: 72%;"></div></div>
+                </div>
+              </div>
+
+              <div class="pf-z4-kpi-foot">
+                <div>
+                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">Accumulated Cost</div>
+                  <div style="font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #06b6d4;" id="pfZ4KpiFootCost">฿0</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 10.5px; color: var(--pf-fg-muted);">Net Unrealized P/L</div>
+                  <div style="font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #34d399;" id="pfZ4KpiFootPl">+฿0</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Group 1: Liquid & Growth Assets -->
-          <div id="pfZone4LiquidGrid" class="pf-z4-grid">
-            <!-- Card 4.1: SET & USD Stock -->
-            <div class="pf-card">
-              <div class="pf-card-head" style="margin-bottom: 8px;">
-                <div>
-                  <span class="pf-badge-soft" style="color: #10b981;">Risk: High • Assess Type: SET &amp; USD Stock</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🇹🇭🇺🇸 SET &amp; USD Stock (หุ้นไทย SET &amp; หุ้นต่างประเทศ Dime)</div>
-                </div>
-                <span id="pfZ4EqBadge" class="pf-pl-pill pos">—</span>
-              </div>
-              <div class="pf-z4-metric-row">
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Market Value รวม</div>
-                  <div id="pfZ4EqMkt" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Total Cost รวม</div>
-                  <div id="pfZ4EqCost" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Unrealized P/L</div>
-                  <div id="pfZ4EqPl" class="pf-z4-stat-val">฿ —</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
-                  <span>• SET (Assess Type: SET):</span>
-                  <strong id="pfZ4SetSplit">฿ —</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
-                  <span>• Dime (Assess Type: USD Stock):</span>
-                  <strong id="pfZ4UsSplit">฿ —</strong>
-                </div>
-              </div>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--pf-border);">
-                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('set', true)">🇹🇭 เจาะลึกชีต &ldquo;SET Trade Log&rdquo;</button>
-                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('usd', true)">🇺🇸 เจาะลึกชีต &ldquo;USD Stock Trading Log&rdquo;</button>
-              </div>
+          <!-- 3. Underlying Holdings & Positions -->
+          <div class="pf-card" style="padding: 22px; margin-top: 14px; margin-bottom: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--pf-fg); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+              <span>Underlying Holdings &amp; Positions</span>
+              <span style="font-size: 11px; color: var(--pf-fg-muted);" id="pfZ4HoldingsCount">0 Positions</span>
             </div>
-
-            <!-- Card 4.2: Crypto & Gold -->
-            <div class="pf-card">
-              <div class="pf-card-head" style="margin-bottom: 8px;">
-                <div>
-                  <span class="pf-badge-soft" style="color: #f59e0b;">Assess Type: GOLD &amp; Crypto</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🪙⚡ GOLD (AOM NOW) &amp; Crypto (Bitkub)</div>
-                </div>
-                <span id="pfZ4AltBadge" class="pf-pl-pill warn">—</span>
-              </div>
-              <div class="pf-z4-metric-row">
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Market Value ปัจจุบัน</div>
-                  <div id="pfZ4AltMkt" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Total Cost สะสม</div>
-                  <div id="pfZ4AltCost" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Unrealized P/L</div>
-                  <div id="pfZ4AltPl" class="pf-z4-stat-val">฿ —</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
-                  <span>• AOM NOW (Assess Type: GOLD):</span>
-                  <strong id="pfZ4GoldVal">฿ —</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap;">
-                  <span>• Bitkub (Assess Type: Crypto):</span>
-                  <strong id="pfZ4CryptoVal">฿ —</strong>
-                </div>
-              </div>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--pf-border);">
-                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('gold', true)">🪙 เจาะลึกชีต &ldquo;Gold Trade Log&rdquo;</button>
-                <button type="button" class="pf-period-btn" style="font-size: 11px; padding: 5px 10px; background: var(--pf-card-sec);" onclick="PortfolioUI.selectTradeLogSheet('crypto', true)">⚡ เจาะลึกชีต &ldquo;Crypto Trade Log&rdquo;</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Group 2: Long-Term & Safety Assets -->
-          <div id="pfZone4SafetyGrid" class="pf-z4-grid">
-            <!-- Card 4.3: PVD (Provident Fund) -->
-            <div class="pf-card">
-              <div class="pf-card-head" style="margin-bottom: 8px;">
-                <div>
-                  <span class="pf-badge-soft" style="color: #0284c7;">Risk: Mid • Assess Type: Provident Fund</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🏢 PVD (กองทุนสำรองเลี้ยงชีพ)</div>
-                </div>
-                <span id="pfZ4PvdBadge" class="pf-pl-pill pos">—</span>
-              </div>
-              <div class="pf-z4-metric-row">
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">มูลค่ารวมสุทธิ (Value)</div>
-                  <div id="pfZ4PvdMkt" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">เงินต้นสะสม (Cost)</div>
-                  <div id="pfZ4PvdEmp" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">กำไรสะสม (Value - Cost)</div>
-                  <div id="pfZ4PvdEmr" class="pf-z4-stat-val" style="color: #10b981;">฿ —</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• ข้อมูลจากชีต Portfolio:</span> <strong>Risk: Mid | Name: PVD</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• การเปลี่ยนแปลงเทียบเดือนก่อนหน้า (MoM):</span> <strong id="pfZ4PvdMom" style="color: #0284c7;">—</strong></div>
-              </div>
-            </div>
-
-            <!-- Card 4.4: Insurance & Cash/Bank -->
-            <div class="pf-card">
-              <div class="pf-card-head" style="margin-bottom: 8px;">
-                <div>
-                  <span class="pf-badge-soft" style="color: #ec4899;">Assess Type: Insurance • Cash • Bank</span>
-                  <div class="pf-card-title" style="margin-top: 6px;">🛡️🏦 Insurance &amp; Cash / Saving-ME</div>
-                </div>
-                <span id="pfZ4InsBadge" class="pf-pl-pill info">—</span>
-              </div>
-              <div class="pf-z4-metric-row">
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Insurance Value (Cost)</div>
-                  <div id="pfZ4InsCashVal" class="pf-z4-stat-val" style="color: #ec4899;">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">Cash + Saving-ME</div>
-                  <div id="pfZ4InsPremium" class="pf-z4-stat-val">฿ —</div>
-                </div>
-                <div class="pf-z4-stat">
-                  <div class="pf-z4-stat-lbl">รวม Safety &amp; Liquid Cash</div>
-                  <div id="pfZ4InsCoverage" class="pf-z4-stat-val" style="color: #10b981;">฿ —</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--pf-fg-sec); display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; justify-content: space-between;"><span>• Cash (Assess Type: Cash):</span> <strong id="pfZ4CashSplit">฿ —</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>• Saving-ME (Assess Type: Bank):</span> <strong id="pfZ4BankSplit">฿ —</strong></div>
-              </div>
-            </div>
+            <div class="pf-z4-holdings-grid" id="pfZ4HoldingsList"></div>
           </div>
 
           <!-- ===============================================================
