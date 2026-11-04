@@ -1431,7 +1431,26 @@ var PortfolioUI = {
         const mFull = monthFull[mo] || "January";
 
         let hm = 0, hc = 0;
-        if (h.assets && h.assets[key]) {
+        if (key === "US") {
+          // Strictly USD Stock (Dime), excluding Jitta / non-USD equities
+          if (Array.isArray(h.items) && h.items.length > 0) {
+            const dimeItems = h.items.filter(it => {
+              const at = String(it.assessType || "").toLowerCase();
+              const nm = String(it.name || "").toLowerCase();
+              return at.includes("usd") || nm.includes("dime");
+            });
+            if (dimeItems.length > 0) {
+              hm = Math.round(dimeItems.reduce((s, it) => s + (Number(it.market) || 0), 0));
+              hc = Math.round(dimeItems.reduce((s, it) => s + (Number(it.cost) || 0), 0));
+            } else {
+              hm = 0;
+              hc = 0;
+            }
+          } else if (h.assets && h.assets.US) {
+            hm = Number(h.assets.US.market ?? 0);
+            hc = Number(h.assets.US.cost ?? 0);
+          }
+        } else if (h.assets && h.assets[key]) {
           hm = Number(h.assets[key].market ?? 0);
           hc = Number(h.assets[key].cost ?? 0);
         } else if (key === "CASH" && h.assets && h.assets.CASH) {
@@ -1609,7 +1628,14 @@ var PortfolioUI = {
     else if (period === "YTD") {
       const ytd = hist.filter(h => h.date && h.date.startsWith("2026"));
       hist = ytd.length > 0 ? ytd : hist.slice(-10);
-    } else if (period === "1Y") hist = hist.slice(-12);
+    } else if (period === "1Y") {
+      hist = hist.slice(-12);
+    } else if (period === "ALL") {
+      const firstActiveIdx = hist.findIndex(h => (h.market > 0 || h.cost > 0));
+      if (firstActiveIdx > 0) {
+        hist = hist.slice(Math.max(0, firstActiveIdx - 1));
+      }
+    }
 
     if (hist.length > 0) {
       setEl("pfZ4DateSpan", `${hist[0].label} - ${hist[hist.length - 1].label}`);
@@ -1941,7 +1967,14 @@ var PortfolioUI = {
       else if (period === "YTD") {
         const ytd = hist.filter(h => h.date && h.date.startsWith("2026"));
         hist = ytd.length > 0 ? ytd : hist.slice(-10);
-      } else if (period === "1Y") hist = hist.slice(-12);
+      } else if (period === "1Y") {
+        hist = hist.slice(-12);
+      } else if (period === "ALL") {
+        const firstActiveIdx = hist.findIndex(h => (h.market > 0 || h.cost > 0));
+        if (firstActiveIdx > 0) {
+          hist = hist.slice(Math.max(0, firstActiveIdx - 1));
+        }
+      }
       this.renderZone4Chart(activeModel, hist);
     });
   },

@@ -444,9 +444,10 @@ var SheetsAPI = {
         else if (at.includes("insurance") || nm.includes("insurance")) cat = "INS";
         else if (at.includes("gold") || nm.includes("aom")) cat = "GOLD";
         else if (at.includes("crypto") || nm.includes("bitkub") || at.includes("ico")) cat = "CRYPTO";
-        else if (at.includes("usd") || nm.includes("dime") || at.includes("etf")) cat = "US";
+        else if (at.includes("usd") || nm.includes("dime")) cat = "US";
         else if (at.includes("cash") || at.includes("bank") || nm.includes("saving") || nm.includes("cash")) cat = "CASH";
-        else if (at.includes("ltf") || nm.includes("uobsd") || nm.includes("jitta")) cat = "SET";
+        else if (at.includes("ltf") || nm.includes("uobsd")) cat = "SET";
+        else if (at.includes("etf") || nm.includes("jitta")) cat = "ETF";
 
         if (!byYm[dateObj.ym]) {
           byYm[dateObj.ym] = {
