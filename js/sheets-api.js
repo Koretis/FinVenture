@@ -1136,10 +1136,21 @@ var SheetsAPI = {
       // SET DIV regular dividend
       const setDivRows = sheetResults["SET DIV"] || [];
       let regularDivTotal = 0;
+      let grandTotalRowVal = 0;
       setDivRows.forEach(sr => {
         const curDiv = this.parseNum(sr["Current Net DIV"] || sr["col_10"] || sr["Net DIV"]);
-        if (sr["Stock"] || sr["col_0"] || sr["Ticker"]) regularDivTotal += curDiv;
+        const stockName = (sr["Stock"] || sr["col_0"] || sr["Ticker"] || "").toString().trim();
+        if (!stockName && curDiv > 0) {
+          // Summary / subtotal row without stock name (Row 12: Thai ฿107k, Row 13: US ฿41k, Row 14: Grand Total ฿148k)
+          if (curDiv > grandTotalRowVal) grandTotalRowVal = curDiv;
+        } else if (stockName) {
+          regularDivTotal += curDiv;
+        }
       });
+      // Prefer Grand Total row from sheet (SET Thai ฿107,227 + US ETF ฿41,084 = ~฿148,312 / ฿147,085)
+      if (grandTotalRowVal >= 100000) {
+        regularDivTotal = grandTotalRowVal;
+      }
       if (regularDivTotal <= 0) regularDivTotal = 147085;
 
       const targetDivAnnual = 300000;
