@@ -3939,6 +3939,335 @@
         grid-template-columns: 1fr;
       }
     }
+    /* SET vs US Allocation & Ratio Component Styles */
+    .pf-set-us-card {
+      background: var(--pf-surface, #0f172a);
+      border: 1px solid var(--pf-border, rgba(255, 255, 255, 0.08));
+      border-radius: 18px;
+    }
+    .pf-set-us-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--pf-border, rgba(255, 255, 255, 0.06));
+    }
+    .pf-set-us-title-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .pf-set-us-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .pf-set-us-title-text h3 {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 3px 0;
+    }
+    .pf-set-us-title-text p {
+      font-size: 12px;
+      color: var(--pf-fg-muted, #94a3b8);
+      margin: 0;
+    }
+    .pf-set-us-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 7px;
+    }
+    .pf-set-us-badge-row-1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pf-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', 'Noto Sans Thai', monospace;
+    }
+    .pf-pill-actual {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .pf-pill-target {
+      background: rgba(99, 102, 241, 0.14);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+    }
+    .pf-pill-gap {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+    }
+    .pf-set-us-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    @media (max-width: 960px) {
+      .pf-set-us-grid { grid-template-columns: 1fr; }
+      .pf-set-us-badges { align-items: flex-start; }
+    }
+    .pf-set-us-col-left, .pf-set-us-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pf-set-us-sub-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+    .pf-set-us-sub-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .pf-set-us-sub-total {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--pf-fg-muted, #94a3b8);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pf-set-us-ratio-block {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 13px 15px;
+    }
+    .pf-set-us-bar-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .pf-set-us-lbl { color: var(--pf-fg-sec, #cbd5e1); }
+    .pf-set-us-vals { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+    .pf-set-us-seg-bar {
+      height: 24px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+    .pf-set-us-seg-set-act {
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pf-set-us-seg-us-act {
+      background: linear-gradient(90deg, #0ea5e9, #0284c7);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pf-set-us-seg-set-tgt {
+      background: rgba(16, 185, 129, 0.35);
+      border-right: 2px solid #0f172a;
+      color: #a7f3d0;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+    .pf-set-us-seg-us-tgt {
+      background: rgba(14, 165, 233, 0.35);
+      color: #bae6fd;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+    .pf-set-us-bar-subs {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--pf-fg-muted, #94a3b8);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pf-set-us-donut-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 6px 0;
+    }
+    .pf-set-us-donut-wrap {
+      width: 110px;
+      height: 110px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .pf-set-us-legend-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pf-set-us-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+    .pf-set-us-legend-box {
+      width: 13px;
+      height: 13px;
+      border-radius: 4px;
+    }
+    .pf-set-us-insight-card {
+      background: rgba(6, 182, 212, 0.05);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .pf-set-us-insight-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .pf-set-us-insight-desc {
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: var(--pf-fg-sec, #cbd5e1);
+    }
+    .pf-set-us-chart-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pf-set-us-chart-titles h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 2px 0;
+    }
+    .pf-set-us-chart-titles p {
+      font-size: 11px;
+      color: var(--pf-fg-muted, #94a3b8);
+      margin: 0;
+    }
+    .pf-set-us-chart-legends {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+    .pf-set-us-c-leg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--pf-fg-sec, #cbd5e1);
+    }
+    .pf-set-us-c-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .pf-set-us-c-dashed-line {
+      width: 14px;
+      height: 2px;
+      border-top: 2px dashed rgba(14, 165, 233, 0.8);
+    }
+    .pf-set-us-chart-svg-wrap {
+      width: 100%;
+      height: 230px;
+      position: relative;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 6px;
+    }
+    svg.pf-set-us-prog-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .pf-set-us-hover-pill {
+      position: absolute;
+      pointer-events: none;
+      background: #0f172a;
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      border-radius: 10px;
+      padding: 7px 11px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      font-size: 11px;
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+      transform: translate(-50%, -120%);
+      z-index: 10;
+      white-space: nowrap;
+    }
+    .pf-set-us-chart-foot-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 13px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      font-size: 11.5px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pf-set-us-foot-left { color: var(--pf-fg-muted, #94a3b8); font-weight: 600; }
+    .pf-set-us-foot-mid { color: #38bdf8; font-weight: 700; }
+    .pf-set-us-foot-right { color: #34d399; font-weight: 700; }
+
     .pf-z4-holding-row {
       display: flex;
       justify-content: space-between;
@@ -5702,11 +6031,7 @@
              + Deep-Dive Trade Log Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
              ================================================================= -->
         <section id="pfZone4" style="margin-bottom: 18px;">
-          <!-- Zone 4 Header -->
-          <div style="margin-bottom: 14px;">
-            <h3 style="font-size: 16px; font-weight: 700; color: var(--pf-fg); margin-bottom: 3px;">Zone 4: Asset Class Performance &amp; Deep-Dive (Portfolio &amp; Trade Logs)</h3>
-            <div style="font-size: 12px; color: var(--pf-fg-muted);">Historical Market Value vs. Accumulated Cost across 7 Core Asset Assessments</div>
-          </div>
+          <!-- Zone 4: 7 Assessment Summary Cards -->
 
           <!-- 1. Top 7 Assessment Summary Cards -->
           <div class="pf-z4-assessments-bar">
@@ -5852,13 +6177,179 @@
             </div>
           </div>
 
-          <!-- 3. Underlying Holdings & Positions -->
-          <div class="pf-card" style="padding: 22px; margin-top: 14px; margin-bottom: 14px;">
-            <div style="font-size: 14.5px; font-weight: 700; color: var(--pf-fg); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
-              <span>Underlying Holdings &amp; Positions</span>
-              <span style="font-size: 11px; color: var(--pf-fg-muted);" id="pfZ4HoldingsCount">0 Positions</span>
+          <!-- 3. SET vs US Stock Ratio & Allocation Card (Forecast SET70_US30) -->
+          <div class="pf-card pf-set-us-card" id="pfSetVsUsRatioCard" style="padding: 24px 28px; margin-top: 16px; margin-bottom: 16px;">
+            
+            <!-- Top Header -->
+            <div class="pf-set-us-header">
+              <div class="pf-set-us-title-group">
+                <div class="pf-set-us-icon-box">⚖️</div>
+                <div class="pf-set-us-title-text">
+                  <h3>สัดส่วนการลงทุน หุ้นไทย vs หุ้นสหรัฐฯ (SET vs US Stock Ratio &amp; Allocation)</h3>
+                  <p>เปรียบเทียบสัดส่วนจริงในพอร์ตหุ้นปัจจุบันกับแผนกลยุทธ์เกษียณ Forecast SET70_US30 (เป้าหมาย 70 : 30)</p>
+                </div>
+              </div>
+
+              <!-- Badges -->
+              <div class="pf-set-us-badges">
+                <div class="pf-set-us-badge-row-1">
+                  <span class="pf-pill-badge pf-pill-actual" id="pfSetUsBadgeActual">สัดส่วนจริง: SET 82.9% : US 17.1% (4.8 : 1)</span>
+                  <span class="pf-pill-badge pf-pill-target">เป้าหมายตามแผน: 70% : 30%</span>
+                </div>
+                <span class="pf-pill-gap" id="pfSetUsBadgeGap">Gap: US ขาดอีก +12.9% (~฿317,409)</span>
+              </div>
             </div>
-            <div class="pf-z4-holdings-grid" id="pfZ4HoldingsList"></div>
+
+            <!-- Main 2-Column Content -->
+            <div class="pf-set-us-grid">
+
+              <!-- Left Column: Actual vs Plan & Insight -->
+              <div class="pf-set-us-col-left">
+                
+                <div class="pf-set-us-sub-head">
+                  <div class="pf-set-us-sub-title"><span>🕒</span> สัดส่วนพอร์ตหุ้นจริง vs แผนเกษียณ 70:30</div>
+                  <div class="pf-set-us-sub-total" id="pfSetUsStockTotal">พอร์ตหุ้นรวม ฿ 2,460,501</div>
+                </div>
+
+                <!-- 1. Actual Ratio Progress -->
+                <div class="pf-set-us-ratio-block">
+                  <div class="pf-set-us-bar-meta">
+                    <span class="pf-set-us-lbl">1. พอร์ตจริงปัจจุบัน (Actual):</span>
+                    <span class="pf-set-us-vals" id="pfSetUsActMeta"><span style="color:#34d399;">SET 82.9%</span> • <span style="color:#38bdf8;">US 17.1%</span></span>
+                  </div>
+                  <div class="pf-set-us-seg-bar">
+                    <div class="pf-set-us-seg-set-act" id="pfSetUsSegSetAct" style="width: 82.9%;">82.9%</div>
+                    <div class="pf-set-us-seg-us-act" id="pfSetUsSegUsAct" style="width: 17.1%;">17.1%</div>
+                  </div>
+                  <div class="pf-set-us-bar-subs">
+                    <span id="pfSetUsActSetSub">SET: ฿ 2,039,760</span>
+                    <span id="pfSetUsActUsSub">US (Dime): ฿ 420,741</span>
+                  </div>
+                </div>
+
+                <!-- 2. Target Plan Ratio Progress -->
+                <div class="pf-set-us-ratio-block">
+                  <div class="pf-set-us-bar-meta">
+                    <span class="pf-set-us-lbl">2. แผนเป้าหมาย (Forecast SET70_US30):</span>
+                    <span class="pf-set-us-vals"><span style="color:#a7f3d0;">SET 70.0%</span> • <span style="color:#bae6fd;">US 30.0%</span></span>
+                  </div>
+                  <div class="pf-set-us-seg-bar">
+                    <div class="pf-set-us-seg-set-tgt" style="width: 70%;">เป้าหมาย 70%</div>
+                    <div class="pf-set-us-seg-us-tgt" style="width: 30%;">30%</div>
+                  </div>
+                  <div class="pf-set-us-bar-subs">
+                    <span id="pfSetUsTgtSetSub">เป้าหมาย SET: ~฿ 1,722,351</span>
+                    <span id="pfSetUsTgtUsSub">เป้าหมาย US: ~฿ 738,150</span>
+                  </div>
+                </div>
+
+                <!-- Donut Chart & Legend -->
+                <div class="pf-set-us-donut-row">
+                  <div class="pf-set-us-donut-wrap">
+                    <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                      <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="18" />
+                      <circle id="pfSetUsDonutSet" cx="50" cy="50" r="38" fill="none" stroke="#10b981" stroke-width="18"
+                              stroke-dasharray="197.9 238.8" stroke-dashoffset="0" stroke-linecap="butt" />
+                      <circle id="pfSetUsDonutUs" cx="50" cy="50" r="38" fill="none" stroke="#0ea5e9" stroke-width="18"
+                              stroke-dasharray="40.8 238.8" stroke-dashoffset="-197.9" stroke-linecap="butt" />
+                    </svg>
+                  </div>
+                  <div class="pf-set-us-legend-list">
+                    <div class="pf-set-us-legend-item">
+                      <span class="pf-set-us-legend-box" style="background: #10b981;"></span>
+                      <span>หุ้นไทย (SET)</span>
+                    </div>
+                    <div class="pf-set-us-legend-item">
+                      <span class="pf-set-us-legend-box" style="background: #0ea5e9;"></span>
+                      <span>หุ้นสหรัฐฯ (Dime)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Rebalance Insight Card -->
+                <div class="pf-set-us-insight-card">
+                  <div class="pf-set-us-insight-title">
+                    <span>💡</span> คำแนะนำการปรับสมดุล (Rebalance Insight):
+                  </div>
+                  <div class="pf-set-us-insight-desc" id="pfSetUsInsightDesc">
+                    ปัจจุบันสัดส่วนหุ้นสหรัฐฯ อยู่ที่ <strong style="color:#ffffff;">17.1%</strong> เติบโตขึ้นจาก 2.9% ในปี 2025 อย่างต่อเนื่อง หากต้องการปรับพอร์ตให้แตะเป้าหมาย <strong style="color:#ffffff;">70:30</strong> ควรกระจายเงินลงทุนใหม่ (DCA / Fresh Capital) เข้าสู่ Dime US Stock อีกประมาณ <span style="color:#34d399; font-weight:700; font-family:'JetBrains Mono', monospace;">฿ 317,409</span> โดยไม่ต้องขายหุ้นไทยออกเพื่อลดผลกระทบทางภาษีและรักษาเงินปันผล
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Right Column: Historical Ratio Progression Chart -->
+              <div class="pf-set-us-col-right">
+
+                <div class="pf-set-us-chart-head">
+                  <div class="pf-set-us-chart-titles">
+                    <h4><span>📈</span> ประวัติการปรับสัดส่วนย้อนหลัง (Historical Ratio Progression 2025 - 2026)</h4>
+                    <p>เส้นทางการปรับน้ำหนักจากหุ้นไทย 100% สู่การกระจายลงทุนในหุ้นสหรัฐฯ (Dime)</p>
+                  </div>
+                  <div class="pf-set-us-chart-legends">
+                    <span class="pf-set-us-c-leg"><span class="pf-set-us-c-dot" style="background:#10b981;"></span> SET %</span>
+                    <span class="pf-set-us-c-leg"><span class="pf-set-us-c-dot" style="background:#0ea5e9;"></span> US %</span>
+                    <span class="pf-set-us-c-leg"><span class="pf-set-us-c-dashed-line"></span> เป้า 30%</span>
+                  </div>
+                </div>
+
+                <!-- SVG Spline Multi-Line Chart -->
+                <div class="pf-set-us-chart-svg-wrap" id="pfSetUsChartWrap">
+                  <svg class="pf-set-us-prog-svg" id="pfSetUsProgSvg" viewBox="0 0 620 230">
+                    <defs>
+                      <filter id="pfSetGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#10b981" flood-opacity="0.6"/>
+                      </filter>
+                      <filter id="pfUsGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#0ea5e9" flood-opacity="0.6"/>
+                      </filter>
+                    </defs>
+
+                    <!-- Grid Lines (0% to 100%) -->
+                    <g id="pfSetUsGridLines" stroke="rgba(255,255,255,0.06)" stroke-dasharray="2 3"></g>
+
+                    <!-- Target 70% & 30% Dashed Lines -->
+                    <line id="pfSetUsLineTgt70" x1="40" y1="62" x2="600" y2="62" stroke="rgba(16, 185, 129, 0.45)" stroke-dasharray="4 4" stroke-width="1.5" />
+                    <line id="pfSetUsLineTgt30" x1="40" y1="142" x2="600" y2="142" stroke="rgba(14, 165, 233, 0.65)" stroke-dasharray="4 4" stroke-width="1.5" />
+
+                    <!-- Curves -->
+                    <path id="pfSetUsCurveSet" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" />
+                    <path id="pfSetUsCurveUs" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" />
+
+                    <!-- Interactive Hover Elements -->
+                    <line id="pfSetUsHoverVLine" x1="0" y1="15" x2="0" y2="200" stroke="#94a3b8" stroke-dasharray="2 2" stroke-width="1" opacity="0" />
+                    <circle id="pfSetUsHoverSetDot" cx="0" cy="0" r="5.5" fill="#10b981" stroke="#0f172a" stroke-width="2" opacity="0" filter="url(#pfSetGlow)" />
+                    <circle id="pfSetUsHoverUsDot" cx="0" cy="0" r="5.5" fill="#0ea5e9" stroke="#0f172a" stroke-width="2" opacity="0" filter="url(#pfUsGlow)" />
+
+                    <!-- Data Points (Dots) -->
+                    <g id="pfSetUsDotsSet"></g>
+                    <g id="pfSetUsDotsUs"></g>
+
+                    <!-- X-Axis Labels -->
+                    <g id="pfSetUsXAxisLabels" font-size="10.5" font-family="'JetBrains Mono', 'Noto Sans Thai', monospace" fill="#94a3b8" text-anchor="middle"></g>
+                  </svg>
+
+                  <!-- Floating Hover Tooltip -->
+                  <div class="pf-set-us-hover-pill" id="pfSetUsHoverPill">
+                    <div style="font-weight: 700; margin-bottom: 3px; font-size: 11px; color:#cbd5e1;" id="pfSetUsPillDate">ก.ย. 25</div>
+                    <div style="display:flex; gap: 12px; font-family:'JetBrains Mono', monospace; font-size: 11.5px;">
+                      <span style="color:#34d399;" id="pfSetUsPillSet">SET 97.1%</span>
+                      <span style="color:#38bdf8;" id="pfSetUsPillUs">US 2.9%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Summary Row -->
+                <div class="pf-set-us-chart-foot-stats">
+                  <span class="pf-set-us-foot-left" id="pfSetUsFootStart">เริ่มต้นสะสม Dime: ก.ย. 2025 (2.9%)</span>
+                  <span class="pf-set-us-foot-mid" id="pfSetUsFootProg">ก้าวหน้าสู่เป้าหมาย: +14.2% ใน 1 ปี</span>
+                  <span class="pf-set-us-foot-right">เป้าหมายสมดุล: 70% SET : 30% US</span>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
 
           <!-- ===============================================================

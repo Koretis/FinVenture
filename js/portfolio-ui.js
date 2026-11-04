@@ -320,6 +320,7 @@ var PortfolioUI = {
     this.renderTopMovers(snap);
     this.renderMarketIntelligence(snap);
     this.renderAssetClassDetailCards(snap);
+    this.renderSetVsUsAllocation(snap);
     this.renderZone5CashFlowAndTech(snap);
   },
 
@@ -1618,6 +1619,9 @@ var PortfolioUI = {
 
     // 3. Render Zone 4 Deep-Dive Sheet Explorer ("SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log")
     this.renderTradeLogExplorer();
+
+    // 4. Render SET vs US Stock Ratio & Allocation Card
+    this.renderSetVsUsAllocation(snap);
   },
 
   renderZone4Main(model) {
@@ -1998,6 +2002,315 @@ var PortfolioUI = {
       this.renderZone4Chart(activeModel, hist);
     });
   },
+  /* =========================================================================
+     SET vs US Stock Ratio & Allocation Component (Forecast SET70_US30)
+     ========================================================================= */
+  renderSetVsUsAllocation(snap) {
+    if (!snap) snap = this.getLatestPortfolioSnapshot();
+    const data = (typeof currentFinData !== "undefined" && currentFinData) ? currentFinData : {};
+    const hist = Array.isArray(data.portfolioHistory) ? data.portfolioHistory : [];
+
+    // 1. Calculate Latest Actual Numbers
+    const setMkt = snap.assets?.SET?.market || 2039760;
+    const usMkt = snap.assets?.US?.market || 420741;
+    const totalStocks = (setMkt + usMkt) || 1;
+
+    const setPct = (setMkt / totalStocks) * 100;
+    const usPct = (usMkt / totalStocks) * 100;
+    const ratio = (usPct > 0) ? (setPct / usPct).toFixed(1) : "—";
+
+    // Target 70:30
+    const tgtSetPct = 70.0;
+    const tgtUsPct = 30.0;
+    const tgtSetVal = totalStocks * 0.70;
+    const tgtUsVal = totalStocks * 0.30;
+    const gapUsPct = tgtUsPct - usPct;
+    const gapUsVal = tgtUsVal - usMkt;
+
+    // 2. Update Header Badges
+    const bAct = document.getElementById("pfSetUsBadgeActual");
+    if (bAct) bAct.textContent = `สัดส่วนจริง: SET ${setPct.toFixed(1)}% : US ${usPct.toFixed(1)}% (${ratio} : 1)`;
+
+    const bGap = document.getElementById("pfSetUsBadgeGap");
+    if (bGap) {
+      const sign = gapUsPct >= 0 ? "+" : "";
+      bGap.textContent = `Gap: US ขาดอีก ${sign}${gapUsPct.toFixed(1)}% (~${this.fmtMoney(Math.abs(gapUsVal))})`;
+    }
+
+    // 3. Update Left Column
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setTxt("pfSetUsStockTotal", `พอร์ตหุ้นรวม ฿ ${Math.round(totalStocks).toLocaleString()}`);
+
+    const actMeta = document.getElementById("pfSetUsActMeta");
+    if (actMeta) actMeta.innerHTML = `<span style="color:#34d399;">SET ${setPct.toFixed(1)}%</span> • <span style="color:#38bdf8;">US ${usPct.toFixed(1)}%</span>`;
+
+    const segSetAct = document.getElementById("pfSetUsSegSetAct");
+    if (segSetAct) {
+      segSetAct.style.width = `${setPct.toFixed(1)}%`;
+      segSetAct.textContent = `${setPct.toFixed(1)}%`;
+    }
+    const segUsAct = document.getElementById("pfSetUsSegUsAct");
+    if (segUsAct) {
+      segUsAct.style.width = `${usPct.toFixed(1)}%`;
+      segUsAct.textContent = `${usPct.toFixed(1)}%`;
+    }
+
+    setTxt("pfSetUsActSetSub", `SET: ฿ ${Math.round(setMkt).toLocaleString()}`);
+    setTxt("pfSetUsActUsSub", `US (Dime): ฿ ${Math.round(usMkt).toLocaleString()}`);
+    setTxt("pfSetUsTgtSetSub", `เป้าหมาย SET: ~฿ ${Math.round(tgtSetVal).toLocaleString()}`);
+    setTxt("pfSetUsTgtUsSub", `เป้าหมาย US: ~฿ ${Math.round(tgtUsVal).toLocaleString()}`);
+
+    // Update Donut
+    const circ = 2 * Math.PI * 38; // ~238.76
+    const setArcLen = (setPct / 100) * circ;
+    const usArcLen = (usPct / 100) * circ;
+    const donutSet = document.getElementById("pfSetUsDonutSet");
+    const donutUs = document.getElementById("pfSetUsDonutUs");
+    if (donutSet) {
+      donutSet.setAttribute("stroke-dasharray", `${setArcLen.toFixed(1)} ${circ.toFixed(1)}`);
+      donutSet.setAttribute("stroke-dashoffset", "0");
+    }
+    if (donutUs) {
+      donutUs.setAttribute("stroke-dasharray", `${usArcLen.toFixed(1)} ${circ.toFixed(1)}`);
+      donutUs.setAttribute("stroke-dashoffset", `-${setArcLen.toFixed(1)}`);
+    }
+
+    // Update Insight Desc
+    const insDesc = document.getElementById("pfSetUsInsightDesc");
+    if (insDesc) {
+      insDesc.innerHTML = `ปัจจุบันสัดส่วนหุ้นสหรัฐฯ อยู่ที่ <strong style="color:#ffffff;">${usPct.toFixed(1)}%</strong> เติบโตขึ้นจาก 2.9% ในปี 2025 อย่างต่อเนื่อง หากต้องการปรับพอร์ตให้แตะเป้าหมาย <strong style="color:#ffffff;">70:30</strong> ควรกระจายเงินลงทุนใหม่ (DCA / Fresh Capital) เข้าสู่ Dime US Stock อีกประมาณ <span style="color:#34d399; font-weight:700; font-family:'JetBrains Mono', monospace;">฿ ${Math.round(Math.abs(gapUsVal)).toLocaleString()}</span> โดยไม่ต้องขายหุ้นไทยออกเพื่อลดผลกระทบทางภาษีและรักษาเงินปันผล`;
+    }
+
+    // 4. Extract Historical Progression (from 2025-09 onwards)
+    const thMonths = {
+      "01": "ม.ค.", "02": "ก.พ.", "03": "มี.ค.", "04": "เม.ย.",
+      "05": "พ.ค.", "06": "มิ.ย.", "07": "ก.ค.", "08": "ส.ค.",
+      "09": "ก.ย.", "10": "ต.ค.", "11": "พ.ย.", "12": "ธ.ค."
+    };
+
+    let progression = [];
+    hist.forEach(h => {
+      const d = String(h.date || "");
+      if (d >= "2025-09") {
+        const s = h.assets?.SET?.market ?? 0;
+        const u = h.assets?.US?.market ?? 0;
+        const tot = s + u;
+        if (tot > 0) {
+          const parts = d.split("-");
+          const yr2 = (parts[0] || "").slice(-2);
+          const mo = parts[1] || "";
+          const lbl = `${thMonths[mo] || mo} ${yr2}`;
+          progression.push({
+            date: d,
+            label: lbl,
+            setMkt: s,
+            usMkt: u,
+            total: tot,
+            setPct: (s / tot) * 100,
+            usPct: (u / tot) * 100
+          });
+        }
+      }
+    });
+
+    if (progression.length === 0) {
+      progression = [
+        { date: "2025-09", label: "ก.ย. 25", setMkt: 1324900, usMkt: 39559, setPct: 97.1, usPct: 2.9 },
+        { date: "2025-10", label: "ต.ค. 25", setMkt: 1244649, usMkt: 107039, setPct: 92.1, usPct: 7.9 },
+        { date: "2025-11", label: "พ.ย. 25", setMkt: 1244438, usMkt: 99410, setPct: 92.6, usPct: 7.4 },
+        { date: "2025-12", label: "ธ.ค. 25", setMkt: 1277954, usMkt: 94876, setPct: 93.1, usPct: 6.9 },
+        { date: "2026-01", label: "ม.ค. 26", setMkt: 1377654, usMkt: 97637, setPct: 93.4, usPct: 6.6 },
+        { date: "2026-02", label: "ก.พ. 26", setMkt: 1468025, usMkt: 85511, setPct: 94.5, usPct: 5.5 },
+        { date: "2026-03", label: "มี.ค. 26", setMkt: 1858660, usMkt: 82948, setPct: 95.7, usPct: 4.3 },
+        { date: "2026-04", label: "เม.ย. 26", setMkt: 1862251, usMkt: 284236, setPct: 86.8, usPct: 13.2 },
+        { date: "2026-05", label: "พ.ค. 26", setMkt: 1944951, usMkt: 336983, setPct: 85.2, usPct: 14.8 },
+        { date: "2026-06", label: "มิ.ย. 26", setMkt: 2036536, usMkt: 355129, setPct: 85.2, usPct: 14.8 },
+        { date: "2026-07", label: "ก.ค. 26", setMkt: 2098487, usMkt: 346927, setPct: 85.8, usPct: 14.2 },
+        { date: "2026-08", label: "ส.ค. 26", setMkt: 2068525, usMkt: 362787, setPct: 85.1, usPct: 14.9 },
+        { date: "2026-09", label: "ก.ย. 26", setMkt: 2005878, usMkt: 374543, setPct: 84.3, usPct: 15.7 },
+        { date: "2026-10", label: "ต.ค. 26", setMkt: 2039760, usMkt: 420741, setPct: 82.9, usPct: 17.1 }
+      ];
+    }
+
+    // 5. Render Right Column Progression SVG Chart
+    this.renderSetUsProgressionChart(progression);
+
+    // 6. Update Footer Stats
+    const firstPt = progression[0];
+    const lastPt = progression[progression.length - 1];
+    setTxt("pfSetUsFootStart", `เริ่มต้นสะสม Dime: ${firstPt.label} (${firstPt.usPct.toFixed(1)}%)`);
+    const progressGain = lastPt.usPct - firstPt.usPct;
+    setTxt("pfSetUsFootProg", `ก้าวหน้าสู่เป้าหมาย: +${progressGain.toFixed(1)}% ใน ${progression.length} เดือน`);
+  },
+
+  renderSetUsProgressionChart(progression) {
+    const wrap = document.getElementById("pfSetUsChartWrap");
+    const svg = document.getElementById("pfSetUsProgSvg");
+    if (!wrap || !svg || !progression || progression.length === 0) return;
+
+    const W = 620;
+    const H = 230;
+    const padLeft = 40;
+    const padRight = 20;
+    const padTop = 18;
+    const padBottom = 30;
+
+    const usableW = W - padLeft - padRight;
+    const usableH = H - padTop - padBottom;
+
+    // Y Grid lines (0% to 100%)
+    const gridG = document.getElementById("pfSetUsGridLines");
+    if (gridG) {
+      gridG.innerHTML = "";
+      for (let pct = 0; pct <= 100; pct += 20) {
+        const y = padTop + usableH - (pct / 100) * usableH;
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", padLeft);
+        line.setAttribute("y1", y.toFixed(1));
+        line.setAttribute("x2", W - padRight);
+        line.setAttribute("y2", y.toFixed(1));
+        gridG.appendChild(line);
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", padLeft - 8);
+        txt.setAttribute("y", (y + 3.5).toFixed(1));
+        txt.setAttribute("text-anchor", "end");
+        txt.setAttribute("font-size", "10");
+        txt.setAttribute("font-family", "'JetBrains Mono', monospace");
+        txt.setAttribute("fill", "#64748b");
+        txt.textContent = `${pct}%`;
+        gridG.appendChild(txt);
+      }
+    }
+
+    // Set Target Reference Lines (70% & 30%)
+    const y70 = padTop + usableH - (70 / 100) * usableH;
+    const y30 = padTop + usableH - (30 / 100) * usableH;
+    const line70 = document.getElementById("pfSetUsLineTgt70");
+    const line30 = document.getElementById("pfSetUsLineTgt30");
+    if (line70) { line70.setAttribute("y1", y70.toFixed(1)); line70.setAttribute("y2", y70.toFixed(1)); line70.setAttribute("x1", padLeft); line70.setAttribute("x2", W - padRight); }
+    if (line30) { line30.setAttribute("y1", y30.toFixed(1)); line30.setAttribute("y2", y30.toFixed(1)); line30.setAttribute("x1", padLeft); line30.setAttribute("x2", W - padRight); }
+
+    // Coordinates
+    const setPts = [];
+    const usPts = [];
+    const xG = document.getElementById("pfSetUsXAxisLabels");
+    const dotsSetG = document.getElementById("pfSetUsDotsSet");
+    const dotsUsG = document.getElementById("pfSetUsDotsUs");
+    if (xG) xG.innerHTML = "";
+    if (dotsSetG) dotsSetG.innerHTML = "";
+    if (dotsUsG) dotsUsG.innerHTML = "";
+
+    progression.forEach((d, i) => {
+      const x = padLeft + (i / (progression.length - 1)) * usableW;
+      const ySet = padTop + usableH - (d.setPct / 100) * usableH;
+      const yUs = padTop + usableH - (d.usPct / 100) * usableH;
+
+      setPts.push({ x, y: ySet, pct: d.setPct, date: d.label, mkt: d.setMkt });
+      usPts.push({ x, y: yUs, pct: d.usPct, date: d.label, mkt: d.usMkt });
+
+      if (dotsSetG) {
+        const cS = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        cS.setAttribute("cx", x.toFixed(1));
+        cS.setAttribute("cy", ySet.toFixed(1));
+        cS.setAttribute("r", "3");
+        cS.setAttribute("fill", "#10b981");
+        cS.setAttribute("stroke", "#0f172a");
+        cS.setAttribute("stroke-width", "1.5");
+        dotsSetG.appendChild(cS);
+      }
+
+      if (dotsUsG) {
+        const cU = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        cU.setAttribute("cx", x.toFixed(1));
+        cU.setAttribute("cy", yUs.toFixed(1));
+        cU.setAttribute("r", "3");
+        cU.setAttribute("fill", "#0ea5e9");
+        cU.setAttribute("stroke", "#0f172a");
+        cU.setAttribute("stroke-width", "1.5");
+        dotsUsG.appendChild(cU);
+      }
+
+      if (xG) {
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", x.toFixed(1));
+        txt.setAttribute("y", H - 6);
+        txt.textContent = d.label;
+        xG.appendChild(txt);
+      }
+    });
+
+    const curveSet = document.getElementById("pfSetUsCurveSet");
+    const curveUs = document.getElementById("pfSetUsCurveUs");
+    if (curveSet) curveSet.setAttribute("d", this.getCatmullRomSpline(setPts));
+    if (curveUs) curveUs.setAttribute("d", this.getCatmullRomSpline(usPts));
+
+    // Interactive Hover
+    this._setUsProgPoints = { setPts, usPts };
+    if (!this._setUsHoverAttached) {
+      this._setUsHoverAttached = true;
+      const vLine = document.getElementById("pfSetUsHoverVLine");
+      const hSetDot = document.getElementById("pfSetUsHoverSetDot");
+      const hUsDot = document.getElementById("pfSetUsHoverUsDot");
+      const pill = document.getElementById("pfSetUsHoverPill");
+
+      wrap.addEventListener("mousemove", (e) => {
+        if (!this._setUsProgPoints) return;
+        const rect = wrap.getBoundingClientRect();
+        const mouseX = ((e.clientX - rect.left) / rect.width) * W;
+        let nearestIdx = 0;
+        let minDist = Infinity;
+        this._setUsProgPoints.setPts.forEach((pt, idx) => {
+          const dist = Math.abs(pt.x - mouseX);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestIdx = idx;
+          }
+        });
+
+        const sPt = this._setUsProgPoints.setPts[nearestIdx];
+        const uPt = this._setUsProgPoints.usPts[nearestIdx];
+
+        if (vLine) {
+          vLine.setAttribute("x1", sPt.x.toFixed(1));
+          vLine.setAttribute("x2", sPt.x.toFixed(1));
+          vLine.setAttribute("opacity", "1");
+        }
+        if (hSetDot) {
+          hSetDot.setAttribute("cx", sPt.x.toFixed(1));
+          hSetDot.setAttribute("cy", sPt.y.toFixed(1));
+          hSetDot.setAttribute("opacity", "1");
+        }
+        if (hUsDot) {
+          hUsDot.setAttribute("cx", uPt.x.toFixed(1));
+          hUsDot.setAttribute("cy", uPt.y.toFixed(1));
+          hUsDot.setAttribute("opacity", "1");
+        }
+
+        const pillDate = document.getElementById("pfSetUsPillDate");
+        const pillSet = document.getElementById("pfSetUsPillSet");
+        const pillUs = document.getElementById("pfSetUsPillUs");
+        if (pillDate) pillDate.textContent = sPt.date;
+        if (pillSet) pillSet.textContent = `SET ${sPt.pct.toFixed(1)}% (฿${Math.round(sPt.mkt).toLocaleString()})`;
+        if (pillUs) pillUs.textContent = `US ${uPt.pct.toFixed(1)}% (฿${Math.round(uPt.mkt).toLocaleString()})`;
+
+        if (pill) {
+          const clientXPixel = (sPt.x / W) * rect.width;
+          pill.style.left = `${clientXPixel}px`;
+          pill.style.top = `${((Math.min(sPt.y, uPt.y) / H) * rect.height) + 10}px`;
+          pill.style.opacity = "1";
+        }
+      });
+
+      wrap.addEventListener("mouseleave", () => {
+        if (vLine) vLine.setAttribute("opacity", "0");
+        if (hSetDot) hSetDot.setAttribute("opacity", "0");
+        if (hUsDot) hUsDot.setAttribute("opacity", "0");
+        if (pill) pill.style.opacity = "0";
+      });
+    }
+  },
+
   /* =========================================================================
      ZONE 4 DEEP-DIVE EXPLORER:
      Sheets: "SET Trade Log", "USD Stock Trading Log", "Gold Trade Log", "Crypto Trade Log"
