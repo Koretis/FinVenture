@@ -446,7 +446,7 @@ var SheetsAPI = {
         else if (at.includes("crypto") || nm.includes("bitkub") || at.includes("ico")) cat = "CRYPTO";
         else if (at.includes("usd") || nm.includes("dime")) cat = "US";
         else if (at.includes("cash") || at.includes("bank") || nm.includes("saving") || nm.includes("cash")) cat = "CASH";
-        else if (at.includes("ltf") || nm.includes("uobsd")) cat = "SET";
+        else if (at.includes("ltf") || nm.includes("uobsd")) cat = "LTF";
         else if (at.includes("etf") || nm.includes("jitta")) cat = "ETF";
 
         if (!byYm[dateObj.ym]) {

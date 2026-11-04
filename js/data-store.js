@@ -90,8 +90,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1313879,
-                  "cost": 1328817
+                  "market": 1114862,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -197,7 +197,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 32651.75,
                   "cost": 46000.0
               },
@@ -207,7 +207,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 80254.16,
                   "cost": 80000.0
               },
@@ -217,7 +217,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 103.94,
                   "cost": 100.0
               },
@@ -227,7 +227,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 86006.26,
                   "cost": 70000.0
               },
@@ -265,8 +265,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1304403,
-                  "cost": 1328817
+                  "market": 1111799,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -372,7 +372,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 31850.15,
                   "cost": 46000.0
               },
@@ -382,7 +382,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 77715.65,
                   "cost": 80000.0
               },
@@ -392,7 +392,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.01,
                   "cost": 100.0
               },
@@ -402,7 +402,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 82934.61,
                   "cost": 70000.0
               },
@@ -440,8 +440,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1283740,
-                  "cost": 1328817
+                  "market": 1091870,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -547,7 +547,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 31437.56,
                   "cost": 46000.0
               },
@@ -557,7 +557,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 78074.15,
                   "cost": 80000.0
               },
@@ -567,7 +567,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.1,
                   "cost": 100.0
               },
@@ -577,7 +577,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 82254.31,
                   "cost": 70000.0
               },
@@ -615,8 +615,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1301911,
-                  "cost": 1328817
+                  "market": 1116105,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -722,7 +722,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 30918.88,
                   "cost": 46000.0
               },
@@ -732,7 +732,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76074.62,
                   "cost": 80000.0
               },
@@ -742,7 +742,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.18,
                   "cost": 100.0
               },
@@ -752,7 +752,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 78708.51,
                   "cost": 70000.0
               },
@@ -790,8 +790,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1272237,
-                  "cost": 1328817
+                  "market": 1084909,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -897,7 +897,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 30494.5,
                   "cost": 46000.0
               },
@@ -907,7 +907,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 77010.33,
                   "cost": 80000.0
               },
@@ -917,7 +917,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.3,
                   "cost": 100.0
               },
@@ -927,7 +927,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 79718.65,
                   "cost": 70000.0
               },
@@ -965,8 +965,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1287580,
-                  "cost": 1328817
+                  "market": 1104610,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1072,7 +1072,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 29760.26,
                   "cost": 46000.0
               },
@@ -1082,7 +1082,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 75750.1,
                   "cost": 80000.0
               },
@@ -1092,7 +1092,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.42,
                   "cost": 100.0
               },
@@ -1102,7 +1102,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 77354.79,
                   "cost": 70000.0
               },
@@ -1140,8 +1140,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1346277,
-                  "cost": 1328817
+                  "market": 1159485,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1247,7 +1247,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 30381.67,
                   "cost": 46000.0
               },
@@ -1257,7 +1257,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 78724.26,
                   "cost": 80000.0
               },
@@ -1267,7 +1267,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.56,
                   "cost": 100.0
               },
@@ -1277,7 +1277,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 77581.55,
                   "cost": 70000.0
               },
@@ -1315,8 +1315,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1301034,
-                  "cost": 1328817
+                  "market": 1107819,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1422,7 +1422,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 30875.09,
                   "cost": 46000.0
               },
@@ -1432,7 +1432,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 79543.18,
                   "cost": 80000.0
               },
@@ -1442,7 +1442,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.69,
                   "cost": 100.0
               },
@@ -1452,7 +1452,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 82692.04,
                   "cost": 70000.0
               },
@@ -1490,8 +1490,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1330084,
-                  "cost": 1328817
+                  "market": 1145020,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1597,7 +1597,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 29206.04,
                   "cost": 46000.0
               },
@@ -1607,7 +1607,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76308.9,
                   "cost": 80000.0
               },
@@ -1617,7 +1617,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 104.83,
                   "cost": 100.0
               },
@@ -1627,7 +1627,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 79444.47,
                   "cost": 70000.0
               },
@@ -1665,8 +1665,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1285176,
-                  "cost": 1328817
+                  "market": 1112495,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1772,7 +1772,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27708.6,
                   "cost": 46000.0
               },
@@ -1782,7 +1782,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 70870.91,
                   "cost": 80000.0
               },
@@ -1792,7 +1792,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.0,
                   "cost": 100.0
               },
@@ -1802,7 +1802,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 73996.58,
                   "cost": 70000.0
               },
@@ -1840,8 +1840,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1277010,
-                  "cost": 1328817
+                  "market": 1103724,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -1947,7 +1947,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27035.66,
                   "cost": 46000.0
               },
@@ -1957,7 +1957,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71742.2,
                   "cost": 80000.0
               },
@@ -1967,7 +1967,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.16,
                   "cost": 100.0
               },
@@ -1977,7 +1977,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 74403.39,
                   "cost": 70000.0
               },
@@ -2015,8 +2015,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1277579,
-                  "cost": 1328817
+                  "market": 1099708,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2122,7 +2122,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27757.27,
                   "cost": 46000.0
               },
@@ -2132,7 +2132,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 73279.54,
                   "cost": 80000.0
               },
@@ -2142,7 +2142,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.32,
                   "cost": 100.0
               },
@@ -2152,7 +2152,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76729.46,
                   "cost": 70000.0
               },
@@ -2190,8 +2190,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1225209,
-                  "cost": 1328817
+                  "market": 1053474,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2297,7 +2297,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26660.63,
                   "cost": 46000.0
               },
@@ -2307,7 +2307,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69890.96,
                   "cost": 80000.0
               },
@@ -2317,7 +2317,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.51,
                   "cost": 100.0
               },
@@ -2327,7 +2327,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 75078.19,
                   "cost": 70000.0
               },
@@ -2365,8 +2365,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1150713,
-                  "cost": 1328817
+                  "market": 976394,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2472,7 +2472,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27338.28,
                   "cost": 46000.0
               },
@@ -2482,7 +2482,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71450.94,
                   "cost": 80000.0
               },
@@ -2492,7 +2492,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.68,
                   "cost": 100.0
               },
@@ -2502,7 +2502,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 75424.52,
                   "cost": 70000.0
               },
@@ -2540,8 +2540,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1178635,
-                  "cost": 1328817
+                  "market": 1002555,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2647,7 +2647,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27674.08,
                   "cost": 46000.0
               },
@@ -2657,7 +2657,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 72346.31,
                   "cost": 80000.0
               },
@@ -2667,7 +2667,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 105.84,
                   "cost": 100.0
               },
@@ -2677,7 +2677,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 75953.64,
                   "cost": 70000.0
               },
@@ -2715,8 +2715,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1197445,
-                  "cost": 1328817
+                  "market": 1021600,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2822,7 +2822,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27635.01,
                   "cost": 46000.0
               },
@@ -2832,7 +2832,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 72384.17,
                   "cost": 80000.0
               },
@@ -2842,7 +2842,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.01,
                   "cost": 100.0
               },
@@ -2852,7 +2852,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 75719.32,
                   "cost": 70000.0
               },
@@ -2890,8 +2890,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1158959,
-                  "cost": 1328817
+                  "market": 984051,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -2997,7 +2997,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27414.4,
                   "cost": 46000.0
               },
@@ -3007,7 +3007,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71001.49,
                   "cost": 80000.0
               },
@@ -3017,7 +3017,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.14,
                   "cost": 100.0
               },
@@ -3027,7 +3027,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76385.88,
                   "cost": 70000.0
               },
@@ -3065,8 +3065,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1153674,
-                  "cost": 1328817
+                  "market": 987048,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -3172,7 +3172,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26200.21,
                   "cost": 46000.0
               },
@@ -3182,7 +3182,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69039.48,
                   "cost": 80000.0
               },
@@ -3192,7 +3192,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.35,
                   "cost": 100.0
               },
@@ -3202,7 +3202,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71280.2,
                   "cost": 70000.0
               },
@@ -3240,8 +3240,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1214609,
-                  "cost": 1328817
+                  "market": 1048116,
+                  "cost": 1132717
               },
               "US": {
                   "market": 0,
@@ -3347,7 +3347,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26267.57,
                   "cost": 46000.0
               },
@@ -3357,7 +3357,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 70886.48,
                   "cost": 80000.0
               },
@@ -3367,7 +3367,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.57,
                   "cost": 100.0
               },
@@ -3377,7 +3377,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69232.43,
                   "cost": 70000.0
               },
@@ -3415,8 +3415,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1244256,
-                  "cost": 1324865
+                  "market": 1077097,
+                  "cost": 1128765
               },
               "US": {
                   "market": 0,
@@ -3522,7 +3522,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26865.4,
                   "cost": 46000.0
               },
@@ -3532,7 +3532,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 72211.83,
                   "cost": 80000.0
               },
@@ -3542,7 +3542,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.78,
                   "cost": 100.0
               },
@@ -3552,7 +3552,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 67974.91,
                   "cost": 70000.0
               },
@@ -3590,8 +3590,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1564148,
-                  "cost": 1580654
+                  "market": 1384349,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -3697,7 +3697,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 28955.29,
                   "cost": 46000.0
               },
@@ -3707,7 +3707,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76949.1,
                   "cost": 80000.0
               },
@@ -3717,7 +3717,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 106.97,
                   "cost": 100.0
               },
@@ -3727,7 +3727,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 73788.37,
                   "cost": 70000.0
               },
@@ -3765,8 +3765,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1606138,
-                  "cost": 1580654
+                  "market": 1425241,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -3872,7 +3872,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 28992.34,
                   "cost": 46000.0
               },
@@ -3882,7 +3882,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 78009.03,
                   "cost": 80000.0
               },
@@ -3892,7 +3892,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.15,
                   "cost": 100.0
               },
@@ -3902,7 +3902,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 73788.37,
                   "cost": 70000.0
               },
@@ -3940,8 +3940,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1656272,
-                  "cost": 1580654
+                  "market": 1481761,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4047,7 +4047,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27572.7,
                   "cost": 46000.0
               },
@@ -4057,7 +4057,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 76258.29,
                   "cost": 80000.0
               },
@@ -4067,7 +4067,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.32,
                   "cost": 100.0
               },
@@ -4077,7 +4077,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 70572.41,
                   "cost": 70000.0
               },
@@ -4115,8 +4115,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1676866,
-                  "cost": 1580654
+                  "market": 1505591,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4222,7 +4222,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26951.29,
                   "cost": 46000.0
               },
@@ -4232,7 +4232,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 74522.78,
                   "cost": 80000.0
               },
@@ -4242,7 +4242,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.49,
                   "cost": 100.0
               },
@@ -4252,7 +4252,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69692.83,
                   "cost": 70000.0
               },
@@ -4290,8 +4290,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1656754,
-                  "cost": 1580654
+                  "market": 1499467,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4397,7 +4397,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 25261.7,
                   "cost": 46000.0
               },
@@ -4407,7 +4407,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69700.56,
                   "cost": 80000.0
               },
@@ -4417,7 +4417,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.65,
                   "cost": 100.0
               },
@@ -4427,7 +4427,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 62216.42,
                   "cost": 70000.0
               },
@@ -4475,8 +4475,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1620867,
-                  "cost": 1580654
+                  "market": 1470322,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4582,7 +4582,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 23965.5,
                   "cost": 46000.0
               },
@@ -4592,7 +4592,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 65485.29,
                   "cost": 80000.0
               },
@@ -4602,7 +4602,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.8,
                   "cost": 100.0
               },
@@ -4612,7 +4612,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 60986.38,
                   "cost": 70000.0
               },
@@ -4660,8 +4660,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1585758,
-                  "cost": 1580654
+                  "market": 1444554,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4767,7 +4767,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 23096.53,
                   "cost": 46000.0
               },
@@ -4777,7 +4777,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 62730.54,
                   "cost": 80000.0
               },
@@ -4787,7 +4787,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 107.96,
                   "cost": 100.0
               },
@@ -4797,7 +4797,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 55269.12,
                   "cost": 70000.0
               },
@@ -4845,8 +4845,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1639077,
-                  "cost": 1580654
+                  "market": 1493443,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -4952,7 +4952,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 23451.87,
                   "cost": 46000.0
               },
@@ -4962,7 +4962,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 65183.76,
                   "cost": 80000.0
               },
@@ -4972,7 +4972,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.11,
                   "cost": 100.0
               },
@@ -4982,7 +4982,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 56890.85,
                   "cost": 70000.0
               },
@@ -5030,8 +5030,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1589034,
-                  "cost": 1580654
+                  "market": 1451058,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -5137,7 +5137,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 22694.05,
                   "cost": 46000.0
               },
@@ -5147,7 +5147,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 62942.17,
                   "cost": 80000.0
               },
@@ -5157,7 +5157,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.25,
                   "cost": 100.0
               },
@@ -5167,7 +5167,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 52231.83,
                   "cost": 70000.0
               },
@@ -5215,8 +5215,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1520528,
-                  "cost": 1580654
+                  "market": 1390467,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -5322,7 +5322,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 21537.12,
                   "cost": 46000.0
               },
@@ -5332,7 +5332,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 59922.36,
                   "cost": 80000.0
               },
@@ -5342,7 +5342,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.37,
                   "cost": 100.0
               },
@@ -5352,7 +5352,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 48493.62,
                   "cost": 70000.0
               },
@@ -5400,8 +5400,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 540000
               },
               "SET": {
-                  "market": 1576688,
-                  "cost": 1580654
+                  "market": 1433041,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -5507,7 +5507,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 24149.06,
                   "cost": 46000.0
               },
@@ -5517,7 +5517,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 67665.3,
                   "cost": 80000.0
               },
@@ -5527,7 +5527,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.49,
                   "cost": 100.0
               },
@@ -5537,7 +5537,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 51723.33,
                   "cost": 70000.0
               },
@@ -5585,8 +5585,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 590000
               },
               "SET": {
-                  "market": 1569854,
-                  "cost": 1580654
+                  "market": 1427263,
+                  "cost": 1384554
               },
               "US": {
                   "market": 0,
@@ -5692,7 +5692,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 24061.49,
                   "cost": 46000.0
               },
@@ -5702,7 +5702,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 67123.83,
                   "cost": 80000.0
               },
@@ -5712,7 +5712,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.6,
                   "cost": 100.0
               },
@@ -5722,7 +5722,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 51297.28,
                   "cost": 70000.0
               },
@@ -5770,8 +5770,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 650000
               },
               "SET": {
-                  "market": 1471300,
-                  "cost": 1266045
+                  "market": 1324900,
+                  "cost": 1069945
               },
               "US": {
                   "market": 39559,
@@ -5877,7 +5877,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 24858.03,
                   "cost": 46000.0
               },
@@ -5887,7 +5887,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 69085.14,
                   "cost": 80000.0
               },
@@ -5897,7 +5897,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.72,
                   "cost": 100.0
               },
@@ -5907,7 +5907,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 52348.65,
                   "cost": 70000.0
               },
@@ -5965,8 +5965,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 440000
               },
               "SET": {
-                  "market": 1391918,
-                  "cost": 1266045
+                  "market": 1244649,
+                  "cost": 1069945
               },
               "US": {
                   "market": 107039,
@@ -6062,7 +6062,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 24932.13,
                   "cost": 46000.0
               },
@@ -6072,7 +6072,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71315.4,
                   "cost": 80000.0
               },
@@ -6082,7 +6082,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.83,
                   "cost": 100.0
               },
@@ -6092,7 +6092,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 50912.46,
                   "cost": 70000.0
               },
@@ -6150,8 +6150,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 440000
               },
               "SET": {
-                  "market": 1385643,
-                  "cost": 1266045
+                  "market": 1244438,
+                  "cost": 1069945
               },
               "US": {
                   "market": 99410,
@@ -6247,7 +6247,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 23704.47,
                   "cost": 46000.0
               },
@@ -6257,7 +6257,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 68087.14,
                   "cost": 80000.0
               },
@@ -6267,7 +6267,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 108.92,
                   "cost": 100.0
               },
@@ -6277,7 +6277,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 49304.48,
                   "cost": 70000.0
               },
@@ -6335,8 +6335,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 440000
               },
               "SET": {
-                  "market": 1420100,
-                  "cost": 1266045
+                  "market": 1277954,
+                  "cost": 1069945
               },
               "US": {
                   "market": 94876,
@@ -6432,7 +6432,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 24026.12,
                   "cost": 46000.0
               },
@@ -6442,7 +6442,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 68239.32,
                   "cost": 80000.0
               },
@@ -6452,7 +6452,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 109.02,
                   "cost": 100.0
               },
@@ -6462,7 +6462,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 49771.76,
                   "cost": 70000.0
               },
@@ -6520,8 +6520,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 440000
               },
               "SET": {
-                  "market": 1526492,
-                  "cost": 1266045
+                  "market": 1377654,
+                  "cost": 1069945
               },
               "US": {
                   "market": 97637,
@@ -6617,7 +6617,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 25063.49,
                   "cost": 46000.0
               },
@@ -6627,7 +6627,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 71976.84,
                   "cost": 80000.0
               },
@@ -6637,7 +6637,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 109.11,
                   "cost": 100.0
               },
@@ -6647,7 +6647,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 51688.97,
                   "cost": 70000.0
               },
@@ -6705,8 +6705,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 440000
               },
               "SET": {
-                  "market": 1637416,
-                  "cost": 1266045
+                  "market": 1468025,
+                  "cost": 1069945
               },
               "US": {
                   "market": 85511,
@@ -6802,7 +6802,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 28441.66,
                   "cost": 46000.0
               },
@@ -6812,7 +6812,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 84060.33,
                   "cost": 80000.0
               },
@@ -6822,7 +6822,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 109.2,
                   "cost": 100.0
               },
@@ -6832,7 +6832,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 56779.53,
                   "cost": 70000.0
               },
@@ -6890,8 +6890,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 2016541,
-                  "cost": 1679670
+                  "market": 1858660,
+                  "cost": 1483570
               },
               "US": {
                   "market": 82948,
@@ -6977,7 +6977,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 26956.34,
                   "cost": 46000.0
               },
@@ -6987,7 +6987,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "CIMB-PRINCIPAL LTF-T",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 79999.0,
                   "cost": 80000.0
               },
@@ -6997,7 +6997,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 109.28,
                   "cost": 100.0
               },
@@ -7007,7 +7007,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UTHAISME-LN",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 50816.26,
                   "cost": 70000.0
               },
@@ -7065,8 +7065,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 490000
               },
               "SET": {
-                  "market": 1889502,
-                  "cost": 1547485
+                  "market": 1862251,
+                  "cost": 1501385
               },
               "US": {
                   "market": 284236,
@@ -7152,7 +7152,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "Krungsri-KFLTFDIV",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 27142.6,
                   "cost": 46000.0
               },
@@ -7162,7 +7162,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "Mid",
                   "assessType": "LTF",
                   "name": "UOBSD",
-                  "cat": "SET",
+                  "cat": "LTF",
                   "market": 109.27,
                   "cost": 100.0
               },

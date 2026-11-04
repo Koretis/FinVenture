@@ -1450,6 +1450,26 @@ var PortfolioUI = {
             hm = Number(h.assets.US.market ?? 0);
             hc = Number(h.assets.US.cost ?? 0);
           }
+        } else if (key === "SET") {
+          // Strictly SET equities portfolio, excluding LTF mutual funds
+          if (Array.isArray(h.items) && h.items.length > 0) {
+            const setItems = h.items.filter(it => {
+              const at = String(it.assessType || "").trim().toUpperCase();
+              const nm = String(it.name || "").trim().toUpperCase();
+              const c = String(it.cat || "").trim().toUpperCase();
+              return at === "SET" || nm === "SET" || (c === "SET" && at !== "LTF");
+            });
+            if (setItems.length > 0) {
+              hm = Math.round(setItems.reduce((s, it) => s + (Number(it.market) || 0), 0));
+              hc = Math.round(setItems.reduce((s, it) => s + (Number(it.cost) || 0), 0));
+            } else if (h.assets && h.assets.SET) {
+              hm = Number(h.assets.SET.market ?? 0);
+              hc = Number(h.assets.SET.cost ?? 0);
+            }
+          } else if (h.assets && h.assets.SET) {
+            hm = Number(h.assets.SET.market ?? 0);
+            hc = Number(h.assets.SET.cost ?? 0);
+          }
         } else if (h.assets && h.assets[key]) {
           hm = Number(h.assets[key].market ?? 0);
           hc = Number(h.assets[key].cost ?? 0);
