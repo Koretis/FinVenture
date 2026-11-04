@@ -1137,11 +1137,13 @@ var SheetsAPI = {
       const setDivRows = sheetResults["SET DIV"] || [];
       let regularDivTotal = 0;
       setDivRows.forEach(sr => {
-        const curDiv = this.parseNum(sr["Current Net DIV"] || sr["col_10"]);
-        if (sr["Stock"]) regularDivTotal += curDiv;
+        const curDiv = this.parseNum(sr["Current Net DIV"] || sr["col_10"] || sr["Net DIV"]);
+        if (sr["Stock"] || sr["col_0"] || sr["Ticker"]) regularDivTotal += curDiv;
       });
-      if (regularDivTotal <= 0) regularDivTotal = 119401.23;
+      if (regularDivTotal <= 0) regularDivTotal = 147085;
 
+      const targetDivAnnual = 300000;
+      const targetYieldProgress = targetDivAnnual > 0 ? Math.round((regularDivTotal / targetDivAnnual) * 1000) / 10 : 49.0;
       const regularDivGrowth = regularDivTotal > 0 ? Math.round(((totalThisYear - regularDivTotal) / regularDivTotal) * 1000) / 10 : 12.1;
 
       const monthlyAvgDiv = Math.round(totalThisYear / 12);
@@ -1185,6 +1187,8 @@ var SheetsAPI = {
         streams: streams.length ? streams : (currentFinData.dividendAnalytics ? currentFinData.dividendAnalytics.streams : []),
         streamsPrevYear: streamsPrevYear,
         regularDivTotal: Math.round(regularDivTotal),
+        targetDivAnnual: targetDivAnnual,
+        targetYieldProgress: targetYieldProgress,
         regularDivGrowth: regularDivGrowth,
         monthlyAvgDiv: monthlyAvgDiv,
         monthlyExpense: monthlyExpense,

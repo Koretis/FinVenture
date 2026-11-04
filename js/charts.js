@@ -1175,16 +1175,24 @@ var FinCharts = {
       covRing.style.strokeDashoffset = offset.toFixed(1);
     }
 
-    // Gauge 2: Total Cost / Profit
-    const profPct = dData.divReturnPct || 37.49;
+    // Gauge 2: Target Dividend Yield (SET DIV)
+    const targetDivAnnual = dData.targetDivAnnual || 300000;
+    const currentDivAnnual = dData.regularDivTotal || 147085;
+    const targetYieldProgress = dData.targetYieldProgress != null 
+      ? dData.targetYieldProgress 
+      : (targetDivAnnual > 0 ? Math.round((currentDivAnnual / targetDivAnnual) * 1000) / 10 : 49.0);
+
     const profPctEl = document.getElementById("divProfitPct");
     const profRing = document.getElementById("divProfitRing");
     const profSub = document.getElementById("divProfitSub");
-    if (profPctEl) profPctEl.textContent = `+${profPct}%`;
-    if (profSub) profSub.textContent = `ต้นทุน ฿${(dData.divCost || 1647800).toLocaleString()} · ตลาด ฿${(dData.divMkt || 2265560).toLocaleString()}`;
+    const profLbl = document.getElementById("divProfitLbl");
+
+    if (profPctEl) profPctEl.textContent = `${targetYieldProgress.toFixed(1)}%`;
+    if (profLbl) profLbl.textContent = "Target Dividend Yield";
+    if (profSub) profSub.textContent = `฿${Math.round(currentDivAnnual).toLocaleString()} / ฿${Math.round(targetDivAnnual).toLocaleString()} per year`;
     if (profRing) {
       const circ = 2 * Math.PI * 18;
-      const offset = circ - (Math.min(100, profPct) / 100) * circ;
+      const offset = circ - (Math.min(100, targetYieldProgress) / 100) * circ;
       profRing.style.strokeDashoffset = offset.toFixed(1);
     }
 

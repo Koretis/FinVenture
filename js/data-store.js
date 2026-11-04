@@ -8332,7 +8332,9 @@ const DEFAULT_FIN_DATA = {
       { name: "KTB", amount: 5100, percent: 6.6 },
       { name: "3BBIF", amount: 3863, percent: 4.9 }
     ],
-    regularDivTotal: 119401,
+    regularDivTotal: 147085,
+    targetDivAnnual: 300000,
+    targetYieldProgress: 49.0,
     regularDivGrowth: 14.1,
     monthlyAvgDiv: 11350,
     monthlyExpense: 52366,
