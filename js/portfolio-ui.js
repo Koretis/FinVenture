@@ -7,7 +7,7 @@
 
 var PortfolioUI = {
   state: {
-    subTab: "overview",            // 'overview' | 'holdings' | 'allocation' | 'cashflow'
+    subTab: "allocation",          // 'allocation' | 'growth' | 'holdings' | 'cashflow'
     period: "YTD",                 // '1M' | '3M' | 'YTD' | '1Y' | 'ALL'
     perfMode: "capital",           // 'capital' (฿ Value vs Cost) | 'benchmark' (% Return by Risk)
     holdingsFilter: "ALL",         // 'ALL' | 'High' | 'Mid' | 'Low'
@@ -169,8 +169,8 @@ var PortfolioUI = {
     };
   },
 
-  setSubTab(subTab) {
-    this.state.subTab = subTab;
+  applySubTabVisibility() {
+    const subTab = this.state.subTab || "allocation";
     document.querySelectorAll(".pf-subtab-btn").forEach(b => {
       b.classList.toggle("active", b.getAttribute("data-pf-subtab") === subTab);
     });
@@ -183,22 +183,28 @@ var PortfolioUI = {
       zone5: document.getElementById("pfZone5")
     };
 
-    if (subTab === "overview") {
-      // Overview: Show all zones
-      Object.values(zones).forEach(el => { if (el) el.style.display = ""; });
-    } else {
-      // Hide all zones first, then show ONLY the selected zone
-      Object.values(zones).forEach(el => { if (el) el.style.display = "none"; });
+    // Hide all zones first, then display ONLY the selected view
+    Object.values(zones).forEach(el => { if (el) el.style.display = "none"; });
 
-      if (subTab === "holdings") {
-        if (zones.zone4) zones.zone4.style.display = "";
-      } else if (subTab === "allocation") {
-        if (zones.zoneBottom3) zones.zoneBottom3.style.display = "";
-      } else if (subTab === "cashflow") {
-        if (zones.zone5) zones.zone5.style.display = "";
-      }
+    if (subTab === "allocation") {
+      // 1. Allocation: Orion Radar & 3-Column Asset Allocation Dashboard
+      if (zones.zoneBottom3) zones.zoneBottom3.style.display = "";
+    } else if (subTab === "growth" || subTab === "overview") {
+      // 2. Portfolio Growth: Show ONLY the screenshot components (Top 5 KPIs + Growth Chart & Holdings Table)
+      if (zones.zone1) zones.zone1.style.display = "";
+      if (zones.zoneMiddle) zones.zoneMiddle.style.display = "";
+    } else if (subTab === "holdings") {
+      // 3. Holdings & Asset Classes: Core Assessment Cards, Spline Area Chart, SET vs US Allocation
+      if (zones.zone4) zones.zone4.style.display = "";
+    } else if (subTab === "cashflow") {
+      // 4. Investment & Funding: Investment Flow Sankey & Monthly Analytics
+      if (zones.zone5) zones.zone5.style.display = "";
     }
+  },
 
+  setSubTab(subTab) {
+    this.state.subTab = subTab;
+    this.applySubTabVisibility();
     this.renderAll();
   },
 
@@ -311,6 +317,7 @@ var PortfolioUI = {
   },
 
   renderAll() {
+    this.applySubTabVisibility();
     const snap = this.getLatestPortfolioSnapshot();
     this.renderTopSummaryKPIs(snap);
     this.renderPerformanceChart(snap);
