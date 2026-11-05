@@ -713,10 +713,14 @@ var PortfolioUI = {
     if (!snap) snap = this.getLatestPortfolioSnapshot();
     const hist = snap.hist || [];
     const period = this.state.period || "YTD";
-    const latestLbl = snap.latest ? snap.latest.label.replace(" (ปัจจุบัน)", "") : "-";
+    const MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const getEnDateLbl = (pt) => (pt && pt.month && pt.year) ? `${MONTHS_EN[(pt.month - 1) % 12]} ${pt.year}` : ((pt && pt.label) ? pt.label.replace(" (ปัจจุบัน)", "") : "-");
 
     const basePt = this.getLookbackPoint(hist, period) || snap.latest || { market: 0, cost: 0, label: "-" };
-    const baseLbl = (basePt.label || "").replace(" (ปัจจุบัน)", "");
+    const baseLbl = getEnDateLbl(basePt);
+    const latestLbl = getEnDateLbl(snap.latest);
+    const prevLbl = getEnDateLbl(snap.prev);
+
     const periodDiff = snap.totalNetWorth - (basePt.market || 0);
     const periodPct = basePt.market > 0 ? ((periodDiff / basePt.market) * 100) : 0;
     const periodCostDiff = snap.totalCost - (basePt.cost || 0);
@@ -728,7 +732,7 @@ var PortfolioUI = {
     if (elNwBadge) {
       const isPos = periodDiff >= 0;
       const arrow = isPos ? "↑ +" : "↓ ";
-      elNwBadge.innerHTML = `<span class="${isPos ? 'pf-pos' : 'pf-neg'}">${arrow}${periodPct.toFixed(2)}% (${isPos ? '+' : ''}${this.fmtShort(periodDiff)})</span> <span class="pf-muted">เทียบ ${baseLbl}</span>`;
+      elNwBadge.innerHTML = `<span class="${isPos ? 'pf-pos' : 'pf-neg'}">${arrow}${periodPct.toFixed(2)}% (${isPos ? '+' : ''}${this.fmtShort(periodDiff)})</span> <span class="pf-muted">vs ${baseLbl}</span>`;
     }
 
     // 2. Total Profit/Loss & Return % (Value - Cost from sheet Portfolio)
@@ -748,7 +752,7 @@ var PortfolioUI = {
     if (elCfIn) elCfIn.textContent = this.fmtMoney(snap.totalCost);
     if (elCfInBadge) {
       const isPos = snap.momCostDiff >= 0;
-      elCfInBadge.innerHTML = `<span class="${isPos ? 'pf-pos' : 'pf-neg'}">MoM ${isPos ? '+' : ''}${this.fmtShort(snap.momCostDiff)}</span> <span class="pf-muted">· สะสม ${period} ${periodCostDiff >= 0 ? '+' : ''}${this.fmtShort(periodCostDiff)}</span>`;
+      elCfInBadge.innerHTML = `<span class="${isPos ? 'pf-pos' : 'pf-neg'}">MoM ${isPos ? '+' : ''}${this.fmtShort(snap.momCostDiff)}</span> <span class="pf-muted">· ${period} ${periodCostDiff >= 0 ? '+' : ''}${this.fmtShort(periodCostDiff)}</span>`;
     }
 
     // 4. MoM Market Value Change (Latest month vs Previous month in sheet Portfolio)
@@ -759,7 +763,6 @@ var PortfolioUI = {
     }
     if (elDivBadge) {
       const isPos = snap.momValueDiff >= 0;
-      const prevLbl = snap.prev ? snap.prev.label.replace(" (ปัจจุบัน)", "") : "-";
       elDivBadge.innerHTML = `<span class="${isPos ? 'pf-pos' : 'pf-neg'}">${isPos ? '↑ +' : '↓ '}${snap.momValuePct.toFixed(2)}% MoM</span> <span class="pf-muted">(${latestLbl} vs ${prevLbl})</span>`;
     }
 
@@ -770,7 +773,7 @@ var PortfolioUI = {
     const highPct = ((snap.risks.High.market / tot) * 100).toFixed(0);
     const midPct = ((snap.risks.Mid.market / tot) * 100).toFixed(0);
     const lowPct = ((snap.risks.Low.market / tot) * 100).toFixed(0);
-    if (elRisk) elRisk.textContent = `+${snap.cagrPct.toFixed(1)}% / ปี`;
+    if (elRisk) elRisk.textContent = `+${snap.cagrPct.toFixed(1)}% / yr`;
     if (elRiskBadge) {
       elRiskBadge.innerHTML = `<span class="pf-pos">High ${highPct}%</span> <span class="pf-muted">· Mid ${midPct}% · Low ${lowPct}%</span>`;
     }
@@ -850,13 +853,13 @@ var PortfolioUI = {
     if (legEl && lastPt) {
       if (mode === "capital") {
         legEl.innerHTML = `
-          <span class="pf-leg-item"><span class="pf-dot" style="background:var(--pf-line-main, #0f172a);"></span>Market Value (มูลค่าตลาดรวม) <strong class="pf-pos">${this.fmtMoney(lastPt.market)}</strong></span>
-          <span class="pf-leg-item"><span class="pf-dot" style="background:#94a3b8;"></span>Cost (เงินต้นสะสมรวม) <strong>${this.fmtMoney(lastPt.cost)}</strong></span>
-          <span class="pf-leg-item"><span class="pf-dot" style="background:#10b981;"></span>Net Profit (กำไรสุทธิ) <strong class="${lastPt.gainAmt >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.gainAmt >= 0 ? '+' : ''}${this.fmtMoney(lastPt.gainAmt)} (${lastPt.gainPct >= 0 ? '+' : ''}${lastPt.gainPct.toFixed(1)}%)</strong></span>
+          <span class="pf-leg-item"><span class="pf-dot" style="background:var(--pf-line-main, #0f172a);"></span>Market Value <strong class="pf-pos">${this.fmtMoney(lastPt.market)}</strong></span>
+          <span class="pf-leg-item"><span class="pf-dot" style="background:#94a3b8;"></span>Invested Cost <strong>${this.fmtMoney(lastPt.cost)}</strong></span>
+          <span class="pf-leg-item"><span class="pf-dot" style="background:#10b981;"></span>Net Profit <strong class="${lastPt.gainAmt >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.gainAmt >= 0 ? '+' : ''}${this.fmtMoney(lastPt.gainAmt)} (${lastPt.gainPct >= 0 ? '+' : ''}${lastPt.gainPct.toFixed(1)}%)</strong></span>
         `;
       } else {
         legEl.innerHTML = `
-          <span class="pf-leg-item"><span class="pf-dot" style="background:var(--pf-line-main, #0f172a);"></span>Total Return % (พอร์ตรวม) <strong class="${lastPt.gainPct >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.gainPct >= 0 ? '+' : ''}${lastPt.gainPct.toFixed(2)}%</strong></span>
+          <span class="pf-leg-item"><span class="pf-dot" style="background:var(--pf-line-main, #0f172a);"></span>Total Return % <strong class="${lastPt.gainPct >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.gainPct >= 0 ? '+' : ''}${lastPt.gainPct.toFixed(2)}%</strong></span>
           <span class="pf-leg-item"><span class="pf-dot" style="background:#94a3b8;"></span>Mid Risk Return (PVD/Ins/Gold) <strong class="${lastPt.midRetPct >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.midRetPct >= 0 ? '+' : ''}${lastPt.midRetPct.toFixed(2)}%</strong></span>
           <span class="pf-leg-item"><span class="pf-dot" style="background:#10b981;"></span>High Risk Return (SET/US/Crypto) <strong class="${lastPt.highRetPct >= 0 ? 'pf-pos' : 'pf-neg'}">${lastPt.highRetPct >= 0 ? '+' : ''}${lastPt.highRetPct.toFixed(2)}%</strong></span>
         `;
@@ -978,7 +981,7 @@ var PortfolioUI = {
         if (cy < 85) cy = pt.yMain + 92;
         callout.setAttribute("transform", `translate(${cx.toFixed(1)}, ${cy.toFixed(1)})`);
       }
-      if (cDate) cDate.textContent = `${pt.label} (กำไร ${pt.gainPct >= 0 ? '+' : ''}${pt.gainPct.toFixed(1)}%)`;
+      if (cDate) cDate.textContent = `${pt.shortLabel ? pt.shortLabel.replace("'", "20") : pt.label} (Gain ${pt.gainPct >= 0 ? '+' : ''}${pt.gainPct.toFixed(1)}%)`;
       if (mode === "capital") {
         if (cLbl1) cLbl1.textContent = "Value";
         if (cVal1) cVal1.textContent = this.fmtShort(pt.market);
@@ -1037,7 +1040,7 @@ var PortfolioUI = {
       : allRows.filter(it => (it.risk || "").toLowerCase() === filter.toLowerCase());
 
     if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px; color:var(--pf-fg-muted);">ไม่มีรายการในหมวดนี้จากชีต Portfolio</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px; color:var(--pf-fg-muted);">No assets found in this risk category</td></tr>`;
       return;
     }
 
@@ -1056,7 +1059,7 @@ var PortfolioUI = {
               <div class="pf-hold-icon" style="background:${meta.color}1a; color:${meta.color}; border:1px solid ${meta.color}35;">${meta.icon}</div>
               <div style="min-width:0;">
                 <div class="pf-hold-ticker">${it.name} <span style="font-size:10px; font-weight:600; color:var(--pf-fg-muted);">(${it.assessType})</span></div>
-                <div class="pf-hold-name">Risk: ${it.risk} · ทุน ${this.fmtShort(it.cost)}</div>
+                <div class="pf-hold-name">Risk: ${it.risk} · Cost ${this.fmtShort(it.cost)}</div>
               </div>
             </div>
           </td>

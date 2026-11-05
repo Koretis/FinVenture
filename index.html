@@ -5797,16 +5797,16 @@
         <section id="pfZone1" class="pf-kpi-grid">
           <!-- 1. Total Portfolio Value -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Total Portfolio Value (มูลค่าพอร์ตรวมจากชีต)</div>
+            <div class="pf-kpi-lbl">Total Portfolio Value</div>
             <div id="pfKpiNetWorth" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiNetWorthBadge" class="pf-kpi-foot">
-              <span class="pf-muted">กำลังโหลดจากชีต Portfolio...</span>
+              <span class="pf-muted">Loading Portfolio data...</span>
             </div>
           </div>
 
           <!-- 2. Total Profit/Loss & Return -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Total Unrealized P/L (กำไร/ขาดทุนสุทธิ Value - Cost)</div>
+            <div class="pf-kpi-lbl">Total Unrealized P/L</div>
             <div id="pfKpiTotalPL" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiTotalPLBadge" class="pf-kpi-foot">
               <span class="pf-muted">—</span>
@@ -5815,7 +5815,7 @@
 
           <!-- 3. Total Invested Capital (Cost) -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Net Invested Cost (เงินต้นสะสมรวมจากชีต)</div>
+            <div class="pf-kpi-lbl">Net Invested Cost</div>
             <div id="pfKpiMonthlyIn" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiMonthlyInBadge" class="pf-kpi-foot">
               <span class="pf-muted">—</span>
@@ -5824,7 +5824,7 @@
 
           <!-- 4. Month-over-Month Value Change -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">MoM Portfolio Change (เปลี่ยนแปลงเทียบเดือนก่อน)</div>
+            <div class="pf-kpi-lbl">MoM Portfolio Change</div>
             <div id="pfKpiDivYtd" class="pf-kpi-val">฿ —</div>
             <div id="pfKpiDivYtdBadge" class="pf-kpi-foot">
               <span class="pf-muted">—</span>
@@ -5833,7 +5833,7 @@
 
           <!-- 5. Historical CAGR & Risk Split -->
           <div class="pf-kpi-card">
-            <div class="pf-kpi-lbl">Portfolio CAGR &amp; Risk Split (อัตราเติบโตเฉลี่ยต่อปี)</div>
+            <div class="pf-kpi-lbl">Portfolio CAGR &amp; Risk Split</div>
             <div id="pfKpiRiskScore" class="pf-kpi-val">—%</div>
             <div id="pfKpiRiskBadge" class="pf-kpi-foot">
               <span class="pf-muted">—</span>
@@ -5849,9 +5849,9 @@
           <div class="pf-card">
             <div class="pf-card-head">
               <div>
-                <div class="pf-card-title">Portfolio Growth &amp; Historical Return (จากชีต Portfolio)</div>
+                <div class="pf-card-title">Portfolio Growth &amp; Historical Return</div>
                 <div style="font-size: 11.5px; color: var(--pf-fg-muted); margin-top: 2px;">
-                  เปรียบเทียบมูลค่าพอร์ตจริง (Value) กับเงินต้นสะสม (Cost) และอัตราผลตอบแทนแยกตามระดับความเสี่ยง (High / Mid / Low)
+                  Historical Market Value vs. Invested Cost &amp; Return by Risk Tier
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
@@ -5874,7 +5874,7 @@
             <div class="pf-card-head" style="margin-bottom: 10px;">
               <div>
                 <div class="pf-card-title">Holdings in Sheet &ldquo;Portfolio&rdquo;</div>
-                <div style="font-size: 11px; color: var(--pf-fg-muted);">รายการสินทรัพย์เดือนล่าสุดตามคอลัมน์ Risk / Assess Type / Name</div>
+                <div style="font-size: 11px; color: var(--pf-fg-muted);">Latest asset holdings by Risk, Assess Type, and Market Value</div>
               </div>
               <div class="pf-period-group">
                 <button type="button" class="pf-period-btn pf-hold-filter-btn active" data-pf-hold="ALL" onclick="PortfolioUI.setHoldingsFilter('ALL', this)">All</button>
