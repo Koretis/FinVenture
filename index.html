@@ -3433,8 +3433,18 @@
         grid-template-columns: 1fr;
         gap: 32px;
       }
+      .pf-ar-center-col {
+        order: 1;
+      }
+      .pf-ar-left-col {
+        order: 2;
+      }
+      .pf-ar-right-col {
+        order: 3;
+      }
       .pf-radar-pedestal-wrap {
         max-width: 420px;
+        margin: 0 auto;
       }
     }
 
@@ -4749,7 +4759,7 @@
         <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">🌐 Overall</button>
         <button class="tab-btn" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')">📊 Portfolio</button>
         <button class="tab-btn" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')">💵 Cash Flow</button>
-        <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 เงินปันผล</button>
+        <button class="tab-btn" data-tab="tab-dividends" onclick="switchTab('tab-dividends')">💰 Dividend Yield</button>
         <button class="tab-btn" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')">🎯 วางแผนเป้าหมาย</button>
       </nav>
 
@@ -6693,7 +6703,7 @@
     <button class="dock-icon active" data-tab="tab-overview" onclick="switchTab('tab-overview')" title="Overall">🌐</button>
     <button class="dock-icon" data-tab="tab-portfolio" onclick="switchTab('tab-portfolio')" title="พอร์ตการลงทุน (Portfolio)">📊</button>
     <button class="dock-icon" data-tab="tab-cashflow" onclick="switchTab('tab-cashflow')" title="กระแสเงินสด & ค่าใช้จ่าย">💵</button>
-    <button class="dock-icon" data-tab="tab-dividends" onclick="switchTab('tab-dividends')" title="เงินปันผล & ดอกเบี้ย">💰</button>
+    <button class="dock-icon" data-tab="tab-dividends" onclick="switchTab('tab-dividends')" title="Dividend Yield">💰</button>
     <button class="dock-icon" data-tab="tab-roadmap" onclick="switchTab('tab-roadmap')" title="เป้าหมาย & วินัยการออม">🎯</button>
   </nav>
 
