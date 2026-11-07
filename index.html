@@ -4776,15 +4776,14 @@
     }
 
     /* =========================================================================
-       HERO CARD REDESIGN: EXPENSE OVERVIEW (REFERENCE STYLE)
+       HERO CARD REDESIGN: EXPENSE OVERALL (TWO-TONE REFERENCE STYLE)
        ========================================================================= */
     .eo-hero-card {
-      background: #d4ecec;
-      background: linear-gradient(175deg, #d8efef 0%, #cae8e8 60%, #bde2e2 100%);
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: #f1f7f7;
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 36px;
-      padding: 26px 28px 20px 28px;
-      box-shadow: 0 16px 40px -10px rgba(55, 110, 110, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      padding: 0;
+      box-shadow: 0 16px 40px -10px rgba(55, 110, 110, 0.16);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -4794,36 +4793,53 @@
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
     }
     [data-theme="dark"] .eo-hero-card {
-      background: linear-gradient(175deg, #183338 0%, #11262a 60%, #0d1e21 100%);
+      background: #0d1e21;
       border: 1px solid rgba(45, 212, 191, 0.2);
-      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
       color: #f1f5f9;
     }
     [data-theme="blue"] .eo-hero-card {
-      background: linear-gradient(175deg, #13334c 0%, #0e273c 60%, #091b2c 100%);
+      background: #0a1c2d;
       border: 1px solid rgba(56, 189, 248, 0.25);
       color: #f0f9ff;
+    }
+
+    .eo-top-chamber {
+      background: #c9e5e8;
+      background: linear-gradient(180deg, #cae6e9 0%, #c5e3e6 100%);
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      padding: 24px 26px 14px 26px;
+    }
+    [data-theme="dark"] .eo-top-chamber {
+      background: linear-gradient(180deg, #183338 0%, #11262a 100%);
+    }
+    [data-theme="blue"] .eo-top-chamber {
+      background: linear-gradient(180deg, #13334c 0%, #0e273c 100%);
     }
 
     .eo-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
       gap: 12px;
     }
     .eo-title {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
       margin: 0;
+      color: #163538;
     }
+    [data-theme="dark"] .eo-title { color: #f8fafc; }
+    [data-theme="blue"] .eo-title { color: #f0f9ff; }
     .eo-subtitle {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
-      color: #436969;
+      color: #507d82;
       margin-top: 3px;
     }
     [data-theme="dark"] .eo-subtitle { color: #80b3b3; }
@@ -4837,8 +4853,8 @@
     }
     .eo-seg-ctrl {
       display: inline-flex;
-      padding: 2.5px;
-      background: rgba(255, 255, 255, 0.55);
+      padding: 2px;
+      background: rgba(255, 255, 255, 0.65);
       border-radius: 9999px;
       border: 1px solid rgba(75, 135, 135, 0.2);
     }
@@ -4850,9 +4866,9 @@
       border: none;
       background: transparent;
       color: #436969;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 4px 11px;
+      padding: 3.5px 10px;
       border-radius: 9999px;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -4876,7 +4892,7 @@
       gap: 12px;
       font-size: 11px;
       font-weight: 600;
-      color: #436969;
+      color: #507d82;
     }
     [data-theme="dark"] .eo-legends { color: #94a3b8; }
     .eo-leg-item {
@@ -4888,23 +4904,23 @@
     .eo-chart-stage {
       position: relative;
       width: 100%;
-      height: 220px;
-      margin: 8px 0 10px 0;
+      height: 230px;
+      margin: 6px 0 4px 0;
       user-select: none;
     }
     @media (max-width: 768px) {
-      .eo-chart-stage { height: 190px; }
+      .eo-chart-stage { height: 195px; }
     }
 
     .eo-peak-badge {
-      background: #d8fd3e;
+      background: #d8ed64;
       color: #0f172a;
       font-weight: 800;
       font-size: 12.5px;
       letter-spacing: -0.02em;
-      padding: 3.5px 12px;
+      padding: 3px 11px;
       border-radius: 9999px;
-      box-shadow: 0 6px 16px rgba(216, 253, 62, 0.45);
+      box-shadow: 0 4px 12px rgba(180, 210, 50, 0.4);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -4924,36 +4940,40 @@
       height: 0;
       border-left: 4.5px solid transparent;
       border-right: 4.5px solid transparent;
-      border-top: 4.5px solid #d8fd3e;
+      border-top: 4.5px solid #d8ed64;
     }
 
     .eo-foot-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      padding-top: 16px;
-      border-top: 1px solid rgba(75, 135, 135, 0.16);
+      padding: 18px 24px 22px 24px;
+      background: #f1f7f7;
       text-align: center;
       gap: 8px;
     }
     [data-theme="dark"] .eo-foot-grid {
-      border-top-color: rgba(255, 255, 255, 0.1);
+      background: #0d1e21;
+    }
+    [data-theme="blue"] .eo-foot-grid {
+      background: #0a1c2d;
     }
     .eo-foot-lbl {
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 10.5px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #436969;
-      margin-bottom: 2px;
+      letter-spacing: 0.05em;
+      color: #6d8a8e;
+      margin-bottom: 3px;
     }
     [data-theme="dark"] .eo-foot-lbl { color: #80b3b3; }
     .eo-foot-val {
-      font-size: 18px;
+      font-size: 17.5px;
       font-weight: 800;
       letter-spacing: -0.03em;
-      color: #0f172a;
+      color: #163538;
     }
     [data-theme="dark"] .eo-foot-val { color: #f8fafc; }
+    [data-theme="blue"] .eo-foot-val { color: #f0f9ff; }
 
     /* Tooltip */
     #eoTooltip {
@@ -5102,85 +5122,78 @@
       <!-- Top Bento Grid: Hero KPI Strip + Milestone Card -->
       <section class="bento-grid" style="grid-template-columns: 1.8fr 1.2fr;" data-od-id="overview-hero">
         
-        <!-- Left: Expense Overview Card (Redesigned matching reference image) -->
+        <!-- Left: Expense overall Card (Two-Tone Reference Style) -->
         <div class="eo-hero-card" data-od-id="card-hero-insight">
-          <!-- Card Header -->
-          <div class="eo-header">
-            <div>
-              <h1 class="eo-title">Overview</h1>
-              <div id="eoPeriodSubtitle" class="eo-subtitle">Q1•2026 ↔ Q4•2026</div>
-            </div>
-
-            <div class="eo-controls">
-              <!-- Period Selector -->
-              <div class="eo-seg-ctrl" role="group" aria-label="Overview Period">
-                <button type="button" class="eo-seg-btn active" data-eo-period="2026" onclick="FinCharts.setExpenseOverviewPeriod('2026')">2026</button>
-                <button type="button" class="eo-seg-btn" data-eo-period="2025" onclick="FinCharts.setExpenseOverviewPeriod('2025')">2025</button>
-                <button type="button" class="eo-seg-btn" data-eo-period="2024" onclick="FinCharts.setExpenseOverviewPeriod('2024')">2024</button>
-                <button type="button" class="eo-seg-btn" data-eo-period="ALL" onclick="FinCharts.setExpenseOverviewPeriod('ALL')">All</button>
+          <!-- Top Section: Aqua Mint Chamber (#c9e5e8) -->
+          <div class="eo-top-chamber">
+            <div class="eo-header">
+              <div>
+                <h1 class="eo-title">Expense overall</h1>
+                <div id="eoPeriodSubtitle" class="eo-subtitle">Q1•2026 ↔ Q4•2026</div>
               </div>
 
-              <!-- Legends -->
-              <div class="eo-legends">
-                <span class="eo-leg-item"><span style="width:10px; height:10px; border-radius:50%; background:#ffffff; border:1px solid rgba(0,0,0,0.15); display:inline-block;"></span> Income</span>
-                <span class="eo-leg-item"><span style="width:10px; height:10px; border-radius:50%; background:#bef264; border:1px solid #a3e635; display:inline-block;"></span> Saving</span>
-                <span class="eo-leg-item"><span style="width:14px; height:2.5px; background:#4a8787; border-radius:99px; display:inline-block;"></span> Expense</span>
+              <div class="eo-controls">
+                <!-- Period Selector -->
+                <div class="eo-seg-ctrl" role="group" aria-label="Expense Overall Period">
+                  <button type="button" class="eo-seg-btn active" data-eo-period="2026" onclick="FinCharts.setExpenseOverviewPeriod('2026')">2026</button>
+                  <button type="button" class="eo-seg-btn" data-eo-period="2025" onclick="FinCharts.setExpenseOverviewPeriod('2025')">2025</button>
+                  <button type="button" class="eo-seg-btn" data-eo-period="2024" onclick="FinCharts.setExpenseOverviewPeriod('2024')">2024</button>
+                  <button type="button" class="eo-seg-btn" data-eo-period="ALL" onclick="FinCharts.setExpenseOverviewPeriod('ALL')">All</button>
+                </div>
+
+                <!-- Legends -->
+                <div class="eo-legends">
+                  <span class="eo-leg-item"><span style="width:9px; height:9px; border-radius:3px; background:#ffffff; border:1px solid rgba(0,0,0,0.18); display:inline-block;"></span> Income</span>
+                  <span class="eo-leg-item"><span style="width:9px; height:9px; border-radius:3px; background:#bef264; border:1px solid #a3e635; display:inline-block;"></span> Saving</span>
+                  <span class="eo-leg-item"><span style="width:13px; height:2px; background:#679196; border-radius:99px; display:inline-block;"></span> Expense</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart Stage Area -->
+            <div class="eo-chart-stage" id="eoChartStage">
+              <!-- Floating Peak Tag Badge (+524k style) -->
+              <div id="eoPeakBadge" class="eo-peak-badge">+0k</div>
+
+              <!-- SVG Chart (Income Bar + Saving Layer + Expense Spline) -->
+              <svg id="eoChartSvg" style="width: 100%; height: 100%; display: block; overflow: visible;" viewBox="0 0 680 270" preserveAspectRatio="none">
+                <!-- Layer 1: White Rounded Income Bars (Gentle rx=8 radius) -->
+                <g id="eoIncomeBarsGroup"></g>
+
+                <!-- Layer 2: Lime-Mint Saving Bars -->
+                <g id="eoSavingBarsGroup"></g>
+
+                <!-- Layer 3: Ultra-Thin Expense Spline Curve (1.8px) -->
+                <path id="eoExpenseSpline" fill="none" stroke="#679196" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Layer 4: Peak Dot & Active Hover Dot -->
+                <circle id="eoPeakDot" cx="0" cy="0" r="3.2" fill="#679196" stroke="#ffffff" stroke-width="1.6" />
+                <circle id="eoHoverDot" cx="0" cy="0" r="4" fill="#d8ed64" stroke="#163538" stroke-width="1.8" opacity="0" />
+              </svg>
+
+              <!-- Floating Hover Tooltip -->
+              <div id="eoTooltip">
+                <div id="eoTtMonth" style="font-weight: 700; color: #93c5fd; margin-bottom: 4px;">Month</div>
+                <div style="display:flex; justify-content:space-between; gap:12px;"><span>Total Income:</span> <strong id="eoTtIncome" class="num">฿0</strong></div>
+                <div style="display:flex; justify-content:space-between; gap:12px;"><span>Saving / Invest:</span> <strong id="eoTtSaving" class="num" style="color:#bef264;">฿0</strong></div>
+                <div style="display:flex; justify-content:space-between; gap:12px;"><span>Total Outcome:</span> <strong id="eoTtExpense" class="num" style="color:#67e8f9;">฿0</strong></div>
               </div>
             </div>
           </div>
 
-          <!-- Chart Stage Area -->
-          <div class="eo-chart-stage" id="eoChartStage">
-            <!-- Floating Peak Tag Badge (+524k style) -->
-            <div id="eoPeakBadge" class="eo-peak-badge">+0k</div>
-
-            <!-- SVG Chart (Income Bar + Saving Layer + Expense Spline) -->
-            <svg id="eoChartSvg" style="width: 100%; height: 100%; display: block; overflow: visible;" viewBox="0 0 680 240" preserveAspectRatio="none">
-              <defs>
-                <filter id="eoCurveShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(30, 80, 80, 0.25)" />
-                </filter>
-                <filter id="eoBarShadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(30, 80, 80, 0.08)" />
-                </filter>
-              </defs>
-
-              <!-- Layer 1: White Rounded Income Bars -->
-              <g id="eoIncomeBarsGroup" filter="url(#eoBarShadow)"></g>
-
-              <!-- Layer 2: Lime-Mint Saving Bars -->
-              <g id="eoSavingBarsGroup"></g>
-
-              <!-- Layer 3: Smooth Expense Curve Spline -->
-              <path id="eoExpenseSpline" fill="none" stroke="#4a8787" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#eoCurveShadow)" />
-
-              <!-- Layer 4: Peak Dot & Active Hover Dot -->
-              <circle id="eoPeakDot" cx="0" cy="0" r="5" fill="#4a8787" stroke="#ffffff" stroke-width="2.5" />
-              <circle id="eoHoverDot" cx="0" cy="0" r="5" fill="#d8fd3e" stroke="#0f172a" stroke-width="2" opacity="0" />
-            </svg>
-
-            <!-- Floating Hover Tooltip -->
-            <div id="eoTooltip">
-              <div id="eoTtMonth" style="font-weight: 700; color: #93c5fd; margin-bottom: 4px;">Month</div>
-              <div style="display:flex; justify-content:space-between; gap:12px;"><span>Income:</span> <strong id="eoTtIncome" class="num">฿0</strong></div>
-              <div style="display:flex; justify-content:space-between; gap:12px;"><span>Saving:</span> <strong id="eoTtSaving" class="num" style="color:#bef264;">฿0</strong></div>
-              <div style="display:flex; justify-content:space-between; gap:12px;"><span>Expense:</span> <strong id="eoTtExpense" class="num" style="color:#67e8f9;">฿0</strong></div>
-            </div>
-          </div>
-
-          <!-- Bottom 3-Column Footer KPI Row (Peak date | Amount | Raise) -->
+          <!-- Bottom Section: Off-White Footer (#f1f7f7) with 3 Totals -->
           <div class="eo-foot-grid">
             <div>
-              <div class="eo-foot-lbl">Peak date</div>
-              <div id="eoFootPeakDate" class="eo-foot-val num">—</div>
+              <div class="eo-foot-lbl">Total Income</div>
+              <div id="eoFootTotalIncome" class="eo-foot-val num">฿ 0</div>
             </div>
             <div>
-              <div class="eo-foot-lbl">Amount</div>
-              <div id="eoFootAmount" class="eo-foot-val num">0</div>
+              <div class="eo-foot-lbl">Total Outcome</div>
+              <div id="eoFootTotalOutcome" class="eo-foot-val num">฿ 0</div>
             </div>
             <div>
-              <div class="eo-foot-lbl">Raise</div>
-              <div id="eoFootRaise" class="eo-foot-val num" style="color: #10b981;">+0</div>
+              <div class="eo-foot-lbl">Total Saving / Investment</div>
+              <div id="eoFootTotalSaving" class="eo-foot-val num" style="color: #10b981;">+฿ 0</div>
             </div>
           </div>
 
@@ -5194,23 +5207,23 @@
           </div>
         </div>
 
-        <!-- Right: Electric Lime #E2F679 / Freedom Goal Milestone Card (From Forecast Total Assess) -->
+        <!-- Right: Electric Lime #E2F679 / Financial Independence Target Card (English Only) -->
         <div class="bento-card hero-accent hero-lime" data-od-id="card-hero-lime" style="display: flex; flex-direction: column; justify-content: space-between;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
             <div>
-              <div class="goal-tag" style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Roadmap & Freedom Goal</div>
-              <div class="goal-title" style="font-size: 18px; font-weight: 800; margin-top: 2px;">เป้าหมายอิสรภาพการเงิน</div>
+              <div class="goal-tag" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Roadmap &amp; Freedom Goal</div>
+              <div class="goal-title" style="font-size: 18px; font-weight: 800; margin-top: 2px;">Financial Independence Target</div>
             </div>
             <button class="icon-btn dark-btn" onclick="switchTab('tab-roadmap')">→</button>
           </div>
 
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
             <div>
-              <div class="goal-tag" id="goalMilestoneLabel" style="font-size: 12px; font-weight: 600;">เป้าหมาย Forecast Total Assess (ปี 2026)</div>
+              <div class="goal-tag" id="goalMilestoneLabel" style="font-size: 12px; font-weight: 600;">Forecast Total Assess Target (2026)</div>
               <div class="num goal-val" id="goalTargetVal" style="font-size: 32px; font-weight: 900; line-height: 1.15;" data-val-thb="6692381">฿ 6.69M</div>
               <div class="goal-sub" id="goalSubDesc" style="font-size: 12px; margin-top: 4px; line-height: 1.4;">
-                <div>🚀 ปัจจุบัน <strong>฿ 7.11M</strong> ทะลุเป้าหมายปี 2026 แล้ว</div>
-                <div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">(+฿ 412,876 / KPI Pass ✅)</div>
+                <div>🚀 Current <strong>฿ 7.11M</strong> surpassed 2026 target!</div>
+                <div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">(+฿ 412,876 / Milestone Achieved ✅)</div>
               </div>
             </div>
 
@@ -5223,15 +5236,15 @@
             </div>
           </div>
 
-          <!-- Bottom Micro Bar in Yellow Goal Card (Pinned to bottom row) -->
+          <!-- Bottom Micro Bar in Yellow Goal Card (English Only) -->
           <div class="goal-micro-bar" style="margin-top: auto;">
             <div>
-              <div style="font-size: 10.5px; font-weight: 600; opacity: 0.75;">เป้าหมายถัดไป (ปี 2027)</div>
+              <div style="font-size: 10px; font-weight: 600; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.03em;">Next Milestone (2027)</div>
               <div class="num font-bold" id="goalNextMilestoneVal" style="font-size: 15px; color: #0f172a;" data-val-thb="7441418">฿ 7.44M</div>
             </div>
             <div style="height: 20px; width: 1px; background: rgba(0, 0, 0, 0.12);"></div>
             <div>
-              <div style="font-size: 10.5px; font-weight: 600; opacity: 0.75;">เป้าหมาย 10M (ปี 2030)</div>
+              <div style="font-size: 10px; font-weight: 600; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.03em;">Freedom Goal 10M (2030)</div>
               <div class="num font-bold" id="goalFreedomVal" style="font-size: 15px; color: #0f172a;" data-val-thb="10776867">฿ 10.78M</div>
             </div>
             <div style="height: 20px; width: 1px; background: rgba(0, 0, 0, 0.12);"></div>

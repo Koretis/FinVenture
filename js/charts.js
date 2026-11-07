@@ -1633,9 +1633,9 @@ var FinCharts = {
     const goalSubEl = document.getElementById("goalSubDesc");
     if (goalSubEl) {
       if (diff2026 >= 0) {
-        goalSubEl.innerHTML = `<div>🚀 ปัจจุบัน <strong>${this.formatMoney(netWorth)}</strong> ทะลุเป้าหมายปี 2026 แล้ว</div><div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">(${diffSign}${this.formatMoney(diff2026)} / KPI Pass ✅)</div>`;
+        goalSubEl.innerHTML = `<div>🚀 Current <strong>${this.formatMoney(netWorth)}</strong> surpassed 2026 target!</div><div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">(${diffSign}${this.formatMoney(diff2026)} / Milestone Achieved ✅)</div>`;
       } else {
-        goalSubEl.innerHTML = `<div>⏳ ปัจจุบัน <strong>${this.formatMoney(netWorth)}</strong></div><div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">ขาดอีก ${this.formatMoney(Math.abs(diff2026))} สู่เป้าหมายปี 2026</div>`;
+        goalSubEl.innerHTML = `<div>⏳ Current <strong>${this.formatMoney(netWorth)}</strong></div><div style="margin-top: 3px; font-weight: 700; opacity: 0.9;">Remaining ${this.formatMoney(Math.abs(diff2026))} to 2026 target</div>`;
       }
     }
 
@@ -1980,40 +1980,51 @@ var FinCharts = {
       }
     });
 
-    // Compute Summary KPIs
+    // Compute Summary KPIs (Footer Metrics)
+    const totalIncome = items.reduce((s, it) => s + it.income, 0);
     const totalOutcome = items.reduce((s, it) => s + it.outcome, 0);
     const totalSaving = items.reduce((s, it) => s + it.saving, 0);
-    const totalIncome = items.reduce((s, it) => s + it.income, 0);
-    const netSavings = totalIncome - totalOutcome;
 
+    const footIncomeEl = document.getElementById("eoFootTotalIncome");
+    const footOutcomeEl = document.getElementById("eoFootTotalOutcome");
+    const footSavingEl = document.getElementById("eoFootTotalSaving");
+
+    if (footIncomeEl) footIncomeEl.textContent = "฿ " + Math.round(totalIncome).toLocaleString();
+    if (footOutcomeEl) footOutcomeEl.textContent = "฿ " + Math.round(totalOutcome).toLocaleString();
+    if (footSavingEl) {
+      const isPos = totalSaving >= 0;
+      footSavingEl.textContent = (isPos ? "+฿ " : "-฿ ") + Math.abs(Math.round(totalSaving)).toLocaleString();
+      footSavingEl.style.color = isPos ? "#10b981" : "#f43f5e";
+    }
+
+    // Hidden Compatibility Anchors
     const footDateEl = document.getElementById("eoFootPeakDate");
     const footAmtEl = document.getElementById("eoFootAmount");
     const footRaiseEl = document.getElementById("eoFootRaise");
-
     if (footDateEl) footDateEl.textContent = peakItem.fullDate || "—";
     if (footAmtEl) footAmtEl.textContent = Math.round(totalOutcome).toLocaleString();
-    if (footRaiseEl) {
-      const isPos = netSavings >= 0;
-      footRaiseEl.textContent = `${isPos ? '+' : ''}${Math.round(netSavings).toLocaleString()}`;
-      footRaiseEl.style.color = isPos ? "#10b981" : "#f43f5e";
-    }
+    if (footRaiseEl) footRaiseEl.textContent = `${totalSaving >= 0 ? '+' : ''}${Math.round(totalSaving).toLocaleString()}`;
 
-    // Coordinate dimensions (viewBox 680 x 240)
+    // Coordinate dimensions (viewBox 680 x 270)
     const svgW = 680;
-    const svgH = 240;
-    const padX = 35;
-    const padTop = 35;
-    const padBottom = 22;
+    const svgH = 270;
+    const padX = 26;
+    const padTop = 32;
+    const padBottom = 8;
     const chartH = svgH - padTop - padBottom;
     const count = items.length;
     const stepX = (svgW - padX * 2) / (count - 1 || 1);
 
-    const maxVal = Math.max(
+    // Max value for scaling with taller floor (Requirement 6)
+    const rawMax = Math.max(
       ...items.map(it => Math.max(it.income, it.outcome, it.saving)),
       peakItem.outcome || 100000
-    ) * 1.15;
+    );
+    const maxVal = rawMax * 1.08;
 
-    const barWidth = Math.min(36, Math.max(18, stepX * 0.62));
+    // Bar width & corner radius (Requirement 5: reduced corner radius rx=8 to match reference)
+    const barWidth = Math.min(42, Math.max(24, stepX * 0.65));
+    const barRadius = 8;
 
     const incomeBarsG = document.getElementById("eoIncomeBarsGroup");
     const savingBarsG = document.getElementById("eoSavingBarsGroup");
@@ -2032,36 +2043,42 @@ var FinCharts = {
 
     items.forEach((it, idx) => {
       const cx = padX + idx * stepX;
-      const incH = Math.max(16, (it.income / maxVal) * chartH);
+
+      // Proportional tall bar height formula: baseline floor 50px + scaled height
+      const incPct = Math.min(1, it.income / maxVal);
+      const incH = Math.max(50, 40 + incPct * (chartH - 40));
       const incY = svgH - padBottom - incH;
 
-      // 1. Layer 1: White Rounded Income Bar
+      // 1. Layer 1: White Rounded Income Bar (Gentle rx=8 radius)
       const barInc = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       barInc.setAttribute("x", cx - barWidth / 2);
       barInc.setAttribute("y", incY);
       barInc.setAttribute("width", barWidth);
       barInc.setAttribute("height", incH);
-      barInc.setAttribute("rx", barWidth / 2);
+      barInc.setAttribute("rx", barRadius);
       barInc.setAttribute("fill", "#ffffff");
       barInc.style.transition = "height 0.4s ease, y 0.4s ease";
       incomeBarsG.appendChild(barInc);
 
-      // 2. Layer 2: Lime-Mint Layered Saving Bar
-      const savH = Math.max(6, (it.saving / maxVal) * chartH);
+      // 2. Layer 2: Soft Lime-Mint Saving Bar
+      const savPct = Math.min(1, it.saving / maxVal);
+      const savH = Math.max(16, 12 + savPct * (chartH - 40));
       const savY = svgH - padBottom - savH;
+      const innerWidth = barWidth - 6;
       const barSav = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      barSav.setAttribute("x", cx - (barWidth - 6) / 2);
+      barSav.setAttribute("x", cx - innerWidth / 2);
       barSav.setAttribute("y", savY);
-      barSav.setAttribute("width", Math.max(4, barWidth - 6));
+      barSav.setAttribute("width", Math.max(4, innerWidth));
       barSav.setAttribute("height", savH);
-      barSav.setAttribute("rx", Math.max(2, (barWidth - 6) / 2));
+      barSav.setAttribute("rx", Math.max(4, barRadius - 2));
       barSav.setAttribute("fill", "#bef264");
       barSav.setAttribute("opacity", "0.92");
       barSav.style.transition = "height 0.4s ease, y 0.4s ease";
       savingBarsG.appendChild(barSav);
 
       // 3. Expense Curve Point
-      const expH = (it.outcome / maxVal) * chartH;
+      const expPct = Math.min(1, it.outcome / maxVal);
+      const expH = Math.max(30, 25 + expPct * (chartH - 40));
       const expY = svgH - padBottom - expH;
       splinePoints.push({ x: cx, y: expY, item: it });
 
@@ -2077,10 +2094,15 @@ var FinCharts = {
       hitArea.addEventListener("mouseenter", (e) => {
         if (!tooltipEl) return;
         tooltipEl.style.display = "block";
-        document.getElementById("eoTtMonth").textContent = it.label;
-        document.getElementById("eoTtIncome").textContent = "฿ " + it.income.toLocaleString();
-        document.getElementById("eoTtSaving").textContent = "฿ " + it.saving.toLocaleString();
-        document.getElementById("eoTtExpense").textContent = "฿ " + it.outcome.toLocaleString();
+        const ttMonthEl = document.getElementById("eoTtMonth");
+        const ttIncEl = document.getElementById("eoTtIncome");
+        const ttSavEl = document.getElementById("eoTtSaving");
+        const ttExpEl = document.getElementById("eoTtExpense");
+
+        if (ttMonthEl) ttMonthEl.textContent = it.label;
+        if (ttIncEl) ttIncEl.textContent = "฿ " + it.income.toLocaleString();
+        if (ttSavEl) ttSavEl.textContent = "฿ " + it.saving.toLocaleString();
+        if (ttExpEl) ttExpEl.textContent = "฿ " + it.outcome.toLocaleString();
 
         const rect = stage.getBoundingClientRect();
         const posX = (cx / svgW) * rect.width;
@@ -2096,7 +2118,8 @@ var FinCharts = {
       });
 
       hitArea.addEventListener("mouseleave", () => {
-        if (tooltipEl) tooltipEl.style.display = "none";
+        if (!tooltipEl) return;
+        tooltipEl.style.display = "none";
         if (hoverDotEl) hoverDotEl.setAttribute("opacity", "0");
       });
 
@@ -2137,7 +2160,7 @@ var FinCharts = {
         const pctX = (peakPt.x / svgW) * 100;
         const pctY = (peakPt.y / svgH) * 100;
         peakBadgeEl.style.left = `${pctX}%`;
-        peakBadgeEl.style.top = `calc(${pctY}% - 14px)`;
+        peakBadgeEl.style.top = `calc(${pctY}% - 10px)`;
       }
     }
   }
