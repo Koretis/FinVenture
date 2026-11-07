@@ -4500,6 +4500,109 @@
     .pf-flow-svg.is-mobile .pf-hub-label-text  { font-size: 10px; }
     .pf-flow-svg.is-mobile .pf-hub-number-text { font-size: 16.5px; }
 
+    /* Zone 4 Explorer: Category & Group Allocation Capsule Bar */
+    .pf-z4-alloc-box {
+      background: var(--pf-card-sec);
+      border: 1px solid var(--pf-border);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      transition: all 0.25s ease;
+    }
+    .pf-z4-alloc-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pf-z4-alloc-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pf-z4-alloc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--pf-fg);
+      letter-spacing: -0.01em;
+    }
+    .pf-z4-alloc-sub {
+      font-size: 11px;
+      color: var(--pf-fg-muted);
+    }
+    .pf-z4-alloc-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pf-z4-alloc-reset-btn {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6366f1;
+      cursor: pointer;
+      text-decoration: underline;
+      display: none;
+    }
+    .pf-z4-alloc-capsule-bar {
+      width: 100%;
+      height: 14px;
+      border-radius: 9999px;
+      background: var(--pf-card);
+      border: 1px solid var(--pf-border);
+      display: flex;
+      gap: 3px;
+      overflow: hidden;
+      margin: 12px 0 10px 0;
+      padding: 2px;
+      box-sizing: border-box;
+    }
+    .pf-z4-alloc-slice {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s ease, opacity 0.2s ease;
+      cursor: pointer;
+    }
+    .pf-z4-alloc-slice:hover {
+      transform: scaleY(1.15);
+      filter: brightness(0.95);
+    }
+    .pf-z4-alloc-legends {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 11.5px;
+      color: var(--pf-fg-muted);
+    }
+    .pf-z4-alloc-leg-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 8px;
+      transition: all 0.18s ease;
+    }
+    .pf-z4-alloc-leg-item:hover {
+      background: var(--pf-card);
+      color: var(--pf-fg);
+    }
+    .pf-z4-alloc-leg-item.active {
+      background: var(--pf-card);
+      color: var(--pf-fg);
+      font-weight: 700;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+    .pf-z4-alloc-leg-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
     /* 3 Bottom Cards */
     .pf-flow-widgets-row {
       display: grid;
@@ -6401,6 +6504,22 @@
 
             <!-- Selected Sheet KPI Summary Strip -->
             <div id="pfZ4ExplorerKpiStrip" class="pf-kpi-grid" style="margin-bottom: 14px;"></div>
+
+            <!-- Dynamic Category / Group Allocation % Multi-Segment Capsule Bar (SET & US Stock) -->
+            <div id="pfZ4AllocBox" class="pf-z4-alloc-box" style="display: none;">
+              <div class="pf-z4-alloc-head">
+                <div class="pf-z4-alloc-title-wrap">
+                  <span id="pfZ4AllocTitle" class="pf-z4-alloc-title">Group &amp; Category Allocation</span>
+                  <span id="pfZ4AllocSub" class="pf-z4-alloc-sub">Source on stats</span>
+                </div>
+                <div class="pf-z4-alloc-meta">
+                  <span id="pfZ4AllocResetBtn" class="pf-z4-alloc-reset-btn" onclick="PortfolioUI.setTradeLogGroupFilter('ALL')">✕ ล้างตัวกรอง</span>
+                  <span id="pfZ4AllocMetaRight" class="num" style="font-size: 11.5px; font-weight: 700; color: var(--pf-fg);">Q3-Q4 • 2026</span>
+                </div>
+              </div>
+              <div id="pfZ4AllocCapsuleBar" class="pf-z4-alloc-capsule-bar"></div>
+              <div id="pfZ4AllocLegends" class="pf-z4-alloc-legends"></div>
+            </div>
 
             <!-- Sub-controls: Holdings Status Filter & Trade Type / Ticker Filter -->
             <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">

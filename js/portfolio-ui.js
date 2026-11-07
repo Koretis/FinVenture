@@ -15,6 +15,7 @@ var PortfolioUI = {
     activeAssessment: "SET",       // 'SET' | 'US' | 'GOLD' | 'CRYPTO' | 'PVD' | 'INS' | 'SAVING'
     tradeLogSheet: "set",          // 'set' | 'usd' | 'gold' | 'crypto'
     tradeLogHoldingFilter: "ALL",  // 'ALL' | 'ACTIVE'
+    tradeLogGroupFilter: "ALL",    // 'ALL' or specific group (e.g. 'ETF cover call', 'Satellite', 'Core US', etc.)
     tradeLogTypeFilter: "ALL",     // 'ALL' | 'Buy' | 'Sell' | 'OTHER'
     tradeLogTickerFilter: "ALL",   // 'ALL' or specific ticker
     investMonthlyYear: "ALL"       // 'ALL' | '2026' | '2025'
@@ -2330,6 +2331,7 @@ var PortfolioUI = {
     this.state.tradeLogSheet = sheetKey || "set";
     this.state.tradeLogTickerFilter = "ALL";
     this.state.tradeLogTypeFilter = "ALL";
+    this.state.tradeLogGroupFilter = "ALL";
 
     document.querySelectorAll(".pf-tradelog-tab-btn").forEach(b => {
       b.classList.toggle("active", b.getAttribute("data-pf-tl") === this.state.tradeLogSheet);
@@ -2364,6 +2366,15 @@ var PortfolioUI = {
 
   setTradeLogTickerFilter(ticker) {
     this.state.tradeLogTickerFilter = ticker || "ALL";
+    this.renderTradeLogExplorer(true);
+  },
+
+  setTradeLogGroupFilter(group) {
+    if (this.state.tradeLogGroupFilter === group) {
+      this.state.tradeLogGroupFilter = "ALL";
+    } else {
+      this.state.tradeLogGroupFilter = group || "ALL";
+    }
     this.renderTradeLogExplorer(true);
   },
 
@@ -2487,13 +2498,179 @@ var PortfolioUI = {
       `;
     }
 
+    // 1b. Render Multi-Segment Category / Group Allocation Capsule Bar (SET & US Stock)
+    const allocBox = document.getElementById("pfZ4AllocBox");
+    const capsuleBar = document.getElementById("pfZ4AllocCapsuleBar");
+    const legendsEl = document.getElementById("pfZ4AllocLegends");
+    const titleElAlloc = document.getElementById("pfZ4AllocTitle");
+    const subElAlloc = document.getElementById("pfZ4AllocSub");
+    const resetBtnAlloc = document.getElementById("pfZ4AllocResetBtn");
+
+    if (allocBox && capsuleBar && legendsEl) {
+      if (key === "usd" || key === "set") {
+        allocBox.style.display = "block";
+
+        const pastelPalette = [
+          { bar: "#86efac", dot: "#10b981", name: "Mint" },
+          { bar: "#a5b4fc", dot: "#6366f1", name: "Periwinkle" },
+          { bar: "#67e8f9", dot: "#06b6d4", name: "Cyan" },
+          { bar: "#fda4af", dot: "#f43f5e", name: "Rose" },
+          { bar: "#fcd34d", dot: "#f59e0b", name: "Amber" },
+          { bar: "#d8b4fe", dot: "#a855f7", name: "Lavender" }
+        ];
+
+        let allocGroups = [];
+
+        if (key === "usd") {
+          if (titleElAlloc) titleElAlloc.textContent = "Group Allocation (Core US • Cover Call • Satellite)";
+          if (subElAlloc) subElAlloc.textContent = "ดึงจาก Field \"Group\" ในชีต USD Stock Trading Log • คลิกแถบสีเพื่อกรองตาราง";
+
+          // Group by holding.group from sheet USD Stock Trading Log
+          const groupMap = {};
+          holdings.forEach(h => {
+            const mkt = Number(h.mktThb || 0);
+            if (mkt <= 0 && Number(h.costThb || 0) <= 0) return;
+            const g = (h.group || "").trim() || (h.name === "Cash" ? "Cash" : "Uncategorized");
+            if (!groupMap[g]) {
+              groupMap[g] = { name: g, mktThb: 0, costThb: 0, items: [] };
+            }
+            groupMap[g].mktThb += mkt;
+            groupMap[g].costThb += Number(h.costThb || 0);
+            groupMap[g].items.push(h);
+          });
+
+          const totalMkt = Object.values(groupMap).reduce((s, g) => s + g.mktThb, 0) || 1;
+          const sortOrder = ["ETF cover call", "Satellite", "Core US", "Common Stock", "ETF", "Cash", "Uncategorized"];
+
+          allocGroups = Object.values(groupMap).map(g => ({
+            id: g.name,
+            label: g.name === "Cash" || g.name === "Uncategorized" ? "สภาพคล่อง (Cash)" : g.name,
+            mktThb: g.mktThb,
+            pct: (g.mktThb / totalMkt) * 100,
+            items: g.items
+          })).sort((a, b) => {
+            const idxA = sortOrder.indexOf(a.id);
+            const idxB = sortOrder.indexOf(b.id);
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            if (idxA !== -1) return -1;
+            if (idxB !== -1) return 1;
+            return b.mktThb - a.mktThb;
+          });
+
+        } else if (key === "set") {
+          if (titleElAlloc) titleElAlloc.textContent = "Sector & Category Allocation (SET)";
+          if (subElAlloc) subElAlloc.textContent = "จัดสัดส่วนกลุ่มอุตสาหกรรมใน SET Trade Log • คลิกแถบสีเพื่อกรองตาราง";
+
+          const setSectorMap = {
+            "ADVANC": "ICT สื่อสาร",
+            "TISCO": "Banking ธนาคาร",
+            "KTB": "Banking ธนาคาร",
+            "MC": "Commerce ค้าปลีก",
+            "TACC": "Commerce ค้าปลีก",
+            "GULF": "Energy & Infra",
+            "3BBIF": "Energy & Infra",
+            "DIF": "Energy & Infra",
+            "PTTEP": "Energy & Infra",
+            "SCB": "Banking ธนาคาร",
+            "Cash": "สภาพคล่อง (Cash)"
+          };
+
+          const secMap = {};
+          holdings.forEach(h => {
+            const mkt = Number(h.mktThb || 0);
+            if (mkt <= 0 && Number(h.costThb || 0) <= 0) return;
+            const sec = setSectorMap[h.name] || (h.name === "Cash" ? "สภาพคล่อง (Cash)" : "อื่นๆ");
+            if (!secMap[sec]) {
+              secMap[sec] = { name: sec, mktThb: 0, items: [] };
+            }
+            secMap[sec].mktThb += mkt;
+            secMap[sec].items.push(h);
+          });
+
+          const totalMkt = Object.values(secMap).reduce((s, g) => s + g.mktThb, 0) || 1;
+          allocGroups = Object.values(secMap).map(g => ({
+            id: g.name,
+            label: g.name,
+            mktThb: g.mktThb,
+            pct: (g.mktThb / totalMkt) * 100,
+            items: g.items
+          })).sort((a, b) => b.mktThb - a.mktThb);
+        }
+
+        const activeGroup = this.state.tradeLogGroupFilter || "ALL";
+        if (resetBtnAlloc) {
+          resetBtnAlloc.style.display = (activeGroup !== "ALL") ? "inline" : "none";
+        }
+
+        // Render Capsule Bar
+        capsuleBar.innerHTML = allocGroups.map((g, idx) => {
+          const pal = pastelPalette[idx % pastelPalette.length];
+          const isDimmed = activeGroup !== "ALL" && activeGroup !== g.id;
+          return `
+            <div class="pf-z4-alloc-slice"
+                 onclick="PortfolioUI.setTradeLogGroupFilter('${g.id}')"
+                 style="width:${Math.max(g.pct, 3)}%; background:${pal.bar}; opacity:${isDimmed ? '0.28' : '1'};"
+                 title="${g.label}: ${g.pct.toFixed(2)}% (${this.fmtMoney(g.mktThb)})">
+            </div>
+          `;
+        }).join("");
+
+        // Render Legends Row
+        legendsEl.innerHTML = allocGroups.map((g, idx) => {
+          const pal = pastelPalette[idx % pastelPalette.length];
+          const isSelected = activeGroup === g.id;
+          const isDimmed = activeGroup !== "ALL" && !isSelected;
+          return `
+            <div class="pf-z4-alloc-leg-item ${isSelected ? 'active' : ''}"
+                 onclick="PortfolioUI.setTradeLogGroupFilter('${g.id}')"
+                 style="opacity:${isDimmed ? '0.45' : '1'};">
+              <span class="pf-z4-alloc-leg-dot" style="background:${pal.bar}; border:2px solid ${pal.dot};"></span>
+              <span style="font-weight:600; color:var(--pf-fg);">${g.label}</span>
+              <span class="num" style="font-weight:700; color:var(--pf-fg);">${g.pct.toFixed(1)}%</span>
+              <span class="num pf-muted" style="font-size:10.5px;">(${this.fmtMoney(g.mktThb)})</span>
+            </div>
+          `;
+        }).join("");
+
+      } else {
+        allocBox.style.display = "none";
+      }
+    }
+
     // 2. Render Holdings Summary Table (Right-side table of the selected Trade Log sheet)
     const holdWrap = document.getElementById("pfZ4ExplorerHoldingsWrap");
     if (holdWrap) {
       const onlyActive = this.state.tradeLogHoldingFilter === "ACTIVE";
+      const targetGroup = this.state.tradeLogGroupFilter || "ALL";
+
+      const setSectorMap = {
+        "ADVANC": "ICT สื่อสาร",
+        "TISCO": "Banking ธนาคาร",
+        "KTB": "Banking ธนาคาร",
+        "MC": "Commerce ค้าปลีก",
+        "TACC": "Commerce ค้าปลีก",
+        "GULF": "Energy & Infra",
+        "3BBIF": "Energy & Infra",
+        "DIF": "Energy & Infra",
+        "PTTEP": "Energy & Infra",
+        "SCB": "Banking ธนาคาร",
+        "Cash": "สภาพคล่อง (Cash)"
+      };
+
       const filteredHoldings = holdings.filter(h => {
-        if (!onlyActive) return true;
-        return Number(h.mktThb || 0) > 0 || Number(h.sellable || 0) > 0;
+        if (onlyActive && !(Number(h.mktThb || 0) > 0 || Number(h.sellable || 0) > 0)) {
+          return false;
+        }
+        if (targetGroup !== "ALL") {
+          if (key === "usd") {
+            const g = (h.group || "").trim() || (h.name === "Cash" ? "Cash" : "Uncategorized");
+            if (g !== targetGroup) return false;
+          } else if (key === "set") {
+            const sec = setSectorMap[h.name] || (h.name === "Cash" ? "สภาพคล่อง (Cash)" : "อื่นๆ");
+            if (sec !== targetGroup) return false;
+          }
+        }
+        return true;
       });
 
       if (key === "set") {
