@@ -1893,6 +1893,253 @@ var FinCharts = {
     if (legUs) legUs.innerText = `● หุ้นสหรัฐ ${usPct}%`;
     if (legCash) legCash.innerText = `● สภาพคล่อง ${cashPct}%`;
     if (legOther) legOther.innerText = `● อื่นๆ ${otherPct}%`;
+  },
+
+  /* =========================================================================
+     EXPENSE OVERVIEW HERO CHART (EXACT REFERENCE ENGINE)
+     Features: White Income Bars + Layered Mint Saving Bars + Teal Expense Spline
+     ========================================================================= */
+  expenseOverviewPeriod: "2026",
+
+  setExpenseOverviewPeriod(period) {
+    this.expenseOverviewPeriod = period || "2026";
+    document.querySelectorAll(".eo-seg-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-eo-period") === this.expenseOverviewPeriod);
+    });
+    this.renderExpenseOverviewHero();
+  },
+
+  renderExpenseOverviewHero() {
+    const stage = document.getElementById("eoChartStage");
+    if (!stage) return;
+
+    const cfList = (typeof currentFinData !== "undefined" && currentFinData && Array.isArray(currentFinData.monthlyCashFlow))
+      ? currentFinData.monthlyCashFlow
+      : [];
+
+    const period = this.expenseOverviewPeriod || "2026";
+    let filtered = [];
+
+    if (period === "ALL") {
+      filtered = cfList.filter(c => (Number(c.income || 0) > 0 || Number(c.outcome || c.netExpense || 0) > 0));
+    } else {
+      const targetYear = parseInt(period, 10);
+      filtered = cfList.filter(c => c.year === targetYear && (Number(c.income || 0) > 0 || Number(c.outcome || c.netExpense || 0) > 0));
+    }
+
+    // Fallback if empty
+    if (!filtered.length) {
+      filtered = cfList.slice(-9);
+    }
+
+    const monthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const items = filtered.map(c => {
+      let mIdx = 1;
+      let yr = c.year || 2026;
+      if (c.month) {
+        const parts = String(c.month).split("-");
+        if (parts.length >= 2) {
+          yr = parseInt(parts[0], 10) || yr;
+          mIdx = parseInt(parts[1], 10) || 1;
+        }
+      }
+      const inc = Number(c.income || 0);
+      const out = Number(c.outcome || c.netExpense || 0);
+      const sav = Number(c.invest || Math.max(0, inc - out));
+
+      return {
+        year: yr,
+        monthIdx: mIdx,
+        monthStr: String(mIdx).padStart(2, "0"),
+        label: `${monthNamesEn[(mIdx - 1) % 12]} '${String(yr).slice(2)}`,
+        fullDate: `15.${String(mIdx).padStart(2, "0")}.${yr}`,
+        income: inc,
+        outcome: out,
+        saving: sav
+      };
+    });
+
+    // Update Subtitle Period text
+    const subtitleEl = document.getElementById("eoPeriodSubtitle");
+    if (subtitleEl && items.length > 0) {
+      if (period === "ALL") {
+        subtitleEl.textContent = `All Historical Range (${items.length} Months)`;
+      } else {
+        subtitleEl.textContent = `Q1•${period} ↔ Q4•${period}`;
+      }
+    }
+
+    // Find peak expense item
+    let peakItem = items[0] || { outcome: 0, fullDate: "—" };
+    let peakIdx = 0;
+    items.forEach((it, idx) => {
+      if (it.outcome > peakItem.outcome) {
+        peakItem = it;
+        peakIdx = idx;
+      }
+    });
+
+    // Compute Summary KPIs
+    const totalOutcome = items.reduce((s, it) => s + it.outcome, 0);
+    const totalSaving = items.reduce((s, it) => s + it.saving, 0);
+    const totalIncome = items.reduce((s, it) => s + it.income, 0);
+    const netSavings = totalIncome - totalOutcome;
+
+    const footDateEl = document.getElementById("eoFootPeakDate");
+    const footAmtEl = document.getElementById("eoFootAmount");
+    const footRaiseEl = document.getElementById("eoFootRaise");
+
+    if (footDateEl) footDateEl.textContent = peakItem.fullDate || "—";
+    if (footAmtEl) footAmtEl.textContent = Math.round(totalOutcome).toLocaleString();
+    if (footRaiseEl) {
+      const isPos = netSavings >= 0;
+      footRaiseEl.textContent = `${isPos ? '+' : ''}${Math.round(netSavings).toLocaleString()}`;
+      footRaiseEl.style.color = isPos ? "#10b981" : "#f43f5e";
+    }
+
+    // Coordinate dimensions (viewBox 680 x 240)
+    const svgW = 680;
+    const svgH = 240;
+    const padX = 35;
+    const padTop = 35;
+    const padBottom = 22;
+    const chartH = svgH - padTop - padBottom;
+    const count = items.length;
+    const stepX = (svgW - padX * 2) / (count - 1 || 1);
+
+    const maxVal = Math.max(
+      ...items.map(it => Math.max(it.income, it.outcome, it.saving)),
+      peakItem.outcome || 100000
+    ) * 1.15;
+
+    const barWidth = Math.min(36, Math.max(18, stepX * 0.62));
+
+    const incomeBarsG = document.getElementById("eoIncomeBarsGroup");
+    const savingBarsG = document.getElementById("eoSavingBarsGroup");
+    const splineEl = document.getElementById("eoExpenseSpline");
+    const peakDotEl = document.getElementById("eoPeakDot");
+    const hoverDotEl = document.getElementById("eoHoverDot");
+    const peakBadgeEl = document.getElementById("eoPeakBadge");
+    const tooltipEl = document.getElementById("eoTooltip");
+
+    if (!incomeBarsG || !savingBarsG || !splineEl) return;
+
+    incomeBarsG.innerHTML = "";
+    savingBarsG.innerHTML = "";
+
+    const splinePoints = [];
+
+    items.forEach((it, idx) => {
+      const cx = padX + idx * stepX;
+      const incH = Math.max(16, (it.income / maxVal) * chartH);
+      const incY = svgH - padBottom - incH;
+
+      // 1. Layer 1: White Rounded Income Bar
+      const barInc = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      barInc.setAttribute("x", cx - barWidth / 2);
+      barInc.setAttribute("y", incY);
+      barInc.setAttribute("width", barWidth);
+      barInc.setAttribute("height", incH);
+      barInc.setAttribute("rx", barWidth / 2);
+      barInc.setAttribute("fill", "#ffffff");
+      barInc.style.transition = "height 0.4s ease, y 0.4s ease";
+      incomeBarsG.appendChild(barInc);
+
+      // 2. Layer 2: Lime-Mint Layered Saving Bar
+      const savH = Math.max(6, (it.saving / maxVal) * chartH);
+      const savY = svgH - padBottom - savH;
+      const barSav = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      barSav.setAttribute("x", cx - (barWidth - 6) / 2);
+      barSav.setAttribute("y", savY);
+      barSav.setAttribute("width", Math.max(4, barWidth - 6));
+      barSav.setAttribute("height", savH);
+      barSav.setAttribute("rx", Math.max(2, (barWidth - 6) / 2));
+      barSav.setAttribute("fill", "#bef264");
+      barSav.setAttribute("opacity", "0.92");
+      barSav.style.transition = "height 0.4s ease, y 0.4s ease";
+      savingBarsG.appendChild(barSav);
+
+      // 3. Expense Curve Point
+      const expH = (it.outcome / maxVal) * chartH;
+      const expY = svgH - padBottom - expH;
+      splinePoints.push({ x: cx, y: expY, item: it });
+
+      // Hit area for hover tooltip
+      const hitArea = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      hitArea.setAttribute("x", cx - stepX / 2);
+      hitArea.setAttribute("y", 0);
+      hitArea.setAttribute("width", stepX);
+      hitArea.setAttribute("height", svgH);
+      hitArea.setAttribute("fill", "transparent");
+      hitArea.style.cursor = "pointer";
+
+      hitArea.addEventListener("mouseenter", (e) => {
+        if (!tooltipEl) return;
+        tooltipEl.style.display = "block";
+        document.getElementById("eoTtMonth").textContent = it.label;
+        document.getElementById("eoTtIncome").textContent = "฿ " + it.income.toLocaleString();
+        document.getElementById("eoTtSaving").textContent = "฿ " + it.saving.toLocaleString();
+        document.getElementById("eoTtExpense").textContent = "฿ " + it.outcome.toLocaleString();
+
+        const rect = stage.getBoundingClientRect();
+        const posX = (cx / svgW) * rect.width;
+        const posY = (expY / svgH) * rect.height;
+        tooltipEl.style.left = `${Math.min(posX, rect.width - 150)}px`;
+        tooltipEl.style.top = `${Math.max(10, posY - 80)}px`;
+
+        if (hoverDotEl) {
+          hoverDotEl.setAttribute("cx", cx);
+          hoverDotEl.setAttribute("cy", expY);
+          hoverDotEl.setAttribute("opacity", "1");
+        }
+      });
+
+      hitArea.addEventListener("mouseleave", () => {
+        if (tooltipEl) tooltipEl.style.display = "none";
+        if (hoverDotEl) hoverDotEl.setAttribute("opacity", "0");
+      });
+
+      incomeBarsG.appendChild(hitArea);
+    });
+
+    // Spline curve Catmull-Rom to Cubic Bezier
+    if (splinePoints.length >= 2) {
+      let d = `M ${splinePoints[0].x} ${splinePoints[0].y}`;
+      for (let i = 0; i < splinePoints.length - 1; i++) {
+        const p0 = splinePoints[i === 0 ? 0 : i - 1];
+        const p1 = splinePoints[i];
+        const p2 = splinePoints[i + 1];
+        const p3 = splinePoints[i + 2 < splinePoints.length ? i + 2 : i + 1];
+
+        const cp1x = p1.x + (p2.x - p0.x) / 5;
+        const cp1y = p1.y + (p2.y - p0.y) / 5;
+        const cp2x = p2.x - (p3.x - p1.x) / 5;
+        const cp2y = p2.y - (p3.y - p1.y) / 5;
+
+        d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+      }
+      splineEl.setAttribute("d", d);
+    } else if (splinePoints.length === 1) {
+      splineEl.setAttribute("d", `M ${splinePoints[0].x - 30} ${splinePoints[0].y} L ${splinePoints[0].x + 30} ${splinePoints[0].y}`);
+    }
+
+    // Pinned Peak Dot & Floating Badge
+    const peakPt = splinePoints[peakIdx] || splinePoints[0];
+    if (peakPt) {
+      if (peakDotEl) {
+        peakDotEl.setAttribute("cx", peakPt.x);
+        peakDotEl.setAttribute("cy", peakPt.y);
+      }
+      if (peakBadgeEl) {
+        const kVal = Math.round(peakPt.item.outcome / 1000);
+        peakBadgeEl.textContent = `+${kVal}k`;
+        const pctX = (peakPt.x / svgW) * 100;
+        const pctY = (peakPt.y / svgH) * 100;
+        peakBadgeEl.style.left = `${pctX}%`;
+        peakBadgeEl.style.top = `calc(${pctY}% - 14px)`;
+      }
+    }
   }
 };
 
@@ -1901,3 +2148,4 @@ window.onDivToggleComparePrev = function(checked) {
     FinCharts.renderDividendDashboard();
   }
 };
+

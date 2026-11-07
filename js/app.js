@@ -80,6 +80,7 @@ function setCurrency(cur) {
 
   // Re-render active views & charts
   FinCharts.renderHistChart();
+  FinCharts.renderExpenseOverviewHero();
   FinCharts.renderCapsuleComparison();
   FinCharts.renderSankeyDiagram();
   FinCharts.renderCashFlowBars();
@@ -318,6 +319,7 @@ function refreshAllDataViews() {
 
   // Redraw charts & lists
   FinCharts.renderHistChart();
+  FinCharts.renderExpenseOverviewHero();
   FinCharts.renderCapsuleComparison();
   FinCharts.renderSankeyDiagram();
   FinCharts.renderCashFlowBars();
