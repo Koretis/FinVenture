@@ -218,6 +218,7 @@ var SheetsAPI = {
       "Invest Monthly",
       "USD Stock Trading Log",
       "SET Trade Log",
+      "RMF log",
       "Gold Trade Log",
       "Crypto Trade Log",
       "Settrade-HIS",
@@ -1605,6 +1606,59 @@ var SheetsAPI = {
       });
 
       currentFinData.tradeLogs.set = { holdings, total, trades };
+    }
+
+    // 2b. RMF log
+    const rmfRows = sheetResults["RMF log"] || [];
+    if (rmfRows.length > 0) {
+      const holdings = [];
+      let total = null;
+      const trades = [];
+
+      rmfRows.forEach((r, idx) => {
+        const stock = cellStr(r, 3);
+        const ttype = cellStr(r, 2);
+        const qty = cleanNum(r["col_4"], 4);
+        const costThb = cleanNum(r["col_8"], 2) || cleanNum(r["col_6"], 2);
+        if ((stock || ttype) && (qty > 0 || costThb > 0)) {
+          trades.push({
+            idx: idx + 1,
+            date: cellStr(r, 0) || "—",
+            platform: cellStr(r, 1) || "Dime",
+            type: ttype || "Buy",
+            ticker: stock || "—",
+            qty: qty,
+            priceThb: cleanNum(r["col_5"], 4),
+            costThb: cleanNum(r["col_6"], 2),
+            commThb: cleanNum(r["col_7"], 2),
+            totalCostThb: costThb,
+            plPct: cleanNum(this.parseNum(r["col_9"], 0) * 100, 2),
+            plThb: cleanNum(r["col_10"], 2)
+          });
+        }
+
+        const fname = cellStr(r, 15);
+        if (fname) {
+          const item = {
+            name: fname,
+            sellable: cleanNum(r["col_16"], 4),
+            avgPriceThb: cleanNum(r["col_17"], 4),
+            lastPriceThb: cleanNum(r["col_18"], 4),
+            costThb: cleanNum(r["col_19"], 2),
+            mktThb: cleanNum(r["col_20"], 2),
+            profitThb: cleanNum(r["col_21"], 2),
+            profitPct: cleanNum(this.parseNum(r["col_22"], 0) * 100, 2),
+            status: cellStr(r, 23) || "Active"
+          };
+          if (fname.toLowerCase() === "total") {
+            total = item;
+          } else {
+            holdings.push(item);
+          }
+        }
+      });
+
+      currentFinData.tradeLogs.rmf = { holdings, total, trades };
     }
 
     // 3. Gold Trade Log

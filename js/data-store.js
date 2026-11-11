@@ -10387,6 +10387,69 @@ const DEFAULT_FIN_DATA = {
       }
     ]
   },
+  "rmf": {
+    "holdings": [
+      {
+        "name": "SCBRMNDQ(A)",
+        "sellable": 4437.1759,
+        "avgPriceThb": 15.7758,
+        "lastPriceThb": 15.8725,
+        "costThb": 70000.0,
+        "mktThb": 70429.07,
+        "profitThb": 429.07,
+        "profitPct": 0.61,
+        "status": "Active"
+      },
+      {
+        "name": "KKP INRMF",
+        "sellable": 1739.7254,
+        "avgPriceThb": 17.2441,
+        "lastPriceThb": 17.244,
+        "costThb": 30000.0,
+        "mktThb": 29999.82,
+        "profitThb": -0.18,
+        "profitPct": 0.0,
+        "status": "Active"
+      }
+    ],
+    "total": {
+      "name": "Total",
+      "costThb": 100000.0,
+      "mktThb": 100428.9,
+      "profitThb": 428.89,
+      "profitPct": 0.43
+    },
+    "trades": [
+      {
+        "idx": 1,
+        "date": "10-Nov-2026",
+        "platform": "Dime",
+        "type": "Buy",
+        "ticker": "SCBRMNDQ(A)",
+        "qty": 4437.1759,
+        "priceThb": 15.7758,
+        "costThb": 70000.0,
+        "commThb": 0.0,
+        "totalCostThb": 70000.0,
+        "plPct": 0.61,
+        "plThb": 429.07
+      },
+      {
+        "idx": 2,
+        "date": "10-Nov-2026",
+        "platform": "Dime",
+        "type": "Buy",
+        "ticker": "KKP INRMF",
+        "qty": 1739.7254,
+        "priceThb": 17.2441,
+        "costThb": 30000.0,
+        "commThb": 0.0,
+        "totalCostThb": 30000.0,
+        "plPct": 0.0,
+        "plThb": -0.18
+      }
+    ]
+  },
   "usd": {
     "holdings": [
       {

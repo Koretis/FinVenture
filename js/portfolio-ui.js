@@ -1420,7 +1420,7 @@ var PortfolioUI = {
     this.renderAssetClassDetailCards();
 
     // Optionally sync Trade Log Explorer sheet if traded
-    const sheetMap = { SET: "set", US: "usd", GOLD: "gold", CRYPTO: "crypto" };
+    const sheetMap = { SET: "set", US: "usd", RMF: "rmf", GOLD: "gold", CRYPTO: "crypto" };
     if (sheetMap[assetId]) {
       this.selectTradeLogSheet(sheetMap[assetId], false);
     }
@@ -1536,7 +1536,7 @@ var PortfolioUI = {
     const definitions = [
       { id: "SET", name: "SET", title: "SET (Thai Equities)", icon: "🇹🇭", color: "#8b5cf6", colorRgb: "139, 92, 246", assetKey: "SET", tradeLogKey: "set", monthlyAvg: 42739 },
       { id: "US", name: "US Stock", title: "US Stock (US Equities)", icon: "🇺🇸", color: "#3b82f6", colorRgb: "59, 130, 246", assetKey: "US", tradeLogKey: "usd", monthlyAvg: 12500 },
-      { id: "RMF", name: "RMF", title: "RMF (Dime / กองทุนลดหย่อนภาษี)", icon: "🌱", color: "#14b8a6", colorRgb: "20, 184, 166", assetKey: "RMF", tradeLogKey: null, monthlyAvg: 8333 },
+      { id: "RMF", name: "RMF", title: "RMF (Dime / กองทุนลดหย่อนภาษี)", icon: "🌱", color: "#14b8a6", colorRgb: "20, 184, 166", assetKey: "RMF", tradeLogKey: "rmf", monthlyAvg: 8333 },
       { id: "GOLD", name: "Gold", title: "Gold (Bullion 96.5%)", icon: "🪙", color: "#f59e0b", colorRgb: "245, 158, 11", assetKey: "GOLD", tradeLogKey: "gold", monthlyAvg: 18200 },
       { id: "CRYPTO", name: "Crypto", title: "Crypto (Digital Assets)", icon: "⚡", color: "#ec4899", colorRgb: "236, 72, 153", assetKey: "CRYPTO", tradeLogKey: "crypto", monthlyAvg: 11413 },
       { id: "PVD", name: "PVD", title: "PVD (Provident Fund)", icon: "🏢", color: "#10b981", colorRgb: "16, 185, 129", assetKey: "PVD", tradeLogKey: null, monthlyAvg: 19726 },
@@ -1584,7 +1584,8 @@ var PortfolioUI = {
         }));
       } else if (def.id === "RMF") {
         holdings = [
-          { name: "Dime RMF (US Tech & Global Equities)", status: "Active DCA", mktThb: mkt || 100429, costThb: cst || 100000, profitThb: (mkt - cst) || 429, profitPct: cst > 0 ? Number(((mkt - cst) / cst * 100).toFixed(2)) : 0.43 }
+          { name: "SCBRMNDQ(A)", status: "Active", mktThb: 70429, costThb: 70000, profitThb: 429, profitPct: 0.61 },
+          { name: "KKP INRMF", status: "Active", mktThb: 30000, costThb: 30000, profitThb: 0, profitPct: 0.0 }
         ];
       } else if (def.id === "PVD") {
         holdings = [
@@ -2434,6 +2435,11 @@ var PortfolioUI = {
         title: "🇺🇸 เจาะลึกพอร์ตหุ้นสหรัฐฯ & ประวัติซื้อขายจากชีต “USD Stock Trading Log”",
         badgeColor: "#6366f1"
       },
+      rmf: {
+        sheetName: "RMF log",
+        title: "🌱 เจาะลึกกองทุนลดหย่อนภาษี RMF & ประวัติซื้อขายจากชีต “RMF log”",
+        badgeColor: "#14b8a6"
+      },
       gold: {
         sheetName: "Gold Trade Log",
         title: "🪙 เจาะลึกพอร์ตทองคำ AOM NOW & ประวัติซื้อขายจากชีต “Gold Trade Log”",
@@ -2480,6 +2486,10 @@ var PortfolioUI = {
         extraKpiLbl = "เงินปันผลรับสุทธิ (Dividend Net)";
         extraKpiVal = `${this.fmtMoney(divThb)} (${this.fmtUsd(divUsd)})`;
         extraKpiSub = `Mkt USD: ${this.fmtUsd(total?.mktUsd || 0)} · Cost USD: ${this.fmtUsd(total?.costUsd || 0)}`;
+      } else if (key === "rmf") {
+        extraKpiLbl = "กองทุนลดหย่อนภาษี (Dime RMF)";
+        extraKpiVal = `${activeHoldings.length} กองทุนหลัก`;
+        extraKpiSub = `Dime Application • ประหยัดภาษีประจำปี`;
       } else if (key === "gold") {
         const totalBuyBaht = buyTrades.reduce((s, t) => s + Number(t.weightBaht || 0), 0);
         const totalBuyAmt = buyTrades.reduce((s, t) => s + Number(t.amountThb || 0), 0);
@@ -2819,6 +2829,55 @@ var PortfolioUI = {
             </tbody>
           </table>
         `;
+      } else if (key === "rmf") {
+        holdWrap.innerHTML = `
+          <table class="pf-hold-tbl" style="font-size:11.5px;">
+            <thead>
+              <tr>
+                <th>Fund Name</th>
+                <th>Status</th>
+                <th style="text-align:right;">Sellable Units</th>
+                <th style="text-align:right;">Avg / Last NAV (THB)</th>
+                <th style="text-align:right;">Cost NAV (THB)</th>
+                <th style="text-align:right;">Mkt Value (THB)</th>
+                <th style="text-align:right;">Profit (THB / %)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredHoldings.map(h => {
+                const isPos = h.profitThb >= 0;
+                const isAct = (h.status || "").toLowerCase() === "active" && h.mktThb > 0;
+                return `
+                  <tr class="pf-hold-row" style="cursor:pointer;" onclick="PortfolioUI.setTradeLogTickerFilter('${h.name}')">
+                    <td><strong>${h.name}</strong></td>
+                    <td><span class="pf-pl-pill ${isAct ? 'pos' : 'info'}" style="font-size:10px;">${h.status || 'Active'}</span></td>
+                    <td style="text-align:right;">${h.sellable > 0 ? h.sellable.toLocaleString(undefined, {minimumFractionDigits: 4, maximumFractionDigits: 4}) : '0'}</td>
+                    <td style="text-align:right;">฿${(h.avgPriceThb || 0).toFixed(4)} → <strong>฿${(h.lastPriceThb || 0).toFixed(4)}</strong></td>
+                    <td style="text-align:right;">${this.fmtMoney(h.costThb)}</td>
+                    <td style="text-align:right; font-weight:700;">${this.fmtMoney(h.mktThb)}</td>
+                    <td style="text-align:right;">
+                      <span class="pf-pl-pill ${h.profitThb === 0 ? 'info' : (isPos ? 'pos' : 'neg')}">
+                        ${h.profitThb > 0 ? '+' : ''}${this.fmtMoney(h.profitThb)} (${h.profitPct >= 0 ? '+' : ''}${h.profitPct.toFixed(2)}%)
+                      </span>
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+              ${total ? `
+                <tr class="pf-hold-row" style="background:var(--pf-card); font-weight:800; border-top:2px solid var(--pf-border);">
+                  <td colspan="4">รวมพอร์ต RMF ทั้งหมด (Total Row in Sheet)</td>
+                  <td style="text-align:right;">${this.fmtMoney(total.costThb)}</td>
+                  <td style="text-align:right; color:#14b8a6;">${this.fmtMoney(total.mktThb)}</td>
+                  <td style="text-align:right;">
+                    <span class="pf-pl-pill ${total.profitThb >= 0 ? 'pos' : 'neg'}">
+                      ${total.profitThb >= 0 ? '+' : ''}${this.fmtMoney(total.profitThb)} (${total.profitPct >= 0 ? '+' : ''}${total.profitPct.toFixed(2)}%)
+                    </span>
+                  </td>
+                </tr>
+              ` : ''}
+            </tbody>
+          </table>
+        `;
       } else if (key === "gold") {
         holdWrap.innerHTML = `
           <table class="pf-hold-tbl" style="font-size:11.5px;">
@@ -3017,7 +3076,7 @@ var PortfolioUI = {
           </table>
         `;
       } else {
-        // SET Trade Log & Crypto Trade Log
+        // SET Trade Log, RMF log & Crypto Trade Log
         tradesWrap.innerHTML = `
           <table class="pf-hold-tbl" style="font-size:11.5px;">
             <thead>
@@ -3026,7 +3085,7 @@ var PortfolioUI = {
                 <th>Date</th>
                 <th>App / Broker</th>
                 <th>Type</th>
-                <th>${key === "set" ? "Stock Name" : "Crypto Name"}</th>
+                <th>${key === "set" ? "Stock Name" : (key === "rmf" ? "Fund Name" : "Crypto Name")}</th>
                 <th style="text-align:right;">Qty</th>
                 <th style="text-align:right;">Price / Unit (THB)</th>
                 <th style="text-align:right;">Commission</th>
@@ -3046,8 +3105,8 @@ var PortfolioUI = {
                     <td>${t.platform}</td>
                     <td><span class="pf-pl-pill ${pillCls}" style="font-size:10px;">${t.type}</span></td>
                     <td><strong>${t.ticker}</strong></td>
-                    <td style="text-align:right;">${t.qty > 0 ? (key === "crypto" ? t.qty.toFixed(6) : t.qty.toLocaleString()) : '—'}</td>
-                    <td style="text-align:right;">${t.priceThb > 0 ? `฿${t.priceThb.toLocaleString()}` : '—'}</td>
+                    <td style="text-align:right;">${t.qty > 0 ? (key === "crypto" ? t.qty.toFixed(6) : (key === "rmf" ? t.qty.toFixed(4) : t.qty.toLocaleString())) : '—'}</td>
+                    <td style="text-align:right;">${t.priceThb > 0 ? (key === "rmf" ? `฿${t.priceThb.toFixed(4)}` : `฿${t.priceThb.toLocaleString()}`) : '—'}</td>
                     <td style="text-align:right; color:var(--pf-fg-muted);">฿${(t.commThb || 0).toFixed(2)}</td>
                     <td style="text-align:right; font-weight:700;">${this.fmtMoney(t.totalCostThb)}</td>
                     <td style="text-align:right;">
