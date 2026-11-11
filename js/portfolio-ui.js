@@ -3243,6 +3243,7 @@ var PortfolioUI = {
       const pvdSum = sumCol("pvdDca");
       const setSum = sumCol("setFunding") + sumCol("setReinvest");
       const usSum = sumCol("usFunding") + sumCol("usReinvest");
+      const rmfSum = sumCol("rmfFunding") + sumCol("rmfReinvest");
       const goldSum = sumCol("goldFunding");
       const cryptoSum = sumCol("cryptoFunding");
       const insSum = sumCol("insFunding") + sumCol("insReinvest");
@@ -3251,6 +3252,7 @@ var PortfolioUI = {
       const assetFlows = [
         { name: "🇺🇸 US Stock (Blended + Re-invest)", val: usSum, color: "#6366f1" },
         { name: "🇹🇭 SET Equity (Blended + Re-invest)", val: setSum, color: "#10b981" },
+        { name: "🌱 RMF (Funding + Re-invest)", val: rmfSum, color: "#14b8a6" },
         { name: "⚡ Crypto Blended Funding", val: cryptoSum, color: "#8b5cf6" },
         { name: "🏢 PVD DCA (สะสมรายเดือน)", val: pvdSum, color: "#0284c7" },
         { name: "🏦 Bank Saving Blended Funding", val: bankSum, color: "#0ea5e9" },
@@ -3323,6 +3325,7 @@ var PortfolioUI = {
               <th style="text-align:right;">PVD DCA</th>
               <th style="text-align:right;">SET (Fund + Re-inv)</th>
               <th style="text-align:right;">US Stock (Fund + Re-inv)</th>
+              <th style="text-align:right;">RMF (+Re-inv)</th>
               <th style="text-align:right;">Gold</th>
               <th style="text-align:right;">Crypto</th>
               <th style="text-align:right;">Bank Saving</th>
@@ -3340,6 +3343,7 @@ var PortfolioUI = {
             ${rowsDesc.map(r => {
               const setNet = (r.setFunding || 0) + (r.setReinvest || 0);
               const usNet = (r.usFunding || 0) + (r.usReinvest || 0);
+              const rmfNet = (r.rmfFunding || 0) + (r.rmfReinvest || 0);
               const insNet = (r.insFunding || 0) + (r.insReinvest || 0);
               const otherNet = (r.jittaFunding || 0) + (r.ltfFunding || 0) + (r.bondFunding || 0);
               return `
@@ -3348,6 +3352,7 @@ var PortfolioUI = {
                   <td style="text-align:right;">${fmtCell(r.pvdDca)}</td>
                   <td style="text-align:right;" title="Funding: ${r.setFunding} | Re-invest: ${r.setReinvest}">${fmtCell(setNet)}</td>
                   <td style="text-align:right;" title="Funding: ${r.usFunding} | Re-invest: ${r.usReinvest}">${fmtCell(usNet)}</td>
+                  <td style="text-align:right;" title="Funding: ${r.rmfFunding || 0} | Re-invest: ${r.rmfReinvest || 0}">${fmtCell(rmfNet)}</td>
                   <td style="text-align:right;">${fmtCell(r.goldFunding)}</td>
                   <td style="text-align:right;">${fmtCell(r.cryptoFunding)}</td>
                   <td style="text-align:right;">${fmtCell(r.bankFunding)}</td>
@@ -3367,6 +3372,7 @@ var PortfolioUI = {
               <td style="text-align:right;">${fmtCell(sumCol("pvdDca"))}</td>
               <td style="text-align:right;">${fmtCell(sumCol("setFunding") + sumCol("setReinvest"))}</td>
               <td style="text-align:right;">${fmtCell(sumCol("usFunding") + sumCol("usReinvest"))}</td>
+              <td style="text-align:right;">${fmtCell(sumCol("rmfFunding") + sumCol("rmfReinvest"))}</td>
               <td style="text-align:right;">${fmtCell(sumCol("goldFunding"))}</td>
               <td style="text-align:right;">${fmtCell(sumCol("cryptoFunding"))}</td>
               <td style="text-align:right;">${fmtCell(sumCol("bankFunding"))}</td>

@@ -604,25 +604,47 @@ var SheetsAPI = {
           const n = this.parseNum(v, 0);
           return Math.abs(n) < 0.005 ? 0 : Math.round(n * 100) / 100;
         };
-        const pvdDca = cleanNum(r["col_1"] !== undefined ? r["col_1"] : r["PVD DCA"]);
-        const setFunding = cleanNum(r["col_2"] !== undefined ? r["col_2"] : r["SET Blended Funding"]);
+        const getVal = (colIdx, ...aliases) => {
+          for (const alias of aliases) {
+            if (r[alias] !== undefined && r[alias] !== null && r[alias] !== "") {
+              return cleanNum(r[alias]);
+            }
+          }
+          for (const key of Object.keys(r)) {
+            const cleanKey = key.trim().toLowerCase();
+            for (const alias of aliases) {
+              if (cleanKey === alias.trim().toLowerCase() && r[key] !== null && r[key] !== "") {
+                return cleanNum(r[key]);
+              }
+            }
+          }
+          if (colIdx !== null && colIdx !== undefined && r[`col_${colIdx}`] !== undefined && r[`col_${colIdx}`] !== null) {
+            return cleanNum(r[`col_${colIdx}`]);
+          }
+          return 0;
+        };
+
+        const pvdDca = getVal(1, "PVD DCA");
+        const setFunding = getVal(2, "SET Blended Funding");
         const setReinvest = cleanNum(r["col_3"]);
-        const usFunding = cleanNum(r["col_4"] !== undefined ? r["col_4"] : r["US Stock Blended Funding"]);
+        const usFunding = getVal(4, "US Stock Blended Funding");
         const usReinvest = cleanNum(r["col_5"]);
-        const goldFunding = cleanNum(r["col_6"] !== undefined ? r["col_6"] : r["Gold Blended Funding"]);
-        const cryptoFunding = cleanNum(r["col_7"] !== undefined ? r["col_7"] : r["Crypto Blended Funding"]);
-        const bankFunding = cleanNum(r["col_8"] !== undefined ? r["col_8"] : r["Bank Saving Blended Funding"]);
-        const insFunding = cleanNum(r["col_9"] !== undefined ? r["col_9"] : r["Life Insurrance Blended Funding"]);
+        const goldFunding = getVal(6, "Gold Blended Funding");
+        const cryptoFunding = getVal(7, "Crypto Blended Funding");
+        const bankFunding = getVal(8, "Bank Saving Blended Funding");
+        const insFunding = getVal(9, "Life Insurrance Blended Funding", "Life Insurance Blended Funding");
         const insReinvest = cleanNum(r["col_10"]);
-        const jittaFunding = cleanNum(r["col_11"] !== undefined ? r["col_11"] : r["Jitta Blended Funding"]);
-        const ltfFunding = cleanNum(r["col_12"] !== undefined ? r["col_12"] : r["LTF Blended Funding"]);
-        const bondFunding = cleanNum(r["col_13"] !== undefined ? r["col_13"] : r["Bond Blended Funding"]);
-        const totalInvest = cleanNum(r["col_14"] !== undefined ? r["col_14"] : (r["Total invest "] || r["Total invest"]));
-        const fromDiv = cleanNum(r["col_15"] !== undefined ? r["col_15"] : r["Invest from DIV/Reinvest "]);
-        const fromBonus = cleanNum(r["col_16"] !== undefined ? r["col_16"] : r["Invest from Bonus "]);
-        const fromTaxRefund = cleanNum(r["col_17"] !== undefined ? r["col_17"] : r["Invest from Tax refund "]);
-        const fromRebalance = cleanNum(r["col_18"] !== undefined ? r["col_18"] : r["Invest from rebalance "]);
-        const fromSalary = cleanNum(r["col_19"] !== undefined ? r["col_19"] : (r["Invest from Saraly "] || r["Invest from Saraly"]));
+        const jittaFunding = getVal(11, "Jitta Blended Funding");
+        const ltfFunding = getVal(12, "LTF Blended Funding");
+        const bondFunding = getVal(13, "Bond Blended Funding");
+        const rmfFunding = getVal(14, "RMF Blended Funding");
+        const rmfReinvest = cleanNum(r["col_15"]);
+        const totalInvest = getVal(16, "Total invest", "Total invest ");
+        const fromDiv = getVal(17, "Invest from DIV/Reinvest", "Invest from DIV/Reinvest ");
+        const fromBonus = getVal(18, "Invest from Bonus", "Invest from Bonus ");
+        const fromTaxRefund = getVal(19, "Invest from Tax refund", "Invest from Tax refund ");
+        const fromRebalance = getVal(20, "Invest from rebalance", "Invest from rebalance ");
+        const fromSalary = getVal(21, "Invest from Saraly", "Invest from Saraly ", "Invest from Salary", "Invest from Salary ");
 
         invByYm[d.ym] = {
           total: totalInvest,
@@ -650,6 +672,8 @@ var SheetsAPI = {
           jittaFunding,
           ltfFunding,
           bondFunding,
+          rmfFunding,
+          rmfReinvest,
           totalInvest,
           fromDiv,
           fromBonus,
