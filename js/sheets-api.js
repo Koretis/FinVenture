@@ -349,6 +349,7 @@ var SheetsAPI = {
         GOLD: { id: "gold", name: "ทองคำ (Gold - AOM NOW)", code: "GOLD", value: 0, color: "#f59e0b", icon: "🪙" },
         CRYPTO: { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 0, color: "#a855f7", icon: "⚡" },
         US: { id: "us", name: "หุ้นสหรัฐ (US - Dime)", code: "US", value: 0, color: "#6366f1", icon: "🇺🇸" },
+        RMF: { id: "rmf", name: "กองทุนลดหย่อนภาษี (RMF - Dime)", code: "RMF", value: 0, color: "#14b8a6", icon: "🌱" },
         CASH: { id: "cash", name: "เงินสด & ฝาก Saving-ME", code: "CASH", value: 0, color: "#38bdf8", icon: "💵" }
       };
 
@@ -373,6 +374,8 @@ var SheetsAPI = {
           assetMap.GOLD.value += val;
         } else if (assessType.includes("crypto") || name.includes("bitkub")) {
           assetMap.CRYPTO.value += val;
+        } else if (assessType.includes("rmf") || name.includes("rmf")) {
+          assetMap.RMF.value += val;
         } else if (assessType.includes("us") || name.includes("dime")) {
           assetMap.US.value += val;
         } else if (assessType.includes("cash") || assessType.includes("bank") || name.includes("saving") || name.includes("cash")) {
@@ -444,6 +447,7 @@ var SheetsAPI = {
         else if (at.includes("insurance") || nm.includes("insurance")) cat = "INS";
         else if (at.includes("gold") || nm.includes("aom")) cat = "GOLD";
         else if (at.includes("crypto") || nm.includes("bitkub") || at.includes("ico")) cat = "CRYPTO";
+        else if (at.includes("rmf") || nm.includes("rmf")) cat = "RMF";
         else if (at.includes("usd") || nm.includes("dime")) cat = "US";
         else if (at.includes("cash") || at.includes("bank") || nm.includes("saving") || nm.includes("cash")) cat = "CASH";
         else if (at.includes("ltf") || nm.includes("uobsd")) cat = "LTF";
@@ -465,6 +469,7 @@ var SheetsAPI = {
               GOLD: { market: 0, cost: 0 },
               CRYPTO: { market: 0, cost: 0 },
               US: { market: 0, cost: 0 },
+              RMF: { market: 0, cost: 0 },
               CASH: { market: 0, cost: 0 }
             },
             risks: {

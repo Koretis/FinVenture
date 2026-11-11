@@ -70,6 +70,7 @@ var PortfolioUI = {
       CRYPTO: { market: Number(rawAssets.CRYPTO?.market ?? 0), cost: Number(rawAssets.CRYPTO?.cost ?? 0) },
       PVD: { market: Number(rawAssets.PVD?.market ?? 0), cost: Number(rawAssets.PVD?.cost ?? 0) },
       INS: { market: Number(rawAssets.INS?.market ?? 0), cost: Number(rawAssets.INS?.cost ?? 0) },
+      RMF: { market: Number(rawAssets.RMF?.market ?? 0), cost: Number(rawAssets.RMF?.cost ?? 0) },
       CASH: { market: Number(rawAssets.CASH?.market ?? 0), cost: Number(rawAssets.CASH?.cost ?? 0) }
     };
 
@@ -93,6 +94,7 @@ var PortfolioUI = {
         { cat: "INS", risk: "Mid", assessType: "Insurance", name: "Insurance" },
         { cat: "CASH", risk: "Low", assessType: "Cash & Bank", name: "Cash / Saving-ME" },
         { cat: "US", risk: "High", assessType: "USD Stock", name: "Dime" },
+        { cat: "RMF", risk: "Mid", assessType: "RMF", name: "Dime RMF" },
         { cat: "CRYPTO", risk: "High", assessType: "Crypto", name: "Bitkub" },
         { cat: "GOLD", risk: "Mid", assessType: "GOLD", name: "AOM NOW" }
       ];
@@ -369,7 +371,7 @@ var PortfolioUI = {
           color: "#ec4899"
         },
         {
-          name: "Mid Risk (PVD, Insurance, GOLD)",
+          name: "Mid Risk (PVD, Insurance, GOLD, RMF)",
           mkt: snap.risks.Mid?.market || 0,
           cost: snap.risks.Mid?.cost || 0,
           color: "#3b82f6"
@@ -424,8 +426,9 @@ var PortfolioUI = {
 
     const goldItem = findItem("GOLD", "AOM") || findItem("GOLD", "gold");
     const cashItem = findItem("CASH", "cash") || findItem("CASH", "saving");
+    const rmfItem = findItem("RMF", "rmf");
 
-    const assets7 = [
+    const assets8 = [
       {
         id: "SET",
         title: "SET (หุ้นไทย)",
@@ -451,6 +454,12 @@ var PortfolioUI = {
         cost: (snap.assets?.GOLD?.cost || 0) > 0 ? snap.assets.GOLD.cost : (goldItem?.cost || 0)
       },
       {
+        id: "RMF",
+        title: "RMF (Dime)",
+        market: (snap.assets?.RMF?.market || 0) > 0 ? snap.assets.RMF.market : (rmfItem?.market || 0),
+        cost: (snap.assets?.RMF?.cost || 0) > 0 ? snap.assets.RMF.cost : (rmfItem?.cost || 0)
+      },
+      {
         id: "DIME",
         title: "Dime (หุ้นสหรัฐ)",
         market: snap.assets?.US?.market || 0,
@@ -470,13 +479,13 @@ var PortfolioUI = {
       }
     ];
 
-    const maxVal = Math.max(1, ...assets7.map(a => Math.max(a.market, a.cost)));
+    const maxVal = Math.max(1, ...assets8.map(a => Math.max(a.market, a.cost)));
 
     const CX = 250;
     const CY = 250;
     const RADIUS = 155;
-    const N = 7;
-    const ANGLES = assets7.map((_, i) => (-Math.PI / 2) + (i * 2 * Math.PI / N));
+    const N = 8;
+    const ANGLES = assets8.map((_, i) => (-Math.PI / 2) + (i * 2 * Math.PI / N));
 
     const gPoly = document.getElementById("pfGuidePolygonsGroup");
     const gSpokes = document.getElementById("pfGuideSpokesGroup");
@@ -520,7 +529,7 @@ var PortfolioUI = {
     }
 
     const getCoords = (isCost) => {
-      return assets7.map((asset, i) => {
+      return assets8.map((asset, i) => {
         const val = isCost ? asset.cost : asset.market;
         const ratio = Math.min(1.0, Math.max(0.18, (val / maxVal) * 0.92));
         const r = RADIUS * ratio;
@@ -584,7 +593,7 @@ var PortfolioUI = {
     if (labelsContainer) {
       labelsContainer.innerHTML = "";
       const R_PCT = 47.0; // 47% from center (pedestal base is 40.75%, so labels are always strictly outside)
-      assets7.forEach((asset, i) => {
+      assets8.forEach((asset, i) => {
         const ang = ANGLES[i];
         const pctX = 50 + R_PCT * Math.cos(ang);
         const pctY = 50 + R_PCT * Math.sin(ang);
@@ -834,8 +843,8 @@ var PortfolioUI = {
       const highCst = (pt.risks?.High?.cost) ?? ((pt.assets?.SET?.cost || 0) + (pt.assets?.US?.cost || 0) + (pt.assets?.CRYPTO?.cost || 0));
       const highRetPct = highCst > 0 ? Number((((highMkt - highCst) / highCst) * 100).toFixed(2)) : 0;
 
-      const midMkt = (pt.risks?.Mid?.market) ?? ((pt.assets?.PVD?.market || 0) + (pt.assets?.INS?.market || 0) + (pt.assets?.GOLD?.market || 0));
-      const midCst = (pt.risks?.Mid?.cost) ?? ((pt.assets?.PVD?.cost || 0) + (pt.assets?.INS?.cost || 0) + (pt.assets?.GOLD?.cost || 0));
+      const midMkt = (pt.risks?.Mid?.market) ?? ((pt.assets?.PVD?.market || 0) + (pt.assets?.INS?.market || 0) + (pt.assets?.GOLD?.market || 0) + (pt.assets?.RMF?.market || 0));
+      const midCst = (pt.risks?.Mid?.cost) ?? ((pt.assets?.PVD?.cost || 0) + (pt.assets?.INS?.cost || 0) + (pt.assets?.GOLD?.cost || 0) + (pt.assets?.RMF?.cost || 0));
       const midRetPct = midCst > 0 ? Number((((midMkt - midCst) / midCst) * 100).toFixed(2)) : 0;
 
       const mIdx = (pt.month || 1) - 1;
@@ -1038,6 +1047,7 @@ var PortfolioUI = {
       GOLD: { icon: "🪙", color: "#f59e0b" },
       CRYPTO: { icon: "⚡", color: "#8b5cf6" },
       US: { icon: "🇺🇸", color: "#6366f1" },
+      RMF: { icon: "🌱", color: "#14b8a6" },
       CASH: { icon: "💵", color: "#0ea5e9" }
     };
 
@@ -1103,7 +1113,8 @@ var PortfolioUI = {
       CASH: "#0ea5e9",
       US: "#6366f1",
       CRYPTO: "#8b5cf6",
-      GOLD: "#f59e0b"
+      GOLD: "#f59e0b",
+      RMF: "#14b8a6"
     };
 
     // Build Donut slices directly from the rows of sheet "Portfolio"
@@ -1444,12 +1455,13 @@ var PortfolioUI = {
 
         let hm = 0, hc = 0;
         if (key === "US") {
-          // Strictly USD Stock (Dime), excluding Jitta / non-USD equities
+          // Strictly USD Stock (Dime), excluding Jitta / non-USD equities and RMF
           if (Array.isArray(h.items) && h.items.length > 0) {
             const dimeItems = h.items.filter(it => {
               const at = String(it.assessType || "").toLowerCase();
               const nm = String(it.name || "").toLowerCase();
-              return at.includes("usd") || nm.includes("dime");
+              const c = String(it.cat || "").toUpperCase();
+              return (at.includes("usd") || nm.includes("dime")) && !at.includes("rmf") && !nm.includes("rmf") && c !== "RMF";
             });
             if (dimeItems.length > 0) {
               hm = Math.round(dimeItems.reduce((s, it) => s + (Number(it.market) || 0), 0));
@@ -1461,6 +1473,26 @@ var PortfolioUI = {
           } else if (h.assets && h.assets.US) {
             hm = Number(h.assets.US.market ?? 0);
             hc = Number(h.assets.US.cost ?? 0);
+          }
+        } else if (key === "RMF") {
+          // Strictly RMF (Dime RMF / Tax Saving Mutual Fund)
+          if (Array.isArray(h.items) && h.items.length > 0) {
+            const rmfItems = h.items.filter(it => {
+              const at = String(it.assessType || "").toLowerCase();
+              const nm = String(it.name || "").toLowerCase();
+              const c = String(it.cat || "").toUpperCase();
+              return at.includes("rmf") || nm.includes("rmf") || c === "RMF";
+            });
+            if (rmfItems.length > 0) {
+              hm = Math.round(rmfItems.reduce((s, it) => s + (Number(it.market) || 0), 0));
+              hc = Math.round(rmfItems.reduce((s, it) => s + (Number(it.cost) || 0), 0));
+            } else if (h.assets && h.assets.RMF) {
+              hm = Number(h.assets.RMF.market ?? 0);
+              hc = Number(h.assets.RMF.cost ?? 0);
+            }
+          } else if (h.assets && h.assets.RMF) {
+            hm = Number(h.assets.RMF.market ?? 0);
+            hc = Number(h.assets.RMF.cost ?? 0);
           }
         } else if (key === "SET") {
           // Strictly SET equities portfolio, excluding LTF mutual funds
@@ -1504,6 +1536,7 @@ var PortfolioUI = {
     const definitions = [
       { id: "SET", name: "SET", title: "SET (Thai Equities)", icon: "🇹🇭", color: "#8b5cf6", colorRgb: "139, 92, 246", assetKey: "SET", tradeLogKey: "set", monthlyAvg: 42739 },
       { id: "US", name: "US Stock", title: "US Stock (US Equities)", icon: "🇺🇸", color: "#3b82f6", colorRgb: "59, 130, 246", assetKey: "US", tradeLogKey: "usd", monthlyAvg: 12500 },
+      { id: "RMF", name: "RMF", title: "RMF (Dime / กองทุนลดหย่อนภาษี)", icon: "🌱", color: "#14b8a6", colorRgb: "20, 184, 166", assetKey: "RMF", tradeLogKey: null, monthlyAvg: 8333 },
       { id: "GOLD", name: "Gold", title: "Gold (Bullion 96.5%)", icon: "🪙", color: "#f59e0b", colorRgb: "245, 158, 11", assetKey: "GOLD", tradeLogKey: "gold", monthlyAvg: 18200 },
       { id: "CRYPTO", name: "Crypto", title: "Crypto (Digital Assets)", icon: "⚡", color: "#ec4899", colorRgb: "236, 72, 153", assetKey: "CRYPTO", tradeLogKey: "crypto", monthlyAvg: 11413 },
       { id: "PVD", name: "PVD", title: "PVD (Provident Fund)", icon: "🏢", color: "#10b981", colorRgb: "16, 185, 129", assetKey: "PVD", tradeLogKey: null, monthlyAvg: 19726 },
@@ -1549,6 +1582,10 @@ var PortfolioUI = {
           profitThb: Number(h.profitThb ?? 0),
           profitPct: Number(h.profitPct ?? 0)
         }));
+      } else if (def.id === "RMF") {
+        holdings = [
+          { name: "Dime RMF (US Tech & Global Equities)", status: "Active DCA", mktThb: mkt || 100429, costThb: cst || 100000, profitThb: (mkt - cst) || 429, profitPct: cst > 0 ? Number(((mkt - cst) / cst * 100).toFixed(2)) : 0.43 }
+        ];
       } else if (def.id === "PVD") {
         holdings = [
           { name: "BBLAM Global Equity Master", status: "Active DCA", mktThb: 1080236, costThb: 453718, profitThb: 626518, profitPct: 138.1 },

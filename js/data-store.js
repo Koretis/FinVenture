@@ -47,6 +47,7 @@ const DEFAULT_FIN_DATA = {
     { id: "cash", name: "เงินสด & ฝาก Saving-ME", code: "CASH", value: 944497, percent: 13.6, color: "#38bdf8", icon: "💵" },
     { id: "us", name: "หุ้นสหรัฐ (US - Dime)", code: "US", value: 420741, percent: 6.0, color: "#6366f1", icon: "🇺🇸" },
     { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 406878, percent: 5.8, color: "#a855f7", icon: "⚡" },
+    { id: "rmf", name: "กองทุนลดหย่อนภาษี (RMF - Dime)", code: "RMF", value: 100429, percent: 1.4, color: "#14b8a6", icon: "🌱" },
     { id: "gold", name: "ทองคำ (Gold - AOM NOW)", code: "GOLD", value: 0, percent: 0.0, color: "#f59e0b", icon: "🪙" }
   ],
 
@@ -102,6 +103,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 830698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -279,6 +284,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -452,6 +461,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 830698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -629,6 +642,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -802,6 +819,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -979,6 +1000,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -1152,6 +1177,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -1329,6 +1358,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -1502,6 +1535,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -1679,6 +1716,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -1852,6 +1893,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -2029,6 +2074,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -2202,6 +2251,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -2379,6 +2432,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -2552,6 +2609,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 881698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -2729,6 +2790,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -2902,6 +2967,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 932698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -3079,6 +3148,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -3252,6 +3325,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 932698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -3429,6 +3506,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -3602,6 +3683,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 932698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -3779,6 +3864,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -3952,6 +4041,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 932698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -4129,6 +4222,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -4302,6 +4399,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 984698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -4489,6 +4590,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -4672,6 +4777,10 @@ const DEFAULT_FIN_DATA = {
                   "cost": 1088698
               },
               "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              },
+              "RMF": {
                   "market": 0,
                   "cost": 0
               }
@@ -7909,6 +8018,10 @@ const DEFAULT_FIN_DATA = {
               "GOLD": {
                   "market": 0,
                   "cost": 0
+              },
+              "RMF": {
+                  "market": 0,
+                  "cost": 0
               }
           },
           "risks": {
@@ -8007,11 +8120,176 @@ const DEFAULT_FIN_DATA = {
                   "cost": 388680.0
               }
           ]
+      },
+      {
+          "date": "2026-11",
+          "label": "พ.ย. 2026 (ปัจจุบัน)",
+          "year": 2026,
+          "month": 11,
+          "cost": 5068846,
+          "market": 6918034,
+          "forecast": 6577666,
+          "assets": {
+              "CASH": {
+                  "market": 454144,
+                  "cost": 454144
+              },
+              "PVD": {
+                  "market": 2160472,
+                  "cost": 907437
+              },
+              "CRYPTO": {
+                  "market": 382675,
+                  "cost": 525000
+              },
+              "SET": {
+                  "market": 2276304,
+                  "cost": 1965994
+              },
+              "US": {
+                  "market": 552960,
+                  "cost": 538680
+              },
+              "RMF": {
+                  "market": 100429,
+                  "cost": 100000
+              },
+              "INS": {
+                  "market": 991050,
+                  "cost": 991050
+              },
+              "GOLD": {
+                  "market": 0,
+                  "cost": 0
+              }
+          },
+          "risks": {
+              "Low": {
+                  "market": 454144,
+                  "cost": 454144
+              },
+              "Mid": {
+                  "market": 3251951,
+                  "cost": 1998487
+              },
+              "High": {
+                  "market": 3211939,
+                  "cost": 3029674
+              }
+          },
+          "items": [
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Low",
+                  "assessType": "Cash",
+                  "name": "Cash",
+                  "cat": "CASH",
+                  "market": 443686.35,
+                  "cost": 443686.35
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Low",
+                  "assessType": "Bank",
+                  "name": "Saving-ME",
+                  "cat": "CASH",
+                  "market": 10457.92,
+                  "cost": 10457.92
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Mid",
+                  "assessType": "Provident Fund",
+                  "name": "PVD",
+                  "cat": "PVD",
+                  "market": 2160471.95,
+                  "cost": 907436.64
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "High",
+                  "assessType": "SET",
+                  "name": "SET",
+                  "cat": "SET",
+                  "market": 2276304.35,
+                  "cost": 1965993.56
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Mid",
+                  "assessType": "Insurance",
+                  "name": "Insurance",
+                  "cat": "INS",
+                  "market": 991050.0,
+                  "cost": 991050.0
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Mid",
+                  "assessType": "GOLD",
+                  "name": "AOM NOW",
+                  "cat": "GOLD",
+                  "market": 0.0,
+                  "cost": 0.0
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "High",
+                  "assessType": "Crypto",
+                  "name": "Bitkub",
+                  "cat": "CRYPTO",
+                  "market": 382674.72,
+                  "cost": 525000.0
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "High",
+                  "assessType": "USD Stock",
+                  "name": "Dime",
+                  "cat": "US",
+                  "market": 552959.89,
+                  "cost": 538680.0
+              },
+              {
+                  "ym": "2026-11",
+                  "date": "Nov-2026",
+                  "risk": "Mid",
+                  "assessType": "RMF",
+                  "name": "Dime",
+                  "cat": "RMF",
+                  "market": 100428.90,
+                  "cost": 100000.0
+              }
+          ]
       }
   ],
 
   // Top Individual Holdings (From sheet Portfolio)
   holdings: [
+    {
+        "ticker": "RMF",
+        "name": "Dime RMF (Mid Risk)",
+        "assetClass": "RMF",
+        "risk": "Mid",
+        "assessType": "RMF",
+        "units": 1,
+        "avgCost": 100000,
+        "curPrice": 100429,
+        "currency": "THB",
+        "marketValueTHB": 100429,
+        "unrealizedGainTHB": 429,
+        "gainPercent": 0.43,
+        "weight": 1.4,
+        "divYield": 0.0
+    },
     {
         "ticker": "PVD",
         "name": "Provident Fund (Mid Risk)",
