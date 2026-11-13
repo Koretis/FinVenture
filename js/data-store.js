@@ -162,7 +162,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 232603.02,
                   "cost": 240000.0
               },
@@ -341,7 +341,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 233163.02,
                   "cost": 240000.0
               },
@@ -520,7 +520,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 251683.02,
                   "cost": 240000.0
               },
@@ -699,7 +699,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 243955.35,
                   "cost": 240000.0
               },
@@ -878,7 +878,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 243035.35,
                   "cost": 240000.0
               },
@@ -1057,7 +1057,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 252475.35,
                   "cost": 240000.0
               },
@@ -1236,7 +1236,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 237547.68,
                   "cost": 240000.0
               },
@@ -1415,7 +1415,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 242827.68,
                   "cost": 240000.0
               },
@@ -1594,7 +1594,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 253427.68,
                   "cost": 240000.0
               },
@@ -1773,7 +1773,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 238947.68,
                   "cost": 240000.0
               },
@@ -1952,7 +1952,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 237867.68,
                   "cost": 240000.0
               },
@@ -2131,7 +2131,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 252827.68,
                   "cost": 240000.0
               },
@@ -2310,7 +2310,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 240307.68,
                   "cost": 240000.0
               },
@@ -2489,7 +2489,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 239507.68,
                   "cost": 240000.0
               },
@@ -2668,7 +2668,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 251827.68,
                   "cost": 240000.0
               },
@@ -2847,7 +2847,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 239587.68,
                   "cost": 240000.0
               },
@@ -3026,7 +3026,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 239587.68,
                   "cost": 240000.0
               },
@@ -3205,7 +3205,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 252427.68,
                   "cost": 240000.0
               },
@@ -3384,7 +3384,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 248507.68,
                   "cost": 240000.0
               },
@@ -3563,7 +3563,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 225667.68,
                   "cost": 240000.0
               },
@@ -3742,7 +3742,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 261067.68,
                   "cost": 240000.0
               },
@@ -3921,7 +3921,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 215147.68,
                   "cost": 240000.0
               },
@@ -4100,7 +4100,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 235867.68,
                   "cost": 240000.0
               },
@@ -4279,7 +4279,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 252227.68,
                   "cost": 240000.0
               },
@@ -4458,7 +4458,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 235347.68,
                   "cost": 240000.0
               },
@@ -4647,7 +4647,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 222907.68,
                   "cost": 240000.0
               },
@@ -4836,7 +4836,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 257027.68,
                   "cost": 240000.0
               },
@@ -5021,7 +5021,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 253267.68,
                   "cost": 240000.0
               },
@@ -5206,7 +5206,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 240467.68,
                   "cost": 240000.0
               },
@@ -5391,7 +5391,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 247427.68,
                   "cost": 240000.0
               },
@@ -5576,7 +5576,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 243947.68,
                   "cost": 240000.0
               },
@@ -5761,7 +5761,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 243947.68,
                   "cost": 240000.0
               },
@@ -5946,7 +5946,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": \"OTHER\",
+                  "cat": "OTHER",
                   "market": 257867.68,
                   "cost": 240000.0
               },
