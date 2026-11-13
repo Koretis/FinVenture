@@ -9096,7 +9096,7 @@ const DEFAULT_FIN_DATA = {
   // Wealth Roadmap Milestones (From Forecast SET70_US30-V2 "Forecast Total Assess")
   milestones: [
     { id: 1, year: 2024, age: 45, title: "Milestone 1 (2024)", target: 5308290, targetLabel: "฿ 5.31M", actual: 5401237, status: "achieved", statusLabel: "Achieved ✅ (101.8%)", note: "สำเร็จปี 2024 ตามเป้าหมาย Forecast Total Assess" },
-    { id: 2, year: 2026, age: 47, title: "Milestone 2 (2026)", target: 6692381, targetLabel: "฿ 6.69M", actual: 7105257, status: "achieved", statusLabel: "Achieved ✅ (106.2%)", note: "ปัจจุบันทะลุเป้าหมายปี 2026 แล้ว (+฿ 413k / KPI Pass)" },
+    { id: 2, year: 2026, age: 47, title: "Milestone 2 (2026)", target: 6692381, targetLabel: "฿ 6.69M", actual: 6915849, status: "achieved", statusLabel: "Achieved ✅ (103.3%)", note: "ปัจจุบันทะลุเป้าหมายปี 2026 แล้ว (+฿ 223k / KPI Pass)" },
     { id: 3, year: 2027, age: 48, title: "Milestone 3 (2027)", target: 7441418, targetLabel: "฿ 7.44M", actual: null, status: "in_progress", statusLabel: "In Progress ⏳ (95.5%)", note: "เป้าหมายปีถัดไป ต้องการอีก ฿ 336k" },
     { id: 4, year: 2030, age: 51, title: "Milestone 4 (10M)", target: 10776867, targetLabel: "฿ 10.78M", actual: null, status: "in_progress", statusLabel: "10M Target 🚀 (65.9%)", note: "ก้าวสู่พอร์ต 8 หลัก (10 ล้านบาท)" },
     { id: 5, year: 2034, age: 55, title: "Milestone 5 (Freedom)", target: 16535455, targetLabel: "฿ 16.54M", actual: null, status: "freedom", statusLabel: "Financial Freedom 🌟", note: "อิสรภาพการเงินถาวร ปันผล ฿ 43k/ด." },

@@ -1666,17 +1666,42 @@ var FinCharts = {
   renderRoadmapView() {
     const containerCards = document.getElementById("roadmapMilestoneCards");
     const containerTable = document.getElementById("forecastTableContainer");
-    const netWorth = (currentFinData.historicalRecap?.latestNetWorth) || currentFinData.overview?.netWorth || 7105257;
     const roadmap = currentFinData.forecastRoadmap || [];
+    const r2026 = roadmap.find(r => r.year === 2026);
+    const netWorth = (r2026 && r2026.actualTotalAssess > 0)
+      ? r2026.actualTotalAssess
+      : ((currentFinData.historicalRecap?.latestNetWorth) || currentFinData.overview?.netWorth || 6915849);
     const milestones = currentFinData.milestones || [];
+
+    // Update Header Pill dynamically
+    const headerPill = document.getElementById("roadmapHeaderPill");
+    if (headerPill && r2026) {
+      const diff2026 = (r2026.actualTotalAssess || netWorth) - r2026.forecastTotalAssess;
+      const isPass = diff2026 >= 0;
+      const sign = isPass ? "+" : "";
+      headerPill.textContent = `ปี 2026: ${isPass ? 'KPI Pass ✅' : 'KPI Fail ⚠️'} (${sign}${this.formatShort(diff2026)})`;
+      headerPill.className = isPass ? "pill pill-lime-neon" : "pill pill-amber";
+    }
 
     if (containerCards && milestones.length > 0) {
       containerCards.innerHTML = milestones.map(m => {
-        const isAchieved = (m.actual && m.actual >= m.target) || (m.year <= 2026 && netWorth >= m.target);
+        const roadItem = roadmap.find(r => r.year === m.year);
+        const actualVal = (roadItem && roadItem.actualTotalAssess > 0) ? roadItem.actualTotalAssess : (m.year <= 2026 ? netWorth : m.actual);
+        const targetVal = (roadItem && roadItem.forecastTotalAssess > 0) ? roadItem.forecastTotalAssess : m.target;
+        const diff = (actualVal != null && targetVal > 0) ? (actualVal - targetVal) : null;
+        const isAchieved = diff != null ? (diff >= 0) : ((m.actual && m.actual >= m.target) || (m.year <= 2026 && netWorth >= targetVal));
         const borderCol = isAchieved ? "#10b981" : (m.status === "freedom" ? "#a855f7" : (m.status === "ultimate" ? "#f59e0b" : "#6366f1"));
         const pillClass = isAchieved ? "pill pill-em" : (m.status === "freedom" ? "pill pill-indigo" : (m.status === "ultimate" ? "pill pill-amber" : "pill pill-lime-neon"));
-        const pct = m.target > 0 ? ((netWorth / m.target) * 100).toFixed(1) : 0;
-        const statusBadge = isAchieved ? "Achieved ✅" : `${pct}% ⏳`;
+        const currentRef = actualVal || netWorth;
+        const pct = targetVal > 0 ? ((currentRef / targetVal) * 100).toFixed(1) : 0;
+        const statusBadge = isAchieved ? `Achieved ✅ (${pct}%)` : `${pct}% ⏳`;
+
+        let noteText = m.note;
+        if (m.year === 2026 && diff != null) {
+          const sign = diff >= 0 ? "+" : "";
+          const kpi = diff >= 0 ? "KPI Pass" : "KPI Fail";
+          noteText = `ปัจจุบันทะลุเป้าหมายปี 2026 แล้ว (${sign}${this.formatShort(diff)} / ${kpi})`;
+        }
 
         return `
           <div class="sub-tile ${isAchieved ? 'white-bg' : 'mint-bg'}" style="border-color: ${borderCol}; padding: 14px; position: relative;">
@@ -1684,14 +1709,14 @@ var FinCharts = {
               <span style="font-weight:700; font-size:12px;">🚩 ${m.title}</span>
               <span class="${pillClass}" style="font-size:10.5px;">${statusBadge}</span>
             </div>
-            <div class="tile-val num font-bold" style="font-size:22px; margin-bottom:4px;" data-val-thb="${m.target}">
-              ${this.formatMoney(m.target)}
+            <div class="tile-val num font-bold" style="font-size:22px; margin-bottom:4px;" data-val-thb="${targetVal}">
+              ${this.formatMoney(targetVal)}
             </div>
             <div style="font-size:11px; color:var(--fg-muted); margin-bottom:6px;">
-              ${m.note}
+              ${noteText}
             </div>
             <div style="font-size:10.5px; color:${isAchieved ? '#10b981' : 'var(--fg-sec)'}; font-weight:600;">
-              ${isAchieved ? '🎉 บรรลุเป้าหมายตามแผน' : `ต้องการเพิ่มอีก ${this.formatMoney(Math.max(0, m.target - netWorth))}`}
+              ${isAchieved ? '🎉 บรรลุเป้าหมายตามแผน' : `ต้องการเพิ่มอีก ${this.formatMoney(Math.max(0, targetVal - currentRef))}`}
             </div>
           </div>
         `;
