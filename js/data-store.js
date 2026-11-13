@@ -46,7 +46,7 @@ const DEFAULT_FIN_DATA = {
     { id: "insurance", name: "ประกันชีวิตสะสมทรัพย์ (Insurance)", code: "INS", value: 991050, percent: 14.2, color: "#ec4899", icon: "🛡️" },
     { id: "cash", name: "เงินสด & ฝาก Saving-ME", code: "CASH", value: 944497, percent: 13.6, color: "#38bdf8", icon: "💵" },
     { id: "us", name: "หุ้นสหรัฐ (US - Dime)", code: "US", value: 420741, percent: 6.0, color: "#6366f1", icon: "🇺🇸" },
-    { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 406878, percent: 5.8, color: "#a855f7", icon: "⚡" },
+    { id: "crypto", name: "สินทรัพย์ดิจิทัล (Crypto - Bitkub)", code: "CRYPTO", value: 374936, percent: 5.4, color: "#a855f7", icon: "⚡" },
     { id: "rmf", name: "กองทุนลดหย่อนภาษี (RMF - Dime)", code: "RMF", value: 100429, percent: 1.4, color: "#14b8a6", icon: "🌱" },
     { id: "gold", name: "ทองคำ (Gold - AOM NOW)", code: "GOLD", value: 0, percent: 0.0, color: "#f59e0b", icon: "🪙" }
   ],
@@ -87,8 +87,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 582749
               },
               "CRYPTO": {
-                  "market": 335033,
-                  "cost": 490000
+                  "market": 102430,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1114862,
@@ -162,7 +162,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 232603.02,
                   "cost": 240000.0
               },
@@ -266,8 +266,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 595968
               },
               "CRYPTO": {
-                  "market": 342395,
-                  "cost": 490000
+                  "market": 109232,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1111799,
@@ -341,7 +341,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 233163.02,
                   "cost": 240000.0
               },
@@ -445,8 +445,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 602715
               },
               "CRYPTO": {
-                  "market": 373220,
-                  "cost": 490000
+                  "market": 121537,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1091870,
@@ -520,7 +520,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 251683.02,
                   "cost": 240000.0
               },
@@ -624,8 +624,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 609462
               },
               "CRYPTO": {
-                  "market": 370035,
-                  "cost": 490000
+                  "market": 126079,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1116105,
@@ -699,7 +699,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 243955.35,
                   "cost": 240000.0
               },
@@ -803,8 +803,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 616209
               },
               "CRYPTO": {
-                  "market": 364840,
-                  "cost": 490000
+                  "market": 121805,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1084909,
@@ -878,7 +878,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 243035.35,
                   "cost": 240000.0
               },
@@ -982,8 +982,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 622956
               },
               "CRYPTO": {
-                  "market": 376142,
-                  "cost": 490000
+                  "market": 123666,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1104610,
@@ -1057,7 +1057,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 252475.35,
                   "cost": 240000.0
               },
@@ -1161,8 +1161,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 629702
               },
               "CRYPTO": {
-                  "market": 349276,
-                  "cost": 490000
+                  "market": 111729,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1159485,
@@ -1236,7 +1236,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 237547.68,
                   "cost": 240000.0
               },
@@ -1340,8 +1340,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 636449
               },
               "CRYPTO": {
-                  "market": 349454,
-                  "cost": 490000
+                  "market": 106626,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1107819,
@@ -1415,7 +1415,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 242827.68,
                   "cost": 240000.0
               },
@@ -1519,8 +1519,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 643196
               },
               "CRYPTO": {
-                  "market": 365267,
-                  "cost": 490000
+                  "market": 111839,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1145020,
@@ -1594,7 +1594,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 253427.68,
                   "cost": 240000.0
               },
@@ -1698,8 +1698,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 649943
               },
               "CRYPTO": {
-                  "market": 365108,
-                  "cost": 490000
+                  "market": 126161,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1112495,
@@ -1773,7 +1773,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 238947.68,
                   "cost": 240000.0
               },
@@ -1877,8 +1877,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 656690
               },
               "CRYPTO": {
-                  "market": 376171,
-                  "cost": 490000
+                  "market": 138304,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1103724,
@@ -1952,7 +1952,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 237867.68,
                   "cost": 240000.0
               },
@@ -2056,8 +2056,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 663437
               },
               "CRYPTO": {
-                  "market": 411641,
-                  "cost": 490000
+                  "market": 158814,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1099708,
@@ -2131,7 +2131,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 252827.68,
                   "cost": 240000.0
               },
@@ -2235,8 +2235,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 670184
               },
               "CRYPTO": {
-                  "market": 388682,
-                  "cost": 490000
+                  "market": 148374,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1053474,
@@ -2310,7 +2310,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 240307.68,
                   "cost": 240000.0
               },
@@ -2414,8 +2414,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 677146
               },
               "CRYPTO": {
-                  "market": 472704,
-                  "cost": 490000
+                  "market": 233196,
+                  "cost": 250000
               },
               "SET": {
                   "market": 976394,
@@ -2489,7 +2489,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 239507.68,
                   "cost": 240000.0
               },
@@ -2593,8 +2593,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 684108
               },
               "CRYPTO": {
-                  "market": 519136,
-                  "cost": 490000
+                  "market": 267309,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1002555,
@@ -2668,7 +2668,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 251827.68,
                   "cost": 240000.0
               },
@@ -2772,8 +2772,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 691070
               },
               "CRYPTO": {
-                  "market": 468682,
-                  "cost": 490000
+                  "market": 229094,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1021600,
@@ -2847,7 +2847,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 239587.68,
                   "cost": 240000.0
               },
@@ -2951,8 +2951,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 698032
               },
               "CRYPTO": {
-                  "market": 500208,
-                  "cost": 490000
+                  "market": 260620,
+                  "cost": 250000
               },
               "SET": {
                   "market": 984051,
@@ -3026,7 +3026,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 239587.68,
                   "cost": 240000.0
               },
@@ -3130,8 +3130,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 704995
               },
               "CRYPTO": {
-                  "market": 492526,
-                  "cost": 490000
+                  "market": 240098,
+                  "cost": 250000
               },
               "SET": {
                   "market": 987048,
@@ -3205,7 +3205,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 252427.68,
                   "cost": 240000.0
               },
@@ -3309,8 +3309,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 711957
               },
               "CRYPTO": {
-                  "market": 478670,
-                  "cost": 490000
+                  "market": 230162,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1048116,
@@ -3384,7 +3384,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 248507.68,
                   "cost": 240000.0
               },
@@ -3488,8 +3488,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 718919
               },
               "CRYPTO": {
-                  "market": 412648,
-                  "cost": 490000
+                  "market": 186980,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1077097,
@@ -3563,7 +3563,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 225667.68,
                   "cost": 240000.0
               },
@@ -3667,8 +3667,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 725881
               },
               "CRYPTO": {
-                  "market": 449208,
-                  "cost": 490000
+                  "market": 188140,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1384349,
@@ -3742,7 +3742,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 261067.68,
                   "cost": 240000.0
               },
@@ -3846,8 +3846,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 732843
               },
               "CRYPTO": {
-                  "market": 419921,
-                  "cost": 490000
+                  "market": 204773,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1425241,
@@ -3921,7 +3921,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 215147.68,
                   "cost": 240000.0
               },
@@ -4025,8 +4025,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 739806
               },
               "CRYPTO": {
-                  "market": 534176,
-                  "cost": 490000
+                  "market": 298308,
+                  "cost": 250000
               },
               "SET": {
                   "market": 1481761,
@@ -4100,7 +4100,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 235867.68,
                   "cost": 240000.0
               },
@@ -4204,8 +4204,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 746768
               },
               "CRYPTO": {
-                  "market": 575596,
-                  "cost": 540000
+                  "market": 323369,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1505591,
@@ -4279,7 +4279,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 252227.68,
                   "cost": 240000.0
               },
@@ -4383,8 +4383,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 753730
               },
               "CRYPTO": {
-                  "market": 571545,
-                  "cost": 540000
+                  "market": 336197,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1499467,
@@ -4458,7 +4458,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 235347.68,
                   "cost": 240000.0
               },
@@ -4572,8 +4572,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 760919
               },
               "CRYPTO": {
-                  "market": 483435,
-                  "cost": 540000
+                  "market": 260527,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1470322,
@@ -4647,7 +4647,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 222907.68,
                   "cost": 240000.0
               },
@@ -4761,8 +4761,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 768107
               },
               "CRYPTO": {
-                  "market": 502412,
-                  "cost": 540000
+                  "market": 245384,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1444554,
@@ -4836,7 +4836,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 257027.68,
                   "cost": 240000.0
               },
@@ -4950,8 +4950,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 775295
               },
               "CRYPTO": {
-                  "market": 513788,
-                  "cost": 540000
+                  "market": 260520,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1493443,
@@ -5021,7 +5021,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 253267.68,
                   "cost": 240000.0
               },
@@ -5135,8 +5135,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 782484
               },
               "CRYPTO": {
-                  "market": 539482,
-                  "cost": 540000
+                  "market": 299014,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1451058,
@@ -5206,7 +5206,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 240467.68,
                   "cost": 240000.0
               },
@@ -5320,8 +5320,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 789672
               },
               "CRYPTO": {
-                  "market": 541174,
-                  "cost": 540000
+                  "market": 293746,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1390467,
@@ -5391,7 +5391,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 247427.68,
                   "cost": 240000.0
               },
@@ -5505,8 +5505,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 796861
               },
               "CRYPTO": {
-                  "market": 601340,
-                  "cost": 540000
+                  "market": 357392,
+                  "cost": 300000
               },
               "SET": {
                   "market": 1433041,
@@ -5576,7 +5576,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 243947.68,
                   "cost": 240000.0
               },
@@ -5690,8 +5690,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 804049
               },
               "CRYPTO": {
-                  "market": 657648,
-                  "cost": 590000
+                  "market": 413701,
+                  "cost": 350000
               },
               "SET": {
                   "market": 1427263,
@@ -5761,7 +5761,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 243947.68,
                   "cost": 240000.0
               },
@@ -5875,8 +5875,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 811238
               },
               "CRYPTO": {
-                  "market": 741762,
-                  "cost": 650000
+                  "market": 483894,
+                  "cost": 410000
               },
               "SET": {
                   "market": 1324900,
@@ -5946,7 +5946,7 @@ const DEFAULT_FIN_DATA = {
                   "risk": "High",
                   "assessType": "ICO",
                   "name": "SiriHUB",
-                  "cat": "CRYPTO",
+                  "cat": \"OTHER\",
                   "market": 257867.68,
                   "cost": 240000.0
               },
@@ -6440,7 +6440,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 832803
               },
               "CRYPTO": {
-                  "market": 367175,
+                  "market": 360101,
                   "cost": 440000
               },
               "SET": {
@@ -6625,7 +6625,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 839991
               },
               "CRYPTO": {
-                  "market": 322087,
+                  "market": 315737,
                   "cost": 440000
               },
               "SET": {
@@ -6810,7 +6810,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 847485
               },
               "CRYPTO": {
-                  "market": 262109,
+                  "market": 256792,
                   "cost": 440000
               },
               "SET": {
@@ -6995,7 +6995,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 854979
               },
               "CRYPTO": {
-                  "market": 333804,
+                  "market": 328128,
                   "cost": 490000
               },
               "SET": {
@@ -7170,7 +7170,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 862473
               },
               "CRYPTO": {
-                  "market": 363383,
+                  "market": 357048,
                   "cost": 490000
               },
               "SET": {
@@ -7325,7 +7325,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 869967
               },
               "CRYPTO": {
-                  "market": 343584,
+                  "market": 337467,
                   "cost": 490000
               },
               "SET": {
@@ -7865,8 +7865,8 @@ const DEFAULT_FIN_DATA = {
                   "cost": 892449
               },
               "CRYPTO": {
-                  "market": 452067,
-                  "cost": 515000
+                  "market": 461769,
+                  "cost": 525000
               },
               "SET": {
                   "market": 2005878,
@@ -7967,8 +7967,8 @@ const DEFAULT_FIN_DATA = {
                   "assessType": "Crypto",
                   "name": "Bitkub",
                   "cat": "CRYPTO",
-                  "market": 452067.28,
-                  "cost": 515000.0
+                  "market": 461769.24,
+                  "cost": 525000.0
               },
               {
                   "ym": "2026-09",
@@ -8000,7 +8000,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 899943
               },
               "CRYPTO": {
-                  "market": 406878,
+                  "market": 410048,
                   "cost": 525000
               },
               "SET": {
@@ -8106,7 +8106,7 @@ const DEFAULT_FIN_DATA = {
                   "assessType": "Crypto",
                   "name": "Bitkub",
                   "cat": "CRYPTO",
-                  "market": 406877.87,
+                  "market": 410047.69,
                   "cost": 525000.0
               },
               {
@@ -8139,7 +8139,7 @@ const DEFAULT_FIN_DATA = {
                   "cost": 907437
               },
               "CRYPTO": {
-                  "market": 382675,
+                  "market": 374936,
                   "cost": 525000
               },
               "SET": {
@@ -8245,7 +8245,7 @@ const DEFAULT_FIN_DATA = {
                   "assessType": "Crypto",
                   "name": "Bitkub",
                   "cat": "CRYPTO",
-                  "market": 382674.72,
+                  "market": 374952.92,
                   "cost": 525000.0
               },
               {
@@ -13857,9 +13857,9 @@ const DEFAULT_FIN_DATA = {
       "avgPriceThb": 0.0,
       "lastPriceThb": 0.0,
       "costThb": 525000.0,
-      "mktThb": 407002.14,
-      "profitThb": -117997.86,
-      "profitPct": -22.48,
+      "mktThb": 374936.0,
+      "profitThb": -150064.0,
+      "profitPct": -28.58,
       "status": "Holding"
     },
     "trades": [

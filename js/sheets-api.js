@@ -447,7 +447,8 @@ var SheetsAPI = {
         else if (at === "set" || nm === "set") cat = "SET";
         else if (at.includes("insurance") || nm.includes("insurance")) cat = "INS";
         else if (at.includes("gold") || nm.includes("aom")) cat = "GOLD";
-        else if (at.includes("crypto") || nm.includes("bitkub") || at.includes("ico")) cat = "CRYPTO";
+        else if ((at.includes("crypto") || nm.includes("bitkub")) && !at.includes("ico") && !nm.includes("sirihub")) cat = "CRYPTO";
+        else if (at.includes("ico") || nm.includes("sirihub")) cat = "OTHER";
         else if (at.includes("rmf") || nm.includes("rmf")) cat = "RMF";
         else if (at.includes("usd") || nm.includes("dime")) cat = "US";
         else if (at.includes("cash") || at.includes("bank") || nm.includes("saving") || nm.includes("cash")) cat = "CASH";
@@ -540,7 +541,49 @@ var SheetsAPI = {
           return item;
         });
 
-        currentFinData.portfolioHistory = historyList;
+        // If sheet "Portfolio" only contains Crypto / Bitkub (subset of assets),
+        // safely update CRYPTO in currentFinData.portfolioHistory so other asset classes (SET, US, PVD, etc.) are preserved.
+        const distinctCats = new Set(allPortfolioRows.map(r => r.cat).filter(c => c && c !== "OTHER"));
+        if (distinctCats.size <= 2 && currentFinData.portfolioHistory && currentFinData.portfolioHistory.length > 0) {
+          const histMap = {};
+          currentFinData.portfolioHistory.forEach(h => {
+            if (h && h.date) histMap[h.date] = h;
+          });
+
+          sortedYm.forEach(ym => {
+            const newPt = byYm[ym];
+            let target = histMap[ym];
+            if (!target) {
+              target = newPt;
+              currentFinData.portfolioHistory.push(target);
+              histMap[ym] = target;
+            } else {
+              if (!target.assets) target.assets = {};
+              distinctCats.forEach(c => {
+                if (newPt.assets && newPt.assets[c]) {
+                  target.assets[c] = {
+                    market: Math.round(newPt.assets[c].market),
+                    cost: Math.round(newPt.assets[c].cost)
+                  };
+                }
+              });
+
+              if (Array.isArray(target.items)) {
+                target.items = target.items.filter(it => !distinctCats.has(it.cat));
+                target.items.push(...newPt.items);
+              } else {
+                target.items = newPt.items;
+              }
+
+              // Recompute total portfolio market and cost with updated asset
+              target.market = Math.round(Object.values(target.assets).reduce((s, a) => s + (Number(a.market) || 0), 0));
+              target.cost = Math.round(Object.values(target.assets).reduce((s, a) => s + (Number(a.cost) || 0), 0));
+            }
+          });
+          currentFinData.portfolioHistory.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+        } else {
+          currentFinData.portfolioHistory = historyList;
+        }
 
         // Calculate Executive Recap Statistics from real Portfolio history
         const len = historyList.length;

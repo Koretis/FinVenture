@@ -1514,6 +1514,26 @@ var PortfolioUI = {
             hm = Number(h.assets.SET.market ?? 0);
             hc = Number(h.assets.SET.cost ?? 0);
           }
+        } else if (key === "CRYPTO") {
+          // Strictly Crypto (Bitkub), excluding ICO / SiriHUB
+          if (Array.isArray(h.items) && h.items.length > 0) {
+            const cryptoItems = h.items.filter(it => {
+              const at = String(it.assessType || "").toLowerCase();
+              const nm = String(it.name || "").toLowerCase();
+              const c = String(it.cat || "").toUpperCase();
+              return (at.includes("crypto") || nm.includes("bitkub") || c === "CRYPTO") && !at.includes("ico") && !nm.includes("sirihub");
+            });
+            if (cryptoItems.length > 0) {
+              hm = Math.round(cryptoItems.reduce((s, it) => s + (Number(it.market) || 0), 0));
+              hc = Math.round(cryptoItems.reduce((s, it) => s + (Number(it.cost) || 0), 0));
+            } else if (h.assets && h.assets.CRYPTO) {
+              hm = Number(h.assets.CRYPTO.market ?? 0);
+              hc = Number(h.assets.CRYPTO.cost ?? 0);
+            }
+          } else if (h.assets && h.assets.CRYPTO) {
+            hm = Number(h.assets.CRYPTO.market ?? 0);
+            hc = Number(h.assets.CRYPTO.cost ?? 0);
+          }
         } else if (h.assets && h.assets[key]) {
           hm = Number(h.assets[key].market ?? 0);
           hc = Number(h.assets[key].cost ?? 0);
@@ -1547,13 +1567,17 @@ var PortfolioUI = {
     const models = {};
     definitions.forEach(def => {
       const ast = a[def.assetKey] || { market: 0, cost: 0 };
-      const mkt = Number(ast.market ?? 0);
-      const cst = Number(ast.cost ?? 0);
+      const rawHist = buildHistForAsset(def.assetKey);
+      let mkt = Number(ast.market ?? 0);
+      let cst = Number(ast.cost ?? 0);
+      if (def.id === "CRYPTO" && rawHist.length > 0) {
+        const lastPt = rawHist[rawHist.length - 1];
+        if (lastPt && lastPt.cost > 0) cst = lastPt.cost;
+        if (lastPt && (mkt <= 0 || !ast.market)) mkt = lastPt.market;
+      }
       const pl = mkt - cst;
       const plPct = cst > 0 ? (pl / cst * 100) : 0;
       const wVal = total > 0 ? (mkt / total * 100) : 0;
-
-      const rawHist = buildHistForAsset(def.assetKey);
       let ath = mkt;
       if (rawHist.length > 0) {
         ath = Math.max(...rawHist.map(h => h.market), mkt);
